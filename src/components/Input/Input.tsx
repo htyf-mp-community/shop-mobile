@@ -10,6 +10,8 @@ interface IInputProps {
   setValue: (prop: any) => void;
   style?: any;
   rest?: any;
+  labelStyle?: any;
+  placeholderColor?: string;
 }
 
 export default function Input({
@@ -19,16 +21,19 @@ export default function Input({
   value,
   setValue,
   style,
+  placeholderColor = "black",
+  labelStyle = {},
   ...rest
 }: IInputProps) {
   return (
     <View style={styles.container}>
-      {name !== "" && <Text style={styles.label}>{name}</Text>}
+      {name !== "" && <Text style={[styles.label, labelStyle]}>{name}</Text>}
       <TextInput
         value={value}
         onChange={setValue}
         keyboardType={keyboardType}
         placeholder={placeholder}
+        placeholderTextColor={placeholderColor}
         style={[styles.input, style]}
         {...rest}
       />

@@ -1,6 +1,6 @@
 import { StyleSheet, Dimensions } from "react-native";
 
-const { width: WIDTH, height: HEIGHT } = Dimensions.get("screen");
+const { width: WIDTH } = Dimensions.get("screen");
 
 const styles = StyleSheet.create({
   container: {
@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
     fontFamily: "sans-serif",
   },
   label: {
+    width: WIDTH * 0.9,
     fontSize: 18,
     color: "black",
   },

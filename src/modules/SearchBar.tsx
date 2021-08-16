@@ -12,18 +12,23 @@ export default function SearchBar({}) {
   const [searchedValue, setSearchedValue] = useState<string>("");
 
   async function FindSearched() {
-    const response = await fetch("", {
-      method: "POST",
-      body: JSON.stringify({ searched: searchedValue }),
-      headers: {
-        "Content-Type": "application/json",
-        token: "", // user.token
-      },
-    });
-    if (!response.ok) {
-      // fail
+    try {
+      const response = await fetch("", {
+        method: "POST",
+        body: JSON.stringify({ searched: searchedValue }),
+        headers: {
+          "Content-Type": "application/json",
+          token: "", // user.token
+        },
+      });
+      if (!response.ok) {
+        // fail
+      }
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
     }
-    const data = await response.json();
   }
 
   return (
