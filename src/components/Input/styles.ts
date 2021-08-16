@@ -5,14 +5,15 @@ const { width: WIDTH, height: HEIGHT } = Dimensions.get("screen");
 const styles = StyleSheet.create({
   container: {
     padding: 10,
-    width: WIDTH * 0.8,
     alignItems: "center",
     justifyContent: "center",
   },
   input: {
     borderColor: "#111111",
-    borderWidth: 0.5,
+    width: WIDTH * 0.9,
+    padding: 10,
     fontSize: 18,
+    borderRadius: 5,
     fontFamily: "sans-serif",
   },
   label: {

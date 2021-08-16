@@ -1,19 +1,20 @@
 import { View, TextInput, Text } from "react-native";
 import styles from "./styles";
+import React from "react";
 
 interface IInputProps {
   keyboardType?: any;
-  name: string;
+  name?: string;
   placeholder: string;
   value: string;
   setValue: (prop: any) => void;
-  style: any;
-  rest: any;
+  style?: any;
+  rest?: any;
 }
 
 export default function Input({
   keyboardType = "default",
-  name,
+  name = "",
   placeholder,
   value,
   setValue,
@@ -22,7 +23,7 @@ export default function Input({
 }: IInputProps) {
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>{name}</Text>
+      {name !== "" && <Text style={styles.label}>{name}</Text>}
       <TextInput
         value={value}
         onChange={setValue}
