@@ -3,29 +3,30 @@ import React, { useState } from "react";
 import Input from "../components/Input/Input";
 import Button from "../components/Button/Button";
 import { useUser } from "../context/UserContext";
+import { API } from "../constants/routes";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
 export default function SearchBar({}) {
-  //@ts-ignore fix later
   const { user } = useUser();
   const [searchedValue, setSearchedValue] = useState<string>("");
 
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
   async function FindSearched() {
     try {
-      const response = await fetch("", {
-        method: "POST",
+      const response = await fetch(API + "/", {
+        method: "GET",
         body: JSON.stringify({ searched: searchedValue }),
         headers: {
           "Content-Type": "application/json",
-          token: "", // user.token
+          token: user.token,
         },
       });
       if (!response.ok) {
-        // fail
       }
       const data = await response.json();
-      console.log(data);
     } catch (error) {
       console.log(error);
     }

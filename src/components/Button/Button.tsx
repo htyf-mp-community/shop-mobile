@@ -25,7 +25,9 @@ export default function Button({
       disabled={disabled}
     >
       {text !== "" && (
-        <Text style={[styles.text, { color: style.color }]}>{text}</Text>
+        <Text style={[styles.text, { color: style.color || "black" }]}>
+          {text}
+        </Text>
       )}
       <View style={styles.icon}>{icon}</View>
     </TouchableOpacity>

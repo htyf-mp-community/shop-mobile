@@ -18,7 +18,7 @@ export default function Input({
   keyboardType = "default",
   name = "",
   placeholder,
-  value,
+  value = "",
   setValue,
   style,
   placeholderColor = "black",
@@ -30,7 +30,7 @@ export default function Input({
       {name !== "" && <Text style={[styles.label, labelStyle]}>{name}</Text>}
       <TextInput
         value={value}
-        onChange={setValue}
+        onChangeText={setValue}
         keyboardType={keyboardType}
         placeholder={placeholder}
         placeholderTextColor={placeholderColor}
