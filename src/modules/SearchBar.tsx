@@ -7,7 +7,7 @@ import { API } from "../constants/routes";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
-export default function SearchBar({}) {
+export default function SearchBar({ open, close }: any) {
   const { user } = useUser();
   const [searchedValue, setSearchedValue] = useState<string>("");
 
@@ -16,19 +16,30 @@ export default function SearchBar({}) {
 
   async function FindSearched() {
     try {
-      const response = await fetch(API + "/", {
-        method: "GET",
-        body: JSON.stringify({ searched: searchedValue }),
-        headers: {
-          "Content-Type": "application/json",
-          token: user.token,
-        },
-      });
+      const response = await fetch(
+        API + "/products/searched=" + searchedValue,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            token: user.token,
+          },
+        }
+      );
       if (!response.ok) {
       }
       const data = await response.json();
+      if (data !== null) {
+        setLoading(false);
+        close();
+        setSearchedValue("");
+        console.log(data);
+      }
     } catch (error) {
       console.log(error);
+      setLoading(false);
+      close();
+      setError(error.message);
+      setSearchedValue("");
     }
   }
 
@@ -38,9 +49,17 @@ export default function SearchBar({}) {
         value={searchedValue}
         setValue={setSearchedValue}
         placeholder={"What are you looking for?"}
-        style={{ backgroundColor: "#4A4C50", width: SCREEN_WIDTH * 0.8 }}
-        {...{ placeholderTextColor: "#fff" }}
+        style={{
+          backgroundColor: "#4A4C50",
+          color: "white",
+          width: SCREEN_WIDTH * 0.8,
+        }}
+        {...{
+          placeholderTextColor: "#fff",
+          onFocus: () => open(),
+        }}
       />
+
       <Button
         callback={FindSearched}
         icon={<Image source={require("../assets/search.png")} />}
@@ -56,5 +75,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingTop: 25,
     borderBottomColor: "#000",
+    zIndex: 10,
   },
 });
