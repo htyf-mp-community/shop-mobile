@@ -7,7 +7,13 @@ import { API } from "../constants/routes";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
-export default function SearchBar({ open, close }: any) {
+interface SearchBarProps {
+  open: () => void;
+  close: () => void;
+  setData: (props: any) => void;
+}
+
+export default function SearchBar({ open, close, setData }: SearchBarProps) {
   const { user } = useUser();
   const [searchedValue, setSearchedValue] = useState<string>("");
 
@@ -33,6 +39,7 @@ export default function SearchBar({ open, close }: any) {
         close();
         setSearchedValue("");
         console.log(data);
+        setData(data);
       }
     } catch (error) {
       console.log(error);

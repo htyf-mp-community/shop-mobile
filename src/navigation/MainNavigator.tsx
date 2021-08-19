@@ -5,6 +5,7 @@ import Home from "./Screens/Home";
 import Auth from "./Screens/Auth";
 import { useUser } from "../context/UserContext";
 import { useEffect } from "react";
+import Cart from "./Screens/Cart";
 
 const Stack = createStackNavigator();
 
@@ -26,11 +27,14 @@ const MainNavigator = () => {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Auth">
         {user.token !== "" ? (
-          <Stack.Screen
-            name="Home"
-            component={Home}
-            options={{ headerShown: false }}
-          />
+          <>
+            <Stack.Screen
+              name="Home"
+              component={Home}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen name="Cart" component={Cart} />
+          </>
         ) : (
           <Stack.Screen
             name="Auth"

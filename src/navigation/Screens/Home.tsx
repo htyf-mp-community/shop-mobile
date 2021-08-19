@@ -5,27 +5,42 @@ import HorizontalSlider from "../../components/HorizontalSlider/HorizontalSlider
 import { Colors } from "../../constants/styles";
 import Product, { ProductTypeProps } from "../../modules/Product";
 import { API } from "../../constants/routes";
-import { useQuery } from "react-query";
 import { useUser } from "../../context/UserContext";
 import Overlay from "../../components/Overlay/Overlay";
 import { useState } from "react";
-
-async function FetchProducts(token: string) {
-  const response = await fetch(API + "/products", {
-    headers: {
-      token: token,
-    },
-  });
-  return response.json();
-}
+import { useEffect } from "react";
 
 export default function Home() {
   const { user } = useUser();
-  const { data } = useQuery("fetch all products", () =>
-    FetchProducts(user.token)
-  );
-
   const [showOverlay, setShowOverlay] = useState(false);
+
+  const [data, setData] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  async function FetchAllProducts() {
+    try {
+      setLoading(true);
+
+      const response = await fetch(API + "/products", {
+        headers: {
+          token: user.token,
+        },
+      });
+      const data = await response.json();
+      if (data !== null) {
+        setData(data);
+        setLoading(false);
+      }
+    } catch (error) {
+      setError(error.message);
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    FetchAllProducts();
+  }, []);
 
   const close = () => {
     setShowOverlay(false);
@@ -38,7 +53,7 @@ export default function Home() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <SearchBar open={open} close={close} />
+      <SearchBar open={open} close={close} setData={setData} />
       <HorizontalSlider title="Most searched">
         {data &&
           data.map((el: ProductTypeProps) => (
