@@ -1,4 +1,4 @@
-import { createStackNavigator } from "@react-navigation/stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import React from "react";
 import Home from "./Screens/Home";
@@ -6,8 +6,9 @@ import Auth from "./Screens/Auth";
 import { useUser } from "../context/UserContext";
 import { useEffect } from "react";
 import Cart from "./Screens/Cart";
+import TabBar from "./TabBar";
 
-const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
 
 const MainNavigator = () => {
   const { setUser, ReadUser, user } = useUser();
@@ -25,24 +26,30 @@ const MainNavigator = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Auth">
+      <Tab.Navigator
+        initialRouteName="Auth"
+        tabBar={TabBar}
+        screenOptions={{
+          tabBarStyle: { position: "absolute" },
+        }}
+      >
         {user.token !== "" ? (
           <>
-            <Stack.Screen
+            <Tab.Screen
               name="Home"
               component={Home}
               options={{ headerShown: false }}
             />
-            <Stack.Screen name="Cart" component={Cart} />
+            <Tab.Screen name="Cart" component={Cart} />
           </>
         ) : (
-          <Stack.Screen
+          <Tab.Screen
             name="Auth"
             options={{ headerShown: false }}
             component={Auth}
           />
         )}
-      </Stack.Navigator>
+      </Tab.Navigator>
     </NavigationContainer>
   );
 };

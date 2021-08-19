@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Dimensions, Image, StyleSheet, Text } from "react-native";
-import { Colors } from "../constants/styles";
+import { radius } from "../constants/styles";
 import Button from "../components/Button/Button";
 import AddToCart from "./AddToCart";
 
@@ -52,13 +52,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   product: {
-    backgroundColor: Colors.primary200,
     width: SCREEN_WIDTH * 0.95,
     height: SCREEN_HEIGHT / 4,
     position: "relative",
   },
   img: {
     ...StyleSheet.absoluteFillObject,
+    borderRadius: radius.small,
   },
 
   text: {
