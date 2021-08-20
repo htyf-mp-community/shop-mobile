@@ -7,7 +7,9 @@ import { useUser } from "../context/UserContext";
 import { useEffect } from "react";
 import Cart from "./Screens/Cart";
 import TabBar from "./TabBar";
-import { Colors } from "../constants/styles";
+import { UploadExpoTokenToServer } from "../notifications/MainNotifications";
+import useNotifications from "../notifications/MainNotifications";
+import User from "./Screens/User";
 
 const Tab = createBottomTabNavigator();
 
@@ -24,6 +26,13 @@ const MainNavigator = () => {
       }
     })();
   }, []);
+  const { expoPushToken } = useNotifications();
+
+  useEffect(() => {
+    if (expoPushToken) {
+      UploadExpoTokenToServer(user.token);
+    }
+  }, [expoPushToken]);
 
   return (
     <NavigationContainer>
@@ -32,27 +41,17 @@ const MainNavigator = () => {
         tabBar={TabBar}
         screenOptions={{
           tabBarStyle: { position: "absolute" },
+          headerShown: false,
         }}
       >
         {user.token !== "" ? (
           <>
-            <Tab.Screen
-              name="Home"
-              component={Home}
-              options={{ headerShown: false }}
-            />
-            <Tab.Screen
-              name="Cart"
-              component={Cart}
-              options={{ headerShown: false }}
-            />
+            <Tab.Screen name="Home" component={Home} />
+            <Tab.Screen name="Cart" component={Cart} />
+            <Tab.Screen component={User} name="User" />
           </>
         ) : (
-          <Tab.Screen
-            name="Auth"
-            options={{ headerShown: false }}
-            component={Auth}
-          />
+          <Tab.Screen name="Auth" component={Auth} />
         )}
       </Tab.Navigator>
     </NavigationContainer>

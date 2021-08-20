@@ -3,6 +3,7 @@ import { View, Dimensions, Image, StyleSheet, Text } from "react-native";
 import { radius } from "../constants/styles";
 import Button from "../components/Button/Button";
 import AddToCart from "./AddToCart";
+import { API } from "../constants/routes";
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("screen");
 
@@ -19,16 +20,20 @@ export type ProductTypeProps = {
   price: number;
   description: string;
   category: string;
-  img_id: ImgType; // take only 1 for thumbnail
+  img_id: ImgType[]; // take only 1 for thumbnail
 };
 
-export default function Product({ price, prod_id }: ProductTypeProps) {
+export default function Product({ price, prod_id, img_id }: ProductTypeProps) {
   function ShowMore() {}
+
+  const image = img_id[0]?.name
+    ? `${API}/upload/images=${img_id[0]?.name}`
+    : img;
 
   return (
     <View style={styles.container}>
       <View style={styles.product}>
-        <Image source={{ uri: img }} style={styles.img} />
+        <Image source={{ uri: image }} style={styles.img} />
 
         <AddToCart prod_id={prod_id} />
 
@@ -50,6 +55,7 @@ const styles = StyleSheet.create({
     height: SCREEN_HEIGHT / 4,
     alignItems: "center",
     justifyContent: "center",
+    marginBottom: 10,
   },
   product: {
     width: SCREEN_WIDTH * 0.95,

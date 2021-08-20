@@ -21,6 +21,7 @@ export default function SearchBar({ open, close, setData }: SearchBarProps) {
   const [error, setError] = useState<string | null>(null);
 
   async function FindSearched() {
+    if (searchedValue.trim() === "") return;
     try {
       const response = await fetch(
         API + "/products/searched=" + searchedValue,

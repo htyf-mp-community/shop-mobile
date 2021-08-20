@@ -3,34 +3,38 @@ import { API } from "../constants/routes";
 import { useState, useRef, useEffect } from "react";
 import { registerForPushNotificationsAsync } from "./registerForPushNotificationsAsync";
 
-export async function UploadExpoTokenToServer(token: string) {
-  const expoPushToken = await Notifications.getExpoPushTokenAsync({
-    experienceId: "@username/example",
-  });
+export async function UploadExpoTokenToServer(jwt: string) {
+  try {
+    const expoPushToken = await Notifications.getExpoPushTokenAsync({
+      experienceId: "@username/example",
+    });
 
-  await fetch(API + "/notifications/upload-token", {
-    method: "POST",
-    headers: {
-      token: token,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      expoPushToken,
-    }),
-  });
+    await fetch(API + "/notifications/upload-token", {
+      method: "POST",
+      headers: {
+        token: jwt,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        token: expoPushToken.data,
+      }),
+    }).catch((err) => console.log(err));
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 interface IScheduldeNotificationProps {
   title: string;
   body: string;
-  data: any;
+  data?: any;
   trigger: Object;
 }
 
 export async function schedulePushNotification({
   title,
   body,
-  data,
+  data = "",
   trigger,
 }: IScheduldeNotificationProps) {
   await Notifications.scheduleNotificationAsync({

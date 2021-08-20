@@ -7,8 +7,7 @@ import Product, { ProductTypeProps } from "../../modules/Product";
 import { API } from "../../constants/routes";
 import { useUser } from "../../context/UserContext";
 import Overlay from "../../components/Overlay/Overlay";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 export default function Home() {
   const { user } = useUser();
@@ -18,7 +17,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  async function FetchAllProducts() {
+  const FetchAllProducts = useCallback(async () => {
     try {
       setLoading(true);
 
@@ -36,7 +35,7 @@ export default function Home() {
       setError(error.message);
       setLoading(false);
     }
-  }
+  }, []);
 
   useEffect(() => {
     FetchAllProducts();

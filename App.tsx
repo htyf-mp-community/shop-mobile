@@ -5,9 +5,6 @@ import { QueryClient, QueryClientProvider } from "react-query";
 
 import * as Notification from "expo-notifications";
 import useNotifications from "./src/notifications/MainNotifications";
-import { useEffect } from "react";
-
-import { UploadExpoTokenToServer } from "./src/notifications/MainNotifications";
 
 const client = new QueryClient({});
 
@@ -20,14 +17,6 @@ Notification.setNotificationHandler({
 });
 
 export default function App() {
-  const { expoPushToken } = useNotifications();
-
-  useEffect(() => {
-    if (expoPushToken) {
-      UploadExpoTokenToServer(expoPushToken);
-    }
-  }, [expoPushToken]);
-
   return (
     <QueryClientProvider client={client}>
       <UserContextProvider>
