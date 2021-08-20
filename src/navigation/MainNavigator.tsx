@@ -7,6 +7,7 @@ import { useUser } from "../context/UserContext";
 import { useEffect } from "react";
 import Cart from "./Screens/Cart";
 import TabBar from "./TabBar";
+import { Colors } from "../constants/styles";
 
 const Tab = createBottomTabNavigator();
 
@@ -40,7 +41,11 @@ const MainNavigator = () => {
               component={Home}
               options={{ headerShown: false }}
             />
-            <Tab.Screen name="Cart" component={Cart} />
+            <Tab.Screen
+              name="Cart"
+              component={Cart}
+              options={{ headerShown: false }}
+            />
           </>
         ) : (
           <Tab.Screen

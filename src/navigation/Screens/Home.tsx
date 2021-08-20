@@ -55,10 +55,9 @@ export default function Home() {
     <SafeAreaView style={styles.container}>
       <SearchBar open={open} close={close} setData={setData} />
       <HorizontalSlider title="Most searched">
-        {data &&
-          data.map((el: ProductTypeProps) => (
-            <Product key={el.prod_id} {...el} />
-          ))}
+        {data?.map((el: ProductTypeProps) => (
+          <Product key={el.prod_id} {...el} />
+        ))}
       </HorizontalSlider>
       {showOverlay && <Overlay close={close} />}
     </SafeAreaView>

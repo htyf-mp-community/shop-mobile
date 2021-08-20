@@ -25,7 +25,7 @@ export default function Button({
       disabled={disabled}
     >
       {text !== "" && (
-        <Text style={[styles.text, { color: style.color || "black" }]}>
+        <Text style={[styles.text, { color: style?.color || "black" }]}>
           {text}
         </Text>
       )}

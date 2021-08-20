@@ -1,9 +1,10 @@
 import React from "react";
-import { View, StyleSheet, Text, Dimensions } from "react-native";
-import { useQuery } from "react-query";
+import { View, StyleSheet, Text } from "react-native";
+
 import { useUser } from "../../context/UserContext";
 import { API } from "../../constants/routes";
 import { h1 } from "../../constants/styles";
+import { Colors } from "../../constants/styles";
 
 async function FetchCart(token: string) {
   const res = await fetch(API + "/cart", {
@@ -17,13 +18,13 @@ async function FetchCart(token: string) {
 export default function Cart() {
   const { user } = useUser();
 
-  const { data, isLoading, error } = useQuery("fetch cart products", () =>
+  /* const { data, isLoading, error } = useQuery("fetch cart products", () =>
     FetchCart(user.token)
   );
-
+ */
   return (
     <View style={styles.container}>
-      <Text style={h1}>Cart</Text>
+      <Text style={[h1, { padding: 10 }]}>Cart</Text>
     </View>
   );
 }
@@ -31,5 +32,6 @@ export default function Cart() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: Colors.primary,
   },
 });
