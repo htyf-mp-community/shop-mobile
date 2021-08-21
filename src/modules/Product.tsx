@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Dimensions, Image, StyleSheet, Text } from "react-native";
 import { radius } from "../constants/styles";
 import Button from "../components/Button/Button";
@@ -6,6 +6,7 @@ import AddToCart from "./AddToCart";
 import { API } from "../constants/routes";
 import { useNavigation } from "@react-navigation/native";
 import { SharedElement } from "react-navigation-shared-element";
+import { useEffect } from "react";
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("screen");
 
@@ -47,12 +48,11 @@ export default function Product({
   return (
     <View style={styles.container}>
       <View style={styles.product}>
-        <SharedElement id={prod_id.toString()} style={styles.product}>
+        <SharedElement id={"prod_id." + prod_id} style={styles.product}>
           <Image
             source={{ uri: image }}
             style={[styles.img, {}]}
             resizeMode="cover"
-            resizeMethod="resize"
           />
         </SharedElement>
 

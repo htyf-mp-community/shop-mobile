@@ -81,8 +81,13 @@ export default function ProductDetails({ route, navigation }: any) {
         </Text>
       </Animated.View>
 
-      <SharedElement id={prod_id}>
-        <Image source={{ uri: image }} style={styles.img} resizeMode="cover" />
+      <SharedElement id={"prod_id." + prod_id}>
+        <Image
+          source={{ uri: image }}
+          style={styles.img}
+          resizeMode="cover"
+          resizeMethod="scale"
+        />
       </SharedElement>
     </ScrollView>
   );
@@ -95,8 +100,8 @@ const styles = StyleSheet.create({
   },
   img: {
     width: SCREEN_WIDTH,
-    height: 300,
-    marginTop: 50,
+    height: 350,
+    marginTop: 80,
   },
   header: {
     width: SCREEN_WIDTH,

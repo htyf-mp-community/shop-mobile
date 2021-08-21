@@ -41,8 +41,6 @@ const MainNavigator = () => {
         initialRouteName="Auth"
         screenOptions={{
           headerShown: false,
-          gestureEnabled: true,
-          gestureDirection: "horizontal",
         }}
       >
         {user.token !== "" ? (
@@ -55,7 +53,8 @@ const MainNavigator = () => {
               name="Details"
               options={{ presentation: "modal" }}
               sharedElements={(route) => {
-                return [route.params.prod_id];
+                const { prod_id } = route.params;
+                return ["prod_id." + prod_id];
               }}
             />
           </>
