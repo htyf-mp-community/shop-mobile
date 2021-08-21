@@ -4,6 +4,7 @@ import Input from "../components/Input/Input";
 import Button from "../components/Button/Button";
 import { useUser } from "../context/UserContext";
 import { API } from "../constants/routes";
+import { useNavigation } from "@react-navigation/native";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
@@ -51,8 +52,15 @@ export default function SearchBar({ open, close, setData }: SearchBarProps) {
     }
   }
 
+  const navigation = useNavigation<any>();
+
   return (
     <View style={styles.container}>
+      <Button
+        icon={<Image source={require("../assets/basket.png")} />}
+        callback={() => navigation.navigate("Cart")}
+        style={{ marginLeft: 10 }}
+      />
       <Input
         value={searchedValue}
         setValue={setSearchedValue}
@@ -60,7 +68,7 @@ export default function SearchBar({ open, close, setData }: SearchBarProps) {
         style={{
           backgroundColor: "#4A4C50",
           color: "white",
-          width: SCREEN_WIDTH * 0.8,
+          width: SCREEN_WIDTH * 0.65,
         }}
         {...{
           placeholderTextColor: "#fff",

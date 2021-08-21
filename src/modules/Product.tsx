@@ -5,8 +5,7 @@ import Button from "../components/Button/Button";
 import AddToCart from "./AddToCart";
 import { API } from "../constants/routes";
 import { useNavigation } from "@react-navigation/native";
-import axios from "axios";
-import { useUser } from "../context/UserContext";
+import { SharedElement } from "react-navigation-shared-element";
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("screen");
 
@@ -48,7 +47,14 @@ export default function Product({
   return (
     <View style={styles.container}>
       <View style={styles.product}>
-        <Image source={{ uri: image }} style={styles.img} />
+        <SharedElement id={prod_id.toString()} style={styles.product}>
+          <Image
+            source={{ uri: image }}
+            style={[styles.img, {}]}
+            resizeMode="cover"
+            resizeMethod="resize"
+          />
+        </SharedElement>
 
         {route === "Cart" ? (
           <Button
@@ -74,7 +80,7 @@ export default function Product({
 
 const styles = StyleSheet.create({
   container: {
-    width: SCREEN_WIDTH * 1,
+    width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT / 4,
     alignItems: "center",
     justifyContent: "center",

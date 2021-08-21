@@ -12,13 +12,21 @@ import axios from "axios";
 import { API } from "../../constants/routes";
 import { useUser } from "../../context/UserContext";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { SharedElement } from "react-navigation-shared-element";
+import { Colors } from "../../constants/styles";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
-const ReturnButton = ({ navigation }: { navigation: any }) => {
+export const ReturnButton = ({
+  navigation,
+  color = "black",
+}: {
+  navigation: any;
+  color?: string;
+}) => {
   return (
     <TouchableOpacity onPress={() => navigation.goBack()} style={styles.return}>
-      <FontAwesome5 name="long-arrow-alt-left" size={25} />
+      <FontAwesome5 name="long-arrow-alt-left" size={25} color={color} />
     </TouchableOpacity>
   );
 };
@@ -60,13 +68,22 @@ export default function ProductDetails({ route, navigation }: any) {
   return (
     <ScrollView style={styles.container} showsHorizontalScrollIndicator={false}>
       <Animated.View style={[styles.header, { opacity }]}>
-        <ReturnButton navigation={navigation} />
-        <Text style={{ fontWeight: "bold", marginRight: 20, fontSize: 18 }}>
+        <ReturnButton navigation={navigation} color="#000" />
+        <Text
+          style={{
+            fontWeight: "bold",
+            marginRight: 20,
+            fontSize: 18,
+            color: "rgba(255,255,255,0.50)",
+          }}
+        >
           {result?.title}
         </Text>
       </Animated.View>
 
-      <Image source={{ uri: image }} style={styles.img} />
+      <SharedElement id={prod_id}>
+        <Image source={{ uri: image }} style={styles.img} resizeMode="cover" />
+      </SharedElement>
     </ScrollView>
   );
 }
@@ -74,11 +91,12 @@ export default function ProductDetails({ route, navigation }: any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: Colors.primary,
   },
   img: {
     width: SCREEN_WIDTH,
     height: 300,
-    marginTop: 30,
+    marginTop: 50,
   },
   header: {
     width: SCREEN_WIDTH,
@@ -89,11 +107,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "rgba(255,255,255,0.8)",
+    backgroundColor: Colors.primary,
     opacity: 0,
   },
   return: {
-    backgroundColor: "rgba(0,0,0,0.15)",
+    backgroundColor: "rgba(255,255,255,0.15)",
     width: 35,
     height: 35,
     marginLeft: 10,

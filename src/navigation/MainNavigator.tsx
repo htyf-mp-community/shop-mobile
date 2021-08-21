@@ -1,4 +1,3 @@
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import React from "react";
 import Home from "./Screens/Home";
@@ -6,13 +5,14 @@ import Auth from "./Screens/Auth";
 import { useUser } from "../context/UserContext";
 import { useEffect } from "react";
 import Cart from "./Screens/Cart";
-import TabBar from "./TabBar";
 import { UploadExpoTokenToServer } from "../notifications/MainNotifications";
 import useNotifications from "../notifications/MainNotifications";
 import User from "./Screens/User";
 import ProductDetails from "./Screens/ProductDetails";
+import { createSharedElementStackNavigator } from "react-navigation-shared-element";
+import "react-native-gesture-handler";
 
-const Tab = createBottomTabNavigator();
+const Stack = createSharedElementStackNavigator();
 
 const MainNavigator = () => {
   const { setUser, ReadUser, user } = useUser();
@@ -37,25 +37,32 @@ const MainNavigator = () => {
 
   return (
     <NavigationContainer>
-      <Tab.Navigator
+      <Stack.Navigator
         initialRouteName="Auth"
-        tabBar={TabBar}
         screenOptions={{
-          tabBarStyle: { position: "absolute" },
           headerShown: false,
+          gestureEnabled: true,
+          gestureDirection: "horizontal",
         }}
       >
         {user.token !== "" ? (
           <>
-            <Tab.Screen name="Home" component={Home} />
-            <Tab.Screen name="Cart" component={Cart} />
-            <Tab.Screen component={User} name="User" />
-            <Tab.Screen component={ProductDetails} name="Details" />
+            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="Cart" component={Cart} />
+            <Stack.Screen component={User} name="User" />
+            <Stack.Screen
+              component={ProductDetails}
+              name="Details"
+              options={{ presentation: "modal" }}
+              sharedElements={(route) => {
+                return [route.params.prod_id];
+              }}
+            />
           </>
         ) : (
-          <Tab.Screen name="Auth" component={Auth} />
+          <Stack.Screen name="Auth" component={Auth} />
         )}
-      </Tab.Navigator>
+      </Stack.Navigator>
     </NavigationContainer>
   );
 };

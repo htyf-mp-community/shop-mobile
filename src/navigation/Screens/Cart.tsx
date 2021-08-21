@@ -5,28 +5,27 @@ import {
   Text,
   ScrollView,
   ActivityIndicator,
+  Dimensions,
 } from "react-native";
 import { useUser } from "../../context/UserContext";
 import { API } from "../../constants/routes";
-import { h2 } from "../../constants/styles";
 import { Colors } from "../../constants/styles";
-
 import Products from "../../modules/Product";
 import { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
 import { useIsFocused } from "@react-navigation/native";
 import Purchase from "../../modules/Purchase";
+import { ReturnButton } from "./ProductDetails";
 
-export default function Cart() {
+const { width: SCREEN_WIDTH } = Dimensions.get("screen");
+
+export default function Cart({ _, navigation }: any) {
   const { user } = useUser();
-
   const isFocused = useIsFocused();
-
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
-
   const [deleted, setDeleted] = useState(0);
 
   async function RemoveCartProduct(cart_id: number) {
@@ -67,7 +66,10 @@ export default function Cart() {
 
   return (
     <View style={styles.container}>
-      <Text style={[h2, styles.heading]}>Cart: {data?.length}</Text>
+      <View style={styles.header}>
+        <ReturnButton navigation={navigation} color="#fff" />
+        <Text style={styles.heading}>Cart</Text>
+      </View>
 
       {isLoading ? (
         <ActivityIndicator size="large" color="#fff" />
@@ -98,7 +100,17 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary,
   },
   heading: {
-    marginTop: 10,
-    padding: 20,
+    fontSize: 18,
+    color: "white",
+    marginRight: 20,
+    fontWeight: "bold",
+  },
+  header: {
+    width: SCREEN_WIDTH,
+    height: 60,
+    marginTop: 20,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
 });
