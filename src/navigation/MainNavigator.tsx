@@ -10,6 +10,7 @@ import TabBar from "./TabBar";
 import { UploadExpoTokenToServer } from "../notifications/MainNotifications";
 import useNotifications from "../notifications/MainNotifications";
 import User from "./Screens/User";
+import ProductDetails from "./Screens/ProductDetails";
 
 const Tab = createBottomTabNavigator();
 
@@ -49,6 +50,7 @@ const MainNavigator = () => {
             <Tab.Screen name="Home" component={Home} />
             <Tab.Screen name="Cart" component={Cart} />
             <Tab.Screen component={User} name="User" />
+            <Tab.Screen component={ProductDetails} name="Details" />
           </>
         ) : (
           <Tab.Screen name="Auth" component={Auth} />

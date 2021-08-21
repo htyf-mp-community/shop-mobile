@@ -1,4 +1,10 @@
-import { Keyboard, SafeAreaView, StyleSheet } from "react-native";
+import {
+  ActivityIndicator,
+  Keyboard,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+} from "react-native";
 import React from "react";
 import SearchBar from "../../modules/SearchBar";
 import HorizontalSlider from "../../components/HorizontalSlider/HorizontalSlider";
@@ -54,6 +60,10 @@ export default function Home() {
     <SafeAreaView style={styles.container}>
       <SearchBar open={open} close={close} setData={setData} />
       <HorizontalSlider title="Most searched">
+        {loading && (
+          <ActivityIndicator size="large" color="#fff" style={styles.loader} />
+        )}
+        {!!error && <Text>Error</Text>}
         {data?.map((el: ProductTypeProps) => (
           <Product key={el.prod_id} {...el} />
         ))}
@@ -67,5 +77,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.primary,
+  },
+  loader: {
+    position: "absolute",
+    top: 100,
+    left: 100,
   },
 });

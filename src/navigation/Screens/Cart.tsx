@@ -6,36 +6,64 @@ import {
   ScrollView,
   ActivityIndicator,
 } from "react-native";
-import { useQuery } from "react-query";
 import { useUser } from "../../context/UserContext";
 import { API } from "../../constants/routes";
 import { h2 } from "../../constants/styles";
 import { Colors } from "../../constants/styles";
 
 import Products from "../../modules/Product";
-
-async function FetchCart(token: string) {
-  const res = await fetch(API + "/cart", {
-    headers: {
-      token: token,
-    },
-  });
-  return await res.json();
-}
+import { useEffect } from "react";
+import axios from "axios";
+import { useState } from "react";
+import { useIsFocused } from "@react-navigation/native";
+import Purchase from "../../modules/Purchase";
 
 export default function Cart() {
   const { user } = useUser();
 
-  // fix or remove react-query from project
+  const isFocused = useIsFocused();
 
-  const { data, isLoading, error } = useQuery(
-    "fetch cart products",
-    () => FetchCart(user.token),
-    {
-      retryDelay: 1000,
-      retry: 3,
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
+
+  const [deleted, setDeleted] = useState(0);
+
+  async function RemoveCartProduct(cart_id: number) {
+    try {
+      const response = await axios.delete(API + "/cart/" + cart_id, {
+        headers: {
+          token: user.token,
+        },
+      });
+
+      if (response.data.status === "Deleted") {
+        setDeleted(deleted + 1);
+      }
+    } catch (error) {
+      console.log(error);
     }
-  );
+  }
+
+  useEffect(() => {
+    (async () => {
+      try {
+        setIsLoading(true);
+        const response = await axios.get(API + "/cart", {
+          headers: {
+            token: user.token,
+          },
+        });
+        if (response.data !== null) {
+          setData(response.data);
+          setIsLoading(false);
+        }
+      } catch (error) {
+        setError(error.message);
+        setIsLoading(false);
+      }
+    })();
+  }, [deleted, isFocused]);
 
   return (
     <View style={styles.container}>
@@ -48,10 +76,18 @@ export default function Cart() {
           {!error &&
             !isLoading &&
             data.map((el: any, i: number) => {
-              return <Products key={i} {...el} />;
+              return (
+                <Products
+                  key={i}
+                  {...el}
+                  route="Cart"
+                  deleteFn={() => RemoveCartProduct(el.cart_id)}
+                />
+              );
             })}
         </ScrollView>
       )}
+      <Purchase />
     </View>
   );
 }
@@ -63,6 +99,6 @@ const styles = StyleSheet.create({
   },
   heading: {
     marginTop: 10,
-    padding: 10,
+    padding: 20,
   },
 });

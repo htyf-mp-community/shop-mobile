@@ -58,5 +58,6 @@ const styles = StyleSheet.create({
   },
   touch: {
     alignItems: "center",
+    width: SCREEN_WIDTH / 3.5,
   },
 });

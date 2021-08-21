@@ -4,6 +4,9 @@ import { radius } from "../constants/styles";
 import Button from "../components/Button/Button";
 import AddToCart from "./AddToCart";
 import { API } from "../constants/routes";
+import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
+import { useUser } from "../context/UserContext";
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("screen");
 
@@ -21,21 +24,41 @@ export type ProductTypeProps = {
   description: string;
   category: string;
   img_id: ImgType[]; // take only 1 for thumbnail
+  route?: string;
+  deleteFn?: () => any;
 };
 
-export default function Product({ price, prod_id, img_id }: ProductTypeProps) {
-  function ShowMore() {}
+export default function Product({
+  price,
+  prod_id,
+  img_id,
+  route,
+  deleteFn = () => {},
+}: ProductTypeProps) {
+  const navigation = useNavigation<any>();
 
   const image = img_id[0]?.name
     ? `${API}/upload/images=${img_id[0]?.name}`
     : img;
+
+  function ShowMore() {
+    navigation.navigate("Details", { prod_id, image });
+  }
 
   return (
     <View style={styles.container}>
       <View style={styles.product}>
         <Image source={{ uri: image }} style={styles.img} />
 
-        <AddToCart prod_id={prod_id} />
+        {route === "Cart" ? (
+          <Button
+            callback={deleteFn}
+            style={[styles.button, { backgroundColor: "red" }]}
+            icon={<Image source={require("../assets/close.png")} />}
+          />
+        ) : (
+          <AddToCart prod_id={prod_id} />
+        )}
 
         <Button
           callback={ShowMore}
