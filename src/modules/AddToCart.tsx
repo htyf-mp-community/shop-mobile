@@ -7,6 +7,7 @@ import { useState } from "react";
 
 interface AddtoCartProps {
   prod_id: number;
+  style?: any;
 }
 
 interface IconProps {
@@ -30,7 +31,7 @@ const Icon = ({ loading, success, error }: IconProps) => {
   return <Image source={require("../assets/basket.png")} />;
 };
 
-export default function AddToCart({ prod_id }: AddtoCartProps) {
+export default function AddToCart({ prod_id, style }: AddtoCartProps) {
   const { user } = useUser();
 
   const [loading, setLoading] = useState(false);
@@ -63,14 +64,17 @@ export default function AddToCart({ prod_id }: AddtoCartProps) {
   return (
     <Button
       callback={PushToCart}
-      style={{
-        color: "#fff",
-        width: 50,
-        position: "absolute",
-        bottom: 10,
-        right: 10,
-        backgroundColor: result === "Added" ? "#2F4858" : "#009950",
-      }}
+      style={[
+        {
+          color: "#fff",
+          width: 50,
+          position: "absolute",
+          bottom: 10,
+          right: 10,
+          backgroundColor: result === "Added" ? "#2F4858" : "#009950",
+        },
+        style,
+      ]}
       icon={<Icon loading={loading} success={result} error={!!error} />}
     />
   );

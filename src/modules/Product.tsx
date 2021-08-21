@@ -6,7 +6,6 @@ import AddToCart from "./AddToCart";
 import { API } from "../constants/routes";
 import { useNavigation } from "@react-navigation/native";
 import { SharedElement } from "react-navigation-shared-element";
-import { useEffect } from "react";
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("screen");
 
@@ -81,14 +80,14 @@ export default function Product({
 const styles = StyleSheet.create({
   container: {
     width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT / 4,
+    height: SCREEN_HEIGHT / 3.5,
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 10,
   },
   product: {
     width: SCREEN_WIDTH * 0.95,
-    height: SCREEN_HEIGHT / 4,
+    height: SCREEN_HEIGHT / 3.5,
     position: "relative",
   },
   img: {

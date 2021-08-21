@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
 import {
-  Image,
   StyleSheet,
   Dimensions,
   Text,
   ScrollView,
   TouchableOpacity,
   Animated,
+  View,
 } from "react-native";
 import axios from "axios";
 import { API } from "../../constants/routes";
@@ -14,6 +14,7 @@ import { useUser } from "../../context/UserContext";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { SharedElement } from "react-navigation-shared-element";
 import { Colors } from "../../constants/styles";
+import AddToCart from "../../modules/AddToCart";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
@@ -59,16 +60,18 @@ export default function ProductDetails({ route, navigation }: any) {
   useEffect(() => {
     Animated.timing(opacity, {
       toValue: 1,
+      useNativeDriver: true,
       duration: 200,
       delay: 500,
-      useNativeDriver: true,
     }).start();
   }, [prod_id]);
 
   return (
     <ScrollView style={styles.container} showsHorizontalScrollIndicator={false}>
       <Animated.View style={[styles.header, { opacity }]}>
-        <ReturnButton navigation={navigation} color="#000" />
+        <View>
+          <ReturnButton navigation={navigation} color="#000" />
+        </View>
         <Text
           style={{
             fontWeight: "bold",
@@ -77,18 +80,40 @@ export default function ProductDetails({ route, navigation }: any) {
             color: "rgba(255,255,255,0.50)",
           }}
         >
-          {result?.title}
+          {result?.category}
         </Text>
       </Animated.View>
 
-      <SharedElement id={"prod_id." + prod_id}>
-        <Image
-          source={{ uri: image }}
-          style={styles.img}
-          resizeMode="cover"
-          resizeMethod="scale"
-        />
-      </SharedElement>
+      <View>
+        <SharedElement id={"prod_id." + prod_id}>
+          <Animated.Image
+            source={{ uri: image }}
+            style={[styles.img]}
+            resizeMode="cover"
+            resizeMethod="scale"
+          />
+        </SharedElement>
+        <Animated.View style={{ opacity }}>
+          <AddToCart prod_id={prod_id} />
+        </Animated.View>
+      </View>
+
+      <Animated.Text
+        style={[
+          styles.text,
+          { opacity, fontSize: 35, padding: 5, marginLeft: 15 },
+        ]}
+      >
+        {result?.title}
+      </Animated.Text>
+
+      <Animated.Text style={[styles.text, { opacity }]}>
+        ${result?.price}
+      </Animated.Text>
+
+      <Animated.Text style={[styles.text, { opacity }]}>
+        {result?.description}
+      </Animated.Text>
     </ScrollView>
   );
 }
@@ -100,7 +125,7 @@ const styles = StyleSheet.create({
   },
   img: {
     width: SCREEN_WIDTH,
-    height: 350,
+    height: 300,
     marginTop: 80,
   },
   header: {
@@ -123,5 +148,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 100,
+  },
+  text: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 18,
+    padding: 20,
   },
 });
