@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { View, Dimensions, Image, StyleSheet, Text } from "react-native";
 import { radius } from "../constants/styles";
 import Button from "../components/Button/Button";
@@ -25,6 +25,7 @@ export type ProductTypeProps = {
   img_id: ImgType[]; // take only 1 for thumbnail
   route?: string;
   deleteFn?: () => any;
+  sharedID?: any;
 };
 
 export default function Product({
@@ -32,6 +33,8 @@ export default function Product({
   prod_id,
   img_id,
   route,
+  title,
+  sharedID = "Key",
   deleteFn = () => {},
 }: ProductTypeProps) {
   const navigation = useNavigation<any>();
@@ -41,13 +44,16 @@ export default function Product({
     : img;
 
   function ShowMore() {
-    navigation.navigate("Details", { prod_id, image });
+    navigation.navigate("Details", { prod_id, image, sharedID, title });
   }
 
   return (
     <View style={styles.container}>
       <View style={styles.product}>
-        <SharedElement id={"prod_id." + prod_id} style={styles.product}>
+        <SharedElement
+          id={"prod_id." + prod_id + sharedID}
+          style={styles.product}
+        >
           <Image
             source={{ uri: image }}
             style={[styles.img, {}]}

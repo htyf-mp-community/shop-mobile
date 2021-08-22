@@ -21,9 +21,17 @@ export default function Home() {
     <SafeAreaView style={styles.container}>
       <SearchBar open={open} close={close} setData={setData} />
       <ScrollView>
-        <MostRecent path="/products" title="Most searched" />
-        <MostRecent path="/products/searched-products" title="Watched by you" />
-        <MostRecent path="/products" title="All available" />
+        <MostRecent
+          path="/products"
+          title="Most searched"
+          sharedID="MostSearched"
+        />
+        <MostRecent
+          path="/products/searched-products"
+          title="Watched by you"
+          sharedID="WatchedByYou"
+        />
+        <MostRecent path="/products" title="All available" sharedID="All" />
       </ScrollView>
 
       {showOverlay && <Overlay close={close} />}

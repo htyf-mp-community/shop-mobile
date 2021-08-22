@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import React from "react";
 import { View, Dimensions } from "react-native";
@@ -12,8 +13,7 @@ interface IPurchaseProps {
 }
 
 export default function Purchase({ cart }: IPurchaseProps) {
-  const { user } = useUser();
-
+  const navigation = useNavigation<any>();
   const ids = cart.map(({ prod_id, ammount }) => ({ prod_id, ammount }));
   const totalPrice =
     cart.length > 1
@@ -23,20 +23,8 @@ export default function Purchase({ cart }: IPurchaseProps) {
           .toFixed(2)
       : cart.map(({ price }) => price)[0];
 
-  async function PurchaseProduct() {
-    try {
-      const response = await axios.post(
-        API + "/purchase",
-        { ids },
-        {
-          headers: {
-            token: user.token,
-          },
-        }
-      );
-    } catch (error) {
-      console.log(error);
-    }
+  function PurchaseProduct() {
+    navigation.navigate("Checkout", { cart: ids });
   }
 
   return (

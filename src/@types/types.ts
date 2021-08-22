@@ -14,3 +14,13 @@ export type UserContextType = {
   SaveUser: (props: UserType) => void;
   ReadUser: () => void;
 };
+
+export type RootStackParams = {
+  initialRouteName: Object | undefined;
+  Home: undefined;
+  Cart: undefined;
+  User: undefined;
+  Auth?: undefined;
+  Details: { prod_id: number; sharedID: string };
+  Checkout: { cart: any };
+};

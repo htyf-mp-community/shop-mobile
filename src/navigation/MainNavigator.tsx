@@ -11,8 +11,12 @@ import User from "./Screens/User";
 import ProductDetails from "./Screens/ProductDetails";
 import { createSharedElementStackNavigator } from "react-navigation-shared-element";
 import "react-native-gesture-handler";
+import { Colors } from "../constants/styles";
+import { options } from "./options";
+import { RootStackParams, UserType } from "../@types/types";
+import Checkout from "./Screens/Checkout";
 
-const Stack = createSharedElementStackNavigator();
+const Stack = createSharedElementStackNavigator<RootStackParams>();
 
 const MainNavigator = () => {
   const { setUser, ReadUser, user } = useUser();
@@ -20,10 +24,8 @@ const MainNavigator = () => {
   useEffect(() => {
     (async () => {
       const res: any = await ReadUser();
-      if (res !== null) {
-        const raw = JSON.parse(res);
-
-        setUser(raw);
+      if (res !== undefined) {
+        setUser(res);
       }
     })();
   }, []);
@@ -49,21 +51,35 @@ const MainNavigator = () => {
             <Stack.Screen
               name="Cart"
               component={Cart}
-              options={{ presentation: "modal" }}
+              options={{
+                gestureEnabled: true,
+                gestureDirection: "vertical",
+                gestureResponseDistance: 500,
+                presentation: "modal",
+                headerShown: true,
+                headerStyle: { backgroundColor: Colors.primary },
+                headerTintColor: "white",
+              }}
             />
             <Stack.Screen component={User} name="User" />
             <Stack.Screen
               component={ProductDetails}
               name="Details"
-              options={{ presentation: "modal" }}
+              //@ts-ignore
+              options={options}
               sharedElements={(route) => {
-                const { prod_id } = route.params;
-                return ["prod_id." + prod_id];
+                const { prod_id, sharedID } = route.params;
+                return ["prod_id." + prod_id + sharedID];
               }}
             />
+            <Stack.Screen name="Checkout" component={Checkout} />
           </>
         ) : (
-          <Stack.Screen name="Auth" component={Auth} />
+          <Stack.Screen
+            name="Auth"
+            component={Auth}
+            options={{ headerShown: true }}
+          />
         )}
       </Stack.Navigator>
     </NavigationContainer>

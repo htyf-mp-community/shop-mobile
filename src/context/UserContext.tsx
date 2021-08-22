@@ -16,25 +16,25 @@ async function SaveUser(props: UserType) {
   }
 }
 
-async function ReadUser() {
+async function ReadUser(): Promise<UserType | undefined> {
   try {
     const value = await AsyncStorage.getItem(USER_PREFIX);
     if (value !== null) {
-      return value;
+      return JSON.parse(value);
     }
   } catch (error) {
     console.log(error);
   }
 }
 
-//@ts-ignore
-const User = createContext<UserContextType>();
-
 const init: UserType = {
   token: "",
   user_id: -1,
   name: "",
 };
+
+//@ts-ignore
+const User = createContext<UserContextType>();
 
 export const UserContextProvider = ({ children }: UserContextProviderType) => {
   const [user, setUser] = useState<UserType>(init);

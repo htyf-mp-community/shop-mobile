@@ -10,9 +10,11 @@ import { ProductTypeProps } from "./Product";
 interface MostRecentProps {
   path: string;
   title: string;
+  sharedID: string;
 }
 
-export default function MostRecent({ path, title }: MostRecentProps) {
+//change name later
+export default function MostRecent({ path, title, sharedID }: MostRecentProps) {
   const { user } = useUser();
   const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
@@ -57,7 +59,7 @@ export default function MostRecent({ path, title }: MostRecentProps) {
       )}
       {!!error && <Text>Error</Text>}
       {data?.map((el: ProductTypeProps) => (
-        <Product key={el.prod_id} {...el} />
+        <Product key={el.prod_id} {...el} sharedID={sharedID} />
       ))}
     </HorizontalSlider>
   );
