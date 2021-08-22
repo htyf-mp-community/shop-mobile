@@ -44,7 +44,13 @@ export default function Product({
     : img;
 
   function ShowMore() {
-    navigation.navigate("Details", { prod_id, image, sharedID, title });
+    navigation.navigate("Details", {
+      prod_id,
+      image,
+      sharedID,
+      title,
+      imgPath: img_id[0]?.name,
+    });
   }
 
   return (

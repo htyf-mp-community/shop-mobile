@@ -1,10 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
-import axios from "axios";
 import React from "react";
 import { View, Dimensions } from "react-native";
 import Button from "../components/Button/Button";
-import { API } from "../constants/routes";
-import { useUser } from "../context/UserContext";
 
 const { width } = Dimensions.get("screen");
 
@@ -28,7 +25,7 @@ export default function Purchase({ cart }: IPurchaseProps) {
   }
 
   return (
-    <View style={{ width, alignItems: "center", padding: 10 }}>
+    <View style={{ width, alignItems: "center", padding: 10, bottom: 90 }}>
       <Button
         text={"Check out, total: $" + totalPrice}
         callback={PurchaseProduct}

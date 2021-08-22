@@ -22,8 +22,8 @@ export default function Home() {
       <SearchBar open={open} close={close} setData={setData} />
       <ScrollView>
         <MostRecent
-          path="/products"
-          title="Most searched"
+          path="/products/good-rated"
+          title="Best Rated"
           sharedID="MostSearched"
         />
         <MostRecent

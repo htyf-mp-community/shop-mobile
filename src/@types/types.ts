@@ -21,6 +21,11 @@ export type RootStackParams = {
   Cart: undefined;
   User: undefined;
   Auth?: undefined;
-  Details: { prod_id: number; sharedID: string };
+  Details: {
+    prod_id: number;
+    sharedID: string;
+    image: string;
+    imgPath: string;
+  };
   Checkout: { cart: any };
 };

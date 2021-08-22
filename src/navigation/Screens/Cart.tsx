@@ -5,6 +5,7 @@ import {
   Text,
   ScrollView,
   ActivityIndicator,
+  Dimensions,
 } from "react-native";
 import { useUser } from "../../context/UserContext";
 import { API } from "../../constants/routes";
@@ -15,6 +16,8 @@ import axios from "axios";
 import { useState } from "react";
 import { useIsFocused } from "@react-navigation/native";
 import Purchase from "../../modules/Purchase";
+
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("screen");
 
 export default function Cart() {
   const { user } = useUser();
@@ -90,7 +93,8 @@ export default function Cart() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT,
     backgroundColor: Colors.primary,
   },
   text: {
@@ -100,5 +104,9 @@ const styles = StyleSheet.create({
     zIndex: 3,
     right: 20,
     fontSize: 25,
+    padding: 5,
+    top: 10,
+    borderRadius: 20,
+    backgroundColor: "black",
   },
 });
