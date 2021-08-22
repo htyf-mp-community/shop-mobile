@@ -7,14 +7,27 @@ import { useUser } from "../context/UserContext";
 
 const { width } = Dimensions.get("screen");
 
-export default function Purchase({ prod_id }: { prod_id: number }) {
+interface IPurchaseProps {
+  cart: any[];
+}
+
+export default function Purchase({ cart }: IPurchaseProps) {
   const { user } = useUser();
+
+  const ids = cart.map(({ prod_id, ammount }) => ({ prod_id, ammount }));
+  const totalPrice =
+    cart.length > 1
+      ? cart
+          .map(({ price }) => Number(price))
+          .reduce((a, b) => a + b)
+          .toFixed(2)
+      : cart.map(({ price }) => price)[0];
 
   async function PurchaseProduct() {
     try {
       const response = await axios.post(
         API + "/purchase",
-        { prod_id },
+        { ids },
         {
           headers: {
             token: user.token,
@@ -29,7 +42,7 @@ export default function Purchase({ prod_id }: { prod_id: number }) {
   return (
     <View style={{ width, alignItems: "center", padding: 10 }}>
       <Button
-        text="Check out"
+        text={"Check out, total: $" + totalPrice}
         callback={PurchaseProduct}
         style={{ backgroundColor: "green", color: "white", width: width * 0.9 }}
       />

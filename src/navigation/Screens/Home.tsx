@@ -22,9 +22,8 @@ export default function Home() {
       <SearchBar open={open} close={close} setData={setData} />
       <ScrollView>
         <MostRecent path="/products" title="Most searched" />
-        <MostRecent path="/products" title="Most searched" />
-        <MostRecent path="/products" title="Most searched" />
-        <MostRecent path="/products" title="Most searched" />
+        <MostRecent path="/products/searched-products" title="Watched by you" />
+        <MostRecent path="/products" title="All available" />
       </ScrollView>
 
       {showOverlay && <Overlay close={close} />}

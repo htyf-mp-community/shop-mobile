@@ -46,7 +46,11 @@ const MainNavigator = () => {
         {user.token !== "" ? (
           <>
             <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen name="Cart" component={Cart} />
+            <Stack.Screen
+              name="Cart"
+              component={Cart}
+              options={{ presentation: "modal" }}
+            />
             <Stack.Screen component={User} name="User" />
             <Stack.Screen
               component={ProductDetails}

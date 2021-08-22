@@ -79,17 +79,30 @@ export default function Cart({ _, navigation }: any) {
             !isLoading &&
             data.map((el: any, i: number) => {
               return (
-                <Products
-                  key={i}
-                  {...el}
-                  route="Cart"
-                  deleteFn={() => RemoveCartProduct(el.cart_id)}
-                />
+                <View key={i}>
+                  <Products
+                    {...el}
+                    route="Cart"
+                    deleteFn={() => RemoveCartProduct(el.cart_id)}
+                  />
+                  <Text
+                    style={{
+                      color: "white",
+                      fontWeight: "bold",
+                      position: "absolute",
+                      zIndex: 3,
+                      right: 20,
+                      fontSize: 25,
+                    }}
+                  >
+                    {el.ammount}
+                  </Text>
+                </View>
               );
             })}
         </ScrollView>
       )}
-      <Purchase />
+      <Purchase cart={data} />
     </View>
   );
 }

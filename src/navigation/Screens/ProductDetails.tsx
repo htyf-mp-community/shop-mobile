@@ -55,6 +55,8 @@ export default function ProductDetails({ route, navigation }: any) {
     })();
   }, []);
 
+  const images: { name: string; id: number }[] = result?.img_id;
+
   const opacity = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -84,7 +86,7 @@ export default function ProductDetails({ route, navigation }: any) {
         </Text>
       </Animated.View>
 
-      <View>
+      <ScrollView horizontal>
         <SharedElement id={"prod_id." + prod_id}>
           <Animated.Image
             source={{ uri: image }}
@@ -93,10 +95,9 @@ export default function ProductDetails({ route, navigation }: any) {
             resizeMethod="scale"
           />
         </SharedElement>
-        <Animated.View style={{ opacity }}>
-          <AddToCart prod_id={prod_id} />
-        </Animated.View>
-      </View>
+
+        <AddToCart prod_id={prod_id} />
+      </ScrollView>
 
       <Animated.Text
         style={[
