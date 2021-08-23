@@ -26,16 +26,17 @@ export const Colors = {
   primary700: "#242c37",
   primary800: "#151a21",
   primary900: "#0b0e11",
-  secondary: "#5575e7",
-  secondaryWashedOut: "#879eed",
-  accent: "#fd4d4d",
-  accentHover: "#fd6868",
-  accentDisabled: "#f5bfbf",
-  black: "#000",
+  secondary: "#009950",
+  secondary100: "#008a48",
+  secondary300: "#00703b",
+  secondary500: "#004f2a",
+  ternary: "#2F4858",
+  ternary200: "#223642",
+  ternary400: "#1c2c36",
 };
 
 const textBase: TextStyle = {
-  fontFamily: "sans-serif",
+  fontFamily: "PoppinsRegular",
   color: Colors.text,
 };
 
@@ -43,21 +44,18 @@ export const h1: TextStyle = {
   ...textBase,
   lineHeight: 90,
   fontSize: fontSize.h1,
-  fontWeight: "700",
 };
 
 export const h2: TextStyle = {
   ...textBase,
   lineHeight: 64,
   fontSize: fontSize.h2,
-  fontWeight: "700",
 };
 
 export const h3: TextStyle = {
   ...textBase,
   lineHeight: 45,
   fontSize: fontSize.h3,
-  fontWeight: "700",
 };
 
 export const h4: TextStyle = {
