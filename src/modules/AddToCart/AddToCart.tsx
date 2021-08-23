@@ -1,9 +1,10 @@
 import React from "react";
 import { Image, ActivityIndicator } from "react-native";
-import Button from "../components/Button/Button";
-import { useUser } from "../context/UserContext";
-import { API } from "../constants/routes";
+import Button from "../../components/Button/Button";
+import { useUser } from "../../context/UserContext";
+import { API } from "../../constants/routes";
 import { useState } from "react";
+import { Colors } from "../../constants/styles";
 
 interface AddtoCartProps {
   prod_id: number;
@@ -19,16 +20,20 @@ interface IconProps {
 const Icon = ({ loading, success, error }: IconProps) => {
   if (loading) {
     return (
-      <ActivityIndicator size="small" color="#fff" style={{ padding: 2 }} />
+      <ActivityIndicator
+        size="small"
+        color={Colors.text}
+        style={{ padding: 2 }}
+      />
     );
   }
   if (error) {
-    return <Image source={require("../assets/close.png")} />;
+    return <Image source={require("../../assets/close.png")} />;
   }
   if (success === "Added") {
-    return <Image source={require("../assets/done.png")} />;
+    return <Image source={require("../../assets/done.png")} />;
   }
-  return <Image source={require("../assets/basket.png")} />;
+  return <Image source={require("../../assets/basket.png")} />;
 };
 
 export default function AddToCart({ prod_id, style }: AddtoCartProps) {
@@ -71,7 +76,8 @@ export default function AddToCart({ prod_id, style }: AddtoCartProps) {
           position: "absolute",
           bottom: 10,
           right: 10,
-          backgroundColor: result === "Added" ? "#2F4858" : "#009950",
+          height: 50,
+          backgroundColor: result === "Added" ? Colors.ternary : "#009950",
         },
         style,
       ]}

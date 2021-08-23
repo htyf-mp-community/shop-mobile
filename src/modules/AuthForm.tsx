@@ -7,7 +7,7 @@ import { Colors, h2, radius } from "../constants/styles";
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
 type AuthFormProps = {
-  onSubmit: (...props: any) => void;
+  onSubmit: ({ email, password }: { email: string; password: string }) => void;
 };
 
 export default function AuthForm({ onSubmit }: AuthFormProps) {
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.primary200,
     backgroundColor: Colors.primary600,
     borderWidth: 0.5,
-    color: "#fff",
+    color: Colors.text,
     justifyContent: "center",
     borderRadius: radius.medium,
   },

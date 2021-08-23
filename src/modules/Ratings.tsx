@@ -1,7 +1,16 @@
 import React from "react";
 import { View, StyleSheet, Text } from "react-native";
 
-export default function Ratings({ ratings }: { ratings: any[] }) {
+interface RatingProps {
+  ratings: {
+    rating_id: number;
+    rating: number;
+    title: string;
+    description: string;
+  }[];
+}
+
+export default function Ratings({ ratings }: RatingProps) {
   return (
     <View style={styles.container}>
       {ratings?.map((el) => {

@@ -1,10 +1,18 @@
-import { View, StyleSheet, Image, Dimensions } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Image,
+  Dimensions,
+  ActivityIndicator,
+} from "react-native";
 import React, { useState } from "react";
 import Input from "../components/Input/Input";
 import Button from "../components/Button/Button";
 import { useUser } from "../context/UserContext";
 import { API } from "../constants/routes";
 import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
+import { Colors } from "../constants/styles";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
@@ -21,35 +29,30 @@ export default function SearchBar({ open, close, setData }: SearchBarProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  async function FindSearched() {
+  function FindSearched() {
     if (searchedValue.trim() === "") return;
-    try {
-      const response = await fetch(
-        API + "/products/searched=" + searchedValue,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            token: user.token,
-          },
+    setLoading(true);
+    axios
+      .get(`${API}/products/searched=${searchedValue}`, {
+        headers: {
+          "Content-Type": "application/json",
+          token: user.token,
+        },
+      })
+      .then(({ data }) => {
+        if (data !== null && data !== undefined) {
+          setLoading(false);
+          close();
+          setSearchedValue("");
+          setData(data);
         }
-      );
-      if (!response.ok) {
-      }
-      const data = await response.json();
-      if (data !== null) {
+      })
+      .catch((error) => {
         setLoading(false);
         close();
+        setError(error.message);
         setSearchedValue("");
-        console.log(data);
-        setData(data);
-      }
-    } catch (error) {
-      console.log(error);
-      setLoading(false);
-      close();
-      setError(error.message);
-      setSearchedValue("");
-    }
+      });
   }
 
   const navigation = useNavigation<any>();
@@ -67,18 +70,28 @@ export default function SearchBar({ open, close, setData }: SearchBarProps) {
         placeholder={"What are you looking for?"}
         style={{
           backgroundColor: "#4A4C50",
-          color: "white",
+          color: Colors.text,
           width: SCREEN_WIDTH * 0.65,
         }}
         {...{
-          placeholderTextColor: "#fff",
+          placeholderTextColor: Colors.text,
           onFocus: () => open(),
         }}
       />
 
       <Button
         callback={FindSearched}
-        icon={<Image source={require("../assets/search.png")} />}
+        icon={
+          <Image
+            source={
+              loading ? (
+                <ActivityIndicator size={"small"} />
+              ) : (
+                require("../assets/search.png")
+              )
+            }
+          />
+        }
       />
     </View>
   );

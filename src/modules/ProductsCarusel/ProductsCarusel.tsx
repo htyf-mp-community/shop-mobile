@@ -1,11 +1,11 @@
 import React, { useState, useCallback, useEffect } from "react";
 
-import HorizontalSlider from "../components/HorizontalSlider/HorizontalSlider";
+import HorizontalSlider from "../../components/HorizontalSlider/HorizontalSlider";
 import { ActivityIndicator, Text } from "react-native";
-import Product from "./Product";
-import { useUser } from "../context/UserContext";
-import { API } from "../constants/routes";
-import { ProductTypeProps } from "./Product";
+import Product from "../Product";
+import { useUser } from "../../context/UserContext";
+import { API } from "../../constants/routes";
+import { ProductTypeProps } from "../Product";
 
 interface MostRecentProps {
   path: string;
@@ -14,7 +14,11 @@ interface MostRecentProps {
 }
 
 //change name later
-export default function MostRecent({ path, title, sharedID }: MostRecentProps) {
+export default function ProductsCarusel({
+  path,
+  title,
+  sharedID,
+}: MostRecentProps) {
   const { user } = useUser();
   const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
@@ -58,9 +62,11 @@ export default function MostRecent({ path, title, sharedID }: MostRecentProps) {
         />
       )}
       {!!error && <Text>Error</Text>}
-      {data?.map((el: ProductTypeProps) => (
-        <Product key={el.prod_id} {...el} sharedID={sharedID} />
-      ))}
+
+      {typeof data !== "undefined" &&
+        data?.map((el: ProductTypeProps) => (
+          <Product key={el.prod_id} {...el} sharedID={sharedID} />
+        ))}
     </HorizontalSlider>
   );
 }
