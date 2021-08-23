@@ -1,22 +1,15 @@
 import React, { useEffect, useState, useRef } from "react";
-import {
-  StyleSheet,
-  Dimensions,
-  ScrollView,
-  Animated,
-  Image,
-  View,
-} from "react-native";
+import { StyleSheet, Dimensions, ScrollView, Animated } from "react-native";
 import axios from "axios";
 import { API } from "../../constants/routes";
 import { useUser } from "../../context/UserContext";
-import { SharedElement } from "react-navigation-shared-element";
 import { Colors } from "../../constants/styles";
-import AddToCart from "../../modules/AddToCart";
-import Dots from "../../modules/Dots";
+import AddToCart from "../../modules/AddToCart/AddToCart";
+import Dots from "../../components/Dots/Dots";
 import Ratings from "../../modules/Ratings";
+import ImagesCarusel from "../../modules/ImagesCarusel/ImagesCarusel";
 
-const { width: SCREEN_WIDTH } = Dimensions.get("screen");
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("screen");
 
 export default function ProductDetails({ route }: any) {
   const { prod_id, image, sharedID } = route.params;
@@ -72,39 +65,21 @@ export default function ProductDetails({ route }: any) {
         }
       )}
     >
-      <ScrollView
-        horizontal
-        pagingEnabled
-        showsHorizontalScrollIndicator={false}
-        scrollEventThrottle={16}
-        onScroll={Animated.event(
-          [{ nativeEvent: { contentOffset: { x: scrollX } } }],
-          {
-            useNativeDriver: false,
-          }
-        )}
-      >
-        <SharedElement id={`prod_id.${prod_id}${sharedID}`}>
-          <Animated.Image
-            source={{ uri: image }}
-            style={[styles.img]}
-            resizeMode="cover"
-            resizeMethod="scale"
-          />
-        </SharedElement>
+      <ImagesCarusel
+        scrollX={scrollX}
+        sharedID={sharedID}
+        prod_id={prod_id}
+        image={image}
+        images={images}
+      />
 
-        {images?.map(({ name, id }) => (
-          <Image
-            source={{ uri: `${API}/upload/images=${name}` }}
-            key={id}
-            style={styles.img}
-          />
-        ))}
-      </ScrollView>
-
-      <View>
-        <AddToCart prod_id={prod_id} />
-      </View>
+      <AddToCart
+        prod_id={prod_id}
+        style={{
+          zIndex: 10,
+          top: 260,
+        }}
+      />
 
       <Animated.View style={[styles.dots, { opacity }]}>
         <Dots arr={[...images, 1]} x={scrollX} />
@@ -130,10 +105,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.primary,
-  },
-  img: {
-    width: SCREEN_WIDTH,
-    height: 250,
   },
   text: {
     color: "white",

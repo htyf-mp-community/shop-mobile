@@ -13,7 +13,7 @@ import { createSharedElementStackNavigator } from "react-navigation-shared-eleme
 import "react-native-gesture-handler";
 import { Colors } from "../constants/styles";
 import { options } from "./options";
-import { RootStackParams, UserType } from "../@types/types";
+import { RootStackParams } from "../@types/types";
 import Checkout from "./Screens/Checkout";
 
 const Stack = createSharedElementStackNavigator<RootStackParams>();
@@ -72,7 +72,19 @@ const MainNavigator = () => {
                 return ["prod_id." + prod_id + sharedID];
               }}
             />
-            <Stack.Screen name="Checkout" component={Checkout} />
+            <Stack.Screen
+              name="Checkout"
+              component={Checkout}
+              options={{
+                gestureEnabled: true,
+                gestureDirection: "vertical",
+                gestureResponseDistance: 200,
+                presentation: "modal",
+                headerShown: true,
+                headerStyle: { backgroundColor: Colors.primary },
+                headerTintColor: "white",
+              }}
+            />
           </>
         ) : (
           <Stack.Screen

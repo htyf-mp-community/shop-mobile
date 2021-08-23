@@ -27,5 +27,5 @@ export type RootStackParams = {
     image: string;
     imgPath: string;
   };
-  Checkout: { cart: any };
+  Checkout: { cart: any; total: number };
 };

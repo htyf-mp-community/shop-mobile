@@ -16,7 +16,7 @@ Notification.setNotificationHandler({
 });
 
 export default function App() {
-  const [loaded, error] = useFonts({
+  const [loaded] = useFonts({
     PoppinsBold: require("./assets/fonts/Poppins-Bold.ttf"),
     PoppinsThin: require("./assets/fonts/Poppins-Thin.ttf"),
     PoppinsMedium: require("./assets/fonts/Poppins-Medium.ttf"),

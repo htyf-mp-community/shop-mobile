@@ -5,6 +5,7 @@ import { Colors } from "../../constants/styles";
 import { API } from "../../constants/routes";
 import { useUser } from "../../context/UserContext";
 import { useState } from "react";
+import axios from "axios";
 
 type OnSubmitType = {
   email: string;
@@ -18,31 +19,31 @@ export default function Auth() {
   const [error, setError] = useState<null | string>(null);
 
   async function onSubmit({ email, password }: OnSubmitType) {
-    try {
-      setLoading(true);
-      const response = await fetch(API + "/auth/login", {
-        method: "POST",
-        body: JSON.stringify({
+    setLoading(true);
+    axios
+      .post(
+        `${API}/auth/login`,
+        {
           email: email.trim(),
           password: password.trim(),
-        }),
-        headers: {
-          "Content-Type": "application/json",
         },
-      });
-
-      const data = await response.json();
-      if (data && data.status === "verified") {
-        SaveUser({ user_id: 1, token: data.token, name: email });
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then(({ data }) => {
+        if (data !== undefined && data !== null) {
+          SaveUser({ user_id: data.user_id, token: data.token, name: email });
+          setLoading(false);
+        }
+      })
+      .catch((err) => {
+        setError(err.message);
         setLoading(false);
-      }
-    } catch (error) {
-      setError(error.message);
-      setLoading(false);
-    }
+      });
   }
-
-  console.log(error);
 
   return (
     <View style={styles.container}>
@@ -58,6 +59,6 @@ export default function Auth() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.primary800,
+    backgroundColor: Colors.primary,
   },
 });

@@ -4,7 +4,7 @@ import SearchBar from "../../modules/SearchBar";
 import { Colors } from "../../constants/styles";
 import Overlay from "../../components/Overlay/Overlay";
 import { useState } from "react";
-import MostRecent from "../../modules/MostRecent";
+import ProductsCarusel from "../../modules/ProductsCarusel/ProductsCarusel";
 
 export default function Home() {
   const [showOverlay, setShowOverlay] = useState(false);
@@ -21,17 +21,21 @@ export default function Home() {
     <SafeAreaView style={styles.container}>
       <SearchBar open={open} close={close} setData={setData} />
       <ScrollView>
-        <MostRecent
+        <ProductsCarusel
           path="/products/good-rated"
           title="Best Rated"
           sharedID="MostSearched"
         />
-        <MostRecent
+        <ProductsCarusel
           path="/products/searched-products"
           title="Watched by you"
           sharedID="WatchedByYou"
         />
-        <MostRecent path="/products" title="All available" sharedID="All" />
+        <ProductsCarusel
+          path="/products"
+          title="All available"
+          sharedID="All"
+        />
       </ScrollView>
 
       {showOverlay && <Overlay close={close} />}

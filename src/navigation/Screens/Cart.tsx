@@ -93,8 +93,7 @@ export default function Cart() {
 
 const styles = StyleSheet.create({
   container: {
-    width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT,
+    flex: 1,
     backgroundColor: Colors.primary,
   },
   text: {

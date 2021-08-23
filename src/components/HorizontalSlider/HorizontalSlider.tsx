@@ -16,7 +16,6 @@ export default function HorizontalSlider({ children, title }: SliderProps) {
         pagingEnabled
         showsHorizontalScrollIndicator={false}
         bounces
-        style={styles.list}
       >
         {children}
       </ScrollView>
@@ -25,9 +24,8 @@ export default function HorizontalSlider({ children, title }: SliderProps) {
 }
 const styles = StyleSheet.create({
   text: {
-    padding: 5,
-    paddingLeft: 20,
+    paddingLeft: 10,
     color: Colors.primary100,
+    fontFamily: "PoppinsBold",
   },
-  list: {},
 });
