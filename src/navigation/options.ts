@@ -1,6 +1,12 @@
 import { Colors } from "../constants/styles";
-export const options = ({ route }: { route: Object }) => ({
-  //@ts-ignore
+
+type route = {
+  route: {
+    params: any;
+  };
+};
+
+export const options = ({ route }: route) => ({
   title: route.params.title,
   headerTitleAlign: "center",
   gestureEnabled: true,

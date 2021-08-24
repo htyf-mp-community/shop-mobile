@@ -18,7 +18,7 @@ export default function Purchase({ cart }: IPurchaseProps) {
           .map(({ price }) => Number(price))
           .reduce((a, b) => a + b)
           .toFixed(2)
-      : cart.map(({ price }) => price)[0];
+      : cart[0]?.price || 0;
 
   function PurchaseProduct() {
     navigation.navigate("Checkout", { cart, total: totalPrice });

@@ -19,15 +19,15 @@ const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 interface SearchBarProps {
   open: () => void;
   close: () => void;
-  setData: (props: any) => void;
 }
 
-export default function SearchBar({ open, close, setData }: SearchBarProps) {
+export default function SearchBar({ open, close }: SearchBarProps) {
   const { user } = useUser();
   const [searchedValue, setSearchedValue] = useState<string>("");
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const navigation = useNavigation<any>();
 
   function FindSearched() {
     if (searchedValue.trim() === "") return;
@@ -44,7 +44,10 @@ export default function SearchBar({ open, close, setData }: SearchBarProps) {
           setLoading(false);
           close();
           setSearchedValue("");
-          setData(data);
+          navigation.navigate("SearchResults", {
+            result: data,
+            length: data.length,
+          });
         }
       })
       .catch((error) => {
@@ -54,8 +57,6 @@ export default function SearchBar({ open, close, setData }: SearchBarProps) {
         setSearchedValue("");
       });
   }
-
-  const navigation = useNavigation<any>();
 
   return (
     <View style={styles.container}>

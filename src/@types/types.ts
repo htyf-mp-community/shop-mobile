@@ -21,6 +21,7 @@ export type RootStackParams = {
   Cart: undefined;
   User: undefined;
   Auth?: undefined;
+  SearchResults: { result: any[]; length: number };
   Details: {
     prod_id: number;
     sharedID: string;

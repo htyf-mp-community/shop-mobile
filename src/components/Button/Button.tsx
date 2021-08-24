@@ -21,8 +21,8 @@ export default function Button({
     <TouchableOpacity
       onPress={callback}
       activeOpacity={0.6}
-      style={[styles.button, style]}
       disabled={disabled}
+      style={[styles.button, style]}
     >
       {text !== "" && (
         <Text style={[styles.text, { color: style?.color || "black" }]}>

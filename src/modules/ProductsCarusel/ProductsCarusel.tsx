@@ -1,5 +1,4 @@
 import React, { useState, useCallback, useEffect } from "react";
-
 import HorizontalSlider from "../../components/HorizontalSlider/HorizontalSlider";
 import { ActivityIndicator, Text } from "react-native";
 import Product from "../Product";
@@ -13,7 +12,6 @@ interface MostRecentProps {
   sharedID: string;
 }
 
-//change name later
 export default function ProductsCarusel({
   path,
   title,
@@ -64,8 +62,8 @@ export default function ProductsCarusel({
       {!!error && <Text>Error</Text>}
 
       {typeof data !== "undefined" &&
-        data?.map((el: ProductTypeProps) => (
-          <Product key={el.prod_id} {...el} sharedID={sharedID} />
+        data?.map((el: ProductTypeProps, index: number) => (
+          <Product key={`${el.prod_id}.${index}`} {...el} sharedID={sharedID} />
         ))}
     </HorizontalSlider>
   );

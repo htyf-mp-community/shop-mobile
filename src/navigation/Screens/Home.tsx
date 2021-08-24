@@ -8,7 +8,6 @@ import ProductsCarusel from "../../modules/ProductsCarusel/ProductsCarusel";
 
 export default function Home() {
   const [showOverlay, setShowOverlay] = useState(false);
-  const [data, setData] = useState([]);
 
   const close = () => {
     setShowOverlay(false);
@@ -19,7 +18,7 @@ export default function Home() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <SearchBar open={open} close={close} setData={setData} />
+      <SearchBar open={open} close={close} />
       <ScrollView>
         <ProductsCarusel
           path="/products/good-rated"

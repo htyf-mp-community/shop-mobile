@@ -15,6 +15,7 @@ import { Colors } from "../constants/styles";
 import { options } from "./options";
 import { RootStackParams } from "../@types/types";
 import Checkout from "./Screens/Checkout";
+import SearchResults from "./Screens/SearchResults";
 
 const Stack = createSharedElementStackNavigator<RootStackParams>();
 
@@ -65,7 +66,7 @@ const MainNavigator = () => {
             <Stack.Screen
               component={ProductDetails}
               name="Details"
-              //@ts-ignore
+              //@ts-ignore animation works different with {...option}
               options={options}
               sharedElements={(route) => {
                 const { prod_id, sharedID } = route.params;
@@ -84,6 +85,16 @@ const MainNavigator = () => {
                 headerStyle: { backgroundColor: Colors.primary },
                 headerTintColor: "white",
               }}
+            />
+            <Stack.Screen
+              name="SearchResults"
+              component={SearchResults}
+              options={({ route }) => ({
+                title: `Search Results: ${route.params.length}`,
+                headerShown: true,
+                headerStyle: { backgroundColor: Colors.primary },
+                headerTintColor: Colors.text,
+              })}
             />
           </>
         ) : (
