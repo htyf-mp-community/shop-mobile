@@ -25,7 +25,7 @@ export default function HorizontalSlider({ children, title }: SliderProps) {
 const styles = StyleSheet.create({
   text: {
     paddingLeft: 10,
-    color: Colors.primary100,
+    color: Colors.text,
     fontFamily: "PoppinsBold",
   },
 });

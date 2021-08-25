@@ -64,39 +64,3 @@ export const h4: TextStyle = {
   fontSize: fontSize.h4,
   fontWeight: "700",
 };
-
-export const paragraph: TextStyle = {
-  ...textBase,
-  fontWeight: "500",
-  fontSize: fontSize.paragraph,
-  lineHeight: 22,
-};
-
-export const paragraphBold: TextStyle = {
-  ...paragraph,
-  fontWeight: "700",
-};
-
-export const small: TextStyle = {
-  ...textBase,
-  fontWeight: "500",
-  fontSize: fontSize.small,
-  lineHeight: 22,
-};
-
-export const smallBold: TextStyle = {
-  ...small,
-  fontWeight: "700",
-};
-
-export const xsmall: TextStyle = {
-  ...textBase,
-  fontWeight: "500",
-  fontSize: fontSize.xs,
-  lineHeight: 16,
-};
-
-export const xsmallBold: TextStyle = {
-  ...xsmall,
-  fontWeight: "700",
-};

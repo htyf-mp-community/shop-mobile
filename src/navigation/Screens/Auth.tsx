@@ -1,6 +1,6 @@
 import React from "react";
 import { View, StyleSheet, ActivityIndicator } from "react-native";
-import AuthForm from "../../modules/AuthForm";
+import AuthForm from "../../modules/AuthForm/AuthForm";
 import { Colors } from "../../constants/styles";
 import { API } from "../../constants/routes";
 import { useUser } from "../../context/UserContext";

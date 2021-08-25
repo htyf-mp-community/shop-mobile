@@ -1,8 +1,8 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { View, Dimensions } from "react-native";
-import Button from "../components/Button/Button";
-import { Colors } from "../constants/styles";
+import Button from "../../components/Button/Button";
+import { Colors } from "../../constants/styles";
 
 const { width } = Dimensions.get("screen");
 

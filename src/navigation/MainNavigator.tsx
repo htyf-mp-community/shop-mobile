@@ -13,7 +13,7 @@ import { createSharedElementStackNavigator } from "react-navigation-shared-eleme
 import "react-native-gesture-handler";
 import { Colors } from "../constants/styles";
 import { options } from "./options";
-import { RootStackParams } from "../@types/types";
+import { RootStackParams, UserType } from "../@types/types";
 import Checkout from "./Screens/Checkout";
 import SearchResults from "./Screens/SearchResults";
 
@@ -24,8 +24,9 @@ const MainNavigator = () => {
 
   useEffect(() => {
     (async () => {
+      // without await doesnt work XD 'await' has no effect on the type of this expression.
       const res: any = await ReadUser();
-      if (res !== undefined) {
+      if (typeof res !== "undefined") {
         setUser(res);
       }
     })();
@@ -59,7 +60,7 @@ const MainNavigator = () => {
                 presentation: "modal",
                 headerShown: true,
                 headerStyle: { backgroundColor: Colors.primary },
-                headerTintColor: "white",
+                headerTintColor: Colors.text,
               }}
             />
             <Stack.Screen component={User} name="User" />
@@ -83,7 +84,7 @@ const MainNavigator = () => {
                 presentation: "modal",
                 headerShown: true,
                 headerStyle: { backgroundColor: Colors.primary },
-                headerTintColor: "white",
+                headerTintColor: Colors.text,
               }}
             />
             <Stack.Screen

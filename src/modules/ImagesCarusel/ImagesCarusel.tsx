@@ -12,7 +12,7 @@ import { API } from "../../constants/routes";
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
 interface ImagesCaruselProps {
-  sharedID: string | number;
+  sharedID: string;
   prod_id: number;
   images: any[];
   image: string;

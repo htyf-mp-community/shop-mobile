@@ -1,10 +1,12 @@
 import React, { useState, useCallback, useEffect } from "react";
 import HorizontalSlider from "../../components/HorizontalSlider/HorizontalSlider";
 import { ActivityIndicator, Text } from "react-native";
-import Product from "../Product";
+import Product from "../Product/Product";
 import { useUser } from "../../context/UserContext";
 import { API } from "../../constants/routes";
-import { ProductTypeProps } from "../Product";
+import { ProductTypeProps } from "../Product/Product";
+import { Colors } from "../../constants/styles";
+import axios from "axios";
 
 interface MostRecentProps {
   path: string;
@@ -24,14 +26,11 @@ export default function ProductsCarusel({
 
   const FetchAllProducts = useCallback(async () => {
     try {
-      setLoading(true);
-
-      const response = await fetch(API + path, {
+      const { data } = await axios.get(`${API}${path}`, {
         headers: {
           token: user.token,
         },
       });
-      const data = await response.json();
       if (data !== null) {
         setData(data);
         setLoading(false);
@@ -51,7 +50,7 @@ export default function ProductsCarusel({
       {loading && (
         <ActivityIndicator
           size="large"
-          color="#fff"
+          color={Colors.text}
           style={{
             position: "absolute",
             top: 100,
@@ -62,8 +61,12 @@ export default function ProductsCarusel({
       {!!error && <Text>Error</Text>}
 
       {typeof data !== "undefined" &&
-        data?.map((el: ProductTypeProps, index: number) => (
-          <Product key={`${el.prod_id}.${index}`} {...el} sharedID={sharedID} />
+        data?.map((product: ProductTypeProps, index: number) => (
+          <Product
+            key={`${product.prod_id}.${index}`}
+            {...product}
+            sharedID={sharedID}
+          />
         ))}
     </HorizontalSlider>
   );

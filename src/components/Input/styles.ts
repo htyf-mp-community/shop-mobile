@@ -12,9 +12,9 @@ const styles = StyleSheet.create({
     borderColor: "#111111",
     width: WIDTH * 0.9,
     padding: 10,
-    fontSize: 18,
+    fontSize: 15,
     borderRadius: 5,
-    fontFamily: "sans-serif",
+    fontFamily: "PoppinsRegular",
   },
   label: {
     width: WIDTH * 0.9,

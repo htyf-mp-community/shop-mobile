@@ -1,7 +1,7 @@
 import React from "react";
 import { View, StyleSheet, Text } from "react-native";
 import { Colors, h3 } from "../../constants/styles";
-import Product, { ProductTypeProps } from "../../modules/Product";
+import Product, { ProductTypeProps } from "../../modules/Product/Product";
 
 export default function SearchResults({ route }: any) {
   const { result } = route.params;

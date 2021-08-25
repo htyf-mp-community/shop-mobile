@@ -12,7 +12,11 @@ export default function Checkout({ route }: any) {
       <Button
         callback={() => {}}
         text="Pay"
-        style={{ margin: 25, backgroundColor: "#009950", color: "white" }}
+        style={{
+          margin: 25,
+          backgroundColor: Colors.secondary,
+          color: Colors.text,
+        }}
       />
     </View>
   );
@@ -26,7 +30,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 25,
     fontFamily: "PoppinsBold",
-    color: "white",
+    color: Colors.text,
     padding: 10,
   },
 });

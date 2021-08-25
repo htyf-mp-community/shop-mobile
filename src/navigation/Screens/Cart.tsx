@@ -1,21 +1,14 @@
 import React from "react";
-import {
-  View,
-  StyleSheet,
-  Text,
-  ScrollView,
-  ActivityIndicator,
-  Dimensions,
-} from "react-native";
+import { View, StyleSheet, Text, ScrollView, Dimensions } from "react-native";
 import { useUser } from "../../context/UserContext";
 import { API } from "../../constants/routes";
 import { Colors } from "../../constants/styles";
-import Products from "../../modules/Product";
+import Products from "../../modules/Product/Product";
 import { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
 import { useIsFocused } from "@react-navigation/native";
-import Purchase from "../../modules/Purchase";
+import Purchase from "../../modules/Purchase/Purchase";
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("screen");
 
@@ -29,13 +22,13 @@ export default function Cart() {
 
   async function RemoveCartProduct(cart_id: number) {
     try {
-      const response = await axios.delete(API + "/cart/" + cart_id, {
+      const { data } = await axios.delete(API + "/cart/" + cart_id, {
         headers: {
           token: user.token,
         },
       });
 
-      if (response.data.status === "Deleted") {
+      if (data.status === "Deleted") {
         setDeleted(deleted + 1);
       }
     } catch (error) {
@@ -65,27 +58,26 @@ export default function Cart() {
 
   return (
     <View style={styles.container}>
-      {isLoading ? (
-        <ActivityIndicator size="large" color="#fff" />
-      ) : (
-        <ScrollView bounces style={{ marginTop: 15 }}>
-          {!error &&
-            !isLoading &&
-            data.map((el: any, i: number) => {
-              return (
-                <View key={i}>
-                  <Products
-                    {...el}
-                    route="Cart"
-                    deleteFn={() => RemoveCartProduct(el.cart_id)}
-                    sharedID="Cart"
-                  />
-                  <Text style={styles.text}>{el.ammount}</Text>
-                </View>
-              );
-            })}
-        </ScrollView>
-      )}
+      <ScrollView
+        bounces
+        style={{ marginTop: 15, height: SCREEN_HEIGHT * 0.9 }}
+      >
+        {!error &&
+          data.map((prod: any, i: number) => {
+            return (
+              <View key={i}>
+                <Products
+                  {...prod}
+                  route="Cart"
+                  deleteFn={() => RemoveCartProduct(prod.cart_id)}
+                  sharedID="CartItems"
+                />
+                <Text style={styles.text}>{prod.ammount}</Text>
+              </View>
+            );
+          })}
+      </ScrollView>
+
       <Purchase cart={data} />
     </View>
   );
@@ -98,8 +90,8 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary,
   },
   text: {
-    color: "white",
-    fontWeight: "bold",
+    color: Colors.text,
+    fontFamily: "PoppinsMedium",
     position: "absolute",
     zIndex: 3,
     right: 20,

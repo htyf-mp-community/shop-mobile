@@ -2,7 +2,7 @@ import React from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { radius } from "../../constants/styles";
 
-type TButton = {
+type TButtonProps = {
   text?: string;
   callback: () => void;
   icon?: any;
@@ -16,7 +16,7 @@ export default function Button({
   icon,
   style,
   disabled = false,
-}: TButton) {
+}: TButtonProps) {
   return (
     <TouchableOpacity
       onPress={callback}
@@ -29,7 +29,7 @@ export default function Button({
           {text}
         </Text>
       )}
-      <View style={styles.icon}>{icon}</View>
+      <View>{icon}</View>
     </TouchableOpacity>
   );
 }
@@ -44,5 +44,4 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 20,
   },
-  icon: {},
 });

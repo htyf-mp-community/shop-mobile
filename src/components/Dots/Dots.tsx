@@ -6,7 +6,7 @@ const { width } = Dimensions.get("screen");
 export default function Dots({ arr, x }: { arr: any[]; x: Animated.Value }) {
   return (
     <>
-      {arr.map((_: any, i: any) => {
+      {arr.map((_: any, i: number) => {
         const backgroundColor = x.interpolate({
           inputRange: [(i - 1) * width, i * width, (i + 1) * width],
           outputRange: [

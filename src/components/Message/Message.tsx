@@ -1,10 +1,11 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
+import { Colors } from "../../constants/styles";
 
 export default function Message({ message }: { message: string }) {
   return (
     <View style={styles.message}>
-      <Text style={{ color: "white" }}>{message}</Text>
+      <Text style={{ color: Colors.text }}>{message}</Text>
     </View>
   );
 }

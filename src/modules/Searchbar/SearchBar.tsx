@@ -6,13 +6,13 @@ import {
   ActivityIndicator,
 } from "react-native";
 import React, { useState } from "react";
-import Input from "../components/Input/Input";
-import Button from "../components/Button/Button";
-import { useUser } from "../context/UserContext";
-import { API } from "../constants/routes";
+import Input from "../../components/Input/Input";
+import Button from "../../components/Button/Button";
+import { useUser } from "../../context/UserContext";
+import { API } from "../../constants/routes";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
-import { Colors } from "../constants/styles";
+import { Colors } from "../../constants/styles";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
@@ -61,7 +61,7 @@ export default function SearchBar({ open, close }: SearchBarProps) {
   return (
     <View style={styles.container}>
       <Button
-        icon={<Image source={require("../assets/basket.png")} />}
+        icon={<Image source={require("../../assets/basket.png")} />}
         callback={() => navigation.navigate("Cart")}
         style={{ marginLeft: 10 }}
       />
@@ -88,7 +88,7 @@ export default function SearchBar({ open, close }: SearchBarProps) {
               loading ? (
                 <ActivityIndicator size={"small"} />
               ) : (
-                require("../assets/search.png")
+                require("../../assets/search.png")
               )
             }
           />

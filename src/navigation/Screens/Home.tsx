@@ -1,6 +1,6 @@
 import { Keyboard, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import React from "react";
-import SearchBar from "../../modules/SearchBar";
+import SearchBar from "../../modules/Searchbar/SearchBar";
 import { Colors } from "../../constants/styles";
 import Overlay from "../../components/Overlay/Overlay";
 import { useState } from "react";

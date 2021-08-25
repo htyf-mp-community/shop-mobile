@@ -1,5 +1,6 @@
 import React from "react";
 import { View, StyleSheet, Text } from "react-native";
+import { Colors } from "../../constants/styles";
 
 interface RatingProps {
   ratings: {
@@ -13,12 +14,12 @@ interface RatingProps {
 export default function Ratings({ ratings }: RatingProps) {
   return (
     <View style={styles.container}>
-      {ratings?.map((el) => {
+      {ratings?.map(({ rating_id, title, rating, description }) => {
         return (
-          <View key={el.rating_id}>
-            <Text style={styles.title}>{el.title}</Text>
-            <Text style={styles.text}>{el.rating}</Text>
-            <Text style={styles.text}>{el.description}</Text>
+          <View key={rating_id}>
+            <Text style={styles.title}>{title}</Text>
+            <Text style={styles.text}>{rating}</Text>
+            <Text style={styles.text}>{description}</Text>
           </View>
         );
       })}
@@ -34,11 +35,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 25,
     fontFamily: "PoppinsBold",
-    color: "white",
+    color: Colors.text,
   },
   text: {
     fontFamily: "PoppinsMedium",
     fontSize: 17,
-    color: "white",
+    color: Colors.text,
   },
 });

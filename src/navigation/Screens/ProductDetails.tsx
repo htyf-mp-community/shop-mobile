@@ -6,14 +6,16 @@ import { useUser } from "../../context/UserContext";
 import { Colors } from "../../constants/styles";
 import AddToCart from "../../modules/AddToCart/AddToCart";
 import Dots from "../../components/Dots/Dots";
-import Ratings from "../../modules/Ratings";
+import Ratings from "../../modules/Ratings/Ratings";
 import ImagesCarusel from "../../modules/ImagesCarusel/ImagesCarusel";
 
-const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("screen");
+const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
 export default function ProductDetails({ route }: any) {
   const { prod_id, image, sharedID } = route.params;
   const { user } = useUser();
+
+  console.log(image);
 
   const [result, setResult] = useState<any>({});
 
@@ -36,6 +38,7 @@ export default function ProductDetails({ route }: any) {
 
   const imgList: { name: string; id: number }[] = result?.img_id;
   const images = imgList?.length > 1 ? imgList.splice(1, imgList.length) : [];
+
   const opacity = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
