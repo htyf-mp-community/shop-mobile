@@ -1,18 +1,48 @@
-import { Keyboard, SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import {
+  Keyboard,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import React from "react";
 import SearchBar from "../../modules/Searchbar/SearchBar";
 import { Colors } from "../../constants/styles";
 import Overlay from "../../components/Overlay/Overlay";
 import { useState } from "react";
 import ProductsCarusel from "../../modules/ProductsCarusel/ProductsCarusel";
+import { useEffect } from "react";
+import axios from "axios";
+import { API } from "../../constants/routes";
+import { useUser } from "../../context/UserContext";
 
 export default function Home() {
   const [showOverlay, setShowOverlay] = useState(false);
+  const [searchHistory, setSearchHistory] = useState([]);
+  const { user } = useUser();
 
   const close = () => {
     setShowOverlay(false);
     Keyboard.dismiss();
   };
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const { data } = await axios.get(`${API}/products/search-history`, {
+          headers: {
+            token: user.token,
+          },
+        });
+        if (data !== null && data !== undefined) {
+          setSearchHistory(data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
 
   const open = () => setShowOverlay(true);
 
@@ -37,7 +67,26 @@ export default function Home() {
         />
       </ScrollView>
 
-      {showOverlay && <Overlay close={close} />}
+      {showOverlay && (
+        <Overlay close={close}>
+          <ScrollView style={{ marginTop: 100 }}>
+            {searchHistory.map(({ word, id, date }) => {
+              return (
+                <View
+                  key={id}
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Text style={styles.text}>{word}</Text>
+                  <Text style={styles.text}>{date}</Text>
+                </View>
+              );
+            })}
+          </ScrollView>
+        </Overlay>
+      )}
     </SafeAreaView>
   );
 }
@@ -46,5 +95,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.primary,
+  },
+  text: {
+    color: "white",
+    fontFamily: "PoppinsRegular",
+    padding: 20,
   },
 });

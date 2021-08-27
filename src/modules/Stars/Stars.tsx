@@ -22,7 +22,7 @@ function CalcResult(start: any[]) {
   return total;
 }
 
-export default function Stars({ setRating }: StarsProps) {
+export default function StarsTouch({ setRating }: StarsProps) {
   const [start, setStart] = useState(init);
 
   useEffect(() => {
@@ -58,6 +58,33 @@ export default function Stars({ setRating }: StarsProps) {
     </View>
   );
 }
+
+export const Stars = ({ rating, style }: any) => {
+  const [start] = useState(() => {
+    const arr = [];
+    for (let i = 0; i < 5; i++) {
+      arr.push({ value: i < rating ? 1 : 0 });
+    }
+    return arr;
+  });
+  return (
+    <View style={[styles.container, style]}>
+      <View style={styles.stars}>
+        {start.map(({ value }, index) => {
+          return (
+            <TouchableWithoutFeedback key={index} style={{ padding: 5 }}>
+              <AntDesign
+                name="star"
+                size={30}
+                color={value === 1 ? "yellow" : "grey"}
+              />
+            </TouchableWithoutFeedback>
+          );
+        })}
+      </View>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {

@@ -117,6 +117,7 @@ const MainNavigator = () => {
               name="ProductReviews"
               component={ProductReviews}
               options={{
+                presentation: "modal",
                 headerShown: true,
                 headerStyle: { backgroundColor: Colors.primary },
                 headerTintColor: Colors.text,

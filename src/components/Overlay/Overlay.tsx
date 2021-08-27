@@ -5,10 +5,15 @@ const { width: SCREEN_WIDTH, height: SCREEN_HEIHGT } = Dimensions.get("screen");
 
 type OverlayProps = {
   close: () => void;
+  children?: React.ReactNode;
 };
 
-export default function Overlay({ close }: OverlayProps) {
-  return <View style={[styles.overlay]} onTouchStart={close}></View>;
+export default function Overlay({ close, children }: OverlayProps) {
+  return (
+    <View style={[styles.overlay]} onTouchStart={close}>
+      {children}
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

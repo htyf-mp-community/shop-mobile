@@ -9,7 +9,7 @@ import { API } from "../../../constants/routes";
 import { Colors } from "../../../constants/styles";
 import { useUser } from "../../../context/UserContext";
 import useListenKeyboard from "../../../hooks/useListenKeyboard";
-import Stars from "../../../modules/Stars/Stars";
+import StarsTouch from "../../../modules/Stars/Stars";
 
 const { width } = Dimensions.get("screen");
 
@@ -52,7 +52,7 @@ export default function CreateReview({ route }: any) {
         </SharedElement>
       )}
       <ScrollView style={styles.form}>
-        <Stars setRating={setRating} />
+        <StarsTouch setRating={setRating} />
         <Input
           name="Title"
           value={title}

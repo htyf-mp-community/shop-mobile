@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { Animated, StyleSheet, Dimensions } from "react-native";
 import Dots from "../../components/Dots/Dots";
+import { Colors } from "../../constants/styles";
 import { ProductTypeProps } from "../Product/Product";
 
 interface DetailsProps {
@@ -53,7 +54,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     padding: 20,
     marginBottom: 20,
-    backgroundColor: "#292929",
+    backgroundColor: Colors.primary,
     fontFamily: "PoppinsMedium",
   },
   title: {

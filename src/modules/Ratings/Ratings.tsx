@@ -1,39 +1,44 @@
 import React from "react";
-import { View, StyleSheet, Text } from "react-native";
-import { Colors } from "../../constants/styles";
+import { View, StyleSheet, Text, Dimensions } from "react-native";
+import { Colors, radius } from "../../constants/styles";
+import { Stars } from "../Stars/Stars";
 
-interface RatingProps {
-  ratings: {
-    rating_id: number;
-    rating: number;
-    title: string;
-    description: string;
-  }[];
+export interface RatingProps {
+  rating_id: number;
+  rating: number;
+  title: string;
+  description: string;
 }
 
-export default function Ratings({ ratings }: RatingProps) {
+const { width } = Dimensions.get("screen");
+
+export default function Ratings({
+  rating_id,
+  rating,
+  title,
+  description,
+}: RatingProps) {
   return (
-    <View style={styles.container}>
-      {ratings?.slice(0, 5).map(({ rating_id, title, rating, description }) => {
-        return (
-          <View key={rating_id}>
-            <Text style={styles.title}>{title}</Text>
-            <Text style={styles.text}>{rating}</Text>
-            <Text style={styles.text}>{description}</Text>
-          </View>
-        );
-      })}
+    <View key={rating_id} style={styles.container}>
+      <Text style={styles.title}>{title}</Text>
+      <Stars rating={rating} style={{ width: width * 0.55 }} />
+      <Text style={styles.text}>{description}</Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#292929",
+    backgroundColor: Colors.primary,
     padding: 10,
+    borderWidth: 0.5,
+    margin: 10,
+    borderColor: Colors.text,
+    borderRadius: radius.small,
   },
   title: {
-    fontSize: 25,
+    fontSize: 35,
+    textAlign: "center",
     fontFamily: "PoppinsBold",
     color: Colors.text,
   },

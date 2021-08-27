@@ -63,14 +63,14 @@ export default function SearchBar({ open, close }: SearchBarProps) {
       <Button
         icon={<Image source={require("../../assets/basket.png")} />}
         callback={() => navigation.navigate("Cart")}
-        style={{ marginLeft: 10 }}
+        style={{ marginLeft: 10, backgroundColor: Colors.primary100 }}
       />
       <Input
         value={searchedValue}
         setValue={setSearchedValue}
         placeholder={"What are you looking for?"}
         style={{
-          backgroundColor: "#4A4C50",
+          backgroundColor: Colors.primary100,
           color: Colors.text,
           width: SCREEN_WIDTH * 0.65,
         }}
@@ -82,6 +82,7 @@ export default function SearchBar({ open, close }: SearchBarProps) {
 
       <Button
         callback={FindSearched}
+        style={{ backgroundColor: Colors.primary100 }}
         icon={
           <Image
             source={
@@ -100,7 +101,7 @@ export default function SearchBar({ open, close }: SearchBarProps) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#313131",
+    backgroundColor: Colors.primary,
     flexDirection: "row",
     alignItems: "center",
     paddingTop: 25,
