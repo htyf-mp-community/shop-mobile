@@ -17,6 +17,7 @@ import { RootStackParams } from "../@types/types";
 import Checkout from "./Screens/Checkout";
 import SearchResults from "./Screens/SearchResults";
 import CreateReview from "./Screens/Reviews/CreateReview";
+import ProductReviews from "./Screens/Reviews/ProductReviews";
 
 const Stack = createSharedElementStackNavigator<RootStackParams>();
 
@@ -111,6 +112,15 @@ const MainNavigator = () => {
                 headerStyle: { backgroundColor: Colors.primary },
                 headerTintColor: Colors.text,
               })}
+            />
+            <Stack.Screen
+              name="ProductReviews"
+              component={ProductReviews}
+              options={{
+                headerShown: true,
+                headerStyle: { backgroundColor: Colors.primary },
+                headerTintColor: Colors.text,
+              }}
             />
           </>
         ) : (

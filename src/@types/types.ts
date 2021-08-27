@@ -34,5 +34,6 @@ export type RootStackParams = {
     sharedID: string;
     prod_name: string;
   };
+  ProductReviews: { reviews: any[] };
   Checkout: { cart: any; total: number };
 };
