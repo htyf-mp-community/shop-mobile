@@ -50,8 +50,8 @@ export default function ImagesCarusel({
 
       {images?.map(({ name, id }: any) => (
         <Image
-          source={{ uri: `${API}/upload/images=${name}` }}
           key={id}
+          source={{ uri: `${API}/upload/images=${name}` }}
           style={styles.img}
         />
       ))}

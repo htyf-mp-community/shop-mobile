@@ -24,6 +24,7 @@ export type ProductTypeProps = {
   deleteFn?: () => any;
   sharedID?: any;
   hide?: boolean;
+  ammount: number;
 };
 
 export default function Product({

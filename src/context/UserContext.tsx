@@ -25,7 +25,7 @@ async function ReadUser(): Promise<UserType | undefined> {
   }
 }
 
-const init: UserType = {
+export const init: UserType = {
   token: "",
   user_id: -1,
   name: "",

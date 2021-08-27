@@ -3,6 +3,7 @@ import React from "react";
 import { View, Dimensions } from "react-native";
 import Button from "../../components/Button/Button";
 import { Colors } from "../../constants/styles";
+import { CalcTotalCartPrice } from "../../functions/CalcTotalCartPrice";
 
 const { width } = Dimensions.get("screen");
 
@@ -12,13 +13,7 @@ interface IPurchaseProps {
 
 export default function Purchase({ cart }: IPurchaseProps) {
   const navigation = useNavigation<any>();
-  const totalPrice =
-    cart.length > 1
-      ? cart
-          .map(({ price }) => Number(price))
-          .reduce((a, b) => a + b)
-          .toFixed(2)
-      : cart[0]?.price || 0;
+  const totalPrice = CalcTotalCartPrice(cart);
 
   function PurchaseProduct() {
     navigation.navigate("Checkout", { cart, total: totalPrice });

@@ -14,7 +14,7 @@ interface RatingProps {
 export default function Ratings({ ratings }: RatingProps) {
   return (
     <View style={styles.container}>
-      {ratings?.map(({ rating_id, title, rating, description }) => {
+      {ratings?.slice(0, 5).map(({ rating_id, title, rating, description }) => {
         return (
           <View key={rating_id}>
             <Text style={styles.title}>{title}</Text>

@@ -13,9 +13,10 @@ import { createSharedElementStackNavigator } from "react-navigation-shared-eleme
 import "react-native-gesture-handler";
 import { Colors } from "../constants/styles";
 import { options } from "./options";
-import { RootStackParams, UserType } from "../@types/types";
+import { RootStackParams } from "../@types/types";
 import Checkout from "./Screens/Checkout";
 import SearchResults from "./Screens/SearchResults";
+import CreateReview from "./Screens/Reviews/CreateReview";
 
 const Stack = createSharedElementStackNavigator<RootStackParams>();
 
@@ -97,12 +98,26 @@ const MainNavigator = () => {
                 headerTintColor: Colors.text,
               })}
             />
+            <Stack.Screen
+              name="CreateReview"
+              component={CreateReview}
+              sharedElements={(route) => {
+                const { prod_id, sharedID } = route.params;
+                return ["prod_id." + prod_id + sharedID];
+              }}
+              options={({ route }) => ({
+                title: `Rate the product: ${route.params.prod_name}`,
+                headerShown: true,
+                headerStyle: { backgroundColor: Colors.primary },
+                headerTintColor: Colors.text,
+              })}
+            />
           </>
         ) : (
           <Stack.Screen
             name="Auth"
             component={Auth}
-            options={{ headerShown: true }}
+            options={{ headerShown: false }}
           />
         )}
       </Stack.Navigator>

@@ -28,5 +28,11 @@ export type RootStackParams = {
     image: string;
     imgPath: string;
   };
+  CreateReview: {
+    prod_id: number;
+    thumbnail: string;
+    sharedID: string;
+    prod_name: string;
+  };
   Checkout: { cart: any; total: number };
 };

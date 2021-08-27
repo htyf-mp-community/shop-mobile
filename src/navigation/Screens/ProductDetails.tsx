@@ -1,22 +1,25 @@
 import React, { useEffect, useState, useRef } from "react";
-import { StyleSheet, Dimensions, ScrollView, Animated } from "react-native";
+import {
+  StyleSheet,
+  Dimensions,
+  ScrollView,
+  Animated,
+  View,
+} from "react-native";
 import axios from "axios";
 import { API } from "../../constants/routes";
 import { useUser } from "../../context/UserContext";
 import { Colors } from "../../constants/styles";
 import AddToCart from "../../modules/AddToCart/AddToCart";
 import Dots from "../../components/Dots/Dots";
-import Ratings from "../../modules/Ratings/Ratings";
 import ImagesCarusel from "../../modules/ImagesCarusel/ImagesCarusel";
+import Button from "../../components/Button/Button";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
-export default function ProductDetails({ route }: any) {
+export default function ProductDetails({ route, navigation }: any) {
   const { prod_id, image, sharedID } = route.params;
   const { user } = useUser();
-
-  console.log(image);
-
   const [result, setResult] = useState<any>({});
 
   useEffect(() => {
@@ -99,7 +102,26 @@ export default function ProductDetails({ route }: any) {
       <Animated.Text style={[styles.text, { opacity, fontSize: 17 }]}>
         {result?.description}
       </Animated.Text>
-      <Ratings ratings={result.rating_id} />
+      <View
+        style={{ width: SCREEN_WIDTH, alignItems: "center", marginBottom: 20 }}
+      >
+        <Button
+          text="Add review"
+          callback={() =>
+            navigation.navigate("CreateReview", {
+              thumbnail: image,
+              prod_id: prod_id,
+              sharedID: sharedID,
+              prod_name: result.title,
+            })
+          }
+          style={{
+            width: SCREEN_WIDTH * 0.9,
+            backgroundColor: Colors.secondary,
+            color: Colors.text,
+          }}
+        />
+      </View>
     </ScrollView>
   );
 }
