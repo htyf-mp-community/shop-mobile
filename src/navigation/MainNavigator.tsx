@@ -69,7 +69,7 @@ const MainNavigator = () => {
             <Stack.Screen
               component={ProductDetails}
               name="Details"
-              //@ts-ignore animation works different with {...option}
+              //@ts-ignore
               options={options}
               sharedElements={(route) => {
                 const { prod_id, sharedID } = route.params;

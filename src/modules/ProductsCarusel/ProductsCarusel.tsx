@@ -7,6 +7,7 @@ import { API } from "../../constants/routes";
 import { ProductTypeProps } from "../Product/Product";
 import { Colors } from "../../constants/styles";
 import axios from "axios";
+import RemoveProductsRepetition from "../../functions/RemoveRepetition";
 
 interface MostRecentProps {
   path: string;
@@ -32,7 +33,7 @@ export default function ProductsCarusel({
         },
       });
       if (data !== null) {
-        setData(data);
+        setData(RemoveProductsRepetition(data));
         setLoading(false);
       }
     } catch (error) {
