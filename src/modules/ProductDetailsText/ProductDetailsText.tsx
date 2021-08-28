@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingLeft: 15,
     fontFamily: "PoppinsBold",
+    backgroundColor: Colors.primary400,
   },
   dots: {
     position: "absolute",

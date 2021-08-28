@@ -1,12 +1,11 @@
 import React from "react";
-import { View, Image, Text } from "react-native";
+import { View, Image, Text, TouchableOpacity } from "react-native";
 import Button from "../../components/Button/Button";
 import AddToCart from "../AddToCart/AddToCart";
 import { API } from "../../constants/routes";
 import { useNavigation } from "@react-navigation/native";
 import { SharedElement } from "react-navigation-shared-element";
 import { Ionicons } from "@expo/vector-icons";
-import { Feather } from "@expo/vector-icons";
 import styles from "./styles";
 import { Colors } from "../../constants/styles";
 
@@ -27,6 +26,7 @@ export type ProductTypeProps = {
   sharedID?: any;
   hide?: boolean;
   ammount: number;
+  RefetchCart?: () => void;
 };
 
 export default function Product({
@@ -38,6 +38,7 @@ export default function Product({
   hide = false,
   sharedID = "Key",
   deleteFn = () => {},
+  RefetchCart,
 }: ProductTypeProps) {
   const navigation = useNavigation<any>();
 
@@ -57,44 +58,40 @@ export default function Product({
 
   return (
     <View style={styles.container}>
-      <View style={styles.product}>
-        <SharedElement
-          id={`prod_id.${prod_id}${sharedID}`}
-          style={styles.product}
-        >
-          <Image
-            source={{ uri: image }}
-            style={[styles.img, {}]}
-            resizeMode="cover"
-          />
-        </SharedElement>
+      <TouchableOpacity onPress={ShowMore} activeOpacity={0.95}>
+        <View style={styles.product}>
+          <SharedElement
+            id={`prod_id.${prod_id}${sharedID}`}
+            style={styles.product}
+          >
+            <Image
+              source={{ uri: image }}
+              style={[styles.img]}
+              resizeMode="cover"
+            />
+          </SharedElement>
 
-        {!hide && (
-          <>
-            {route === "Cart" ? (
-              <Button
-                callback={deleteFn}
-                style={[styles.button, { backgroundColor: "red" }]}
-                icon={<Ionicons name="close" size={22} color={Colors.text} />}
+          {!hide && (
+            <>
+              {route === "Cart" && (
+                <Button
+                  callback={deleteFn}
+                  style={[styles.button, { backgroundColor: "red" }]}
+                  icon={<Ionicons name="close" size={22} color={Colors.text} />}
+                />
+              )}
+
+              <AddToCart
+                refetch={RefetchCart}
+                prod_id={prod_id}
+                style={{ right: route === "Cart" ? 70 : 10 }}
               />
-            ) : (
-              <>
-                <AddToCart prod_id={prod_id} />
-              </>
-            )}
-          </>
-        )}
+            </>
+          )}
 
-        <Button
-          callback={ShowMore}
-          style={[styles.button, { right: hide ? 10 : 70 }]}
-          icon={
-            <Feather name="more-horizontal" size={22} color={Colors.text} />
-          }
-        />
-
-        <Text style={styles.info}>${price}</Text>
-      </View>
+          <Text style={styles.info}>${price}</Text>
+        </View>
+      </TouchableOpacity>
     </View>
   );
 }

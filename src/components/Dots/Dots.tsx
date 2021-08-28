@@ -16,6 +16,12 @@ export default function Dots({ arr, x }: { arr: any[]; x: Animated.Value }) {
           ],
           extrapolate: "clamp",
         });
+
+        const scale = x.interpolate({
+          inputRange: [(i - 1) * width, i * width, (i + 1) * width],
+          outputRange: [0.8, 1.1, 0.8],
+          extrapolate: "clamp",
+        });
         return (
           <Animated.View
             key={i}
@@ -25,6 +31,7 @@ export default function Dots({ arr, x }: { arr: any[]; x: Animated.Value }) {
               backgroundColor: backgroundColor,
               borderRadius: 100,
               margin: 4,
+              transform: [{ scale }],
             }}
           ></Animated.View>
         );

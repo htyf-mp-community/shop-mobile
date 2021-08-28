@@ -9,13 +9,15 @@ import {
 } from "react-native";
 import { useUser } from "../../context/UserContext";
 import { API } from "../../constants/routes";
-import { Colors, radius } from "../../constants/styles";
+import { Colors, h2, radius } from "../../constants/styles";
 import Products from "../../modules/Product/Product";
 import { useEffect } from "react";
 import axios from "axios";
 import { useIsFocused } from "@react-navigation/native";
 import Purchase from "../../modules/Purchase/Purchase";
 import { wait } from "./Home";
+import SvgComponent from "../../components/Svgs/Svgs";
+import { cart } from "../../assets/emptyCart";
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("screen");
 
@@ -44,6 +46,11 @@ export default function Cart() {
   }
 
   const [refresh, setRefresh] = useState(false);
+  const [refetch, setRefetch] = useState(0);
+
+  const RefreshCart = () => {
+    setRefetch(refetch + 1);
+  };
 
   const onRefresh = useCallback(() => {
     setRefresh(true);
@@ -70,18 +77,34 @@ export default function Cart() {
         setIsLoading(false);
       }
     })();
-  }, [deleted, isFocused, refresh]);
+  }, [deleted, isFocused, refresh, refetch]);
 
   return (
     <View style={styles.container}>
+      {data.length === 0 && (
+        <View
+          style={{
+            width: SCREEN_WIDTH,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Text style={h2}>Add Something</Text>
+          <SvgComponent svg={cart} size={300} />
+        </View>
+      )}
       <ScrollView
         bounces
-        style={{ marginTop: 15, height: SCREEN_HEIGHT * 0.9 }}
+        style={{
+          marginTop: 15,
+          height: SCREEN_HEIGHT * 0.9,
+          position: "relative",
+        }}
         refreshControl={
           <RefreshControl refreshing={refresh} onRefresh={onRefresh} />
         }
       >
-        {!error &&
+        {typeof data !== "undefined" &&
           data.map((prod: any, i: number) => {
             return (
               <View key={i} style={{ position: "relative" }}>
@@ -90,6 +113,7 @@ export default function Cart() {
                   route="Cart"
                   deleteFn={() => RemoveCartProduct(prod.cart_id)}
                   sharedID="CartItems"
+                  RefetchCart={RefreshCart}
                 />
                 <Text style={styles.text}>{prod.ammount}</Text>
               </View>

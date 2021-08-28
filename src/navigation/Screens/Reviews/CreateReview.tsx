@@ -105,7 +105,6 @@ const styles = StyleSheet.create({
   },
   form: {
     width,
-    padding: 5,
   },
   input: {
     borderColor: "white",

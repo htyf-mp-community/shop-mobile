@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, ActivityIndicator } from "react-native";
+import { ActivityIndicator } from "react-native";
 import Button from "../../components/Button/Button";
 import { useUser } from "../../context/UserContext";
 import { API } from "../../constants/routes";
@@ -11,6 +11,7 @@ import { Ionicons } from "@expo/vector-icons";
 interface AddtoCartProps {
   prod_id: number;
   style?: any;
+  refetch?: () => void;
 }
 
 interface IconProps {
@@ -38,7 +39,11 @@ const Icon = ({ loading, success, error }: IconProps) => {
   return <Ionicons name="ios-basket" size={22} color={Colors.text} />;
 };
 
-export default function AddToCart({ prod_id, style }: AddtoCartProps) {
+export default function AddToCart({
+  prod_id,
+  style,
+  refetch = () => {},
+}: AddtoCartProps) {
   const { user } = useUser();
 
   const [loading, setLoading] = useState(false);
@@ -62,6 +67,7 @@ export default function AddToCart({ prod_id, style }: AddtoCartProps) {
         if (data !== null && status === 201) {
           setResult(data.status);
           setLoading(false);
+          refetch();
         }
       })
       .catch((error) => {
