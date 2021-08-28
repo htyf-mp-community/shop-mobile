@@ -12,6 +12,7 @@ interface IInputProps {
   rest?: any;
   labelStyle?: any;
   placeholderColor?: string;
+  inputRef?: any;
 }
 
 export default function Input({
@@ -23,6 +24,7 @@ export default function Input({
   style,
   placeholderColor = "black",
   labelStyle = {},
+  inputRef,
   ...rest
 }: IInputProps) {
   return (
@@ -36,6 +38,7 @@ export default function Input({
         placeholderTextColor={placeholderColor}
         style={[styles.input, style]}
         {...rest}
+        ref={inputRef}
       />
     </View>
   );

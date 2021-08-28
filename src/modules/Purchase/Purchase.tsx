@@ -22,6 +22,7 @@ export default function Purchase({ cart }: IPurchaseProps) {
   return (
     <View style={{ width, alignItems: "center", padding: 10, bottom: 5 }}>
       <Button
+        disabled={cart.length === 0}
         text={"Check out, total: $" + totalPrice}
         callback={PurchaseProduct}
         style={{

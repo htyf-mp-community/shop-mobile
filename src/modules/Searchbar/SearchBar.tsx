@@ -1,10 +1,4 @@
-import {
-  View,
-  StyleSheet,
-  Image,
-  Dimensions,
-  ActivityIndicator,
-} from "react-native";
+import { View, StyleSheet, Dimensions, ActivityIndicator } from "react-native";
 import React, { useState } from "react";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
@@ -13,11 +7,13 @@ import { API } from "../../constants/routes";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { Colors } from "../../constants/styles";
+import { MaterialIcons } from "@expo/vector-icons";
+import { useRef } from "react";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
 interface SearchBarProps {
-  open: () => void;
+  open: (callback?: any) => void;
   close: () => void;
 }
 
@@ -29,8 +25,13 @@ export default function SearchBar({ open, close }: SearchBarProps) {
   const [error, setError] = useState<string | null>(null);
   const navigation = useNavigation<any>();
 
+  const inputRef = useRef<any>();
+
   function FindSearched() {
-    if (searchedValue.trim() === "") return;
+    if (searchedValue.trim() === "")
+      return open(() => {
+        inputRef.current.focus();
+      });
     setLoading(true);
     axios
       .get(`${API}/products/searched=${searchedValue}`, {
@@ -61,7 +62,9 @@ export default function SearchBar({ open, close }: SearchBarProps) {
   return (
     <View style={styles.container}>
       <Button
-        icon={<Image source={require("../../assets/basket.png")} />}
+        icon={
+          <MaterialIcons name="shopping-basket" size={24} color={Colors.text} />
+        }
         callback={() => navigation.navigate("Cart")}
         style={{ marginLeft: 10, backgroundColor: Colors.primary100 }}
       />
@@ -69,6 +72,7 @@ export default function SearchBar({ open, close }: SearchBarProps) {
         value={searchedValue}
         setValue={setSearchedValue}
         placeholder={"What are you looking for?"}
+        inputRef={inputRef}
         style={{
           backgroundColor: Colors.primary100,
           color: Colors.text,
@@ -76,7 +80,7 @@ export default function SearchBar({ open, close }: SearchBarProps) {
         }}
         {...{
           placeholderTextColor: Colors.text,
-          onFocus: () => open(),
+          onFocus: () => open(() => {}),
         }}
       />
 
@@ -84,15 +88,13 @@ export default function SearchBar({ open, close }: SearchBarProps) {
         callback={FindSearched}
         style={{ backgroundColor: Colors.primary100 }}
         icon={
-          <Image
-            source={
-              loading ? (
-                <ActivityIndicator size={"small"} />
-              ) : (
-                require("../../assets/search.png")
-              )
-            }
-          />
+          <>
+            {loading ? (
+              <ActivityIndicator size="small" />
+            ) : (
+              <MaterialIcons name="search" size={22} color={Colors.text} />
+            )}
+          </>
         }
       />
     </View>

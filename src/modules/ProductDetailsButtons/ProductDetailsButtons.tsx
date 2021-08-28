@@ -39,6 +39,7 @@ export default function ProductDetailsButtons({
           width: SCREEN_WIDTH * 0.4,
           backgroundColor: Colors.secondary,
           color: Colors.text,
+          justifyContent: "center",
         }}
       />
       <Button
@@ -48,6 +49,7 @@ export default function ProductDetailsButtons({
           width: SCREEN_WIDTH * 0.4,
           backgroundColor: Colors.ternary,
           color: Colors.text,
+          justifyContent: "center",
         }}
       />
     </View>

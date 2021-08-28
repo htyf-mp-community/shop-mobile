@@ -1,13 +1,15 @@
 import React, { useState, useCallback, useEffect } from "react";
 import HorizontalSlider from "../../components/HorizontalSlider/HorizontalSlider";
-import { ActivityIndicator, Text } from "react-native";
+import { View, Text } from "react-native";
 import Product from "../Product/Product";
 import { useUser } from "../../context/UserContext";
 import { API } from "../../constants/routes";
 import { ProductTypeProps } from "../Product/Product";
-import { Colors } from "../../constants/styles";
 import axios from "axios";
 import RemoveProductsRepetition from "../../functions/RemoveRepetition";
+import ProductLoader from "../ProductLoader/ProductLoader";
+import styles from "../Product/styles";
+import { Colors } from "../../constants/styles";
 
 interface MostRecentProps {
   path: string;
@@ -29,12 +31,13 @@ export default function ProductsCarusel({
 
   const FetchAllProducts = useCallback(async () => {
     try {
+      setLoading(true);
       const { data } = await axios.get(`${API}${path}`, {
         headers: {
           token: user.token,
         },
       });
-      if (data !== null) {
+      if (data !== null && data.message !== "Token expired") {
         setData(RemoveProductsRepetition(data));
         setLoading(false);
       }
@@ -50,18 +53,21 @@ export default function ProductsCarusel({
 
   return (
     <HorizontalSlider title={title}>
-      {loading && (
-        <ActivityIndicator
-          size="large"
-          color={Colors.text}
-          style={{
-            position: "absolute",
-            top: 100,
-            left: 100,
-          }}
-        />
+      {loading && <ProductLoader />}
+      {!!error && (
+        <View style={styles.container}>
+          <View
+            style={[
+              styles.product,
+              { justifyContent: "center", alignItems: "center" },
+            ]}
+          >
+            <Text style={{ fontFamily: "PoppinsBold", color: Colors.text }}>
+              {error || "Failed to fetch products"}
+            </Text>
+          </View>
+        </View>
       )}
-      {!!error && <Text>Error</Text>}
 
       {typeof data !== "undefined" &&
         data?.map((product: ProductTypeProps, index: number) => (

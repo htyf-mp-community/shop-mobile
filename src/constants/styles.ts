@@ -18,7 +18,6 @@ export const fontSize = {
 
 export const Colors = {
   text: "#fff",
-  // primary: "#313131",
   primary: "#121212",
   primary100: "#2F3135",
   primary200: "#262626",

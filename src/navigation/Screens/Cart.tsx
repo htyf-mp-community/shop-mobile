@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { useUser } from "../../context/UserContext";
 import { API } from "../../constants/routes";
-import { Colors } from "../../constants/styles";
+import { Colors, radius } from "../../constants/styles";
 import Products from "../../modules/Product/Product";
 import { useEffect } from "react";
 import axios from "axios";
@@ -84,7 +84,7 @@ export default function Cart() {
         {!error &&
           data.map((prod: any, i: number) => {
             return (
-              <View key={i}>
+              <View key={i} style={{ position: "relative" }}>
                 <Products
                   {...prod}
                   route="Cart"
@@ -109,15 +109,18 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary,
   },
   text: {
+    width: 45,
+    height: 45,
     color: Colors.text,
     fontFamily: "PoppinsMedium",
     position: "absolute",
     zIndex: 3,
-    right: 20,
+    right: 15,
     fontSize: 25,
     padding: 5,
-    top: 10,
-    borderRadius: 20,
-    backgroundColor: "black",
+    top: 5,
+    borderRadius: radius.medium,
+    backgroundColor: Colors.secondary,
+    textAlign: "center",
   },
 });

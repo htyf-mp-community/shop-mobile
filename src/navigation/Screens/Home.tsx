@@ -50,7 +50,10 @@ export default function Home() {
     })();
   }, []);
 
-  const open = () => setShowOverlay(true);
+  const open = (callback: () => void) => {
+    setShowOverlay(true);
+    callback();
+  };
 
   const [refresh, setRefresh] = useState(false);
 
@@ -78,13 +81,13 @@ export default function Home() {
         />
         <ProductsCarusel
           path="/products/searched-products"
-          title="Watched by you"
+          title="Your searches"
           sharedID="WatchedByYou"
           refresh={refresh}
         />
         <ProductsCarusel
           path="/products"
-          title="All available"
+          title="All products"
           sharedID="All"
           refresh={refresh}
         />
@@ -92,7 +95,7 @@ export default function Home() {
 
       {showOverlay && (
         <Overlay close={close}>
-          <ScrollView style={{ marginTop: 100 }}>
+          {/*  <ScrollView style={{ marginTop: 100 }}>
             {searchHistory.map(({ word, id, date }) => {
               return (
                 <View
@@ -107,7 +110,7 @@ export default function Home() {
                 </View>
               );
             })}
-          </ScrollView>
+          </ScrollView> */}
         </Overlay>
       )}
     </SafeAreaView>

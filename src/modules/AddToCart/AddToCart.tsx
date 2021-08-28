@@ -6,6 +6,7 @@ import { API } from "../../constants/routes";
 import { useState } from "react";
 import { Colors } from "../../constants/styles";
 import axios from "axios";
+import { Ionicons } from "@expo/vector-icons";
 
 interface AddtoCartProps {
   prod_id: number;
@@ -29,12 +30,12 @@ const Icon = ({ loading, success, error }: IconProps) => {
     );
   }
   if (error) {
-    return <Image source={require("../../assets/close.png")} />;
+    return <Ionicons name="close-outline" size={22} color={Colors.text} />;
   }
   if (success === "Added") {
-    return <Image source={require("../../assets/done.png")} />;
+    return <Ionicons name="checkmark-done" size={22} color={Colors.text} />;
   }
-  return <Image source={require("../../assets/basket.png")} />;
+  return <Ionicons name="ios-basket" size={22} color={Colors.text} />;
 };
 
 export default function AddToCart({ prod_id, style }: AddtoCartProps) {

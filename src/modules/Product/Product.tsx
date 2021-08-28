@@ -5,8 +5,10 @@ import AddToCart from "../AddToCart/AddToCart";
 import { API } from "../../constants/routes";
 import { useNavigation } from "@react-navigation/native";
 import { SharedElement } from "react-navigation-shared-element";
-
+import { Ionicons } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 import styles from "./styles";
+import { Colors } from "../../constants/styles";
 
 type ImgType = {
   id: number;
@@ -73,7 +75,7 @@ export default function Product({
               <Button
                 callback={deleteFn}
                 style={[styles.button, { backgroundColor: "red" }]}
-                icon={<Image source={require("../../assets/close.png")} />}
+                icon={<Ionicons name="close" size={22} color={Colors.text} />}
               />
             ) : (
               <>
@@ -86,7 +88,9 @@ export default function Product({
         <Button
           callback={ShowMore}
           style={[styles.button, { right: hide ? 10 : 70 }]}
-          icon={<Image source={require("../../assets/dots.png")} />}
+          icon={
+            <Feather name="more-horizontal" size={22} color={Colors.text} />
+          }
         />
 
         <Text style={styles.info}>${price}</Text>
