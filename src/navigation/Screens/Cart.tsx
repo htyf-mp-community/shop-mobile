@@ -1,14 +1,21 @@
-import React from "react";
-import { View, StyleSheet, Text, ScrollView, Dimensions } from "react-native";
+import React, { useState, useCallback } from "react";
+import {
+  View,
+  StyleSheet,
+  Text,
+  ScrollView,
+  Dimensions,
+  RefreshControl,
+} from "react-native";
 import { useUser } from "../../context/UserContext";
 import { API } from "../../constants/routes";
 import { Colors } from "../../constants/styles";
 import Products from "../../modules/Product/Product";
 import { useEffect } from "react";
 import axios from "axios";
-import { useState } from "react";
 import { useIsFocused } from "@react-navigation/native";
 import Purchase from "../../modules/Purchase/Purchase";
+import { wait } from "./Home";
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("screen");
 
@@ -36,6 +43,15 @@ export default function Cart() {
     }
   }
 
+  const [refresh, setRefresh] = useState(false);
+
+  const onRefresh = useCallback(() => {
+    setRefresh(true);
+    wait(1000).then(() => {
+      setRefresh(false);
+    });
+  }, []);
+
   useEffect(() => {
     (async () => {
       try {
@@ -54,13 +70,16 @@ export default function Cart() {
         setIsLoading(false);
       }
     })();
-  }, [deleted, isFocused]);
+  }, [deleted, isFocused, refresh]);
 
   return (
     <View style={styles.container}>
       <ScrollView
         bounces
         style={{ marginTop: 15, height: SCREEN_HEIGHT * 0.9 }}
+        refreshControl={
+          <RefreshControl refreshing={refresh} onRefresh={onRefresh} />
+        }
       >
         {!error &&
           data.map((prod: any, i: number) => {

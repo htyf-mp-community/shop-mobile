@@ -13,12 +13,14 @@ interface MostRecentProps {
   path: string;
   title: string;
   sharedID: string;
+  refresh: boolean;
 }
 
 export default function ProductsCarusel({
   path,
   title,
   sharedID,
+  refresh,
 }: MostRecentProps) {
   const { user } = useUser();
   const [data, setData] = useState<any[]>([]);
@@ -44,7 +46,7 @@ export default function ProductsCarusel({
 
   useEffect(() => {
     FetchAllProducts();
-  }, []);
+  }, [refresh]);
 
   return (
     <HorizontalSlider title={title}>

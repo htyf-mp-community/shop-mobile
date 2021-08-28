@@ -58,7 +58,7 @@ const MainNavigator = () => {
               options={{
                 gestureEnabled: true,
                 gestureDirection: "vertical",
-                gestureResponseDistance: 500,
+                gestureResponseDistance: 200,
                 presentation: "modal",
                 headerShown: true,
                 headerStyle: { backgroundColor: Colors.primary },

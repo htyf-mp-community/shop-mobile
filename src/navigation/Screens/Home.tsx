@@ -1,5 +1,6 @@
 import {
   Keyboard,
+  RefreshControl,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -16,6 +17,11 @@ import { useEffect } from "react";
 import axios from "axios";
 import { API } from "../../constants/routes";
 import { useUser } from "../../context/UserContext";
+import { useCallback } from "react";
+
+export const wait = (timeout: number) => {
+  return new Promise((resolve) => setTimeout(resolve, timeout));
+};
 
 export default function Home() {
   const [showOverlay, setShowOverlay] = useState(false);
@@ -46,24 +52,41 @@ export default function Home() {
 
   const open = () => setShowOverlay(true);
 
+  const [refresh, setRefresh] = useState(false);
+
+  const onRefresh = useCallback(() => {
+    setRefresh(true);
+    wait(1000).then(() => {
+      setRefresh(false);
+    });
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <SearchBar open={open} close={close} />
-      <ScrollView>
+      <ScrollView
+        contentContainerStyle={styles.scrollView}
+        refreshControl={
+          <RefreshControl onRefresh={onRefresh} refreshing={refresh} />
+        }
+      >
         <ProductsCarusel
           path="/products/good-rated"
           title="Best Rated"
           sharedID="MostSearched"
+          refresh={refresh}
         />
         <ProductsCarusel
           path="/products/searched-products"
           title="Watched by you"
           sharedID="WatchedByYou"
+          refresh={refresh}
         />
         <ProductsCarusel
           path="/products"
           title="All available"
           sharedID="All"
+          refresh={refresh}
         />
       </ScrollView>
 
@@ -101,4 +124,5 @@ const styles = StyleSheet.create({
     fontFamily: "PoppinsRegular",
     padding: 20,
   },
+  scrollView: {},
 });
