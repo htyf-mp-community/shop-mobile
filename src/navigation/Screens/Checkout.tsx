@@ -1,11 +1,13 @@
 import axios from "axios";
 import React from "react";
 import { useState } from "react";
-import { View, StyleSheet, Text, Dimensions } from "react-native";
+import { View, StyleSheet, Dimensions } from "react-native";
 import Button from "../../components/Button/Button";
+import Message from "../../components/Message/Message";
 import { API } from "../../constants/routes";
 import { Colors } from "../../constants/styles";
 import { useUser } from "../../context/UserContext";
+import Personals from "../../modules/Checkout";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -37,26 +39,14 @@ export default function Checkout({ route }: any) {
 
   return (
     <View style={styles.container}>
-      {result === "Success" ? <View></View> : <View></View>}
+      <Personals />
 
-      <View>
-        <Text style={styles.text}>Address</Text>
-        {/* address component */}
-      </View>
-      <View>
-        <Text style={styles.text}>Phone number</Text>
-        {/* phone input */}
-      </View>
-      <View>
-        <Text style={styles.text}>Payment method</Text>
-        {/* maybe stripe integration */}
-      </View>
+      {!!result && <Message status={result} />}
 
       <View style={{ width: width, justifyContent: "center" }}>
-        {/* align it later */}
         <Button
           callback={Purchase}
-          disabled={true}
+          disabled={false}
           text={`Purchase $${total}`}
           style={{
             margin: 25,

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { StyleSheet, ScrollView, Animated } from "react-native";
+import { StyleSheet, ScrollView, Animated, RefreshControl } from "react-native";
 import axios from "axios";
 import { API } from "../../constants/routes";
 import { useUser } from "../../context/UserContext";
@@ -9,11 +9,24 @@ import ImagesCarusel from "../../modules/ImagesCarusel/ImagesCarusel";
 
 import ProductDetailsText from "../../modules/ProductDetailsText/ProductDetailsText";
 import ProductDetailsButtons from "../../modules/ProductDetailsButtons/ProductDetailsButtons";
+import { useIsFocused } from "@react-navigation/native";
+
+const wait = (timeout: number) => {
+  return new Promise((resolve) => setTimeout(resolve, timeout));
+};
 
 export default function ProductDetails({ route, navigation }: any) {
   const { prod_id, image, sharedID } = route.params;
   const { user } = useUser();
   const [result, setResult] = useState<any>({});
+  const isFocused = useIsFocused();
+
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    wait(1000).then(() => setRefreshing(false));
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -30,7 +43,7 @@ export default function ProductDetails({ route, navigation }: any) {
         console.log(error);
       }
     })();
-  }, []);
+  }, [isFocused, refreshing]);
 
   const imgList: { name: string; id: number }[] = result?.img_id;
   const images = imgList?.length > 1 ? imgList.splice(1, imgList.length) : [];
@@ -43,6 +56,9 @@ export default function ProductDetails({ route, navigation }: any) {
       scrollEventThrottle={16}
       showsVerticalScrollIndicator={false}
       bounces
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
     >
       <ImagesCarusel
         scrollX={scrollX}

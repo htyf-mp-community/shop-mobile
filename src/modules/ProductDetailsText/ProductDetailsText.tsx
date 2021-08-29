@@ -24,7 +24,7 @@ export default function ProductDetailsText({
       toValue: 1,
       useNativeDriver: true,
       duration: 200,
-      delay: 500,
+      delay: 200,
     }).start();
   }, [result.prod_id]);
   return (

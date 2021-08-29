@@ -5,6 +5,7 @@ import { View, StyleSheet, Image, Dimensions, ScrollView } from "react-native";
 import { SharedElement } from "react-navigation-shared-element";
 import Button from "../../../components/Button/Button";
 import Input from "../../../components/Input/Input";
+import Message from "../../../components/Message/Message";
 import { API } from "../../../constants/routes";
 import { Colors } from "../../../constants/styles";
 import { useUser } from "../../../context/UserContext";
@@ -23,7 +24,10 @@ export default function CreateReview({ route }: any) {
 
   const { status, variants } = useListenKeyboard();
 
+  const [response, setResponse] = useState("");
+
   async function PostReview() {
+    if (!title || !description || !rating) return;
     axios
       .post(
         `${API}/ratings/add`,
@@ -35,7 +39,7 @@ export default function CreateReview({ route }: any) {
           },
         }
       )
-      .then(({ data }) => console.log(data))
+      .then(({ data }) => setResponse(data.message))
       .catch((err) => console.log(err));
   }
 
@@ -51,6 +55,9 @@ export default function CreateReview({ route }: any) {
           />
         </SharedElement>
       )}
+
+      {!!response && <Message status={response} />}
+
       <ScrollView style={styles.form}>
         <StarsTouch setRating={setRating} />
         <Input
