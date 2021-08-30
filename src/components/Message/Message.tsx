@@ -22,6 +22,11 @@ export default function Message({ status }: { status: string }) {
     }).start();
   }, [isFocused]);
 
+  useEffect(() => {
+    const timeout = setTimeout(goHome, 2000);
+    return () => clearTimeout(timeout);
+  }, []);
+
   function goHome() {
     navigation.navigate("Home");
   }

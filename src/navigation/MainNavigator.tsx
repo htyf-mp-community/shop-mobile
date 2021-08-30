@@ -65,7 +65,15 @@ const MainNavigator = () => {
                 headerTintColor: Colors.text,
               }}
             />
-            <Stack.Screen component={User} name="User" />
+            <Stack.Screen
+              component={User}
+              name="User"
+              options={{
+                headerShown: true,
+                headerStyle: { backgroundColor: Colors.primary },
+                headerTintColor: Colors.text,
+              }}
+            />
             <Stack.Screen
               component={ProductDetails}
               name="Details"

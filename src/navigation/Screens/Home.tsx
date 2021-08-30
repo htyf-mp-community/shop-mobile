@@ -4,8 +4,6 @@ import {
   SafeAreaView,
   ScrollView,
   StyleSheet,
-  Text,
-  View,
 } from "react-native";
 import React from "react";
 import SearchBar from "../../modules/Searchbar/SearchBar";
@@ -14,12 +12,13 @@ import Overlay from "../../components/Overlay/Overlay";
 import { useState } from "react";
 import ProductsCarusel from "../../modules/ProductsCarusel/ProductsCarusel";
 import { useCallback } from "react";
+import Button from "../../components/Button/Button";
 
 export const wait = (timeout: number) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
 };
 
-export default function Home() {
+export default function Home({ route, navigation }: any) {
   const [showOverlay, setShowOverlay] = useState(false);
 
   const close = () => {
@@ -67,6 +66,12 @@ export default function Home() {
           title="All products"
           sharedID="All"
           refresh={refresh}
+        />
+
+        <Button
+          callback={() => navigation.navigate("User")}
+          text="Profile"
+          style={{ marginTop: 20 }}
         />
       </ScrollView>
 
