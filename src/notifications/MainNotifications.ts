@@ -1,7 +1,8 @@
 import * as Notifications from "expo-notifications";
-import { API } from "../constants/routes";
+import { ENDPOINTS } from "../constants/routes";
 import { useState, useRef, useEffect } from "react";
 import { registerForPushNotificationsAsync } from "./registerForPushNotificationsAsync";
+import axios from "axios";
 
 export async function UploadExpoTokenToServer(jwt: string) {
   try {
@@ -9,16 +10,17 @@ export async function UploadExpoTokenToServer(jwt: string) {
       experienceId: "@username/example",
     });
 
-    await fetch(API + "/notifications/upload-token", {
-      method: "POST",
-      headers: {
-        token: jwt,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        token: expoPushToken.data,
-      }),
-    }).catch((err) => console.log(err));
+    axios
+      .post(
+        ENDPOINTS.notificationsAddToken,
+        { token: expoPushToken },
+        {
+          headers: {
+            token: jwt,
+          },
+        }
+      )
+      .catch((err) => console.log(err));
   } catch (error) {
     console.log(error);
   }

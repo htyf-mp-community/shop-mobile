@@ -59,7 +59,12 @@ export default function StarsTouch({ setRating }: StarsProps) {
   );
 }
 
-export const Stars = ({ rating, style }: any) => {
+type TStarsProps = {
+  rating: number;
+  starStyle?: any;
+};
+
+export const Stars = ({ rating, starStyle = {} }: TStarsProps) => {
   const [start] = useState(() => {
     const arr = [];
     for (let i = 0; i < 5; i++) {
@@ -68,7 +73,7 @@ export const Stars = ({ rating, style }: any) => {
     return arr;
   });
   return (
-    <View style={[styles.container, style]}>
+    <View style={[styles.container, starStyle]}>
       <View style={styles.stars}>
         {start.map(({ value }, index) => {
           return (

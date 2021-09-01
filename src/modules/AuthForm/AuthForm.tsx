@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH * 0.5,
     marginTop: 20,
     borderColor: Colors.primary200,
-    backgroundColor: Colors.primary600,
+    backgroundColor: Colors.secondary,
     borderWidth: 0.5,
     color: Colors.text,
     justifyContent: "center",

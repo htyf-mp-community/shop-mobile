@@ -2,7 +2,7 @@ import axios from "axios";
 import React from "react";
 import { useState } from "react";
 import { View, Text, StyleSheet, Switch } from "react-native";
-import { API } from "../../../constants/routes";
+import { ENDPOINTS } from "../../../constants/routes";
 import { Colors } from "../../../constants/styles";
 import { useUser } from "../../../context/UserContext";
 
@@ -16,7 +16,7 @@ export default function Settings() {
     try {
       console.log(isEnabled);
       axios.post(
-        `${API}/notifications/settings`,
+        ENDPOINTS.notificationsSettings,
         {
           enable: !isEnabled,
         },

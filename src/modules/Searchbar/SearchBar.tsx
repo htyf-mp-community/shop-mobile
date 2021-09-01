@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
 import { useUser } from "../../context/UserContext";
-import { API } from "../../constants/routes";
+import { API, ENDPOINTS } from "../../constants/routes";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { Colors } from "../../constants/styles";
@@ -34,7 +34,7 @@ export default function SearchBar({ open, close }: SearchBarProps) {
       });
     setLoading(true);
     axios
-      .get(`${API}/products/searched=${searchedValue}`, {
+      .get(`${ENDPOINTS.searchProducts}${searchedValue}`, {
         headers: {
           "Content-Type": "application/json",
           token: user.token,

@@ -13,6 +13,7 @@ import { useState } from "react";
 import ProductsCarusel from "../../modules/ProductsCarusel/ProductsCarusel";
 import { useCallback } from "react";
 import Button from "../../components/Button/Button";
+import { ENDPOINTS } from "../../constants/routes";
 
 export const wait = (timeout: number) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -44,25 +45,24 @@ export default function Home({ route, navigation }: any) {
     <SafeAreaView style={styles.container}>
       <SearchBar open={open} close={close} />
       <ScrollView
-        contentContainerStyle={styles.scrollView}
         refreshControl={
           <RefreshControl onRefresh={onRefresh} refreshing={refresh} />
         }
       >
         <ProductsCarusel
-          path="/products/good-rated"
+          path={ENDPOINTS.goodRatedProducts}
           title="Best Rated"
           sharedID="MostSearched"
           refresh={refresh}
         />
         <ProductsCarusel
-          path="/products/searched-products"
+          path={ENDPOINTS.searchedProducts}
           title="Your searches"
           sharedID="WatchedByYou"
           refresh={refresh}
         />
         <ProductsCarusel
-          path="/products"
+          path={ENDPOINTS.productsAll}
           title="All products"
           sharedID="All"
           refresh={refresh}
@@ -71,7 +71,7 @@ export default function Home({ route, navigation }: any) {
         <Button
           callback={() => navigation.navigate("User")}
           text="Profile"
-          style={{ marginTop: 20 }}
+          style={{ marginTop: 20, width: 250 }}
         />
       </ScrollView>
 
@@ -90,5 +90,4 @@ const styles = StyleSheet.create({
     fontFamily: "PoppinsRegular",
     padding: 20,
   },
-  scrollView: {},
 });

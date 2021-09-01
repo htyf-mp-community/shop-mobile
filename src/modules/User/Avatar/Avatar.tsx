@@ -7,12 +7,14 @@ const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("screen");
 
 interface IAvatarProps {
   avatar?: string; // required later
+  hide?: boolean;
+  style?: any;
 }
 
-export default function Avatar({ avatar }: IAvatarProps) {
+export default function Avatar({ avatar, hide = false, style }: IAvatarProps) {
   const { user } = useUser();
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       <Image
         source={{
           uri:
@@ -21,15 +23,19 @@ export default function Avatar({ avatar }: IAvatarProps) {
         }}
         style={styles.avatar}
       />
-      <Text style={styles.username}>
-        Hi!{" "}
-        <Text style={{ color: Colors.secondary }}>
-          {user?.name.split("@")[0]}
-        </Text>
-      </Text>
-      <Text style={[styles.username, { fontSize: 15, marginTop: 5 }]}>
-        since 28.08.2021
-      </Text>
+      {!hide && (
+        <>
+          <Text style={styles.username}>
+            Hi!{" "}
+            <Text style={{ color: Colors.secondary }}>
+              {user?.name.split("@")[0]}
+            </Text>
+          </Text>
+          <Text style={[styles.username, { fontSize: 15, marginTop: 5 }]}>
+            since 28.08.2021
+          </Text>
+        </>
+      )}
     </View>
   );
 }

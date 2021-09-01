@@ -32,7 +32,7 @@ export default function ProductsCarusel({
   const FetchAllProducts = useCallback(async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get(`${API}${path}`, {
+      const { data } = await axios.get(path, {
         headers: {
           token: user.token,
         },

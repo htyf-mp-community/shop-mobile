@@ -1,6 +1,6 @@
 import React from "react";
-import { View, StyleSheet, Text, Dimensions } from "react-native";
-import { Colors, radius } from "../../constants/styles";
+import { View, StyleSheet, Text, Dimensions, Image } from "react-native";
+import { Colors } from "../../constants/styles";
 import { Stars } from "../Stars/Stars";
 
 export interface RatingProps {
@@ -20,9 +20,24 @@ export default function Ratings({
 }: RatingProps) {
   return (
     <View key={rating_id} style={styles.container}>
-      <Text style={styles.title}>{title}</Text>
-      <Stars rating={rating} style={{ width: width * 0.55 }} />
-      <Text style={styles.text}>{description}</Text>
+      <View style={{ flexDirection: "row", width: width * 0.3 }}>
+        <Image
+          source={{
+            uri: "https://pbs.twimg.com/profile_images/573692360263004161/gOvizBEP_400x400.jpeg",
+          }}
+          style={styles.image}
+        />
+        <View style={{ width: width * 0.7, marginLeft: 10 }}>
+          <Stars
+            starStyle={{ flexDirection: "row", width: width * 0.7 }}
+            rating={rating}
+          />
+          <Text style={styles.title}>{title}</Text>
+          <Text style={[styles.text, { textAlign: "center" }]}>
+            {description}
+          </Text>
+        </View>
+      </View>
     </View>
   );
 }
@@ -32,19 +47,24 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary,
     padding: 10,
     borderWidth: 0.5,
-    margin: 10,
-    borderColor: Colors.text,
-    borderRadius: radius.small,
+    margin: 5,
+    borderBottomWidth: 0.5,
+    borderBottomColor: "rgba(255,255,255,0.5)",
   },
   title: {
-    fontSize: 35,
-    textAlign: "center",
-    fontFamily: "PoppinsBold",
+    fontSize: 25,
+    paddingLeft: 25,
+    fontFamily: "PoppinsMedium",
     color: Colors.text,
   },
   text: {
-    fontFamily: "PoppinsMedium",
+    fontFamily: "PoppinsRegular",
     fontSize: 17,
     color: Colors.text,
+  },
+  image: {
+    width: 75,
+    height: 75,
+    borderRadius: 100,
   },
 });
