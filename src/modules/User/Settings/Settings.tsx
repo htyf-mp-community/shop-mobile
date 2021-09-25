@@ -5,6 +5,7 @@ import { View, Text, StyleSheet, Switch } from "react-native";
 import { ENDPOINTS } from "../../../constants/routes";
 import { Colors } from "../../../constants/styles";
 import { useUser } from "../../../context/UserContext";
+import SignOut from "../../Signout/Signout";
 
 export default function Settings() {
   const [isEnabled, setIsEnabled] = useState(true);
@@ -34,19 +35,21 @@ export default function Settings() {
       <Text style={styles.headings}>Settings</Text>
       <View
         style={{
-          flexDirection: "row",
-          alignItems: "center",
           marginTop: 20,
+          flexDirection: "column",
         }}
       >
-        <Text style={[styles.headings, { fontSize: 15 }]}>Notifications</Text>
-        <Switch
-          trackColor={{ false: Colors.text, true: Colors.text }}
-          thumbColor={isEnabled ? Colors.secondary100 : "#f4f3f4"}
-          value={isEnabled}
-          ios_backgroundColor="#3e3e3e"
-          onValueChange={toggleSwitch}
-        />
+        <SignOut />
+        <View style={{ padding: 5 }}>
+          <Text style={[styles.headings, { fontSize: 15 }]}>Notifications</Text>
+          <Switch
+            trackColor={{ false: Colors.text, true: Colors.text }}
+            thumbColor={isEnabled ? Colors.secondary100 : "#f4f3f4"}
+            value={isEnabled}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={toggleSwitch}
+          />
+        </View>
       </View>
     </View>
   );

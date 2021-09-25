@@ -45,11 +45,11 @@ export default function AuthForm({ onSubmit }: AuthFormProps) {
         placeholder="email"
         style={{
           ...styles.input,
-          borderColor: EmailError ? "red" : Colors.primary100,
-          color: EmailError ? "red" : Colors.primary100,
+          borderColor: EmailError ? "red" : Colors.text,
+          color: EmailError ? "red" : Colors.text,
         }}
-        placeholderColor={Colors.primary100}
-        labelStyle={{ color: Colors.primary100 }}
+        placeholderColor={Colors.text}
+        labelStyle={{ color: Colors.text }}
       />
       <Input
         value={password}
@@ -58,11 +58,11 @@ export default function AuthForm({ onSubmit }: AuthFormProps) {
         placeholder="password"
         style={{
           ...styles.input,
-          borderColor: PasswordError ? "red" : Colors.primary100,
-          color: PasswordError ? "red" : Colors.primary100,
+          borderColor: PasswordError ? "red" : Colors.text,
+          color: PasswordError ? "red" : Colors.text,
         }}
-        placeholderColor={Colors.primary100}
-        labelStyle={{ color: Colors.primary100 }}
+        placeholderColor={Colors.text}
+        labelStyle={{ color: Colors.text }}
       />
       <Button text="Sign In" callback={Submit} style={styles.btn} />
     </View>

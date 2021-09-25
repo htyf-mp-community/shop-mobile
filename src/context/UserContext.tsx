@@ -8,14 +8,6 @@ import {
 
 export const USER_PREFIX = "react-native-shop-user";
 
-async function SaveUser(props: UserType) {
-  try {
-    await AsyncStorage.setItem(USER_PREFIX, JSON.stringify(props));
-  } catch (error) {
-    return null;
-  }
-}
-
 async function ReadUser(): Promise<UserType | undefined> {
   try {
     const value = await AsyncStorage.getItem(USER_PREFIX);
@@ -36,6 +28,16 @@ const User = createContext<UserContextType>();
 
 export const UserContextProvider = ({ children }: UserContextProviderType) => {
   const [user, setUser] = useState<UserType>(init);
+
+  async function SaveUser(props: UserType) {
+    try {
+      await AsyncStorage.setItem(USER_PREFIX, JSON.stringify(props)).then(() =>
+        setUser(props)
+      );
+    } catch (error) {
+      return null;
+    }
+  }
 
   return (
     <User.Provider value={{ user, setUser, SaveUser, ReadUser }}>

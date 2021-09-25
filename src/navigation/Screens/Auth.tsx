@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, ActivityIndicator } from "react-native";
+import { View, ActivityIndicator } from "react-native";
 import AuthForm from "../../modules/AuthForm/AuthForm";
 import { Colors } from "../../constants/styles";
 import { API } from "../../constants/routes";
@@ -40,13 +40,20 @@ export default function Auth() {
         }
       })
       .catch((err) => {
-        setError(err.message);
+        setError(err.response.data.message || err.message);
         setLoading(false);
       });
   }
 
+  console.log(error);
+
   return (
-    <View style={styles.container}>
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: Colors.primary,
+      }}
+    >
       {loading ? (
         <ActivityIndicator size="large" color="#fff" />
       ) : (
@@ -55,10 +62,3 @@ export default function Auth() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.primary,
-  },
-});
