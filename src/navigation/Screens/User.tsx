@@ -1,5 +1,6 @@
+import History from "../../modules/User/History/History";
 import React from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { Colors } from "../../constants/styles";
 import Avatar from "../../modules/User/Avatar/Avatar";
 import Settings from "../../modules/User/Settings/Settings";
@@ -9,6 +10,7 @@ export default function User() {
     <View style={styles.container}>
       <Avatar />
       <Settings />
+      <History />
     </View>
   );
 }

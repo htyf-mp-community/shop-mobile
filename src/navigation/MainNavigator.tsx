@@ -22,21 +22,17 @@ import ProductReviews from "./Screens/Reviews/ProductReviews";
 const Stack = createSharedElementStackNavigator<RootStackParams>();
 
 const MainNavigator = () => {
-  const { setUser, ReadUser, user } = useUser();
+  const { ReadUser, user } = useUser();
 
   useEffect(() => {
     (async () => {
-      // without await doesnt work XD 'await' has no effect on the type of this expression.
-      const res: any = await ReadUser();
-      if (typeof res !== "undefined") {
-        setUser(res);
-      }
+      ReadUser();
     })();
   }, []);
-  const { expoPushToken } = useNotifications();
+  const { expoPushToken, notification } = useNotifications();
 
   useEffect(() => {
-    if (expoPushToken) {
+    if (expoPushToken && notification) {
       UploadExpoTokenToServer(user.token);
     }
   }, [expoPushToken]);

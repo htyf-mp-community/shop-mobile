@@ -8,15 +8,6 @@ import {
 
 export const USER_PREFIX = "react-native-shop-user";
 
-async function ReadUser(): Promise<UserType | undefined> {
-  try {
-    const value = await AsyncStorage.getItem(USER_PREFIX);
-    return value !== null ? JSON.parse(value) : undefined;
-  } catch (error) {
-    return undefined;
-  }
-}
-
 export const init: UserType = {
   token: "",
   user_id: -1,
@@ -36,6 +27,15 @@ export const UserContextProvider = ({ children }: UserContextProviderType) => {
       );
     } catch (error) {
       return null;
+    }
+  }
+
+  async function ReadUser(): Promise<UserType | undefined> {
+    try {
+      const value = await AsyncStorage.getItem(USER_PREFIX);
+      value !== null ? setUser(JSON.parse(value)) : undefined;
+    } catch (error) {
+      return undefined;
     }
   }
 
