@@ -1,42 +1,18 @@
-import axios from "axios";
 import { ENDPOINTS } from "../../../constants/routes";
-import { useUser } from "../../../context/UserContext";
-import { useEffect, useState } from "react";
-import { StyleSheet, ScrollView } from "react-native";
+import { StyleSheet } from "react-native";
 import React from "react";
-import Product from "../../Product/Product";
+import ProductsCarusel from "../../ProductsCarusel/ProductsCarusel";
 
 interface HistoryProps {}
 
 export default function History({}: HistoryProps): JSX.Element {
-  const {
-    user: { token },
-  } = useUser();
-
-  const [history, setHistory] = useState<any[]>([]);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const { data } = await axios.get(ENDPOINTS.history, {
-          headers: {
-            token: token,
-          },
-        });
-
-        setHistory(data);
-      } catch (error: any) {
-        console.log(error.message);
-      }
-    })();
-  }, [token]);
-
   return (
-    <ScrollView style={styles.container} horizontal pagingEnabled>
-      {history.map((el, i) => {
-        return <Product key={i} {...el} sharedID=".history" />;
-      })}
-    </ScrollView>
+    <ProductsCarusel
+      title="Last purchases"
+      sharedID="History"
+      path={ENDPOINTS.history}
+      refresh={false}
+    />
   );
 }
 

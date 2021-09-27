@@ -3,7 +3,6 @@ import HorizontalSlider from "../../components/HorizontalSlider/HorizontalSlider
 import { View, Text } from "react-native";
 import Product from "../Product/Product";
 import { useUser } from "../../context/UserContext";
-import { API } from "../../constants/routes";
 import { ProductTypeProps } from "../Product/Product";
 import axios from "axios";
 import RemoveProductsRepetition from "../../functions/RemoveRepetition";
@@ -41,7 +40,7 @@ export default function ProductsCarusel({
         setData(RemoveProductsRepetition(data));
         setLoading(false);
       }
-    } catch (error) {
+    } catch (error: any) {
       setError(error.message);
       setLoading(false);
     }
