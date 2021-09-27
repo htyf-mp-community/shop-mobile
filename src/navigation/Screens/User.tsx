@@ -9,8 +9,8 @@ export default function User() {
   return (
     <ScrollView style={styles.container}>
       <Avatar />
-      <Settings />
       <History />
+      <Settings />
     </ScrollView>
   );
 }

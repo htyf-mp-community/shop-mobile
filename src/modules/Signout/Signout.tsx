@@ -20,5 +20,18 @@ export default function SignOut() {
     }
   }
 
-  return <Button callback={SignOut} text={"Sign Out"} />;
+  return (
+    <Button
+      callback={SignOut}
+      text={tapped === 1 ? "Are you sure?" : "Signout"}
+      style={{
+        backgroundColor: "transparent",
+        color: "red",
+        borderWidth: 1,
+        borderColor: "red",
+        marginTop: 20,
+        marginBottom: 20,
+      }}
+    />
+  );
 }

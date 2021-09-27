@@ -39,8 +39,14 @@ export default function Settings() {
           flexDirection: "column",
         }}
       >
-        <SignOut />
-        <View style={{ padding: 5 }}>
+        <View
+          style={{
+            padding: 10,
+            justifyContent: "flex-start",
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
           <Text style={[styles.headings, { fontSize: 15 }]}>Notifications</Text>
           <Switch
             trackColor={{ false: Colors.text, true: Colors.text }}
@@ -50,6 +56,7 @@ export default function Settings() {
             onValueChange={toggleSwitch}
           />
         </View>
+        <SignOut />
       </View>
     </View>
   );
