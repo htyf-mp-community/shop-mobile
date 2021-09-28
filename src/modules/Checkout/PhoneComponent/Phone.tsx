@@ -1,11 +1,11 @@
 import React from "react";
-import { useState } from "react";
 import { View, Text } from "react-native";
+import { usePersonalContext } from "../PersonalProvider/index";
 import Input from "../../../components/Input/Input";
 import { Colors } from "../../../constants/styles";
 
 export default function Phone() {
-  const [phone, setPhone] = useState("");
+  const { phone, setPhone } = usePersonalContext();
   return (
     <View style={{ padding: 10 }}>
       <Text

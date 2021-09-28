@@ -1,11 +1,11 @@
 import React from "react";
-import { useState } from "react";
 import { Text, View } from "react-native";
+import { usePersonalContext } from "../PersonalProvider/index";
 import Input from "../../../components/Input/Input";
 import { Colors } from "../../../constants/styles";
 
 export default function Payment() {
-  const [card, setCard] = useState("");
+  const { card, setCard } = usePersonalContext();
 
   return (
     <View style={{ padding: 10 }}>

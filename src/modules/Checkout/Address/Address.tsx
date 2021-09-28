@@ -1,15 +1,15 @@
 import React from "react";
-import { useState } from "react";
 import { View, StyleSheet, Dimensions, Text } from "react-native";
+import { usePersonalContext } from "../PersonalProvider/index";
 import Input from "../../../components/Input/Input";
 import { Colors } from "../../../constants/styles";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
 export default function Address() {
-  const [city, setCity] = useState("");
-  const [number, setNumber] = useState("");
-  const [street, setStreet] = useState("");
+  const {
+    address: { city, setCity, setNumber, setStreet, number, street },
+  } = usePersonalContext();
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Address</Text>

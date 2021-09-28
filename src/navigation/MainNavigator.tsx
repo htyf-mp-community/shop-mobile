@@ -25,7 +25,7 @@ const MainNavigator = () => {
   const { ReadUser, user } = useUser();
 
   useEffect(() => {
-    (async () => {
+    (() => {
       ReadUser();
     })();
   }, []);

@@ -8,16 +8,33 @@ import { API } from "../../constants/routes";
 import { Colors } from "../../constants/styles";
 import { useUser } from "../../context/UserContext";
 import Personals from "../../modules/Checkout";
+import PersonalProvider, {
+  usePersonalContext,
+} from "../../modules/Checkout/PersonalProvider";
 
 const { width, height } = Dimensions.get("screen");
 
 export default function Checkout({ route }: any) {
+  return (
+    <PersonalProvider>
+      <CheckoutComponent route={route} />
+    </PersonalProvider>
+  );
+}
+
+function CheckoutComponent({ route }: any) {
   const { cart, total } = route.params;
   const { user } = useUser();
 
   const [result, setResult] = useState("");
 
+  const {
+    card,
+    address: { city, street },
+  } = usePersonalContext();
+
   async function Purchase() {
+    if (!city || !street || !card) return;
     try {
       const response = await axios.post(
         `${API}/payments/purchase`,
