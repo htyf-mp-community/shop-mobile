@@ -2,7 +2,7 @@ import React from "react";
 import { ActivityIndicator } from "react-native";
 import Button from "../../components/Button/Button";
 import { useUser } from "../../context/UserContext";
-import { ENDPOINTS } from "../../constants/routes";
+import { API, ENDPOINTS } from "../../constants/routes";
 import { useState } from "react";
 import { Colors } from "../../constants/styles";
 import axios from "axios";
@@ -54,7 +54,7 @@ export default function AddToCart({
     setLoading(true);
     axios
       .post(
-        ENDPOINTS.cartAdd,
+        `${API}/cart/`,
         { prod_id },
         {
           headers: {

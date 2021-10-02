@@ -31,7 +31,7 @@ export default function Cart() {
 
   async function RemoveCartProduct(cart_id: number) {
     try {
-      const { data } = await axios.delete(API + "/cart/" + cart_id, {
+      const { data } = await axios.delete(`${API}/cart?id=${cart_id}`, {
         headers: {
           token: user.token,
         },
@@ -72,7 +72,7 @@ export default function Cart() {
           setData(response.data);
           setIsLoading(false);
         }
-      } catch (error) {
+      } catch (error: any) {
         setError(error.message);
         setIsLoading(false);
       }
