@@ -5,7 +5,7 @@ import { radius } from "../../constants/styles";
 type TButtonProps = {
   text?: string;
   callback: () => void;
-  icon?: any;
+  icon?: React.ReactNode;
   style?: any;
   disabled?: boolean;
 };
@@ -25,7 +25,7 @@ export default function Button({
       style={[styles.button, style]}
     >
       {text !== "" && (
-        <Text style={[styles.text, { color: style?.color || "black" }]}>
+        <Text style={[styles.text, { color: style?.color || "#fff" }]}>
           {text}
         </Text>
       )}
@@ -37,7 +37,7 @@ export default function Button({
 const styles = StyleSheet.create({
   button: {
     flexDirection: "row",
-    backgroundColor: "#4A4C50",
+    backgroundColor: "#FF0056",
     borderRadius: radius.small,
     padding: 12,
   },

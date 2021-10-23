@@ -1,5 +1,5 @@
 import { ENDPOINTS } from "../../../constants/routes";
-import { StyleSheet } from "react-native";
+
 import React from "react";
 import ProductsCarusel from "../../ProductsCarusel/ProductsCarusel";
 
@@ -15,7 +15,3 @@ export default function History({}: HistoryProps): JSX.Element {
     />
   );
 }
-
-const styles = StyleSheet.create({
-  container: {},
-});

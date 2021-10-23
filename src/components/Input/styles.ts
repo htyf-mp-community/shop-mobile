@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
   label: {
     width: WIDTH * 0.9,
     fontSize: 18,
+    fontWeight: "bold",
     color: "black",
   },
 });

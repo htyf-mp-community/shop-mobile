@@ -3,17 +3,18 @@ import { Animated, Dimensions } from "react-native";
 
 const { width } = Dimensions.get("screen");
 
-export default function Dots({ arr, x }: { arr: any[]; x: Animated.Value }) {
+interface DotsProps {
+  arr: any[];
+  x: Animated.Value;
+}
+
+export default function Dots({ arr, x }: DotsProps) {
   return (
     <>
       {arr.map((_: any, i: number) => {
         const backgroundColor = x.interpolate({
           inputRange: [(i - 1) * width, i * width, (i + 1) * width],
-          outputRange: [
-            "rgba(255,255,255,0.2)",
-            "white",
-            "rgba(255,255,255,0.2)",
-          ],
+          outputRange: ["grey", "white", "grey"],
           extrapolate: "clamp",
         });
 
@@ -22,12 +23,19 @@ export default function Dots({ arr, x }: { arr: any[]; x: Animated.Value }) {
           outputRange: [0.8, 1.1, 0.8],
           extrapolate: "clamp",
         });
+
+        const dotWidth = x.interpolate({
+          inputRange: [(i - 1) * width, i * width, (i + 1) * width],
+          outputRange: [15, 30, 15],
+          extrapolate: "clamp",
+        });
+
         return (
           <Animated.View
             key={i}
             style={{
-              width: 15,
-              height: 15,
+              width: dotWidth,
+              height: 10,
               backgroundColor: backgroundColor,
               borderRadius: 100,
               margin: 4,

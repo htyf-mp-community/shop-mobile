@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, StyleSheet, Dimensions, Text } from "react-native";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
-import { Colors, h2, radius } from "../../constants/styles";
+import { Colors, h1, radius } from "../../constants/styles";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
@@ -37,7 +37,7 @@ export default function AuthForm({ onSubmit }: AuthFormProps) {
 
   return (
     <View style={styles.form}>
-      <Text style={h2}>Login</Text>
+      <Text style={[h1, { fontWeight: "bold" }]}>Login</Text>
       <Input
         value={email}
         setValue={setEmail}
@@ -50,11 +50,13 @@ export default function AuthForm({ onSubmit }: AuthFormProps) {
         }}
         placeholderColor={Colors.text}
         labelStyle={{ color: Colors.text }}
+        keyboardType="email-address"
       />
       <Input
         value={password}
         setValue={setPassword}
         name="password"
+        keyboardType="visible-password"
         placeholder="password"
         style={{
           ...styles.input,
@@ -76,7 +78,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   input: {
-    borderWidth: 0.5,
+    borderWidth: 1.5,
     borderColor: Colors.primary200,
     marginTop: 5,
   },
@@ -84,7 +86,6 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH * 0.5,
     marginTop: 20,
     borderColor: Colors.primary200,
-    backgroundColor: Colors.secondary,
     borderWidth: 0.5,
     color: Colors.text,
     justifyContent: "center",

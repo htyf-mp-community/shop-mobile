@@ -4,29 +4,19 @@ import { useState } from "react";
 import { View, Text, StyleSheet, Switch } from "react-native";
 import { ENDPOINTS } from "../../../constants/routes";
 import { Colors } from "../../../constants/styles";
-import { useUser } from "../../../context/UserContext";
 import SignOut from "../../Signout/Signout";
 
 export default function Settings() {
   const [isEnabled, setIsEnabled] = useState(true);
-  const { user } = useUser();
 
   const toggleSwitch = async () => {
     setIsEnabled((previousState) => !previousState);
 
     try {
       console.log(isEnabled);
-      axios.post(
-        ENDPOINTS.notificationsSettings,
-        {
-          enable: !isEnabled,
-        },
-        {
-          headers: {
-            token: user.token,
-          },
-        }
-      );
+      axios.post(ENDPOINTS.notificationsSettings, {
+        enable: !isEnabled,
+      });
     } catch (error) {}
   };
 

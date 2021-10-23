@@ -18,8 +18,6 @@ import Checkout from "./Screens/Checkout";
 import SearchResults from "./Screens/SearchResults";
 import CreateReview from "./Screens/Reviews/CreateReview";
 import ProductReviews from "./Screens/Reviews/ProductReviews";
-import axios from "axios";
-import { API } from "../constants/routes";
 
 const Stack = createSharedElementStackNavigator<RootStackParams>();
 
@@ -29,8 +27,6 @@ const MainNavigator = () => {
   useEffect(() => {
     (() => {
       ReadUser();
-      axios.defaults.headers.common["token"] = user.token;
-      axios.defaults.baseURL = API;
     })();
   }, []);
   const { expoPushToken, notification } = useNotifications();

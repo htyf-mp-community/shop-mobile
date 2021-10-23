@@ -15,14 +15,11 @@ export default function Avatar({ avatar, hide = false, style }: IAvatarProps) {
   const { user } = useUser();
   return (
     <View style={[styles.container, style]}>
-      <Image
-        source={{
-          uri:
-            avatar ||
-            "https://pbs.twimg.com/profile_images/573692360263004161/gOvizBEP_400x400.jpeg",
-        }}
-        style={styles.avatar}
-      />
+      <View style={[styles.avatar]}>
+        <Text style={{ fontSize: 50, color: "#fff" }}>
+          {user.name[0].toUpperCase()}
+        </Text>
+      </View>
       {!hide && (
         <>
           <Text style={styles.username}>
@@ -48,9 +45,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   avatar: {
+    marginTop: 10,
     width: SCREEN_WIDTH * 0.5,
     height: SCREEN_WIDTH * 0.5,
     borderRadius: 100,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#1E1E1E",
   },
   username: {
     fontFamily: "PoppinsBold",

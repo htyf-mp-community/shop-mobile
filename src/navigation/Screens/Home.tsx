@@ -4,6 +4,7 @@ import {
   SafeAreaView,
   ScrollView,
   StyleSheet,
+  View,
 } from "react-native";
 import React from "react";
 import SearchBar from "../../modules/Searchbar/SearchBar";
@@ -68,11 +69,20 @@ export default function Home({ route, navigation }: any) {
           refresh={refresh}
         />
 
-        <Button
-          callback={() => navigation.navigate("User")}
-          text="Profile"
-          style={{ marginTop: 20, width: 250 }}
-        />
+        <View
+          style={{
+            width: "100%",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: 20,
+          }}
+        >
+          <Button
+            callback={() => navigation.navigate("User")}
+            text="Profile"
+            style={{ width: "100%" }}
+          />
+        </View>
       </ScrollView>
 
       {showOverlay && <Overlay close={close}></Overlay>}

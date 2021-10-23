@@ -34,7 +34,6 @@ function CheckoutComponent({ route }: any) {
   } = usePersonalContext();
 
   async function Purchase() {
-    if (!city || !street || !card) return;
     try {
       const response = await axios.post(
         `${API}/payments/purchase`,
