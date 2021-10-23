@@ -36,6 +36,7 @@ export default function useFetchProducts(path: string, deps: any[] = []) {
       });
       if (data !== null && data.message !== "Token expired") {
         const result = RemoveProductsRepetition(data);
+
         setState((prev) => ({ ...prev, data: result, loading: false }));
       }
     } catch (error: any) {

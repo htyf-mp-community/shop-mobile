@@ -22,7 +22,9 @@ export default function ProductsCarusel({
   sharedID,
   refresh,
 }: MostRecentProps) {
-  const getItem = (data: any[]) => data[0];
+  const getItem = (data: any[], key: number) => {
+    return data[key];
+  };
 
   const state = useFetchProducts(path, [refresh]);
 
@@ -62,7 +64,7 @@ export default function ProductsCarusel({
           initialNumToRender={1}
           getItem={getItem}
           getItemCount={(data) => data.length}
-          keyExtractor={(item: ProductTypeProps) => item.prod_id.toString()}
+          keyExtractor={(item: ProductTypeProps) => `home.${item.prod_id}`}
           renderItem={({ item, index }) => {
             return (
               <Product
