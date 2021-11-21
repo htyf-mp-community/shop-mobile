@@ -12,6 +12,7 @@ export const init: UserType = {
   token: "",
   user_id: -1,
   name: "",
+  isLoggedIn: false,
 };
 
 //@ts-ignore
@@ -20,10 +21,15 @@ const User = createContext<UserContextType>();
 export const UserContextProvider = ({ children }: UserContextProviderType) => {
   const [user, setUser] = useState<UserType>(init);
 
+  const setLoggedIn = () => setUser((p) => ({ ...p, isLoggedIn: true }));
+
   async function SaveUser(props: UserType) {
     try {
-      await AsyncStorage.setItem(USER_PREFIX, JSON.stringify(props)).then(() =>
-        setUser(props)
+      await AsyncStorage.setItem(USER_PREFIX, JSON.stringify(props)).then(
+        () => {
+          setUser(props);
+          setLoggedIn();
+        }
       );
     } catch (error) {
       return null;
@@ -33,14 +39,24 @@ export const UserContextProvider = ({ children }: UserContextProviderType) => {
   async function ReadUser(): Promise<UserType | undefined> {
     try {
       const value = await AsyncStorage.getItem(USER_PREFIX);
-      value !== null ? setUser(JSON.parse(value)) : undefined;
+
+      if (value !== null) {
+        setUser(JSON.parse(value));
+        setLoggedIn();
+      }
     } catch (error) {
       return undefined;
     }
   }
 
+  async function RemoveUser() {
+    AsyncStorage.removeItem(USER_PREFIX).then(() => {
+      setUser(init);
+    });
+  }
+
   return (
-    <User.Provider value={{ user, setUser, SaveUser, ReadUser }}>
+    <User.Provider value={{ user, setUser, SaveUser, ReadUser, RemoveUser }}>
       {children}
     </User.Provider>
   );

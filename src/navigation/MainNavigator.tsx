@@ -18,36 +18,45 @@ import Checkout from "./Screens/Checkout";
 import SearchResults from "./Screens/SearchResults";
 import CreateReview from "./Screens/Reviews/CreateReview";
 import ProductReviews from "./Screens/Reviews/ProductReviews";
+import useCheckToken from "../hooks/useCheckToken";
 
 const Stack = createSharedElementStackNavigator<RootStackParams>();
 
-const MainNavigator = () => {
-  const { ReadUser, user } = useUser();
+export default function MainNavigator() {
+  const {
+    ReadUser,
+    user: { token, isLoggedIn },
+  } = useUser();
 
   useEffect(() => {
-    (() => {
-      ReadUser();
-    })();
+    ReadUser();
   }, []);
-  const { expoPushToken, notification } = useNotifications();
+  const { notification } = useNotifications();
+  useCheckToken();
 
   useEffect(() => {
-    if (expoPushToken && notification) {
-      UploadExpoTokenToServer(user.token);
+    if (notification) {
+      UploadExpoTokenToServer(token);
     }
-  }, [expoPushToken]);
+  }, [notification]);
 
   return (
     <NavigationContainer>
       <Stack.Navigator
         initialRouteName="Auth"
         screenOptions={{
-          headerShown: false,
+          headerShown: true,
+          headerStyle: { backgroundColor: Colors.primary },
+          headerTintColor: Colors.text,
         }}
       >
-        {user.token !== "" ? (
+        {isLoggedIn ? (
           <>
-            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen
+              name="Home"
+              component={Home}
+              options={{ headerShown: false }}
+            />
             <Stack.Screen
               name="Cart"
               component={Cart}
@@ -56,27 +65,16 @@ const MainNavigator = () => {
                 gestureDirection: "vertical",
                 gestureResponseDistance: 200,
                 presentation: "modal",
-                headerShown: true,
-                headerStyle: { backgroundColor: Colors.primary },
-                headerTintColor: Colors.text,
               }}
             />
-            <Stack.Screen
-              component={User}
-              name="User"
-              options={{
-                headerShown: true,
-                headerStyle: { backgroundColor: Colors.primary },
-                headerTintColor: Colors.text,
-              }}
-            />
+            <Stack.Screen component={User} name="User" />
             <Stack.Screen
               component={ProductDetails}
               name="Details"
               //@ts-ignore
               options={options}
-              sharedElements={(route) => {
-                const { prod_id, sharedID } = route.params;
+              sharedElements={({ params }) => {
+                const { prod_id, sharedID } = params;
                 return ["prod_id." + prod_id + sharedID];
               }}
             />
@@ -88,9 +86,6 @@ const MainNavigator = () => {
                 gestureDirection: "vertical",
                 gestureResponseDistance: 200,
                 presentation: "modal",
-                headerShown: true,
-                headerStyle: { backgroundColor: Colors.primary },
-                headerTintColor: Colors.text,
               }}
             />
             <Stack.Screen
@@ -98,9 +93,6 @@ const MainNavigator = () => {
               component={SearchResults}
               options={({ route }) => ({
                 title: `Search Results: ${route.params.length}`,
-                headerShown: true,
-                headerStyle: { backgroundColor: Colors.primary },
-                headerTintColor: Colors.text,
               })}
             />
             <Stack.Screen
@@ -110,11 +102,8 @@ const MainNavigator = () => {
                 const { prod_id, sharedID } = route.params;
                 return ["prod_id." + prod_id + sharedID];
               }}
-              options={({ route }) => ({
-                title: `Rate the product: ${route.params.prod_name}`,
-                headerShown: true,
-                headerStyle: { backgroundColor: Colors.primary },
-                headerTintColor: Colors.text,
+              options={({ route: { params } }) => ({
+                title: `Rate product: ${params.prod_name}`,
               })}
             />
             <Stack.Screen
@@ -122,9 +111,6 @@ const MainNavigator = () => {
               component={ProductReviews}
               options={{
                 presentation: "modal",
-                headerShown: true,
-                headerStyle: { backgroundColor: Colors.primary },
-                headerTintColor: Colors.text,
               }}
             />
           </>
@@ -138,6 +124,4 @@ const MainNavigator = () => {
       </Stack.Navigator>
     </NavigationContainer>
   );
-};
-
-export default MainNavigator;
+}

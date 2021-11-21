@@ -6,6 +6,7 @@ export type UserType = {
   token: string;
   name: string;
   user_id: number;
+  isLoggedIn: boolean;
 };
 
 export type UserContextType = {
@@ -13,6 +14,7 @@ export type UserContextType = {
   setUser: (prop: any) => void;
   SaveUser: (props: UserType) => void;
   ReadUser: () => void;
+  RemoveUser: () => void;
 };
 
 export type RootStackParams = {

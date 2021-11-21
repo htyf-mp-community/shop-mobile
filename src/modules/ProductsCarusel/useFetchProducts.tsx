@@ -3,17 +3,17 @@ import axios from "axios";
 import { useUser } from "../../context/UserContext";
 import RemoveProductsRepetition from "../../functions/RemoveRepetition";
 
-interface StateProps {
+interface StateProps<T> {
   loading: boolean;
   error: string;
-  data: any[];
+  data: T[];
   tries: number;
 }
 
-export default function useFetchProducts(path: string, deps: any[] = []) {
+export default function useFetchProducts<T>(path: string, deps: any[] = []) {
   const { user } = useUser();
 
-  const [state, setState] = useState<StateProps>({
+  const [state, setState] = useState<StateProps<T>>({
     loading: false,
     error: "",
     data: [],
@@ -27,6 +27,7 @@ export default function useFetchProducts(path: string, deps: any[] = []) {
         loading: false,
         error: "Something Went Wrong",
       }));
+
     try {
       setState((prev) => ({ ...prev, loading: true }));
       const { data } = await axios.get(path, {

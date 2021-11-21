@@ -6,24 +6,20 @@ import axios from "axios";
 
 export async function UploadExpoTokenToServer(jwt: string) {
   try {
-    const expoPushToken = await Notifications.getExpoPushTokenAsync({
-      experienceId: "@username/example",
-    });
+    const expoPushToken = await Notifications.getExpoPushTokenAsync();
 
-    axios
-      .post(
-        ENDPOINTS.notificationsAddToken,
-        { token: expoPushToken },
-        {
-          headers: {
-            token: jwt,
-          },
-        }
-      )
-      .catch((err) => console.log(err));
-  } catch (error) {
-    console.log(error);
-  }
+    if (typeof expoPushToken === "undefined") return;
+    console.log("expoPushToken: ", expoPushToken);
+    await axios.post(
+      ENDPOINTS.notificationsAddToken,
+      { token: expoPushToken },
+      {
+        headers: {
+          token: jwt,
+        },
+      }
+    );
+  } catch (error: any) {}
 }
 
 interface IScheduldeNotificationProps {
@@ -66,8 +62,8 @@ const useNotifications = () => {
       });
 
     responseListener.current =
-      Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log(response);
+      Notifications.addNotificationResponseReceivedListener((e) => {
+        console.log(e);
       });
 
     return () => {

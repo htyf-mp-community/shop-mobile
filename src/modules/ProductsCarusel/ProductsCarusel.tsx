@@ -14,7 +14,7 @@ interface MostRecentProps {
   refresh: boolean;
 }
 
-const { width } = Dimensions.get("screen");
+const { width: WIDTH } = Dimensions.get("screen");
 
 export default function ProductsCarusel({
   path,
@@ -22,14 +22,16 @@ export default function ProductsCarusel({
   sharedID,
   refresh,
 }: MostRecentProps) {
-  const getItem = (data: any[], key: number) => {
+  const getItem = (data: ProductTypeProps[], key: number) => {
     return data[key];
   };
 
-  const state = useFetchProducts(path, [refresh]);
+  const { loading, data, error } = useFetchProducts<ProductTypeProps[]>(path, [
+    refresh,
+  ]);
 
   return (
-    <View style={{ width: width }}>
+    <View style={{ width: WIDTH }}>
       <Text
         style={{
           fontWeight: "bold",
@@ -40,8 +42,8 @@ export default function ProductsCarusel({
       >
         {title}
       </Text>
-      {state.loading && <ProductLoader />}
-      {!!state.error && (
+      {loading && <ProductLoader />}
+      {!!error && (
         <View style={styles.container}>
           <View
             style={[
@@ -50,15 +52,15 @@ export default function ProductsCarusel({
             ]}
           >
             <Text style={{ fontFamily: "PoppinsBold", color: Colors.text }}>
-              {state.error || "Failed to fetch products"}
+              {error || "Failed to fetch products"}
             </Text>
           </View>
         </View>
       )}
 
-      {!state.loading && !state.error && (
+      {!loading && !error && (
         <VirtualizedList
-          data={state.data}
+          data={data}
           horizontal
           pagingEnabled
           initialNumToRender={1}
