@@ -4,16 +4,19 @@ import { useState } from "react";
 import { View, Text, StyleSheet, Switch } from "react-native";
 import { ENDPOINTS } from "../../../constants/routes";
 import { Colors } from "../../../constants/styles";
+import useNotifications from "../../../notifications/MainNotifications";
 import SignOut from "../../Signout/Signout";
 
 export default function Settings() {
-  const [isEnabled, setIsEnabled] = useState(true);
+  const [isEnabled, setIsEnabled] = useState(false);
+
+  const { expoPushToken } = useNotifications();
 
   const toggleSwitch = async () => {
     setIsEnabled((previousState) => !previousState);
 
     try {
-      console.log(isEnabled);
+      console.log({ isEnabled, expoPushToken });
       axios.post(ENDPOINTS.notificationsSettings, {
         enable: !isEnabled,
       });
@@ -40,8 +43,8 @@ export default function Settings() {
           <Text style={[styles.headings, { fontSize: 15 }]}>Notifications</Text>
           <Switch
             trackColor={{ false: Colors.text, true: Colors.text }}
-            thumbColor={isEnabled ? Colors.secondary100 : "#f4f3f4"}
-            value={isEnabled}
+            thumbColor={!isEnabled ? Colors.secondary100 : "#f4f3f4"}
+            value={!isEnabled}
             ios_backgroundColor="#3e3e3e"
             onValueChange={toggleSwitch}
           />

@@ -13,6 +13,7 @@ interface IInputProps {
   labelStyle?: any;
   placeholderColor?: string;
   inputRef?: any;
+  secureTextEntry?: boolean;
 }
 
 export default function Input({
@@ -25,6 +26,7 @@ export default function Input({
   placeholderColor = "black",
   labelStyle = {},
   inputRef,
+  secureTextEntry = false,
   ...rest
 }: IInputProps) {
   return (
@@ -37,6 +39,7 @@ export default function Input({
         placeholder={placeholder}
         placeholderTextColor={placeholderColor}
         style={[styles.input, style]}
+        secureTextEntry={secureTextEntry}
         {...rest}
         ref={inputRef}
       />

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, StyleSheet, Dimensions, Text } from "react-native";
+import { TextInput } from "react-native-gesture-handler";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import { Colors, h1, radius } from "../../constants/styles";
@@ -56,7 +57,7 @@ export default function AuthForm({ onSubmit }: AuthFormProps) {
         value={password}
         setValue={setPassword}
         name="password"
-        keyboardType="visible-password"
+        keyboardType="default"
         placeholder="password"
         style={{
           ...styles.input,
@@ -65,6 +66,7 @@ export default function AuthForm({ onSubmit }: AuthFormProps) {
         }}
         placeholderColor={Colors.text}
         labelStyle={{ color: Colors.text }}
+        secureTextEntry={true}
       />
       <Button text="Sign In" callback={Submit} style={styles.btn} />
     </View>

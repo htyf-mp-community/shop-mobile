@@ -1,4 +1,4 @@
-import { NavigationContainer } from "@react-navigation/native";
+import { DarkTheme, NavigationContainer } from "@react-navigation/native";
 import React from "react";
 import Home from "./Screens/Home";
 import Auth from "./Screens/Auth";
@@ -19,6 +19,7 @@ import SearchResults from "./Screens/SearchResults";
 import CreateReview from "./Screens/Reviews/CreateReview";
 import ProductReviews from "./Screens/Reviews/ProductReviews";
 import useCheckToken from "../hooks/useCheckToken";
+import Landing from "./Screens/Landing";
 
 const Stack = createSharedElementStackNavigator<RootStackParams>();
 
@@ -31,19 +32,20 @@ export default function MainNavigator() {
   useEffect(() => {
     ReadUser();
   }, []);
-  const { notification } = useNotifications();
+  const { notification, expoPushToken } = useNotifications();
   useCheckToken();
 
   useEffect(() => {
-    if (notification) {
+    console.log("notifications: ", { notification, expoPushToken });
+    if (notification && expoPushToken) {
       UploadExpoTokenToServer(token);
     }
   }, [notification]);
 
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={DarkTheme}>
       <Stack.Navigator
-        initialRouteName="Auth"
+        initialRouteName="Landing"
         screenOptions={{
           headerShown: true,
           headerStyle: { backgroundColor: Colors.primary },
@@ -115,11 +117,18 @@ export default function MainNavigator() {
             />
           </>
         ) : (
-          <Stack.Screen
-            name="Auth"
-            component={Auth}
-            options={{ headerShown: false }}
-          />
+          <>
+            <Stack.Screen
+              name="Auth"
+              component={Auth}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Landing"
+              component={Landing}
+              options={{ headerShown: false }}
+            />
+          </>
         )}
       </Stack.Navigator>
     </NavigationContainer>

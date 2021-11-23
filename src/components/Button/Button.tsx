@@ -8,6 +8,7 @@ type TButtonProps = {
   icon?: React.ReactNode;
   style?: any;
   disabled?: boolean;
+  fontStyle?: any;
 };
 
 export default function Button({
@@ -16,6 +17,7 @@ export default function Button({
   icon,
   style,
   disabled = false,
+  fontStyle = {},
 }: TButtonProps) {
   return (
     <TouchableOpacity
@@ -25,7 +27,9 @@ export default function Button({
       style={[styles.button, style]}
     >
       {text !== "" && (
-        <Text style={[styles.text, { color: style?.color || "#fff" }]}>
+        <Text
+          style={[styles.text, { color: style?.color || "#fff" }, fontStyle]}
+        >
           {text}
         </Text>
       )}

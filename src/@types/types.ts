@@ -23,6 +23,7 @@ export type RootStackParams = {
   Cart: undefined;
   User: undefined;
   Auth?: undefined;
+  Landing: undefined;
   SearchResults: { result: any[]; length: number };
   Details: {
     prod_id: number;

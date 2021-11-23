@@ -1,9 +1,7 @@
 import React from "react";
 import MainNavigator from "./src/navigation/MainNavigator";
 import { UserContextProvider } from "./src/context/UserContext";
-
 import * as Notification from "expo-notifications";
-
 import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
 

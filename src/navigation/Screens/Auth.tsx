@@ -1,5 +1,5 @@
 import React from "react";
-import { View, ActivityIndicator } from "react-native";
+import { View } from "react-native";
 import AuthForm from "../../modules/AuthForm/AuthForm";
 import { Colors } from "../../constants/styles";
 import { API } from "../../constants/routes";
@@ -34,8 +34,13 @@ export default function Auth() {
         }
       )
       .then(({ data }) => {
-        if (data !== undefined && data !== null) {
-          SaveUser({ user_id: data.user_id, token: data.token, name: email });
+        if (typeof data !== "undefined" && data !== null) {
+          SaveUser({
+            user_id: data.user_id,
+            token: data.token,
+            name: email,
+            isLoggedIn: true,
+          });
           setLoading(false);
         }
       })
@@ -45,8 +50,6 @@ export default function Auth() {
       });
   }
 
-  console.log(error);
-
   return (
     <View
       style={{
@@ -54,11 +57,7 @@ export default function Auth() {
         backgroundColor: Colors.primary,
       }}
     >
-      {loading ? (
-        <ActivityIndicator size="large" color="#fff" />
-      ) : (
-        <AuthForm onSubmit={onSubmit} />
-      )}
+      <AuthForm onSubmit={onSubmit} />
     </View>
   );
 }
