@@ -1,4 +1,5 @@
 import {
+  Animated,
   Keyboard,
   RefreshControl,
   SafeAreaView,
@@ -6,7 +7,7 @@ import {
   StyleSheet,
   View,
 } from "react-native";
-import React from "react";
+import React, { useRef } from "react";
 import SearchBar from "../../modules/Searchbar/SearchBar";
 import { Colors } from "../../constants/styles";
 import Overlay from "../../components/Overlay/Overlay";
@@ -15,6 +16,9 @@ import ProductsCarusel from "../../modules/ProductsCarusel/ProductsCarusel";
 import { useCallback } from "react";
 import Button from "../../components/Button/Button";
 import { ENDPOINTS } from "../../constants/routes";
+import Sidebar from "../../modules/Sidebar";
+
+let isOpen = false;
 
 export const wait = (timeout: number) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -42,50 +46,58 @@ export default function Home({ route, navigation }: any) {
     });
   }, []);
 
+  const translateX = useRef(new Animated.Value(0)).current;
+
+  function ToggleSidebar() {
+    if (!isOpen) {
+      Animated.spring(translateX, {
+        toValue: 250,
+        useNativeDriver: true,
+      }).start();
+      isOpen = true;
+    } else {
+      Animated.spring(translateX, {
+        toValue: 0,
+        useNativeDriver: true,
+      }).start();
+      isOpen = false;
+    }
+    close();
+  }
+
   return (
     <SafeAreaView style={styles.container}>
-      <SearchBar open={open} close={close} />
-      <ScrollView
-        refreshControl={
-          <RefreshControl onRefresh={onRefresh} refreshing={refresh} />
-        }
-      >
-        <ProductsCarusel
-          path={ENDPOINTS.goodRatedProducts}
-          title="Best Rated"
-          sharedID="MostSearched"
-          refresh={refresh}
-        />
-        <ProductsCarusel
-          path={ENDPOINTS.searchedProducts}
-          title="Your searches"
-          sharedID="WatchedByYou"
-          refresh={refresh}
-        />
-        <ProductsCarusel
-          path={ENDPOINTS.productsAll}
-          title="All products"
-          sharedID="All"
-          refresh={refresh}
-        />
-
-        <View
-          style={{
-            width: "100%",
-            justifyContent: "center",
-            alignItems: "center",
-            padding: 20,
-          }}
+      <Sidebar translateX={translateX}>
+        <SearchBar open={open} close={close} toggleSidebar={ToggleSidebar} />
+        <ScrollView
+          style={{ marginBottom: 80 }}
+          bounces={true}
+          refreshControl={
+            <RefreshControl onRefresh={onRefresh} refreshing={refresh} />
+          }
         >
-          <Button
-            callback={() => navigation.navigate("User")}
-            text="Profile"
-            style={{ width: "100%" }}
+          <ProductsCarusel
+            path={ENDPOINTS.goodRatedProducts}
+            title="Best Rated"
+            sharedID="MostSearched"
+            refresh={refresh}
           />
-        </View>
-      </ScrollView>
+          <ProductsCarusel
+            path={ENDPOINTS.searchedProducts}
+            title="Your searches"
+            sharedID="WatchedByYou"
+            refresh={refresh}
+          />
+          <ProductsCarusel
+            path={ENDPOINTS.productsAll}
+            title="All products"
+            sharedID="All"
+            refresh={refresh}
+          />
+        </ScrollView>
 
-      {showOverlay && <Overlay close={close}></Overlay>}
+        {showOverlay && <Overlay close={close}></Overlay>}
+      </Sidebar>
     </SafeAreaView>
   );
 }

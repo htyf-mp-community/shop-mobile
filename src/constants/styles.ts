@@ -34,7 +34,7 @@ export const Colors = {
 };
 
 const textBase: TextStyle = {
-  fontFamily: "PoppinsRegular",
+  fontFamily: "PoppinsBold",
   color: Colors.text,
 };
 

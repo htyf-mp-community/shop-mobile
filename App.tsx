@@ -4,6 +4,9 @@ import { UserContextProvider } from "./src/context/UserContext";
 import * as Notification from "expo-notifications";
 import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Colors } from "./src/constants/styles";
+import { StatusBar } from "expo-status-bar";
 
 Notification.setNotificationHandler({
   handleNotification: async () => ({
@@ -28,8 +31,11 @@ export default function App() {
   }
 
   return (
-    <UserContextProvider>
-      <MainNavigator />
-    </UserContextProvider>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.primary }}>
+      <StatusBar backgroundColor={Colors.primary} style="dark" />
+      <UserContextProvider>
+        <MainNavigator />
+      </UserContextProvider>
+    </SafeAreaView>
   );
 }

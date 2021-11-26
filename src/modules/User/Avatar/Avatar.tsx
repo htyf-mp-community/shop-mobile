@@ -1,17 +1,16 @@
 import React from "react";
-import { View, Image, Text, StyleSheet, Dimensions } from "react-native";
+import { View, Text, StyleSheet, Dimensions, ViewStyle } from "react-native";
 import { Colors } from "../../../constants/styles";
 import { useUser } from "../../../context/UserContext";
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("screen");
 
 interface IAvatarProps {
-  avatar?: string; // required later
   hide?: boolean;
-  style?: any;
+  style?: ViewStyle;
 }
 
-export default function Avatar({ avatar, hide = false, style }: IAvatarProps) {
+export default function Avatar({ hide = false, style }: IAvatarProps) {
   const { user } = useUser();
   return (
     <View style={[styles.container, style]}>

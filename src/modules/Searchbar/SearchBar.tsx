@@ -7,7 +7,7 @@ import { API, ENDPOINTS } from "../../constants/routes";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { Colors } from "../../constants/styles";
-import { MaterialIcons } from "@expo/vector-icons";
+import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import { useRef } from "react";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
@@ -15,9 +15,14 @@ const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 interface SearchBarProps {
   open: (callback?: any) => void;
   close: () => void;
+  toggleSidebar: () => void;
 }
 
-export default function SearchBar({ open, close }: SearchBarProps) {
+export default function SearchBar({
+  open,
+  close,
+  toggleSidebar,
+}: SearchBarProps) {
   const { user } = useUser();
   const [searchedValue, setSearchedValue] = useState<string>("");
 
@@ -62,10 +67,8 @@ export default function SearchBar({ open, close }: SearchBarProps) {
   return (
     <View style={styles.container}>
       <Button
-        icon={
-          <MaterialIcons name="shopping-basket" size={24} color={Colors.text} />
-        }
-        callback={() => navigation.navigate("Cart")}
+        icon={<AntDesign name="bars" size={24} color={Colors.text} />}
+        callback={toggleSidebar}
         style={{ marginLeft: 10, backgroundColor: Colors.primary100 }}
       />
       <Input
@@ -106,7 +109,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary,
     flexDirection: "row",
     alignItems: "center",
-    paddingTop: 25,
     zIndex: 10,
   },
 });
