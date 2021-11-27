@@ -1,7 +1,7 @@
 import { DarkTheme, NavigationContainer } from "@react-navigation/native";
 import React from "react";
 import Home from "./Screens/Home";
-import Auth from "./Screens/Auth";
+import Auth from "./Screens/Auth/Auth";
 import { useUser } from "../context/UserContext";
 import { useEffect } from "react";
 import Cart from "./Screens/Cart";
@@ -21,7 +21,7 @@ import ProductReviews from "./Screens/Reviews/ProductReviews";
 import useCheckToken from "../hooks/useCheckToken";
 import Landing from "./Screens/Landing";
 
-const Stack = createSharedElementStackNavigator<RootStackParams>();
+export const Stack = createSharedElementStackNavigator<RootStackParams>();
 
 export default function MainNavigator() {
   const {
@@ -36,7 +36,6 @@ export default function MainNavigator() {
   useCheckToken();
 
   useEffect(() => {
-    console.log("notifications: ", { notification, expoPushToken });
     if (notification && expoPushToken) {
       UploadExpoTokenToServer(token);
     }

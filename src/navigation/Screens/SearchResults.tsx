@@ -1,6 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Text } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { View, StyleSheet, Text, FlatList } from "react-native";
 import { Colors, h3 } from "../../constants/styles";
 import Product, { ProductTypeProps } from "../../modules/Product/Product";
 
@@ -17,13 +16,16 @@ export default function SearchResults({ route }: any) {
       >
         Matching Products
       </Text>
-      <ScrollView>
-        {result.map((prod: ProductTypeProps) => {
+
+      <FlatList
+        keyExtractor={(id) => id.prod_id.toString()}
+        data={result || []}
+        renderItem={({ item: prod }: { item: ProductTypeProps }) => {
           return (
             <Product key={prod.prod_id} {...prod} sharedID="SearchResult" />
           );
-        })}
-      </ScrollView>
+        }}
+      />
     </View>
   );
 }

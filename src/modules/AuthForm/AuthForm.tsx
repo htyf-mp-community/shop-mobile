@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { View, StyleSheet, Dimensions, Text } from "react-native";
-import { TextInput } from "react-native-gesture-handler";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import { Colors, h1, radius } from "../../constants/styles";
@@ -9,14 +8,16 @@ const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
 type AuthFormProps = {
   onSubmit: ({ email, password }: { email: string; password: string }) => void;
+  header: string;
+  error?: string;
 };
 
-export default function AuthForm({ onSubmit }: AuthFormProps) {
+export default function AuthForm({ onSubmit, header, error }: AuthFormProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [EmailError, setEmailError] = useState(false);
-  const [PasswordError, setPasswordError] = useState(false);
+  const [EmailError, setEmailError] = useState(!!error);
+  const [PasswordError, setPasswordError] = useState(!!error);
 
   async function Submit() {
     if (email.length > 0 && email.includes("@")) {
@@ -38,11 +39,12 @@ export default function AuthForm({ onSubmit }: AuthFormProps) {
 
   return (
     <View style={styles.form}>
-      <Text style={[h1, { fontWeight: "bold" }]}>Login</Text>
+      <Text style={[h1, { fontWeight: "bold" }]}>{header}</Text>
+      <Text style={{ color: "red", fontSize: 20 }}>{error}</Text>
       <Input
         value={email}
         setValue={setEmail}
-        name="e-mail"
+        name={"e-mail"}
         placeholder="email"
         style={{
           ...styles.input,
@@ -56,7 +58,7 @@ export default function AuthForm({ onSubmit }: AuthFormProps) {
       <Input
         value={password}
         setValue={setPassword}
-        name="password"
+        name={"password"}
         keyboardType="default"
         placeholder="password"
         style={{

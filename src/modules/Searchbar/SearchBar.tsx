@@ -50,6 +50,7 @@ export default function SearchBar({
           setLoading(false);
           close();
           setSearchedValue("");
+
           navigation.navigate("SearchResults", {
             result: data,
             length: data.length,

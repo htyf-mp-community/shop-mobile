@@ -1,12 +1,13 @@
 import React from "react";
 
 import { SafeAreaView } from "react-native-safe-area-context";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { RouteProp } from "@react-navigation/core";
 
 import { Dimensions, StyleSheet, View, Text, Image } from "react-native";
 import { Colors } from "../../constants/styles";
 import Button from "../../components/Button/Button";
+
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RouteProp } from "@react-navigation/core";
 
 interface LandingProps {
   navigation: StackNavigationProp<any>;
@@ -68,13 +69,17 @@ export default function Landing({ route, navigation }: LandingProps) {
             fontStyle={{ fontSize: 20 }}
             style={styles.button}
             text="Create an account"
-            callback={() => navigation.navigate("Auth")}
+            callback={() => navigation.navigate("Auth", { screen: "Register" })}
           />
           <Button
             fontStyle={{ fontSize: 20 }}
             style={[styles.button, { backgroundColor: Colors.primary300 }]}
             text="Log in"
-            callback={() => navigation.navigate("Auth")}
+            callback={() =>
+              navigation.navigate("Auth", {
+                screen: "Login",
+              })
+            }
           />
         </View>
       </View>

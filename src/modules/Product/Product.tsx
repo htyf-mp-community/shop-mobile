@@ -27,6 +27,7 @@ export type ProductTypeProps = {
   hide?: boolean;
   ammount: number;
   RefetchCart?: () => void;
+  style?: any;
 };
 
 const notfound =
@@ -42,6 +43,7 @@ export default function Product({
   sharedID = "Key",
   deleteFn = () => {},
   RefetchCart,
+  style = {},
 }: ProductTypeProps) {
   const navigation = useNavigation<any>();
 
@@ -60,7 +62,7 @@ export default function Product({
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       <TouchableOpacity onPress={ShowMore} activeOpacity={0.95}>
         <View style={styles.product}>
           <SharedElement

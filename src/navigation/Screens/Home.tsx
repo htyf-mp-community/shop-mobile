@@ -14,7 +14,6 @@ import Overlay from "../../components/Overlay/Overlay";
 import { useState } from "react";
 import ProductsCarusel from "../../modules/ProductsCarusel/ProductsCarusel";
 import { useCallback } from "react";
-import Button from "../../components/Button/Button";
 import { ENDPOINTS } from "../../constants/routes";
 import Sidebar from "../../modules/Sidebar";
 
@@ -24,7 +23,15 @@ export const wait = (timeout: number) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
 };
 
-export default function Home({ route, navigation }: any) {
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RouteProp } from "@react-navigation/core";
+
+interface HomeProps {
+  navigation: StackNavigationProp<any>;
+  route: RouteProp<any>;
+}
+
+export default function Home({ route, navigation }: HomeProps) {
   const [showOverlay, setShowOverlay] = useState(false);
 
   const close = () => {

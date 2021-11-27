@@ -50,9 +50,8 @@ export const UserContextProvider = ({ children }: UserContextProviderType) => {
   }
 
   async function RemoveUser() {
-    AsyncStorage.removeItem(USER_PREFIX).then(() => {
-      setUser(init);
-    });
+    AsyncStorage.removeItem(USER_PREFIX);
+    setUser(init);
   }
 
   return (

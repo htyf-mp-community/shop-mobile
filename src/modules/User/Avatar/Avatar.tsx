@@ -16,7 +16,7 @@ export default function Avatar({ hide = false, style }: IAvatarProps) {
     <View style={[styles.container, style]}>
       <View style={[styles.avatar]}>
         <Text style={{ fontSize: 50, color: "#fff" }}>
-          {user.name[0].toUpperCase()}
+          {user?.name[0]?.toUpperCase() || ""}
         </Text>
       </View>
       {!hide && (

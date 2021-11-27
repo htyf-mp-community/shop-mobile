@@ -4,12 +4,13 @@ import { useUser } from "../../context/UserContext";
 
 export default function SignOut() {
   const { RemoveUser } = useUser();
-
   const [tapped, setTapped] = useState(0);
 
   async function SignOut() {
     setTapped(tapped + 1);
-    if (tapped > 1) return RemoveUser();
+    if (tapped > 1) {
+      RemoveUser();
+    }
   }
 
   return (
