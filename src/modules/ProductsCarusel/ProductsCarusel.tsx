@@ -62,8 +62,8 @@ export default function ProductsCarusel({
         <VirtualizedList
           data={data}
           horizontal
-          pagingEnabled
-          initialNumToRender={1}
+          // pagingEnabled
+          initialNumToRender={2}
           getItem={getItem}
           getItemCount={(data) => data.length}
           keyExtractor={(item: ProductTypeProps) => `home.${item.prod_id}`}

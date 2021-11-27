@@ -5,14 +5,14 @@ const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("screen");
 
 const styles = StyleSheet.create({
   container: {
-    width: SCREEN_WIDTH,
+    width: SCREEN_WIDTH * 0.95,
     height: SCREEN_HEIGHT / 3.5,
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 10,
   },
   product: {
-    width: SCREEN_WIDTH * 0.95,
+    width: SCREEN_WIDTH * 0.9,
     height: SCREEN_HEIGHT / 3.5,
     position: "relative",
   },

@@ -15,6 +15,10 @@ interface ProdButtonsProps {
   };
   propsRead: {
     reviews: any[];
+    thumbnail: string;
+    prod_id: number;
+    sharedID: string;
+    prod_name: string;
   };
 }
 

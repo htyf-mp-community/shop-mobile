@@ -1,7 +1,25 @@
-import React from "react";
-import { BackHandler } from "react-native";
+import { BackHandler, Alert } from "react-native";
 import { useEffect } from "react";
 
 export default function useListenBackPress() {
-  // later
+  useEffect(() => {
+    const backAction = () => {
+      Alert.alert("Hold on!", "Are you sure you want to go back?", [
+        {
+          text: "Cancel",
+          onPress: () => null,
+          style: "cancel",
+        },
+        { text: "YES", onPress: () => BackHandler.exitApp() },
+      ]);
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, []);
 }

@@ -85,7 +85,13 @@ export default function ProductDetails({ route, navigation }: any) {
           sharedID,
           prod_name: result.title,
         }}
-        propsRead={{ reviews: result.rating_id }}
+        propsRead={{
+          reviews: result.rating_id,
+          thumbnail: image,
+          prod_id,
+          sharedID,
+          prod_name: result.title,
+        }}
       />
     </ScrollView>
   );

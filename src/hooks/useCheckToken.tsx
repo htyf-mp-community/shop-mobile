@@ -4,8 +4,9 @@ import { API } from "../constants/routes";
 import { USER_PREFIX, useUser } from "../context/UserContext";
 import { Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { UserType } from "../@types/types";
 
-export default function useCheckToken() {
+export default function useCheckToken(): UserType {
   const { user, SaveUser } = useUser();
 
   useEffect(() => {
@@ -20,8 +21,7 @@ export default function useCheckToken() {
             user_id: data.id,
           });
         })
-        .catch(async (err) => {
-          console.log(err.response.data);
+        .catch(async () => {
           Alert.alert("Session Expired", "Please login again", [
             {
               text: "Log in",
@@ -32,5 +32,5 @@ export default function useCheckToken() {
     }
   }, [user.token]);
 
-  return user.isLoggedIn;
+  return user;
 }

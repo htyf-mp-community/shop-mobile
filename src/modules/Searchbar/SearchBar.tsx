@@ -1,4 +1,4 @@
-import { View, StyleSheet, Dimensions, ActivityIndicator } from "react-native";
+import { View, StyleSheet, Dimensions } from "react-native";
 import React, { useState } from "react";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
@@ -77,10 +77,12 @@ export default function SearchBar({
         setValue={setSearchedValue}
         placeholder={"What are you looking for?"}
         inputRef={inputRef}
+        labelStyle={{ fontSize: 16 }}
         style={{
           backgroundColor: Colors.primary100,
           color: Colors.text,
           width: SCREEN_WIDTH * 0.65,
+          padding: 10,
         }}
         {...{
           placeholderTextColor: Colors.text,
@@ -91,15 +93,7 @@ export default function SearchBar({
       <Button
         callback={FindSearched}
         style={{ backgroundColor: Colors.primary100 }}
-        icon={
-          <>
-            {loading ? (
-              <ActivityIndicator size="small" />
-            ) : (
-              <MaterialIcons name="search" size={22} color={Colors.text} />
-            )}
-          </>
-        }
+        icon={<MaterialIcons name="search" size={22} color={Colors.text} />}
       />
     </View>
   );

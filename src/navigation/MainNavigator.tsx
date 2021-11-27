@@ -20,20 +20,19 @@ import CreateReview from "./Screens/Reviews/CreateReview";
 import ProductReviews from "./Screens/Reviews/ProductReviews";
 import useCheckToken from "../hooks/useCheckToken";
 import Landing from "./Screens/Landing";
+// import useListenBackPress from "../hooks/useListenBackPress";
 
 export const Stack = createSharedElementStackNavigator<RootStackParams>();
 
-export default function MainNavigator() {
-  const {
-    ReadUser,
-    user: { token, isLoggedIn },
-  } = useUser();
+export default function MainNavigator(): JSX.Element {
+  const { ReadUser } = useUser();
+  const { token, isLoggedIn } = useCheckToken();
+  // useListenBackPress();
 
   useEffect(() => {
     ReadUser();
   }, []);
   const { notification, expoPushToken } = useNotifications();
-  useCheckToken();
 
   useEffect(() => {
     if (notification && expoPushToken) {
@@ -72,8 +71,7 @@ export default function MainNavigator() {
             <Stack.Screen
               component={ProductDetails}
               name="Details"
-              //@ts-ignore
-              options={options}
+              options={{ ...options }}
               sharedElements={({ params }) => {
                 const { prod_id, sharedID } = params;
                 return ["prod_id." + prod_id + sharedID];
@@ -110,9 +108,13 @@ export default function MainNavigator() {
             <Stack.Screen
               name="ProductReviews"
               component={ProductReviews}
-              options={{
-                presentation: "modal",
+              sharedElements={(route) => {
+                const { prod_id, sharedID } = route.params;
+                return ["prod_id." + prod_id + sharedID];
               }}
+              options={({ route: { params } }) => ({
+                title: `Rate product: ${params.prod_name}`,
+              })}
             />
           </>
         ) : (

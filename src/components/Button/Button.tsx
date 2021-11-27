@@ -1,14 +1,28 @@
 import React from "react";
-import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
-import { radius } from "../../constants/styles";
+import {
+  Text,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  StyleProp,
+} from "react-native";
+import { Colors, radius } from "../../constants/styles";
 
-type TButtonProps = {
+type ButtonProps = Partial<TouchableOpacity> & {
   text?: string;
   callback: () => void;
   icon?: React.ReactNode;
   style?: any;
   disabled?: boolean;
   fontStyle?: any;
+  iconStyle?: any;
+  variant?: "primary" | "secondary" | "ternary";
+};
+
+const VARIANTS = {
+  primary: "#FF0056",
+  secondary: Colors.primary,
+  ternary: Colors.secondary,
 };
 
 export default function Button({
@@ -18,13 +32,17 @@ export default function Button({
   style,
   disabled = false,
   fontStyle = {},
-}: TButtonProps) {
+  iconStyle = {},
+  variant = "primary",
+  ...rest
+}: ButtonProps) {
   return (
     <TouchableOpacity
       onPress={callback}
-      activeOpacity={0.6}
+      activeOpacity={0.8}
       disabled={disabled}
-      style={[styles.button, style]}
+      style={[{ backgroundColor: VARIANTS[variant] }, styles.button, style]}
+      {...rest}
     >
       {text !== "" && (
         <Text

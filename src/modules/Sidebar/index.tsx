@@ -55,7 +55,10 @@ export default function Sidebar({ children, translateX }: SidebarProps) {
   return (
     <View style={styles.container}>
       <View style={styles.navigation}>
-        <Avatar hide={true} />
+        <Avatar
+          hide={true}
+          avatarStyles={{ backgroundColor: Colors.primary }}
+        />
         {[
           { text: "Cart", icon: "shoppingcart" },
           { text: "User", icon: "user" },

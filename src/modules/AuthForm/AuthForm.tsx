@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-import { View, StyleSheet, Dimensions, Text } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, StyleSheet, Dimensions, Text, Keyboard } from "react-native";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import { Colors, h1, radius } from "../../constants/styles";
+import useListenKeyboard from "../../hooks/useListenKeyboard";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
@@ -37,15 +38,17 @@ export default function AuthForm({ onSubmit, header, error }: AuthFormProps) {
     }
   }
 
+  const { status } = useListenKeyboard();
+
   return (
-    <View style={styles.form}>
+    <View style={[styles.form, { paddingTop: status === "open" ? 10 : 100 }]}>
       <Text style={[h1, { fontWeight: "bold" }]}>{header}</Text>
       <Text style={{ color: "red", fontSize: 20 }}>{error}</Text>
       <Input
         value={email}
         setValue={setEmail}
-        name={"e-mail"}
-        placeholder="email"
+        name={"E-mail"}
+        placeholder="Email"
         style={{
           ...styles.input,
           borderColor: EmailError ? "red" : Colors.text,
@@ -58,9 +61,9 @@ export default function AuthForm({ onSubmit, header, error }: AuthFormProps) {
       <Input
         value={password}
         setValue={setPassword}
-        name={"password"}
+        name={"Password"}
         keyboardType="default"
-        placeholder="password"
+        placeholder="Password"
         style={{
           ...styles.input,
           borderColor: PasswordError ? "red" : Colors.text,
@@ -70,16 +73,21 @@ export default function AuthForm({ onSubmit, header, error }: AuthFormProps) {
         labelStyle={{ color: Colors.text }}
         secureTextEntry={true}
       />
-      <Button text="Sign In" callback={Submit} style={styles.btn} />
+      <Button
+        text={header.toUpperCase()}
+        callback={Submit}
+        style={styles.btn}
+        fontStyle={{ fontWeight: "bold" }}
+      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   form: {
-    marginTop: 100,
+    flex: 1,
     alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: Colors.primary,
   },
   input: {
     borderWidth: 1.5,
@@ -87,10 +95,9 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   btn: {
-    width: SCREEN_WIDTH * 0.5,
+    width: SCREEN_WIDTH * 0.45,
     marginTop: 20,
-    borderColor: Colors.primary200,
-    borderWidth: 0.5,
+    padding: 15,
     color: Colors.text,
     justifyContent: "center",
     borderRadius: radius.medium,

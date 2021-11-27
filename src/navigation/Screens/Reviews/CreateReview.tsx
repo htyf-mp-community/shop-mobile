@@ -81,20 +81,21 @@ export default function CreateReview({ route }: any) {
           labelStyle={{ color: "white", paddingBottom: 5 }}
           {...{
             multiline: true,
-            numberOfLines: 10,
+            numberOfLines: 6,
             scrollEnabled: true,
             textAlignVertical: "top",
           }}
         />
         <View style={{ width, alignItems: "center" }}>
           <Button
-            text="Submit"
+            text="Add review"
             callback={PostReview}
             style={{
               width: width * 0.9,
               backgroundColor: Colors.secondary,
               color: Colors.text,
               marginTop: 20,
+              justifyContent: "center",
             }}
           />
         </View>

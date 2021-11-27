@@ -81,6 +81,7 @@ export default function AddToCart({
       style={[
         {
           color: Colors.text,
+
           width: 50,
           position: "absolute",
           bottom: 10,

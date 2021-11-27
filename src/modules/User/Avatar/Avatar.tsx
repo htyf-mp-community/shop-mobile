@@ -8,13 +8,18 @@ const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("screen");
 interface IAvatarProps {
   hide?: boolean;
   style?: ViewStyle;
+  avatarStyles?: any;
 }
 
-export default function Avatar({ hide = false, style }: IAvatarProps) {
+export default function Avatar({
+  hide = false,
+  style,
+  avatarStyles,
+}: IAvatarProps) {
   const { user } = useUser();
   return (
     <View style={[styles.container, style]}>
-      <View style={[styles.avatar]}>
+      <View style={[styles.avatar, avatarStyles]}>
         <Text style={{ fontSize: 50, color: "#fff" }}>
           {user?.name[0]?.toUpperCase() || ""}
         </Text>

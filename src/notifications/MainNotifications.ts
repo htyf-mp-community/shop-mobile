@@ -8,21 +8,17 @@ export async function UploadExpoTokenToServer(jwt: string) {
   try {
     const expoPushToken = await Notifications.getExpoPushTokenAsync();
 
-    console.log("expoPushToken: ", expoPushToken);
-
     if (typeof expoPushToken === "undefined") return;
 
-    await axios
-      .post(
-        ENDPOINTS.notificationsAddToken,
-        { token: expoPushToken },
-        {
-          headers: {
-            token: jwt,
-          },
-        }
-      )
-      .then((res) => console.log(res));
+    await axios.post(
+      ENDPOINTS.notificationsAddToken,
+      { token: expoPushToken },
+      {
+        headers: {
+          token: jwt,
+        },
+      }
+    );
   } catch (error: any) {}
 }
 
