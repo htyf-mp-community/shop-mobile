@@ -1,8 +1,5 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useRef } from "react";
 import { StyleSheet, ScrollView, Animated, RefreshControl } from "react-native";
-import axios from "axios";
-import { API } from "../../constants/routes";
-import { useUser } from "../../context/UserContext";
 import { Colors } from "../../constants/styles";
 import AddToCart from "../../modules/AddToCart/AddToCart";
 import ImagesCarusel from "../../modules/ImagesCarusel/ImagesCarusel";
@@ -10,6 +7,8 @@ import ImagesCarusel from "../../modules/ImagesCarusel/ImagesCarusel";
 import ProductDetailsText from "../../modules/ProductDetailsText/ProductDetailsText";
 import ProductDetailsButtons from "../../modules/ProductDetailsButtons/ProductDetailsButtons";
 import { useIsFocused } from "@react-navigation/native";
+import useFetch from "../../hooks/useFetch";
+import { ProductTypeProps } from "../../modules/Product/Product";
 
 const wait = (timeout: number) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -17,8 +16,6 @@ const wait = (timeout: number) => {
 
 export default function ProductDetails({ route, navigation }: any) {
   const { prod_id, image, sharedID } = route.params;
-  const { user } = useUser();
-  const [result, setResult] = useState<any>({});
   const isFocused = useIsFocused();
 
   const [refreshing, setRefreshing] = React.useState(false);
@@ -28,22 +25,10 @@ export default function ProductDetails({ route, navigation }: any) {
     wait(1000).then(() => setRefreshing(false));
   }, []);
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const response = await axios.get(`${API}/products/id=${prod_id}`, {
-          headers: {
-            token: user.token,
-          },
-        });
-        if (typeof response.data !== "undefined") {
-          setResult(response.data);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, [isFocused, refreshing]);
+  const { data: result } = useFetch<any>(`/products/id=${prod_id}`, [
+    isFocused,
+    refreshing,
+  ]);
 
   const imgList: { name: string; id: number }[] = result?.img_id;
   const images = imgList?.length > 1 ? imgList.splice(1, imgList.length) : [];

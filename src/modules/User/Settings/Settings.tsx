@@ -1,27 +1,47 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { View, Text, StyleSheet, Switch } from "react-native";
-import { ENDPOINTS } from "../../../constants/routes";
+import { API, ENDPOINTS } from "../../../constants/routes";
 import { Colors } from "../../../constants/styles";
+import { useUser } from "../../../context/UserContext";
 import useNotifications from "../../../notifications/MainNotifications";
 import SignOut from "../../Signout/Signout";
 
 export default function Settings() {
   const [isEnabled, setIsEnabled] = useState(false);
-
-  const { expoPushToken } = useNotifications();
+  const { user } = useUser();
 
   const toggleSwitch = async () => {
     setIsEnabled((previousState) => !previousState);
 
     try {
-      console.log({ isEnabled, expoPushToken });
-      axios.post(ENDPOINTS.notificationsSettings, {
-        enable: !isEnabled,
-      });
-    } catch (error) {}
+      await axios.post(
+        ENDPOINTS.notificationsSettings,
+        {
+          enable: !isEnabled,
+        },
+        { headers: { token: user.token } }
+      );
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const { data } = await axios.get(`${API}/notifications/status`, {
+          headers: {
+            token: user.token,
+          },
+        });
+        setIsEnabled(data.enabled);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -43,8 +63,8 @@ export default function Settings() {
           <Text style={[styles.headings, { fontSize: 15 }]}>Notifications</Text>
           <Switch
             trackColor={{ false: Colors.text, true: Colors.text }}
-            thumbColor={!isEnabled ? Colors.secondary100 : "#f4f3f4"}
-            value={!isEnabled}
+            thumbColor={isEnabled ? Colors.secondary100 : "#f4f3f4"}
+            value={isEnabled}
             ios_backgroundColor="#3e3e3e"
             onValueChange={toggleSwitch}
           />

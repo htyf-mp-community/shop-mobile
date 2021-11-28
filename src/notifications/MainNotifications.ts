@@ -4,12 +4,11 @@ import { useState, useRef, useEffect } from "react";
 import { registerForPushNotificationsAsync } from "./registerForPushNotificationsAsync";
 import axios from "axios";
 
-export async function UploadExpoTokenToServer(jwt: string) {
+export async function UploadExpoTokenToServer(
+  jwt: string,
+  expoPushToken: string
+) {
   try {
-    const expoPushToken = await Notifications.getExpoPushTokenAsync();
-
-    if (typeof expoPushToken === "undefined") return;
-
     await axios.post(
       ENDPOINTS.notificationsAddToken,
       { token: expoPushToken },

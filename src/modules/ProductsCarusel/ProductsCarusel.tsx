@@ -14,7 +14,7 @@ interface MostRecentProps {
   refresh: boolean;
 }
 
-const { width: WIDTH } = Dimensions.get("screen");
+const { width: WIDTH, height: HEIGHT } = Dimensions.get("screen");
 
 export default function ProductsCarusel({
   path,
@@ -56,6 +56,16 @@ export default function ProductsCarusel({
             </Text>
           </View>
         </View>
+      )}
+
+      {data.length < 1 && (
+        <View
+          style={{
+            backgroundColor: Colors.primary,
+            height: HEIGHT / 3,
+            width: WIDTH * 0.9,
+          }}
+        ></View>
       )}
 
       {!loading && !error && (

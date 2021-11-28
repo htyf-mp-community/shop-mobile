@@ -32,13 +32,13 @@ export default function MainNavigator(): JSX.Element {
   useEffect(() => {
     ReadUser();
   }, []);
-  const { notification, expoPushToken } = useNotifications();
+  const { expoPushToken } = useNotifications();
 
   useEffect(() => {
-    if (notification && expoPushToken) {
-      UploadExpoTokenToServer(token);
+    if (typeof expoPushToken !== "undefined") {
+      UploadExpoTokenToServer(token, expoPushToken);
     }
-  }, [notification]);
+  }, [expoPushToken]);
 
   return (
     <NavigationContainer theme={DarkTheme}>

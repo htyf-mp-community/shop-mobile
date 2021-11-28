@@ -11,22 +11,19 @@ import { useUser } from "../../context/UserContext";
 import { API } from "../../constants/routes";
 import { Colors, h2, radius } from "../../constants/styles";
 import Products from "../../modules/Product/Product";
-import { useEffect } from "react";
 import axios from "axios";
 import { useIsFocused } from "@react-navigation/native";
 import Purchase from "../../modules/Purchase/Purchase";
 import { wait } from "./Home";
 import SvgComponent from "../../components/Svgs/Svgs";
 import { cart } from "../../assets/emptyCart";
+import useFetch from "../../hooks/useFetch";
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("screen");
 
 export default function Cart() {
   const { user } = useUser();
   const isFocused = useIsFocused();
-  const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
   const [deleted, setDeleted] = useState(0);
 
   async function RemoveCartProduct(cart_id: number) {
@@ -59,25 +56,12 @@ export default function Cart() {
     });
   }, []);
 
-  useEffect(() => {
-    (async () => {
-      try {
-        setIsLoading(true);
-        const response = await axios.get(API + "/cart", {
-          headers: {
-            token: user.token,
-          },
-        });
-        if (response.data !== null) {
-          setData(response.data);
-          setIsLoading(false);
-        }
-      } catch (error: any) {
-        setError(error.message);
-        setIsLoading(false);
-      }
-    })();
-  }, [deleted, isFocused, refresh, refetch]);
+  const { data, loading, error } = useFetch("/cart", [
+    deleted,
+    isFocused,
+    refresh,
+    refetch,
+  ]);
 
   return (
     <View style={styles.container}>
