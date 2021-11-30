@@ -22,7 +22,12 @@ export default function SearchResults({ route }: any) {
         data={result || []}
         renderItem={({ item: prod }: { item: ProductTypeProps }) => {
           return (
-            <Product key={prod.prod_id} {...prod} sharedID="SearchResult" />
+            <Product
+              key={prod.prod_id}
+              sharedID="SearchResult"
+              fullSize={true}
+              {...prod}
+            />
           );
         }}
       />

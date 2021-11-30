@@ -25,6 +25,7 @@ export const wait = (timeout: number) => {
 
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RouteProp } from "@react-navigation/core";
+import Categories from "../../modules/Categories";
 
 interface HomeProps {
   navigation: StackNavigationProp<any>;
@@ -83,6 +84,7 @@ export default function Home({ route, navigation }: HomeProps) {
             <RefreshControl onRefresh={onRefresh} refreshing={refresh} />
           }
         >
+          <Categories />
           <ProductsCarusel
             path={ENDPOINTS.goodRatedProducts}
             title="Best Rated"

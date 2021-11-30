@@ -12,6 +12,7 @@ interface MostRecentProps {
   title: string;
   sharedID: string;
   refresh: boolean;
+  center?: boolean;
 }
 
 const { width: WIDTH, height: HEIGHT } = Dimensions.get("screen");
@@ -21,6 +22,7 @@ export default function ProductsCarusel({
   title,
   sharedID,
   refresh,
+  center = true,
 }: MostRecentProps) {
   const getItem = (data: ProductTypeProps[], key: number) => {
     return data[key];

@@ -10,7 +10,7 @@ import {
 import { useUser } from "../../context/UserContext";
 import { API } from "../../constants/routes";
 import { Colors, h2, radius } from "../../constants/styles";
-import Products from "../../modules/Product/Product";
+import Products, { ProductTypeProps } from "../../modules/Product/Product";
 import axios from "axios";
 import { useIsFocused } from "@react-navigation/native";
 import Purchase from "../../modules/Purchase/Purchase";
@@ -56,7 +56,7 @@ export default function Cart() {
     });
   }, []);
 
-  const { data, loading, error } = useFetch("/cart", [
+  const { data } = useFetch<ProductTypeProps[]>("/cart", [
     deleted,
     isFocused,
     refresh,
@@ -98,6 +98,7 @@ export default function Cart() {
                   deleteFn={() => RemoveCartProduct(prod.cart_id)}
                   sharedID="CartItems"
                   RefetchCart={RefreshCart}
+                  fullSize={true}
                 />
                 <Text style={styles.text}>{prod.ammount}</Text>
               </View>

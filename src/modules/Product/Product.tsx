@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Image, Text, TouchableOpacity } from "react-native";
+import { View, Image, Text, TouchableOpacity, Dimensions } from "react-native";
 import Button from "../../components/Button/Button";
 import AddToCart from "../AddToCart/AddToCart";
 import { API } from "../../constants/routes";
@@ -13,6 +13,8 @@ type ImgType = {
   id: number;
   name: string;
 };
+
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("screen");
 
 export type ProductTypeProps = {
   prod_id: number;
@@ -28,6 +30,7 @@ export type ProductTypeProps = {
   ammount: number;
   RefetchCart?: () => void;
   style?: any;
+  fullSize?: boolean;
 };
 
 const notfound =
@@ -44,6 +47,7 @@ export default function Product({
   deleteFn = () => {},
   RefetchCart,
   style = {},
+  fullSize,
 }: ProductTypeProps) {
   const navigation = useNavigation<any>();
 
@@ -61,13 +65,21 @@ export default function Product({
     });
   }
 
+  const ElementWidth = fullSize ? SCREEN_WIDTH * 0.95 : SCREEN_WIDTH * 0.9;
+
   return (
-    <View style={[styles.container, style]}>
+    <View
+      style={[
+        styles.container,
+        style,
+        { width: fullSize ? SCREEN_WIDTH : SCREEN_WIDTH * 0.95 },
+      ]}
+    >
       <TouchableOpacity onPress={ShowMore} activeOpacity={0.95}>
-        <View style={styles.product}>
+        <View style={[styles.product, { width: ElementWidth }]}>
           <SharedElement
             id={`prod_id.${prod_id}${sharedID}`}
-            style={styles.product}
+            style={[styles.product, { width: ElementWidth }]}
           >
             <Image
               source={{ uri: image }}
