@@ -14,6 +14,7 @@ interface IInputProps {
   placeholderColor?: string;
   inputRef?: any;
   secureTextEntry?: boolean;
+  helperText?: string;
 }
 
 export default function Input({
@@ -27,6 +28,7 @@ export default function Input({
   labelStyle = {},
   inputRef,
   secureTextEntry = false,
+  helperText,
   ...rest
 }: IInputProps) {
   return (
@@ -43,6 +45,21 @@ export default function Input({
         {...rest}
         ref={inputRef}
       />
+      {typeof helperText !== "undefined" && (
+        <Text
+          style={[
+            styles.label,
+            {
+              color: "#e0e0e0",
+              fontSize: 15,
+              fontWeight: "400",
+              marginLeft: 10,
+            },
+          ]}
+        >
+          {helperText}
+        </Text>
+      )}
     </View>
   );
 }

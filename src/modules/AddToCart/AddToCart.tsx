@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ActivityIndicator } from "react-native";
 import Button from "../../components/Button/Button";
 import { useUser } from "../../context/UserContext";
-import { API, ENDPOINTS } from "../../constants/routes";
+import { API } from "../../constants/routes";
 import { useState } from "react";
 import { Colors } from "../../constants/styles";
 import axios from "axios";
@@ -74,6 +74,14 @@ export default function AddToCart({
         setError(error.message);
       });
   }
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setResult("");
+    }, 3000);
+
+    return () => clearTimeout(timeout);
+  }, [PushToCart]);
 
   return (
     <Button

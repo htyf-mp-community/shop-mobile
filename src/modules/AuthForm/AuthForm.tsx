@@ -55,8 +55,9 @@ export default function AuthForm({ onSubmit, header, error }: AuthFormProps) {
           color: EmailError ? "red" : Colors.text,
         }}
         placeholderColor={Colors.text}
-        labelStyle={{ color: Colors.text }}
+        labelStyle={{ color: EmailError ? "red" : Colors.text }}
         keyboardType="email-address"
+        helperText="6-60 characters"
       />
       <Input
         value={password}
@@ -70,8 +71,9 @@ export default function AuthForm({ onSubmit, header, error }: AuthFormProps) {
           color: PasswordError ? "red" : Colors.text,
         }}
         placeholderColor={Colors.text}
-        labelStyle={{ color: Colors.text }}
+        labelStyle={{ color: PasswordError ? "red" : Colors.text }}
         secureTextEntry={true}
+        helperText="atleast 6 characters long"
       />
       <Button
         text={header.toUpperCase()}

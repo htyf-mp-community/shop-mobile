@@ -10,13 +10,18 @@ export const USER_PREFIX = "react-native-shop-user";
 
 export const init: UserType = {
   token: "",
-  user_id: -1,
+  user_id: 0,
   name: "",
   isLoggedIn: false,
 };
 
-//@ts-ignore
-const User = createContext<UserContextType>();
+const User = createContext<UserContextType>({
+  user: init,
+  ReadUser: () => {},
+  RemoveUser: () => {},
+  SaveUser: () => {},
+  setUser: () => {},
+});
 
 export const UserContextProvider = ({ children }: UserContextProviderType) => {
   const [user, setUser] = useState<UserType>(init);
@@ -61,6 +66,6 @@ export const UserContextProvider = ({ children }: UserContextProviderType) => {
   );
 };
 
-export const useUser = () => {
+export const useUser = (): UserContextType => {
   return useContext(User);
 };

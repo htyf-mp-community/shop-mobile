@@ -10,7 +10,7 @@ type SliderProps = {
 export default function HorizontalSlider({ children, title }: SliderProps) {
   return (
     <View>
-      <Text style={[h3, styles.text]}>{title}</Text>
+      <Text style={[h3, styles.text, { marginBottom: 5 }]}>{title}</Text>
       <ScrollView
         horizontal
         pagingEnabled

@@ -1,7 +1,5 @@
 # Shop App react-native
 
-## Run App
-
 ### Web
 
 ```bash

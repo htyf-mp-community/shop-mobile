@@ -24,17 +24,11 @@ export default function Dots({ arr, x }: DotsProps) {
           extrapolate: "clamp",
         });
 
-        const dotWidth = x.interpolate({
-          inputRange: [(i - 1) * width, i * width, (i + 1) * width],
-          outputRange: [15, 30, 15],
-          extrapolate: "clamp",
-        });
-
         return (
           <Animated.View
             key={i}
             style={{
-              width: dotWidth,
+              width: 15,
               height: 10,
               backgroundColor: backgroundColor,
               borderRadius: 100,

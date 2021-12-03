@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Text,
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  StyleProp,
-} from "react-native";
+import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { Colors, radius } from "../../constants/styles";
 
 type ButtonProps = Partial<TouchableOpacity> & {
