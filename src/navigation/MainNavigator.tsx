@@ -20,6 +20,7 @@ import CreateReview from "./Screens/Reviews/CreateReview";
 import ProductReviews from "./Screens/Reviews/ProductReviews";
 import useCheckToken from "../hooks/useCheckToken";
 import Landing from "./Screens/Landing";
+import Publish from "./Screens/Publish";
 
 export const Stack = createSharedElementStackNavigator<RootStackParams>();
 
@@ -114,6 +115,7 @@ export default function MainNavigator(): JSX.Element {
                 title: `Rate product: ${params.prod_name}`,
               })}
             />
+            <Stack.Screen name="Publish" component={Publish} />
           </>
         ) : (
           <>
