@@ -1,7 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { useState } from "react";
-import { View, StyleSheet, Dimensions } from "react-native";
+import { View, StyleSheet, Dimensions, ScrollView } from "react-native";
 import Button from "../../components/Button/Button";
 import Message from "../../components/Message/Message";
 import { API } from "../../constants/routes";
@@ -54,7 +54,7 @@ function CheckoutComponent({ route }: any) {
   }
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Personals />
 
       {!!result && <Message status={result} />}
@@ -72,7 +72,7 @@ function CheckoutComponent({ route }: any) {
           }}
         />
       </View>
-    </View>
+    </ScrollView>
   );
 }
 

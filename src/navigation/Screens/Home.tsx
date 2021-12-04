@@ -5,7 +5,6 @@ import {
   SafeAreaView,
   ScrollView,
   StyleSheet,
-  View,
 } from "react-native";
 import React, { useRef } from "react";
 import SearchBar from "../../modules/Searchbar/SearchBar";

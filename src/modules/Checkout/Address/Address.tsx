@@ -12,26 +12,31 @@ export default function Address() {
   } = usePersonalContext();
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Address</Text>
       <View style={styles.form}>
         <Input
+          labelStyle={{ color: Colors.text }}
+          name="City"
           value={city}
           setValue={setCity}
-          placeholder="city"
+          placeholder="South Kaitlinchester, TN 85978"
           style={styles.input}
           placeholderColor={Colors.text}
         />
         <Input
+          labelStyle={{ color: Colors.text }}
+          name="Home number"
           value={number}
           setValue={setNumber}
-          placeholder="home number"
+          placeholder="1549"
           style={styles.input}
           placeholderColor={Colors.text}
         />
         <Input
+          labelStyle={{ color: Colors.text }}
+          name="Street"
           value={street}
           setValue={setStreet}
-          placeholder="street"
+          placeholder="1549 Elvera Skyway"
           style={styles.input}
           placeholderColor={Colors.text}
         />

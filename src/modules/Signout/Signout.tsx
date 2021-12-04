@@ -7,23 +7,23 @@ export default function SignOut() {
   const [tapped, setTapped] = useState(0);
 
   async function SignOut() {
-    setTapped(tapped + 1);
-    if (tapped > 1) {
+    if (tapped >= 1) {
       RemoveUser();
     }
+    setTapped(tapped + 1);
   }
 
   return (
     <Button
       callback={SignOut}
-      text={tapped === 1 ? "Are you sure?" : "Signout"}
+      variant="secondary"
+      text={tapped === 1 ? "Are you sure?" : "SIGN OUT"}
       style={{
-        backgroundColor: "transparent",
-        color: "red",
         borderWidth: 1,
         borderColor: "red",
         marginTop: 20,
         marginBottom: 20,
+        justifyContent: "center",
       }}
     />
   );

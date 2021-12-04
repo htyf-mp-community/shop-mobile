@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState } from "react";
 
 interface PersonalContextProps {
-  phone: number;
+  phone: string;
   setPhone: (_: any) => void;
   card: string;
   setCard: (_: any) => void;
@@ -16,7 +16,7 @@ interface PersonalContextProps {
 }
 
 const PersonalsContext = createContext<PersonalContextProps>({
-  phone: 0,
+  phone: "",
   setPhone: (_: any) => {},
   card: "",
   setCard: (_: any) => {},
@@ -39,7 +39,7 @@ export default function PersonalProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [phone, setPhone] = useState(0);
+  const [phone, setPhone] = useState("000-000-000");
   const [card, setCard] = useState("");
   const [city, setCity] = useState("");
   const [number, setNumber] = useState("");

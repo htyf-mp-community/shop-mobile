@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
 import { useUser } from "../../context/UserContext";
-import { API, ENDPOINTS } from "../../constants/routes";
+import { ENDPOINTS } from "../../constants/routes";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { Colors } from "../../constants/styles";
@@ -75,14 +75,14 @@ export default function SearchBar({
       <Input
         value={searchedValue}
         setValue={setSearchedValue}
-        placeholder={"What are you looking for?"}
+        placeholder={"Search the products..."}
         inputRef={inputRef}
-        labelStyle={{ fontSize: 16 }}
         style={{
           backgroundColor: Colors.primary100,
           color: Colors.text,
           width: SCREEN_WIDTH * 0.65,
           padding: 10,
+          fontSize: 15,
         }}
         {...{
           placeholderTextColor: Colors.text,

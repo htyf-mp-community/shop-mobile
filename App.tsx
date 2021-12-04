@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import MainNavigator from "./src/navigation/MainNavigator";
 import { UserContextProvider } from "./src/context/UserContext";
 import * as Notification from "expo-notifications";
@@ -7,6 +7,7 @@ import AppLoading from "expo-app-loading";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from "./src/constants/styles";
 import { StatusBar } from "expo-status-bar";
+import { ThemeContextProvider } from "./src/context/ThemeContext";
 
 Notification.setNotificationHandler({
   handleNotification: async () => ({
@@ -33,9 +34,11 @@ export default function App() {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.primary }}>
       <StatusBar backgroundColor={Colors.primary} style="dark" />
-      <UserContextProvider>
-        <MainNavigator />
-      </UserContextProvider>
+      <ThemeContextProvider>
+        <UserContextProvider>
+          <MainNavigator />
+        </UserContextProvider>
+      </ThemeContextProvider>
     </SafeAreaView>
   );
 }

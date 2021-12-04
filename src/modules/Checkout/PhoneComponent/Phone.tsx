@@ -20,7 +20,11 @@ export default function Phone() {
           placeholder="phone number"
           placeholderColor={Colors.text}
           keyboardType="numeric"
-          style={{ borderColor: Colors.text, borderWidth: 0.5 }}
+          style={{
+            borderColor: Colors.text,
+            borderWidth: 0.5,
+            color: Colors.text,
+          }}
         />
       </View>
     </View>

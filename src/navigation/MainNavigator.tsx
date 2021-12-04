@@ -20,14 +20,12 @@ import CreateReview from "./Screens/Reviews/CreateReview";
 import ProductReviews from "./Screens/Reviews/ProductReviews";
 import useCheckToken from "../hooks/useCheckToken";
 import Landing from "./Screens/Landing";
-// import useListenBackPress from "../hooks/useListenBackPress";
 
 export const Stack = createSharedElementStackNavigator<RootStackParams>();
 
 export default function MainNavigator(): JSX.Element {
   const { ReadUser } = useUser();
   const { token, isLoggedIn } = useCheckToken();
-  // useListenBackPress();
 
   useEffect(() => {
     ReadUser();
