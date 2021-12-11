@@ -26,7 +26,6 @@ export type RootStackParams = {
   Landing: undefined;
   Register?: undefined;
   Login?: undefined;
-  Publish: undefined;
   SearchResults: { result: any[]; length: number };
   Details: {
     prod_id: number;

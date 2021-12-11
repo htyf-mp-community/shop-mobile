@@ -9,14 +9,13 @@ import {
 } from "react-native";
 import { useUser } from "../../context/UserContext";
 import { API } from "../../constants/routes";
-import { Colors, h2, radius } from "../../constants/styles";
+import { Colors, h1, h2, radius } from "../../constants/styles";
 import Products, { ProductTypeProps } from "../../modules/Product/Product";
 import axios from "axios";
 import { useIsFocused } from "@react-navigation/native";
 import Purchase from "../../modules/Purchase/Purchase";
 import { wait } from "./Home";
-import SvgComponent from "../../components/Svgs/Svgs";
-import { cart } from "../../assets/emptyCart";
+import { AntDesign } from "@expo/vector-icons";
 import useFetch from "../../hooks/useFetch";
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("screen");
@@ -69,12 +68,13 @@ export default function Cart() {
         <View
           style={{
             width: SCREEN_WIDTH,
+            height: SCREEN_HEIGHT,
             alignItems: "center",
             justifyContent: "center",
           }}
         >
-          <Text style={h2}>Add Something</Text>
-          <SvgComponent svg={cart} size={300} />
+          <Text style={[h1, { textAlign: "center" }]}>Empty</Text>
+          <AntDesign name="shoppingcart" size={300} color="#fff" />
         </View>
       )}
       <ScrollView

@@ -115,7 +115,7 @@ export default function MainNavigator(): JSX.Element {
                 title: `Rate product: ${params.prod_name}`,
               })}
             />
-            <Stack.Screen name="Publish" component={Publish} />
+            
           </>
         ) : (
           <>

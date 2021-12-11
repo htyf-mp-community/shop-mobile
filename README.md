@@ -1,4 +1,4 @@
-# Shop App react-native
+# React-Native shop application
 
 ### Web
 

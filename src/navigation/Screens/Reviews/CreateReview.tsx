@@ -39,8 +39,8 @@ export default function CreateReview({ route }: any) {
           },
         }
       )
-      .then(({ data }) => setResponse(data.message))
-      .catch((err) => {
+      .then(() => setResponse("Success"))
+      .catch(() => {
         setResponse("Failed");
       });
   }

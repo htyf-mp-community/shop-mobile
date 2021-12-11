@@ -62,7 +62,6 @@ export default function Sidebar({ children, translateX }: SidebarProps) {
         {[
           { text: "Cart", icon: "shoppingcart" },
           { text: "User", icon: "user" },
-          { text: "Publish", icon: "pluscircleo" },
         ].map(({ text, icon }, i) => {
           return (
             <Button
