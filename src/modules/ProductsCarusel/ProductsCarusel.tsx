@@ -22,14 +22,17 @@ export default function ProductsCarusel({
   title,
   sharedID,
   refresh,
-  center = true,
+  center = false,
 }: MostRecentProps) {
   const getItem = (data: ProductTypeProps[], key: number) => {
     return data[key];
   };
 
+  //const [more, setMore] = useState(0);
+
   const { loading, data, error } = useFetchProducts<ProductTypeProps[]>(path, [
     refresh,
+    // more,
   ]);
 
   return (
@@ -74,7 +77,6 @@ export default function ProductsCarusel({
         <VirtualizedList
           data={data}
           horizontal
-          // pagingEnabled
           initialNumToRender={2}
           getItem={getItem}
           getItemCount={(data) => data.length}
@@ -85,6 +87,7 @@ export default function ProductsCarusel({
                 key={`${item.prod_id}.${index}`}
                 {...item}
                 sharedID={sharedID}
+                fullSize={center}
               />
             );
           }}

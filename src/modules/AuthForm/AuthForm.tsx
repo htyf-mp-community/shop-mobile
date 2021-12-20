@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { View, StyleSheet, Dimensions, Text, Keyboard } from "react-native";
+import React, { useState } from "react";
+import { ScrollView, StyleSheet, Dimensions, Text } from "react-native";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import { Colors, h1, radius } from "../../constants/styles";
@@ -41,7 +41,10 @@ export default function AuthForm({ onSubmit, header, error }: AuthFormProps) {
   const { status } = useListenKeyboard();
 
   return (
-    <View style={[styles.form, { paddingTop: status === "open" ? 10 : 100 }]}>
+    <ScrollView
+      contentContainerStyle={{ alignItems: "center" }}
+      style={[styles.form, { paddingTop: status === "open" ? 10 : 100 }]}
+    >
       <Text style={[h1, { fontWeight: "bold" }]}>{header}</Text>
       <Text style={{ color: "red", fontSize: 20 }}>{error}</Text>
       <Input
@@ -54,7 +57,7 @@ export default function AuthForm({ onSubmit, header, error }: AuthFormProps) {
           borderColor: EmailError ? "red" : Colors.text,
           color: EmailError ? "red" : Colors.text,
         }}
-        placeholderColor={Colors.text}
+        placeholderColor={EmailError ? "red" : Colors.text}
         labelStyle={{ color: EmailError ? "red" : Colors.text }}
         keyboardType="email-address"
         helperText="6-60 characters"
@@ -70,7 +73,7 @@ export default function AuthForm({ onSubmit, header, error }: AuthFormProps) {
           borderColor: PasswordError ? "red" : Colors.text,
           color: PasswordError ? "red" : Colors.text,
         }}
-        placeholderColor={Colors.text}
+        placeholderColor={PasswordError ? "red" : Colors.text}
         labelStyle={{ color: PasswordError ? "red" : Colors.text }}
         secureTextEntry={true}
         helperText="atleast 6 characters long"
@@ -81,14 +84,13 @@ export default function AuthForm({ onSubmit, header, error }: AuthFormProps) {
         style={styles.btn}
         fontStyle={{ fontWeight: "bold" }}
       />
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   form: {
     flex: 1,
-    alignItems: "center",
     backgroundColor: Colors.primary,
   },
   input: {

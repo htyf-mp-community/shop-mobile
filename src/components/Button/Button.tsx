@@ -2,7 +2,7 @@ import React from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { Colors, radius } from "../../constants/styles";
 
-type ButtonProps = Partial<TouchableOpacity> & {
+interface ButtonProps {
   text?: string;
   callback: () => void;
   icon?: React.ReactNode;
@@ -11,7 +11,7 @@ type ButtonProps = Partial<TouchableOpacity> & {
   fontStyle?: any;
   iconStyle?: any;
   variant?: "primary" | "secondary" | "ternary";
-};
+}
 
 const VARIANTS = {
   primary: "#FF0056",

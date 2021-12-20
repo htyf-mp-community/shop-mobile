@@ -7,7 +7,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { UserType } from "../@types/types";
 
 export default function useCheckToken(): UserType {
-  const { user, SaveUser } = useUser();
+  const { user, SaveUser, setUser } = useUser();
 
   useEffect(() => {
     if (user.token) {
@@ -25,7 +25,10 @@ export default function useCheckToken(): UserType {
           Alert.alert("Session Expired", "Please login again", [
             {
               text: "Log in",
-              onPress: async () => await AsyncStorage.removeItem(USER_PREFIX),
+              onPress: async () => {
+                await AsyncStorage.removeItem(USER_PREFIX);
+                setUser((p: UserType) => ({ ...p, isLoggedIn: false }));
+              },
             },
           ]);
         });
