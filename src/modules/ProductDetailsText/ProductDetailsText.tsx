@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 18,
     padding: 20,
-    marginBottom: 20,
+
     backgroundColor: Colors.primary,
     fontFamily: "PoppinsMedium",
   },

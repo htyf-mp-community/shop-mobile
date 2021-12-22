@@ -63,18 +63,17 @@ export default function ProductsCarusel({
         </View>
       )}
 
-      {data.length < 1 && (
-        <View
-          style={{
-            backgroundColor: Colors.primary,
-            height: HEIGHT / 3,
-            width: WIDTH * 0.9,
-          }}
-        ></View>
-      )}
-
       {!loading && !error && (
         <VirtualizedList
+          ListEmptyComponent={
+            <View
+              style={{
+                backgroundColor: Colors.primary,
+                height: HEIGHT / 3,
+                width: WIDTH * 0.95,
+              }}
+            ></View>
+          }
           data={data}
           horizontal
           initialNumToRender={2}

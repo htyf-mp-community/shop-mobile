@@ -1,16 +1,20 @@
 import React from "react";
-import { ScrollView, StyleSheet, View, Text } from "react-native";
+import { ScrollView, StyleSheet, View, Text, ViewProps } from "react-native";
 import { h3, Colors } from "../../constants/styles";
 
-type SliderProps = {
+type SliderProps = ViewProps & {
   children: React.ReactNode;
   title: string;
 };
 
-export default function HorizontalSlider({ children, title }: SliderProps) {
+export default function HorizontalSlider({
+  children,
+  title,
+  ...rest
+}: SliderProps) {
   return (
-    <View>
-      <Text style={[h3, styles.text, { marginBottom: 5 }]}>{title}</Text>
+    <View {...rest}>
+      <Text style={[h3, styles.text, { marginBottom: 10 }]}>{title}</Text>
       <ScrollView
         horizontal
         pagingEnabled

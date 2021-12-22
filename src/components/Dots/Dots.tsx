@@ -28,7 +28,7 @@ export default function Dots({ arr, x }: DotsProps) {
           <Animated.View
             key={i}
             style={{
-              width: 15,
+              width: 10,
               height: 10,
               backgroundColor: backgroundColor,
               borderRadius: 100,

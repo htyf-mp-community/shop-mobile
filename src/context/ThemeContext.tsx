@@ -24,8 +24,6 @@ export const ThemeContextProvider: React.FC = ({ children }) => {
   const colorScheme = Appearance.getColorScheme();
   const [theme, setTheme] = useState(THEMES[colorScheme ?? "dark"]);
 
-  console.log({ colorScheme });
-
   return (
     <ThemeContext.Provider value={{ theme }}>{children}</ThemeContext.Provider>
   );

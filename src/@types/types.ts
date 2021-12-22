@@ -12,7 +12,7 @@ export type UserType = {
 export type UserContextType = {
   user: UserType;
   setUser: (prop: any) => void;
-  SaveUser: (props: UserType) => void;
+  SaveUser: (props: any) => void;
   ReadUser: () => void;
   RemoveUser: () => void;
 };
@@ -32,6 +32,7 @@ export type RootStackParams = {
     sharedID: string;
     image: string;
     imgPath: string;
+    title: string;
   };
   CreateReview: {
     prod_id: number;
@@ -45,5 +46,5 @@ export type RootStackParams = {
     prod_id: number;
     sharedID: string;
   };
-  Checkout: { cart: any; total: number };
+  Checkout: { cart: any[]; total: number };
 };

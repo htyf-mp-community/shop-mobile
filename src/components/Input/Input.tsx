@@ -1,25 +1,28 @@
-import { View, TextInput, Text } from "react-native";
+import {
+  View,
+  TextInput,
+  Text,
+  StyleProp,
+  ViewStyle,
+  TextInputProps,
+} from "react-native";
 import styles from "./styles";
 import React from "react";
 
-interface IInputProps {
-  keyboardType?: any;
+interface InputProps extends TextInputProps {
   name?: string;
   placeholder: string;
   value: string;
-  setValue: (prop: any) => void;
-  style?: any;
-  rest?: any;
-  labelStyle?: any;
+  setValue: (text: string) => void;
+  style?: StyleProp<ViewStyle>;
+  labelStyle?: StyleProp<ViewStyle>;
   placeholderColor?: string;
   inputRef?: any;
-  secureTextEntry?: boolean;
   helperText?: string;
 }
 
 export default function Input({
-  keyboardType = "default",
-  name = "",
+  name,
   placeholder,
   value = "",
   setValue,
@@ -27,23 +30,22 @@ export default function Input({
   placeholderColor = "black",
   labelStyle = {},
   inputRef,
-  secureTextEntry = false,
   helperText,
   ...rest
-}: IInputProps) {
+}: InputProps) {
   return (
     <View style={styles.container}>
-      {name !== "" && <Text style={[styles.label, labelStyle]}>{name}</Text>}
+      {typeof name !== "undefined" && (
+        <Text style={[styles.label, labelStyle]}>{name}</Text>
+      )}
       <TextInput
         value={value}
         onChangeText={setValue}
-        keyboardType={keyboardType}
         placeholder={placeholder}
         placeholderTextColor={placeholderColor}
         style={[styles.input, style]}
-        secureTextEntry={secureTextEntry}
-        {...rest}
         ref={inputRef}
+        {...rest}
       />
       {typeof helperText !== "undefined" && (
         <Text

@@ -1,15 +1,23 @@
 import React from "react";
-import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  ViewStyle,
+  StyleProp,
+  TextStyle,
+  TouchableOpacityProps,
+} from "react-native";
 import { Colors, radius } from "../../constants/styles";
 
-interface ButtonProps {
+interface ButtonProps extends TouchableOpacityProps {
   text?: string;
   callback: () => void;
   icon?: React.ReactNode;
-  style?: any;
-  disabled?: boolean;
-  fontStyle?: any;
-  iconStyle?: any;
+  style?: StyleProp<ViewStyle>;
+  fontStyle?: StyleProp<TextStyle>;
+  iconStyle?: StyleProp<ViewStyle>;
   variant?: "primary" | "secondary" | "ternary";
 }
 
@@ -20,13 +28,12 @@ const VARIANTS = {
 };
 
 export default function Button({
-  text = "",
+  text,
   callback,
   icon,
   style,
-  disabled = false,
-  fontStyle = {},
-  iconStyle = {},
+  fontStyle,
+  iconStyle,
   variant = "primary",
   ...rest
 }: ButtonProps) {
@@ -34,18 +41,13 @@ export default function Button({
     <TouchableOpacity
       onPress={callback}
       activeOpacity={0.8}
-      disabled={disabled}
       style={[{ backgroundColor: VARIANTS[variant] }, styles.button, style]}
       {...rest}
     >
-      {text !== "" && (
-        <Text
-          style={[styles.text, { color: style?.color || "#fff" }, fontStyle]}
-        >
-          {text}
-        </Text>
+      {typeof text !== "undefined" && (
+        <Text style={[styles.text, { color: "#fff" }, fontStyle]}>{text}</Text>
       )}
-      <View>{icon}</View>
+      <View style={iconStyle}>{icon}</View>
     </TouchableOpacity>
   );
 }

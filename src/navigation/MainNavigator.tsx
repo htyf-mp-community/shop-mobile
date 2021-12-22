@@ -12,7 +12,6 @@ import ProductDetails from "./Screens/ProductDetails";
 import { createSharedElementStackNavigator } from "react-navigation-shared-element";
 import "react-native-gesture-handler";
 import { Colors } from "../constants/styles";
-import { options } from "./options";
 import { RootStackParams } from "../@types/types";
 import Checkout from "./Screens/Checkout";
 import SearchResults from "./Screens/SearchResults";
@@ -69,7 +68,17 @@ export default function MainNavigator(): JSX.Element {
             <Stack.Screen
               component={ProductDetails}
               name="Details"
-              options={{ ...options }}
+              options={({ route }) => ({
+                title: route.params.title,
+                headerTitleAlign: "center",
+                gestureEnabled: true,
+                gestureDirection: "vertical",
+                gestureResponseDistance: 100,
+                presentation: "modal",
+                headerShown: true,
+                headerStyle: { backgroundColor: Colors.primary },
+                headerTintColor: "white",
+              })}
               sharedElements={({ params }) => {
                 const { prod_id, sharedID } = params;
                 return ["prod_id." + prod_id + sharedID];
@@ -83,6 +92,7 @@ export default function MainNavigator(): JSX.Element {
                 gestureDirection: "vertical",
                 gestureResponseDistance: 200,
                 presentation: "modal",
+                headerTitleAlign: "center",
               }}
             />
             <Stack.Screen
