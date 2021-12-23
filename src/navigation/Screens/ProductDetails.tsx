@@ -1,14 +1,17 @@
 import React, { useRef } from "react";
-import { StyleSheet, ScrollView, Animated, RefreshControl } from "react-native";
+import { ScrollView, Animated, RefreshControl } from "react-native";
 import { Colors } from "../../constants/styles";
 import AddToCart from "../../modules/AddToCart/AddToCart";
 import ImagesCarusel from "../../modules/ImagesCarusel/ImagesCarusel";
-
 import ProductDetailsText from "../../modules/ProductDetailsText/ProductDetailsText";
 import ProductDetailsButtons from "../../modules/ProductDetailsButtons/ProductDetailsButtons";
 import { useIsFocused } from "@react-navigation/native";
 import useFetch from "../../hooks/useFetch";
-import { ProductTypeProps } from "../../modules/Product/Product";
+
+interface ImageProps {
+  name: string;
+  id: number;
+}
 
 const wait = (timeout: number) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -30,13 +33,16 @@ export default function ProductDetails({ route, navigation }: any) {
     refreshing,
   ]);
 
-  const imgList: { name: string; id: number }[] = result?.img_id;
+  const imgList = result?.img_id as ImageProps[];
   const images = imgList?.length > 1 ? imgList.splice(1, imgList.length) : [];
   const scrollX = useRef(new Animated.Value(0)).current;
 
   return (
     <ScrollView
-      style={styles.container}
+      style={{
+        flex: 1,
+        backgroundColor: Colors.primary,
+      }}
       showsHorizontalScrollIndicator={false}
       scrollEventThrottle={16}
       showsVerticalScrollIndicator={false}
@@ -81,10 +87,3 @@ export default function ProductDetails({ route, navigation }: any) {
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.primary,
-  },
-});

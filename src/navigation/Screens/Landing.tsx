@@ -1,7 +1,5 @@
 import React from "react";
-
 import { SafeAreaView } from "react-native-safe-area-context";
-
 import { Dimensions, StyleSheet, View, Text, Image } from "react-native";
 import { Colors } from "../../constants/styles";
 import Button from "../../components/Button/Button";
@@ -39,15 +37,25 @@ const styles = StyleSheet.create({
 });
 
 export default function Landing({ route, navigation }: LandingProps) {
+  function onNavigateLogin() {
+    navigation.navigate("Auth", {
+      screen: "Login",
+    });
+  }
+
+  function onNavigateRegister() {
+    navigation.navigate("Auth", { screen: "Register" });
+  }
+
   return (
     <SafeAreaView style={styles.container}>
-      <View
+      <Image
+        source={require("../../assets/blob-haikei.png")}
         style={{
           height: HEIGHT * 0.5,
-          backgroundColor: Colors.primary300,
-          margin: 10,
+          width: WIDTH,
         }}
-      ></View>
+      />
       <View style={{ height: HEIGHT * 0.4 }}>
         <View style={styles.block}>
           <Text
@@ -69,17 +77,13 @@ export default function Landing({ route, navigation }: LandingProps) {
             fontStyle={{ fontSize: 20 }}
             style={styles.button}
             text="Create an account"
-            callback={() => navigation.navigate("Auth", { screen: "Register" })}
+            callback={onNavigateRegister}
           />
           <Button
             fontStyle={{ fontSize: 20 }}
             style={[styles.button, { backgroundColor: Colors.primary300 }]}
             text="Log in"
-            callback={() =>
-              navigation.navigate("Auth", {
-                screen: "Login",
-              })
-            }
+            callback={onNavigateLogin}
           />
         </View>
       </View>
