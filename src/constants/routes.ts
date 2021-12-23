@@ -13,12 +13,12 @@ export const ENDPOINTS = {
   notificationsSettings: `${API}/notifications/settings`,
   //
   productsAll: `${API}/products`,
-  searchProducts: `${API}/products/searched=`, // text
+  searchProducts: `${API}/products/searched=`,
   searchHistory: `${API}/products/search-history`,
-  searchedProducts: `${API}/products/searched-products`,
-  searchCategory: `${API}/products/category=`, // category
-  searchById: `${API}/products/id=`, //id
-  goodRatedProducts: `${API}/products/good-rated`,
+  searchedProducts: `${API}/products/searched-products`, // this
+  searchCategory: `${API}/products/category=`,
+  searchById: `${API}/products/id=`,
+  goodRatedProducts: `${API}/products/good-rated`, // this
   //
   login: `${API}/auth/login`,
   register: `${API}/auth/register`,

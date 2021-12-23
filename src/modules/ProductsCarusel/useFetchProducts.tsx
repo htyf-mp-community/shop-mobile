@@ -7,7 +7,34 @@ interface StateProps<T> {
   loading: boolean;
   error: string;
   data: T[];
-  tries: number;
+  hasMore: boolean;
+}
+
+export interface Product {
+  prod_id: number;
+  price: number;
+  discount_price: number | null | undefined;
+  title: string;
+  expiration_date: string;
+  description: string;
+  category: string;
+  img_id: {
+    id: number;
+    name: string;
+  }[];
+  rating_id: {
+    rating_id: number;
+    user_id: number;
+    rating: number;
+    title: string;
+    description: string;
+  }[];
+}
+
+interface Response {
+  hasMore: boolean;
+  results: Product[];
+  message?: string;
 }
 
 export default function useFetchProducts<T>(path: string, deps: any[] = []) {
@@ -17,46 +44,46 @@ export default function useFetchProducts<T>(path: string, deps: any[] = []) {
     loading: false,
     error: "",
     data: [],
-    tries: 0,
+    hasMore: false,
   });
 
-  const FetchAllProducts = useCallback(async () => {
-    if (state.tries > 1)
-      return setState((prev) => ({
-        ...prev,
-        loading: false,
-        error: "Something Went Wrong",
-      }));
+  const FetchAllProducts = useCallback(
+    async (url?: string | undefined) => {
+      try {
+        setState((prev) => ({ ...prev, loading: true }));
 
-    try {
-      setState((prev) => ({ ...prev, loading: true }));
-      const { data } = await axios.get(path, {
-        headers: {
-          token: user.token,
-        },
-      });
-      if (data !== null && data.message !== "Token expired") {
-        const result = RemoveProductsRepetition(data);
+        const finalUrl = typeof url === "undefined" ? path : url;
 
+        const { data } = await axios.get<Response>(finalUrl, {
+          headers: {
+            token: user.token,
+          },
+        });
+
+        if (data !== undefined && data.message !== "Token expired") {
+          const result = RemoveProductsRepetition(data?.results);
+
+          setState((prev: any) => ({
+            ...prev,
+            hasMore: data.hasMore,
+            data: [...prev.data, ...result],
+            loading: false,
+          }));
+        }
+      } catch (error: any) {
         setState((prev) => ({
           ...prev,
-          data: result,
           loading: false,
+          error: error?.response?.data?.message || error.message,
         }));
       }
-    } catch (error: any) {
-      setState((prev) => ({
-        ...prev,
-        loading: false,
-        error: error?.response?.data?.message || error.message,
-        tries: state.tries + 1,
-      }));
-    }
-  }, [state.error]);
+    },
+    [state.error]
+  );
 
   useEffect(() => {
     FetchAllProducts();
   }, deps);
 
-  return state;
+  return { ...state, FetchAllProducts };
 }

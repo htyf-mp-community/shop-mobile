@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, Dimensions, VirtualizedList } from "react-native";
 import Product from "../Product/Product";
 import { ProductTypeProps } from "../Product/Product";
@@ -28,12 +28,18 @@ export default function ProductsCarusel({
     return data[key];
   };
 
-  //const [more, setMore] = useState(0);
+  const [skip, setSkip] = useState(5);
 
-  const { loading, data, error } = useFetchProducts<ProductTypeProps[]>(path, [
-    refresh,
-    // more,
-  ]);
+  const { loading, data, error, hasMore, FetchAllProducts } = useFetchProducts<
+    ProductTypeProps[]
+  >(`${path}?skip=0`, [refresh]);
+
+  function onSkip() {
+    if (hasMore) {
+      setSkip(skip + 5);
+      FetchAllProducts(`${path}?skip=${skip}`);
+    }
+  }
 
   return (
     <View style={{ width: WIDTH }}>
@@ -47,7 +53,7 @@ export default function ProductsCarusel({
       >
         {title}
       </Text>
-      {loading && <ProductLoader />}
+      {loading && data.length === 0 && <ProductLoader />}
       {!!error && (
         <View style={styles.container}>
           <View
@@ -63,35 +69,35 @@ export default function ProductsCarusel({
         </View>
       )}
 
-      {!loading && !error && (
-        <VirtualizedList
-          ListEmptyComponent={
-            <View
-              style={{
-                backgroundColor: Colors.primary,
-                height: HEIGHT / 3,
-                width: WIDTH * 0.95,
-              }}
-            ></View>
-          }
-          data={data}
-          horizontal
-          initialNumToRender={2}
-          getItem={getItem}
-          getItemCount={(data) => data.length}
-          keyExtractor={(item: ProductTypeProps) => `home.${item.prod_id}`}
-          renderItem={({ item, index }) => {
-            return (
-              <Product
-                key={`${item.prod_id}.${index}`}
-                {...item}
-                sharedID={sharedID}
-                fullSize={center}
-              />
-            );
-          }}
-        />
-      )}
+      <VirtualizedList
+        ListEmptyComponent={
+          <View
+            style={{
+              backgroundColor: Colors.primary,
+              height: HEIGHT / 3,
+              width: WIDTH * 0.95,
+            }}
+          ></View>
+        }
+        data={data}
+        onEndReached={onSkip}
+        horizontal
+        initialNumToRender={2}
+        onEndReachedThreshold={0.5}
+        getItem={getItem}
+        getItemCount={(data) => data.length}
+        keyExtractor={(item: ProductTypeProps) => `home.${item.prod_id}}`}
+        renderItem={({ item, index }) => {
+          return (
+            <Product
+              key={`${item.prod_id}.${index}`}
+              {...item}
+              sharedID={sharedID}
+              fullSize={center}
+            />
+          );
+        }}
+      />
     </View>
   );
 }

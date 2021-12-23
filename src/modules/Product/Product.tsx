@@ -1,5 +1,13 @@
 import React from "react";
-import { View, Image, Text, TouchableOpacity, Dimensions } from "react-native";
+import {
+  View,
+  Image,
+  Text,
+  TouchableOpacity,
+  Dimensions,
+  StyleProp,
+  ViewStyle,
+} from "react-native";
 import Button from "../../components/Button/Button";
 import AddToCart from "../AddToCart/AddToCart";
 import { API } from "../../constants/routes";
@@ -14,7 +22,7 @@ type ImgType = {
   name: string;
 };
 
-const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("screen");
+const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
 export type ProductTypeProps = {
   prod_id: number;
@@ -24,13 +32,14 @@ export type ProductTypeProps = {
   category: string;
   img_id: ImgType[]; // take only 1 for thumbnail
   route?: string;
-  deleteFn?: () => any;
-  sharedID?: any;
+  deleteFn?: () => void;
+  sharedID?: string;
   hide?: boolean;
   ammount: number;
   RefetchCart?: () => void;
-  style?: any;
+  style?: StyleProp<ViewStyle>;
   fullSize?: boolean;
+  discounted_price?: null | undefined | number;
 };
 
 const notfound =
@@ -46,7 +55,7 @@ export default function Product({
   sharedID = "Key",
   deleteFn = () => {},
   RefetchCart,
-  style = {},
+  style,
   fullSize,
 }: ProductTypeProps) {
   const navigation = useNavigation<any>();
@@ -75,7 +84,7 @@ export default function Product({
         { width: fullSize ? SCREEN_WIDTH : SCREEN_WIDTH * 0.95 },
       ]}
     >
-      <TouchableOpacity onPress={ShowMore} activeOpacity={0.95}>
+      <TouchableOpacity onPress={ShowMore} activeOpacity={0.9}>
         <View style={[styles.product, { width: ElementWidth }]}>
           <SharedElement
             id={`prod_id.${prod_id}${sharedID}`}
