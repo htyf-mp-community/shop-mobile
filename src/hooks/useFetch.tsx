@@ -19,6 +19,8 @@ export default function useFetch<DataType>(path: string, deps: any[] = []) {
   const { user } = useUser();
 
   useEffect(() => {
+    const cancelToken = axios.CancelToken.source();
+
     (async () => {
       setState((p) => ({ ...p, loading: true }));
       try {
@@ -26,6 +28,7 @@ export default function useFetch<DataType>(path: string, deps: any[] = []) {
           headers: {
             token: user.token,
           },
+          cancelToken: cancelToken.token,
         });
         setState({
           loading: false,
@@ -40,6 +43,10 @@ export default function useFetch<DataType>(path: string, deps: any[] = []) {
         }));
       }
     })();
+
+    return () => {
+      cancelToken.cancel();
+    };
   }, deps);
 
   return state;

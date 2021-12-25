@@ -30,7 +30,7 @@ export default function CreateReview({ route }: any) {
     if (!title || !description || !rating) return;
     axios
       .post(
-        `${API}/ratings/add`,
+        `${API}/ratings`,
         { prod_id, description, title, rating },
         {
           headers: {
@@ -69,7 +69,7 @@ export default function CreateReview({ route }: any) {
           placeholder="Rating's title"
           style={styles.input}
           placeholderColor="white"
-          labelStyle={{ color: "white", paddingBottom: 5 }}
+          labelStyle={{ paddingBottom: 5, color: "#fff" }}
         />
         <Input
           name="Description"
@@ -78,7 +78,7 @@ export default function CreateReview({ route }: any) {
           placeholder="Describe your feelings about the product"
           style={styles.input}
           placeholderColor="white"
-          labelStyle={{ color: "white", paddingBottom: 5 }}
+          labelStyle={{ paddingBottom: 5, color: "#fff" }}
           {...{
             multiline: true,
             numberOfLines: 6,
@@ -93,7 +93,6 @@ export default function CreateReview({ route }: any) {
             style={{
               width: width * 0.9,
               backgroundColor: Colors.secondary,
-              color: Colors.text,
               marginTop: 20,
               justifyContent: "center",
             }}
@@ -121,5 +120,4 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     color: "white",
   },
-  stars: {},
 });

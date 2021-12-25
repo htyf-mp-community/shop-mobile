@@ -2,7 +2,7 @@ export const API = "http://192.168.0.25:3000";
 
 export const ENDPOINTS = {
   //
-  cartAdd: `${API}/cart/add-to-cart`,
+  cartAdd: `${API}/cart`,
   cart: `${API}/cart`,
   cartDelete: `${API}/cart/`, // + prod_id,
   //

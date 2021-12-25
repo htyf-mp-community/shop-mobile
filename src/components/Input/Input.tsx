@@ -5,6 +5,7 @@ import {
   StyleProp,
   ViewStyle,
   TextInputProps,
+  TextStyle,
 } from "react-native";
 import styles from "./styles";
 import React from "react";
@@ -15,7 +16,7 @@ interface InputProps extends TextInputProps {
   value: string;
   setValue: (text: string) => void;
   style?: StyleProp<ViewStyle>;
-  labelStyle?: StyleProp<ViewStyle>;
+  labelStyle?: StyleProp<TextStyle>;
   placeholderColor?: string;
   inputRef?: any;
   helperText?: string;

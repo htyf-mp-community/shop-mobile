@@ -45,7 +45,7 @@ export default function useAuth(route: Route) {
         }
       })
       .catch((err) => {
-        setError(err.response.data.message || err.message);
+        setError(err?.response?.data?.message || err.message);
         setLoading(false);
       });
   }

@@ -79,9 +79,9 @@ export default function SearchBar({
         inputRef={inputRef}
         style={{
           backgroundColor: Colors.primary100,
-          color: Colors.text,
           width: SCREEN_WIDTH * 0.65,
           padding: 10,
+          //@ts-ignore
           fontSize: 15,
         }}
         {...{

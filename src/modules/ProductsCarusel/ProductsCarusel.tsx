@@ -69,35 +69,37 @@ export default function ProductsCarusel({
         </View>
       )}
 
-      <VirtualizedList
-        ListEmptyComponent={
-          <View
-            style={{
-              backgroundColor: Colors.primary,
-              height: HEIGHT / 3,
-              width: WIDTH * 0.95,
-            }}
-          ></View>
-        }
-        data={data}
-        onEndReached={onSkip}
-        horizontal
-        initialNumToRender={2}
-        onEndReachedThreshold={0.5}
-        getItem={getItem}
-        getItemCount={(data) => data.length}
-        keyExtractor={(item: ProductTypeProps) => `home.${item.prod_id}}`}
-        renderItem={({ item, index }) => {
-          return (
-            <Product
-              key={`${item.prod_id}.${index}`}
-              {...item}
-              sharedID={sharedID}
-              fullSize={center}
-            />
-          );
-        }}
-      />
+      {!error && (
+        <VirtualizedList
+          ListEmptyComponent={
+            <View
+              style={{
+                backgroundColor: Colors.primary,
+                height: HEIGHT / 3,
+                width: WIDTH * 0.95,
+              }}
+            ></View>
+          }
+          data={data}
+          onEndReached={onSkip}
+          horizontal
+          initialNumToRender={2}
+          onEndReachedThreshold={0.5}
+          getItem={getItem}
+          getItemCount={(data) => data.length}
+          keyExtractor={(item: ProductTypeProps) => `home.${item.prod_id}}`}
+          renderItem={({ item, index }) => {
+            return (
+              <Product
+                key={`${item.prod_id}.${index}`}
+                {...item}
+                sharedID={sharedID}
+                fullSize={center}
+              />
+            );
+          }}
+        />
+      )}
     </View>
   );
 }

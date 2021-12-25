@@ -54,7 +54,6 @@ export default function Purchase({ cart }: IPurchaseProps) {
         callback={PurchaseProduct}
         style={{
           backgroundColor: Colors.secondary,
-          color: Colors.text,
           width: width * 0.9,
           justifyContent: "center",
         }}

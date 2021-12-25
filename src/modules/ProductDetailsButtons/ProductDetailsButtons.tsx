@@ -38,12 +38,11 @@ export default function ProductDetailsButtons({
     >
       <Button
         text="Add review"
-        variant="ternary"
+        variant="secondary"
         callback={() => navigation.navigate("CreateReview", propsAdd)}
         style={{
           width: SCREEN_WIDTH * 0.4,
           backgroundColor: Colors.primary400,
-          color: Colors.text,
           justifyContent: "center",
         }}
       />
@@ -53,7 +52,6 @@ export default function ProductDetailsButtons({
         callback={() => navigation.navigate("ProductReviews", propsRead)}
         style={{
           width: SCREEN_WIDTH * 0.4,
-          color: Colors.text,
           justifyContent: "center",
         }}
       />
