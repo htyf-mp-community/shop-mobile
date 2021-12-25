@@ -28,7 +28,7 @@ export default function ProductDetails({ route, navigation }: any) {
     wait(1000).then(() => setRefreshing(false));
   }, []);
 
-  const { data: result } = useFetch<any>(`/products/id=${prod_id}`, [
+  const { data: result } = useFetch<any>(`/products/product/${prod_id}`, [
     isFocused,
     refreshing,
   ]);

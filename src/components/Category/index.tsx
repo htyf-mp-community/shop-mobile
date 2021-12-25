@@ -16,7 +16,7 @@ export default function Category({ category, ...rest }: CategoryProps) {
 
   async function GetProductsByCategory() {
     try {
-      const { data } = await axios.get(`${API}/products/category=${category}`, {
+      const { data } = await axios.get(`${API}/products/category/${category}`, {
         headers: {
           token: user.token,
         },

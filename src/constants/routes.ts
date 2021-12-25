@@ -17,7 +17,7 @@ export const ENDPOINTS = {
   searchHistory: `${API}/products/search-history`,
   searchedProducts: `${API}/products/searched-products`, // this
   searchCategory: `${API}/products/category=`,
-  searchById: `${API}/products/id=`,
+  searchById: `${API}/products/product/`,
   goodRatedProducts: `${API}/products/good-rated`, // this
   //
   login: `${API}/auth/login`,
