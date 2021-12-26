@@ -22,4 +22,7 @@ export const ENDPOINTS = {
   //
   login: `${API}/auth/login`,
   register: `${API}/auth/register`,
+  //
+
+  dailySale: `${API}/sales/daily`,
 };

@@ -116,10 +116,6 @@ export default function MainNavigator(): JSX.Element {
             <Stack.Screen
               name="ProductReviews"
               component={ProductReviews}
-              sharedElements={(route) => {
-                const { prod_id, sharedID } = route.params;
-                return ["prod_id." + prod_id + sharedID];
-              }}
               options={({ route: { params } }) => ({
                 title: `Rate product: ${params.prod_name}`,
               })}

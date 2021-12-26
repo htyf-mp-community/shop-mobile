@@ -40,6 +40,8 @@ const styles = StyleSheet.create({
     width: WIDTH * 0.5,
     justifyContent: "center",
     marginTop: 10,
+    padding: 20,
+    borderRadius: 10,
   },
 });
 

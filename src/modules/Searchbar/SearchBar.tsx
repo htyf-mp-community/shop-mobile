@@ -13,7 +13,7 @@ import { useRef } from "react";
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
 interface SearchBarProps {
-  open: (callback?: any) => void;
+  open: (callback: () => void) => void;
   close: () => void;
   toggleSidebar: () => void;
 }

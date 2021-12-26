@@ -15,7 +15,7 @@ interface InputProps extends TextInputProps {
   placeholder: string;
   value: string;
   setValue: (text: string) => void;
-  style?: StyleProp<ViewStyle>;
+  style?: StyleProp<ViewStyle & TextStyle>;
   labelStyle?: StyleProp<TextStyle>;
   placeholderColor?: string;
   inputRef?: any;

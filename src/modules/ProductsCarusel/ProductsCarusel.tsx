@@ -77,8 +77,12 @@ export default function ProductsCarusel({
                 backgroundColor: Colors.primary,
                 height: HEIGHT / 3,
                 width: WIDTH * 0.95,
+                justifyContent: "center",
+                alignItems: "center",
               }}
-            ></View>
+            >
+              <Text style={{ color: "#fff", fontSize: 30 }}>Nothing yet </Text>
+            </View>
           }
           data={data}
           onEndReached={onSkip}

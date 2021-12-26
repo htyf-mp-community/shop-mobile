@@ -33,7 +33,7 @@ export default function AuthForm({ onSubmit, header, error }: AuthFormProps) {
       setPasswordError(true);
     }
 
-    if (password.length > 5 && email.length > 0) {
+    if (!EmailError && !PasswordError) {
       onSubmit({ email, password });
     }
   }
@@ -94,8 +94,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary,
   },
   input: {
-    borderWidth: 1.5,
-    borderColor: Colors.primary200,
+    borderWidth: 1,
     marginTop: 5,
   },
   btn: {

@@ -15,6 +15,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
     borderRadius: 5,
     fontFamily: "PoppinsRegular",
+    backgroundColor: "#212121",
+    color: "#fff",
   },
   label: {
     width: WIDTH * 0.9,

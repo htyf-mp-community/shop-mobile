@@ -25,6 +25,7 @@ export const wait = (timeout: number) => {
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RouteProp } from "@react-navigation/core";
 import Categories from "../../modules/Categories";
+import HorizontalSlider from "../../components/HorizontalSlider/HorizontalSlider";
 
 interface HomeProps {
   navigation: StackNavigationProp<any>;
@@ -84,6 +85,15 @@ export default function Home({ route, navigation }: HomeProps) {
           }
         >
           <Categories />
+
+          <ProductsCarusel
+            path={ENDPOINTS.dailySale}
+            title="Today's discount"
+            sharedID="Promotion"
+            refresh={refresh}
+            center
+          />
+
           <ProductsCarusel
             path={ENDPOINTS.goodRatedProducts}
             title="Best Rated"
@@ -104,7 +114,7 @@ export default function Home({ route, navigation }: HomeProps) {
           />
         </ScrollView>
 
-        {showOverlay && <Overlay close={close}></Overlay>}
+        {showOverlay && <Overlay close={close} />}
       </Sidebar>
     </SafeAreaView>
   );

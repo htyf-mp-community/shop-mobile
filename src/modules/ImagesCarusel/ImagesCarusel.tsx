@@ -14,7 +14,7 @@ const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 interface ImagesCaruselProps {
   sharedID: string;
   prod_id: number;
-  images: any[];
+  images: { id: number; name: string }[];
   image: string;
   scrollX: Animated.Value;
 }
