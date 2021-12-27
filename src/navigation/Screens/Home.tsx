@@ -15,24 +15,13 @@ import ProductsCarusel from "../../modules/ProductsCarusel/ProductsCarusel";
 import { useCallback } from "react";
 import { ENDPOINTS } from "../../constants/routes";
 import Sidebar from "../../modules/Sidebar";
-
-import { StackNavigationProp } from "@react-navigation/stack";
-import { RouteProp } from "@react-navigation/core";
 import Categories from "../../modules/Categories";
 import Newsletter from "../../components/Newsletter";
+import { wait } from "../../functions/wait";
 
 let isOpen = false;
 
-export const wait = (timeout: number) => {
-  return new Promise((resolve) => setTimeout(resolve, timeout));
-};
-
-interface HomeProps {
-  navigation: StackNavigationProp<any>;
-  route: RouteProp<any>;
-}
-
-export default function Home({ route, navigation }: HomeProps) {
+export default function Home() {
   const [showOverlay, setShowOverlay] = useState(false);
 
   const close = () => {

@@ -16,6 +16,7 @@ import { SharedElement } from "react-navigation-shared-element";
 import { Ionicons } from "@expo/vector-icons";
 import styles from "./styles";
 import { Colors } from "../../constants/styles";
+import { useNavigationProps } from "../../@types/types";
 
 type ImgType = {
   id: number;
@@ -58,7 +59,7 @@ export default function Product({
   style,
   fullSize,
 }: ProductTypeProps) {
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation<useNavigationProps>();
 
   const image = img_id[0]?.name
     ? `${API}/upload/images=${img_id[0]?.name}`

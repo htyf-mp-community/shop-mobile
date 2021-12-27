@@ -9,6 +9,7 @@ import axios from "axios";
 import { Colors } from "../../constants/styles";
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import { useRef } from "react";
+import { Product, useNavigationProps } from "../../@types/types";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
@@ -24,45 +25,46 @@ export default function SearchBar({
   toggleSidebar,
 }: SearchBarProps) {
   const { user } = useUser();
-  const [searchedValue, setSearchedValue] = useState<string>("");
+  const [searchedValue, setSearchedValue] = useState("");
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation<useNavigationProps>();
 
-  const inputRef = useRef<any>();
+  const inputRef = useRef<any>(null);
 
-  function FindSearched() {
+  async function FindSearched() {
     if (searchedValue.trim() === "")
       return open(() => {
-        inputRef.current.focus();
+        inputRef.current?.focus();
       });
     setLoading(true);
-    axios
-      .get(`${ENDPOINTS.searchProducts}${searchedValue}`, {
-        headers: {
-          "Content-Type": "application/json",
-          token: user.token,
-        },
-      })
-      .then(({ data }) => {
-        if (data !== null && data !== undefined) {
-          setLoading(false);
-          close();
-          setSearchedValue("");
-
-          navigation.navigate("SearchResults", {
-            result: data,
-            length: data.length,
-          });
+    try {
+      const { data } = await axios.get<Product[]>(
+        `${ENDPOINTS.searchProducts}${searchedValue}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            token: user.token,
+          },
         }
-      })
-      .catch((error) => {
+      );
+      if (data !== null && data !== undefined) {
         setLoading(false);
         close();
-        setError(error.message);
         setSearchedValue("");
-      });
+
+        navigation.navigate("SearchResults", {
+          result: data,
+          length: data.length,
+        });
+      }
+    } catch (error: any) {
+      setLoading(false);
+      close();
+      setError(error.message);
+      setSearchedValue("");
+    }
   }
 
   return (
@@ -81,7 +83,6 @@ export default function SearchBar({
           backgroundColor: Colors.primary100,
           width: SCREEN_WIDTH * 0.65,
           padding: 10,
-          //@ts-ignore
           fontSize: 15,
         }}
         {...{

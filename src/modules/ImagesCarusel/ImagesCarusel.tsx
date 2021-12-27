@@ -55,7 +55,7 @@ export default function ImagesCarusel({
         />
       </SharedElement>
 
-      {images?.map(({ name, id }: any) => (
+      {images?.map(({ name, id }: { name: string; id: number }) => (
         <Image
           key={id}
           source={{ uri: `${API}/upload/images=${name}` }}

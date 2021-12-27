@@ -2,11 +2,12 @@ import React from "react";
 import { View, Dimensions } from "react-native";
 import { Colors } from "../../constants/styles";
 import Button from "../../components/Button/Button";
+import { useNavigationProps } from "../../@types/types";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
 interface ProdButtonsProps {
-  navigation: any;
+  navigation: useNavigationProps;
   propsAdd: {
     thumbnail: string;
     prod_id: number;

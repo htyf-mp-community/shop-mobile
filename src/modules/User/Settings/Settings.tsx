@@ -5,7 +5,6 @@ import { View, Text, StyleSheet, Switch } from "react-native";
 import { API, ENDPOINTS } from "../../../constants/routes";
 import { Colors } from "../../../constants/styles";
 import { useUser } from "../../../context/UserContext";
-import useNotifications from "../../../notifications/MainNotifications";
 import SignOut from "../../Signout/Signout";
 
 export default function Settings() {

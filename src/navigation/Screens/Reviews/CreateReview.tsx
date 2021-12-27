@@ -3,6 +3,7 @@ import React from "react";
 import { useState } from "react";
 import { View, StyleSheet, Image, Dimensions, ScrollView } from "react-native";
 import { SharedElement } from "react-navigation-shared-element";
+import { ScreenNavigationProps } from "../../../@types/types";
 import Button from "../../../components/Button/Button";
 import Input from "../../../components/Input/Input";
 import Message from "../../../components/Message/Message";
@@ -14,7 +15,9 @@ import StarsTouch from "../../../modules/Stars/Stars";
 
 const { width } = Dimensions.get("screen");
 
-export default function CreateReview({ route }: any) {
+export default function CreateReview({
+  route,
+}: ScreenNavigationProps<"CreateReview">) {
   const { prod_id, thumbnail, sharedID } = route.params;
   const { user } = useUser();
 

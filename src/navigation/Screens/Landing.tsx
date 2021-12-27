@@ -4,14 +4,6 @@ import { Dimensions, StyleSheet, View, Text, Image } from "react-native";
 import { Colors } from "../../constants/styles";
 import Button from "../../components/Button/Button";
 
-import { StackNavigationProp } from "@react-navigation/stack";
-import { RouteProp } from "@react-navigation/core";
-
-interface LandingProps {
-  navigation: StackNavigationProp<any>;
-  route: RouteProp<any>;
-}
-
 const { width: WIDTH, height: HEIGHT } = Dimensions.get("screen");
 
 const styles = StyleSheet.create({
@@ -36,7 +28,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function Landing({ route, navigation }: LandingProps) {
+export default function Landing({ route, navigation }: any) {
   function onNavigateLogin() {
     navigation.navigate("Auth", {
       screen: "Login",

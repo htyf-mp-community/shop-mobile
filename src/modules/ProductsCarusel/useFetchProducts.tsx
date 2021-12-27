@@ -2,33 +2,13 @@ import { useState, useCallback, useEffect } from "react";
 import axios from "axios";
 import { useUser } from "../../context/UserContext";
 import RemoveProductsRepetition from "../../functions/RemoveRepetition";
+import { Product } from "../../@types/types";
 
 interface StateProps<T> {
   loading: boolean;
   error: string;
   data: T[];
   hasMore: boolean;
-}
-
-export interface Product {
-  prod_id: number;
-  price: number;
-  discount_price: number | null | undefined;
-  title: string;
-  expiration_date: string;
-  description: string;
-  category: string;
-  img_id: {
-    id: number;
-    name: string;
-  }[];
-  rating_id: {
-    rating_id: number;
-    user_id: number;
-    rating: number;
-    title: string;
-    description: string;
-  }[];
 }
 
 interface Response {

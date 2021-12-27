@@ -6,7 +6,7 @@ import { ProductTypeProps } from "../Product/Product";
 
 interface DetailsProps {
   result: ProductTypeProps;
-  images: any[];
+  images: { id: number; name: string }[];
   scrollX: Animated.Value;
 }
 

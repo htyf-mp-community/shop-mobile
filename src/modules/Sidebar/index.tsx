@@ -6,6 +6,7 @@ import { Colors } from "../../constants/styles";
 
 import { AntDesign } from "@expo/vector-icons";
 import Avatar from "../User/Avatar/Avatar";
+import { useNavigationProps } from "../../@types/types";
 
 const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
 
@@ -52,7 +53,7 @@ export default function Sidebar({ children, translateX }: SidebarProps) {
     extrapolate: "clamp",
   });
 
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation<useNavigationProps>();
 
   return (
     <View style={styles.container}>
@@ -79,6 +80,7 @@ export default function Sidebar({ children, translateX }: SidebarProps) {
               }
               style={styles.button}
               text={text}
+              /* @ts-ignore */
               callback={() => navigation.navigate(text)}
             />
           );

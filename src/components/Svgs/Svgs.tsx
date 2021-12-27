@@ -1,9 +1,10 @@
 import React from "react";
+import { StyleProp, ViewStyle } from "react-native";
 import { SvgXml } from "react-native-svg";
 
 interface SvgProps {
   svg: string;
-  styles?: any;
+  styles?: StyleProp<ViewStyle>;
   size: number;
 }
 

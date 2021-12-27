@@ -1,6 +1,34 @@
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RouteProp } from "@react-navigation/native";
+
 export type UserContextProviderType = {
   children: React.ReactNode;
 };
+
+export interface ProductImageProps {
+  id: number;
+  name: string;
+}
+
+export interface ProductRatingProps {
+  rating_id: number;
+  user_id: number;
+  rating: number;
+  title: string;
+  description: string;
+}
+
+export interface Product {
+  prod_id: number;
+  price: number;
+  discount_price: number | null | undefined;
+  title: string;
+  expiration_date: string;
+  description: string;
+  category: string;
+  img_id: ProductImageProps[];
+  rating_id: ProductRatingProps[];
+}
 
 export type UserType = {
   token: string;
@@ -26,6 +54,7 @@ export type RootStackParams = {
   Landing: undefined;
   Register?: undefined;
   Login?: undefined;
+  MyReviews: undefined;
   SearchResults: { result: any[]; length: number };
   Details: {
     prod_id: number;
@@ -48,3 +77,10 @@ export type RootStackParams = {
   };
   Checkout: { cart: any[]; total: number };
 };
+
+export type useNavigationProps = StackNavigationProp<RootStackParams>;
+
+export interface ScreenNavigationProps<T extends keyof RootStackParams> {
+  route: RouteProp<RootStackParams, T>;
+  navigation?: StackNavigationProp<RootStackParams>;
+}

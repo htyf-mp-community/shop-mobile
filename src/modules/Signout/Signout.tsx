@@ -6,7 +6,7 @@ export default function SignOut() {
   const { RemoveUser } = useUser();
   const [tapped, setTapped] = useState(0);
 
-  async function SignOut() {
+  async function onSignOut() {
     if (tapped >= 1) {
       RemoveUser();
     }
@@ -15,8 +15,8 @@ export default function SignOut() {
 
   return (
     <Button
-      callback={SignOut}
-      variant="secondary"
+      callback={onSignOut}
+      variant="primary"
       text={tapped === 1 ? "Are you sure?" : "SIGN OUT"}
       style={{
         borderWidth: 1,

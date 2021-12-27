@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React from "react";
 import {
   Text,
   View,
@@ -28,6 +28,7 @@ const VARIANTS = {
 };
 
 /**
+ * Custom button Component with touch animation
  * @param {String} text text shown inside the button
  * @param {Function} callback function that exectutes on button click
  * @param {ReactNode} icon  icon passed as Component
@@ -65,7 +66,6 @@ export default function Button({
 const styles = StyleSheet.create({
   button: {
     flexDirection: "row",
-    backgroundColor: "#FF0056",
     borderRadius: radius.small,
     padding: 12,
   },

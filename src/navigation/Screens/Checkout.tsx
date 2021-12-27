@@ -2,6 +2,7 @@ import axios from "axios";
 import React from "react";
 import { useState } from "react";
 import { View, StyleSheet, Dimensions, ScrollView } from "react-native";
+import { ScreenNavigationProps } from "../../@types/types";
 import Button from "../../components/Button/Button";
 import Message from "../../components/Message/Message";
 import { API } from "../../constants/routes";
@@ -14,7 +15,7 @@ import PersonalProvider, {
 
 const { width, height } = Dimensions.get("screen");
 
-export default function Checkout({ route }: any) {
+export default function Checkout({ route }: ScreenNavigationProps<"Checkout">) {
   return (
     <PersonalProvider>
       <CheckoutComponent route={route} />
@@ -28,10 +29,7 @@ function CheckoutComponent({ route }: any) {
 
   const [result, setResult] = useState("");
 
-  const {
-    card,
-    address: { city, street },
-  } = usePersonalContext();
+  // const {} = usePersonalContext();
 
   async function Purchase() {
     try {
@@ -67,7 +65,6 @@ function CheckoutComponent({ route }: any) {
           style={{
             margin: 25,
             backgroundColor: Colors.secondary,
-            color: Colors.text,
             width: width * 0.9,
           }}
         />

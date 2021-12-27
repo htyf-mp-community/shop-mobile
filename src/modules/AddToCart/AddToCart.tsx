@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { ActivityIndicator, StyleProp, View, ViewStyle } from "react-native";
+import { ActivityIndicator, StyleProp, ViewStyle } from "react-native";
 import Button from "../../components/Button/Button";
 import { useUser } from "../../context/UserContext";
 import { ENDPOINTS } from "../../constants/routes";

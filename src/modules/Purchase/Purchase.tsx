@@ -1,18 +1,18 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { View, Dimensions, Text } from "react-native";
+import { View, Text, useWindowDimensions } from "react-native";
+import { Product, useNavigationProps } from "../../@types/types";
 import Button from "../../components/Button/Button";
 import { Colors } from "../../constants/styles";
 import { CalcTotalCartPrice } from "../../functions/CalcTotalCartPrice";
 
-const { width } = Dimensions.get("screen");
-
 interface IPurchaseProps {
-  cart: any[];
+  cart: Product[];
 }
 
 export default function Purchase({ cart }: IPurchaseProps) {
-  const navigation = useNavigation<any>();
+  const { width } = useWindowDimensions();
+  const navigation = useNavigation<useNavigationProps>();
   const totalPrice = CalcTotalCartPrice(cart);
 
   function PurchaseProduct() {

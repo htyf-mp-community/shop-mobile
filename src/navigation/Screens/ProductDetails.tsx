@@ -7,17 +7,13 @@ import ProductDetailsText from "../../modules/ProductDetailsText/ProductDetailsT
 import ProductDetailsButtons from "../../modules/ProductDetailsButtons/ProductDetailsButtons";
 import { useIsFocused } from "@react-navigation/native";
 import useFetch from "../../hooks/useFetch";
+import { ProductImageProps, ScreenNavigationProps } from "../../@types/types";
+import { wait } from "../../functions/wait";
 
-interface ImageProps {
-  name: string;
-  id: number;
-}
-
-const wait = (timeout: number) => {
-  return new Promise((resolve) => setTimeout(resolve, timeout));
-};
-
-export default function ProductDetails({ route, navigation }: any) {
+export default function ProductDetails({
+  route,
+  navigation,
+}: Required<ScreenNavigationProps<"Details">>) {
   const { prod_id, image, sharedID } = route.params;
   const isFocused = useIsFocused();
 
@@ -33,7 +29,7 @@ export default function ProductDetails({ route, navigation }: any) {
     refreshing,
   ]);
 
-  const imgList = result?.img_id as ImageProps[];
+  const imgList = result?.img_id as ProductImageProps[];
   const images = imgList?.length > 1 ? imgList.splice(1, imgList.length) : [];
   const scrollX = useRef(new Animated.Value(0)).current;
 

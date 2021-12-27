@@ -106,7 +106,7 @@ export default function Cart() {
           })}
       </ScrollView>
 
-      <Purchase cart={data} />
+      <Purchase cart={data as any} />
     </View>
   );
 }
