@@ -16,16 +16,16 @@ import { useCallback } from "react";
 import { ENDPOINTS } from "../../constants/routes";
 import Sidebar from "../../modules/Sidebar";
 
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RouteProp } from "@react-navigation/core";
+import Categories from "../../modules/Categories";
+import Newsletter from "../../components/Newsletter";
+
 let isOpen = false;
 
 export const wait = (timeout: number) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
 };
-
-import { StackNavigationProp } from "@react-navigation/stack";
-import { RouteProp } from "@react-navigation/core";
-import Categories from "../../modules/Categories";
-import HorizontalSlider from "../../components/HorizontalSlider/HorizontalSlider";
 
 interface HomeProps {
   navigation: StackNavigationProp<any>;
@@ -48,9 +48,9 @@ export default function Home({ route, navigation }: HomeProps) {
   const [refresh, setRefresh] = useState(false);
 
   const onRefresh = useCallback(() => {
-    setRefresh(true);
+    // setRefresh(true);
     wait(1000).then(() => {
-      setRefresh(false);
+      //  setRefresh(false);
     });
   }, []);
 
@@ -100,6 +100,7 @@ export default function Home({ route, navigation }: HomeProps) {
             sharedID="MostSearched"
             refresh={refresh}
           />
+
           <ProductsCarusel
             path={ENDPOINTS.searchedProducts}
             title="Your searches"
@@ -112,6 +113,8 @@ export default function Home({ route, navigation }: HomeProps) {
             sharedID="All"
             refresh={refresh}
           />
+
+          <Newsletter />
         </ScrollView>
 
         {showOverlay && <Overlay close={close} />}

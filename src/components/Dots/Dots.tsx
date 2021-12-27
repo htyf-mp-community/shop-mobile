@@ -8,6 +8,11 @@ interface DotsProps {
   x: Animated.Value;
 }
 
+/**
+ * @param {Array} arr length of the Array represents ammount of dots
+ * @param {Animated.Value} x Based on this value, component interpolates dots current active position
+ **/
+
 export default function Dots({ arr, x }: DotsProps) {
   return (
     <>
@@ -35,7 +40,7 @@ export default function Dots({ arr, x }: DotsProps) {
               margin: 4,
               transform: [{ scale }],
             }}
-          ></Animated.View>
+          />
         );
       })}
     </>

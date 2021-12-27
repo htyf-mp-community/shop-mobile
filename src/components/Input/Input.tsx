@@ -22,6 +22,17 @@ interface InputProps extends TextInputProps {
   helperText?: string;
 }
 
+/**
+ * @param {String | undefined} name Label text placed above input field, if not defined will be omitted
+ * @param {String} placeholder text displyed inside component, cannot be empty
+ * @param {String} value React useState value
+ * @param {Function} setValue React useState function
+ * @param {StyleProp<ViewStyle & TextStyle>} style styling of the TextInput
+ * @param {String} placeholderColor color of the placeholder
+ * @param {StyleProp<TextStyle>} labelStyle styling of the label
+ * @param {String} helperText text placed below TextInput, if undefined will be omitted
+ **/
+
 export default function Input({
   name,
   placeholder,

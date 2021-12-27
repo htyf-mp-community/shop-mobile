@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import {
   Text,
   View,
@@ -26,6 +26,16 @@ const VARIANTS = {
   secondary: Colors.primary,
   ternary: Colors.secondary,
 };
+
+/**
+ * @param {String} text text shown inside the button
+ * @param {Function} callback function that exectutes on button click
+ * @param {ReactNode} icon  icon passed as Component
+ * @param {StyleProp<ViewStyle>} style styling for entire button
+ * @param {StyleProp<TextStyle>} fontStyle styling for text inside button
+ * @param {StyleProp<ViewStyle>} iconStyle styling for icon passed as ICON props
+ * @param {"primary" | "secondary" | "ternary"} variant style of the button
+ **/
 
 export default function Button({
   text,
