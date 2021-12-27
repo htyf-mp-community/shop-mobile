@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { ActivityIndicator } from "react-native";
+import { ActivityIndicator, StyleProp, View, ViewStyle } from "react-native";
 import Button from "../../components/Button/Button";
 import { useUser } from "../../context/UserContext";
 import { ENDPOINTS } from "../../constants/routes";
@@ -10,7 +10,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 interface AddtoCartProps {
   prod_id: number;
-  style?: any;
+  style?: StyleProp<ViewStyle>;
   refetch?: () => void;
 }
 
@@ -19,6 +19,13 @@ interface IconProps {
   success: string;
   error: boolean;
 }
+
+/**
+ * It shows Icon based on arguments
+ * @param {Boolean} loading represents if query have finished
+ * @param {String} success response from the server, based on Component displays icon
+ * @param {Boolean} error
+ **/
 
 const Icon = ({ loading, success, error }: IconProps) => {
   if (loading) {
@@ -38,6 +45,12 @@ const Icon = ({ loading, success, error }: IconProps) => {
   }
   return <Ionicons name="ios-basket" size={22} color={Colors.text} />;
 };
+
+/**
+ * @param {Number} prod_id
+ * @param {StyleProp<ViewStyle>} style styling for Component
+ * @param {Function} refetch function that refreshes other component, is not compulsory
+ **/
 
 export default function AddToCart({
   prod_id,
@@ -88,8 +101,6 @@ export default function AddToCart({
       callback={PushToCart}
       style={[
         {
-          color: Colors.text,
-
           width: 50,
           position: "absolute",
           bottom: 10,

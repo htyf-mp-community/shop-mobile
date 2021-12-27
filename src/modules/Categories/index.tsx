@@ -4,6 +4,9 @@ import { FlatList } from "react-native";
 import Category from "../../components/Category/index";
 import useFetch from "../../hooks/useFetch";
 
+/**
+ * Fetches all kinds of categories from the server and displays them
+ **/
 export default function Categories() {
   const { data } = useFetch<any[]>("/products/categories");
 

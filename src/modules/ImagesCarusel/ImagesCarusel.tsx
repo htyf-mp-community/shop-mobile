@@ -19,6 +19,13 @@ interface ImagesCaruselProps {
   scrollX: Animated.Value;
 }
 
+/**
+ * @param {String} sharedID thumbnail key
+ * @param {Number} prod_id used for defining SharedElement id
+ * @param {Array} images Array of Objects with id and image name
+ * @param {String} image thumbnail url, must contain API+'/upload/images=${name}'
+ * @param {Animated.Value} scrollX Animated.Value scroll event
+ **/
 export default function ImagesCarusel({
   sharedID,
   prod_id,

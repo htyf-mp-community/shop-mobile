@@ -7,6 +7,11 @@ type SliderProps = ViewProps & {
   title: string;
 };
 
+/**
+ * @param {String} title text displayed above list
+ * @param {Node} children Node elements
+ **/
+
 export default function HorizontalSlider({
   children,
   title,

@@ -17,6 +17,14 @@ interface MostRecentProps {
 
 const { width: WIDTH, height: HEIGHT } = Dimensions.get("screen");
 
+/** 
+ * @param {String} path server EndPoint
+ * @param {String} title text displayed as title of the component
+ * @param {String} sharedID SharedElement key for carusel
+ * @param {Boolean} center if true component will take full screen width
+ * @param {Boolean} refresh triggers refetch
+
+ **/
 export default function ProductsCarusel({
   path,
   title,
