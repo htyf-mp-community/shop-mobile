@@ -37,9 +37,9 @@ export default function Home() {
   const [refresh, setRefresh] = useState(false);
 
   const onRefresh = useCallback(() => {
-    // setRefresh(true);
+    setRefresh(true);
     wait(1000).then(() => {
-      //  setRefresh(false);
+      setRefresh(false);
     });
   }, []);
 

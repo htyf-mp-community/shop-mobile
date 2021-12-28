@@ -1,5 +1,12 @@
 import React from "react";
-import { View, Text, StyleSheet, Dimensions, ViewStyle } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  ViewStyle,
+  StyleProp,
+} from "react-native";
 import { Colors } from "../../../constants/styles";
 import { useUser } from "../../../context/UserContext";
 
@@ -7,7 +14,7 @@ const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("screen");
 
 interface IAvatarProps {
   hide?: boolean;
-  style?: ViewStyle;
+  style?: StyleProp<ViewStyle>;
   avatarStyles?: any;
 }
 

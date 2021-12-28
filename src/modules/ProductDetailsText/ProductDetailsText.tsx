@@ -1,12 +1,13 @@
 import React, { useEffect, useRef } from "react";
 import { Animated, StyleSheet, Dimensions } from "react-native";
+import { ProductImageProps } from "../../@types/types";
 import Dots from "../../components/Dots/Dots";
 import { Colors } from "../../constants/styles";
 import { ProductTypeProps } from "../Product/Product";
 
 interface DetailsProps {
   result: ProductTypeProps;
-  images: { id: number; name: string }[];
+  images: ProductImageProps[];
   scrollX: Animated.Value;
 }
 

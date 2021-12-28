@@ -16,22 +16,12 @@ import { SharedElement } from "react-navigation-shared-element";
 import { Ionicons } from "@expo/vector-icons";
 import styles from "./styles";
 import { Colors } from "../../constants/styles";
-import { useNavigationProps } from "../../@types/types";
 
-type ImgType = {
-  id: number;
-  name: string;
-};
+import * as Types from "../../@types/types";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
-export type ProductTypeProps = {
-  prod_id: number;
-  title: string;
-  price: number;
-  description: string;
-  category: string;
-  img_id: ImgType[]; // take only 1 for thumbnail
+export type ProductTypeProps = Types.Product & {
   route?: string;
   deleteFn?: () => void;
   sharedID?: string;
@@ -59,7 +49,7 @@ export default function Product({
   style,
   fullSize,
 }: ProductTypeProps) {
-  const navigation = useNavigation<useNavigationProps>();
+  const navigation = useNavigation<Types.useNavigationProps>();
 
   const image = img_id[0]?.name
     ? `${API}/upload/images=${img_id[0]?.name}`

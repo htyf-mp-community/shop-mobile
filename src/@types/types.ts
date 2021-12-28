@@ -55,6 +55,7 @@ export type RootStackParams = {
   Register?: undefined;
   Login?: undefined;
   MyReviews: undefined;
+  AccountSettings: undefined;
   SearchResults: { result: any[]; length: number };
   Details: {
     prod_id: number;

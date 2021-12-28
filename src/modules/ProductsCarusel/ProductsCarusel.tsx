@@ -100,16 +100,14 @@ export default function ProductsCarusel({
           getItem={getItem}
           getItemCount={(data) => data.length}
           keyExtractor={(item: ProductTypeProps) => `home.${item.prod_id}}`}
-          renderItem={({ item, index }) => {
-            return (
-              <Product
-                key={`${item.prod_id}.${index}`}
-                {...item}
-                sharedID={sharedID}
-                fullSize={center}
-              />
-            );
-          }}
+          renderItem={({ item, index }) => (
+            <Product
+              key={`${item.prod_id}.${index}`}
+              {...item}
+              sharedID={sharedID}
+              fullSize={center}
+            />
+          )}
         />
       )}
     </View>

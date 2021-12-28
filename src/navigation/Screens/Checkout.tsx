@@ -9,9 +9,7 @@ import { API } from "../../constants/routes";
 import { Colors } from "../../constants/styles";
 import { useUser } from "../../context/UserContext";
 import Personals from "../../modules/Checkout";
-import PersonalProvider, {
-  usePersonalContext,
-} from "../../modules/Checkout/PersonalProvider";
+import PersonalProvider from "../../modules/Checkout/PersonalProvider";
 
 const { width, height } = Dimensions.get("screen");
 

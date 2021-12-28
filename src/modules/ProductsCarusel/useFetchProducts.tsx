@@ -41,12 +41,10 @@ export default function useFetchProducts<T>(path: string, deps: any[] = []) {
         });
 
         if (data !== undefined && data.message !== "Token expired") {
-          const result = RemoveProductsRepetition(data?.results);
-
-          setState((prev: any) => ({
+          setState((prev) => ({
             ...prev,
             hasMore: data.hasMore,
-            data: [...prev.data, ...result],
+            data: RemoveProductsRepetition([...prev.data, ...data.results]),
             loading: false,
           }));
         }

@@ -2,14 +2,14 @@ import React, { createContext, useContext, useState } from "react";
 
 interface PersonalContextProps {
   phone: string;
-  setPhone: (_: any) => void;
+  setPhone: (phone: string) => void;
   card: string;
-  setCard: (_: any) => void;
+  setCard: (card: string) => void;
   address: {
     city: string;
-    setCity: (_: any) => void;
-    setNumber: (_: any) => void;
-    setStreet: (_: any) => void;
+    setCity: (city: string) => void;
+    setNumber: (nr: string) => void;
+    setStreet: (street: string) => void;
     number: string;
     street: string;
   };
@@ -17,9 +17,9 @@ interface PersonalContextProps {
 
 const PersonalsContext = createContext<PersonalContextProps>({
   phone: "",
-  setPhone: (_: any) => {},
+  setPhone: (phone: string) => {},
   card: "",
-  setCard: (_: any) => {},
+  setCard: (card: string) => {},
   address: {
     city: "",
     setCity: (_: any) => {},
