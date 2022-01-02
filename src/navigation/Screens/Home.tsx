@@ -1,6 +1,5 @@
 import {
   Animated,
-  Keyboard,
   RefreshControl,
   SafeAreaView,
   ScrollView,
@@ -9,7 +8,6 @@ import {
 import React, { useRef } from "react";
 import SearchBar from "../../modules/Searchbar/SearchBar";
 import { Colors } from "../../constants/styles";
-import Overlay from "../../components/Overlay/Overlay";
 import { useState } from "react";
 import ProductsCarusel from "../../modules/ProductsCarusel/ProductsCarusel";
 import { useCallback } from "react";
@@ -22,18 +20,6 @@ import { wait } from "../../functions/wait";
 let isOpen = false;
 
 export default function Home() {
-  const [showOverlay, setShowOverlay] = useState(false);
-
-  const close = () => {
-    setShowOverlay(false);
-    Keyboard.dismiss();
-  };
-
-  const open = (callback: () => void) => {
-    setShowOverlay(true);
-    callback();
-  };
-
   const [refresh, setRefresh] = useState(false);
 
   const onRefresh = useCallback(() => {
@@ -59,15 +45,13 @@ export default function Home() {
       }).start();
       isOpen = false;
     }
-    close();
   }
 
   return (
     <SafeAreaView style={styles.container}>
       <Sidebar translateX={translateX}>
-        <SearchBar open={open} close={close} toggleSidebar={ToggleSidebar} />
+        <SearchBar toggleSidebar={ToggleSidebar} />
         <ScrollView
-          style={{ marginBottom: 80 }}
           bounces={true}
           refreshControl={
             <RefreshControl onRefresh={onRefresh} refreshing={refresh} />
@@ -105,8 +89,6 @@ export default function Home() {
 
           <Newsletter />
         </ScrollView>
-
-        {showOverlay && <Overlay close={close} />}
       </Sidebar>
     </SafeAreaView>
   );

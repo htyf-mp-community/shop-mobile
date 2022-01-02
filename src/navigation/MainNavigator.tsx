@@ -20,13 +20,22 @@ import ProductReviews from "./Screens/Reviews/ProductReviews";
 import useCheckToken from "../hooks/useCheckToken";
 import Landing from "./Screens/Landing";
 import AccountSettings from "./Screens/AccountSettings";
+
 import MyReviews from "./Screens/MyReviews";
+import SearchScreen from "./Screens/Search";
+import {
+  cartScreenOptions,
+  checkOutScreenOptions,
+  defaultStackOptions,
+  detailsScreenOptions,
+  horizontalAnimation,
+} from "./options";
 
 export const Stack = createSharedElementStackNavigator<RootStackParams>();
 
 export default function MainNavigator(): JSX.Element {
   const { ReadUser } = useUser();
-  const { token, isLoggedIn } = useCheckToken();
+  const { token, isLoggedIn, name } = useCheckToken();
 
   useEffect(() => {
     ReadUser();
@@ -43,44 +52,34 @@ export default function MainNavigator(): JSX.Element {
     <NavigationContainer theme={DarkTheme}>
       <Stack.Navigator
         initialRouteName="Landing"
-        screenOptions={{
-          headerShown: true,
-          headerStyle: { backgroundColor: Colors.primary },
-          headerTintColor: Colors.text,
-        }}
+        screenOptions={defaultStackOptions}
       >
         {isLoggedIn ? (
           <>
             <Stack.Screen
               name="Home"
               component={Home}
-              options={{ headerShown: false }}
+              options={{
+                headerShown: false,
+              }}
             />
             <Stack.Screen
               name="Cart"
               component={Cart}
+              options={cartScreenOptions}
+            />
+            <Stack.Screen
+              component={User}
+              name="User"
               options={{
-                gestureEnabled: true,
-                gestureDirection: "vertical",
-                gestureResponseDistance: 200,
-                presentation: "modal",
+                headerTitleAlign: "center",
+                headerTitle: name.split("@")[0],
               }}
             />
-            <Stack.Screen component={User} name="User" />
             <Stack.Screen
               component={ProductDetails}
               name="Details"
-              options={({ route }) => ({
-                title: route.params.title,
-                headerTitleAlign: "center",
-                gestureEnabled: true,
-                gestureDirection: "vertical",
-                gestureResponseDistance: 100,
-                presentation: "modal",
-                headerShown: true,
-                headerStyle: { backgroundColor: Colors.primary },
-                headerTintColor: "white",
-              })}
+              options={detailsScreenOptions}
               sharedElements={({ params }) => {
                 const { prod_id, sharedID } = params;
                 return ["prod_id." + prod_id + sharedID];
@@ -89,13 +88,7 @@ export default function MainNavigator(): JSX.Element {
             <Stack.Screen
               name="Checkout"
               component={Checkout}
-              options={{
-                gestureEnabled: true,
-                gestureDirection: "vertical",
-                gestureResponseDistance: 200,
-                presentation: "modal",
-                headerTitleAlign: "center",
-              }}
+              options={checkOutScreenOptions}
             />
             <Stack.Screen
               name="SearchResults"
@@ -124,6 +117,15 @@ export default function MainNavigator(): JSX.Element {
             />
             <Stack.Screen name="MyReviews" component={MyReviews} />
             <Stack.Screen name="AccountSettings" component={AccountSettings} />
+            <Stack.Screen
+              name="Search"
+              component={SearchScreen}
+              options={{
+                ...horizontalAnimation,
+                headerTitleAlign: "center",
+                headerTitle: "Searched Phrase",
+              }}
+            />
           </>
         ) : (
           <>

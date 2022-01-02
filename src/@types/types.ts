@@ -47,6 +47,7 @@ export type UserContextType = {
 
 export type RootStackParams = {
   initialRouteName: Object | undefined;
+  Search: undefined;
   Home: undefined;
   Cart: undefined;
   User: undefined;
@@ -61,7 +62,6 @@ export type RootStackParams = {
     prod_id: number;
     sharedID: string;
     image: string;
-    imgPath: string;
     title: string;
   };
   CreateReview: {
@@ -84,4 +84,11 @@ export type useNavigationProps = StackNavigationProp<RootStackParams>;
 export interface ScreenNavigationProps<T extends keyof RootStackParams> {
   route: RouteProp<RootStackParams, T>;
   navigation?: StackNavigationProp<RootStackParams>;
+}
+
+export interface SuggestionType {
+  image: string;
+  prod_id: number;
+  title: string;
+  price: number;
 }
