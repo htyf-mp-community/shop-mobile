@@ -14,12 +14,13 @@ interface InputProps extends TextInputProps {
   name?: string;
   placeholder: string;
   value: string;
-  setValue: (text: string) => void;
+  setValue?: (text: string) => void;
   style?: StyleProp<ViewStyle & TextStyle>;
   labelStyle?: StyleProp<TextStyle>;
   placeholderColor?: string;
   inputRef?: any;
   helperText?: string;
+  helperStyle?: StyleProp<TextStyle>;
 }
 
 /**
@@ -43,6 +44,7 @@ export default function Input({
   labelStyle = {},
   inputRef,
   helperText,
+  helperStyle,
   ...rest
 }: InputProps) {
   return (
@@ -69,6 +71,7 @@ export default function Input({
               fontWeight: "400",
               marginLeft: 10,
             },
+            helperStyle,
           ]}
         >
           {helperText}

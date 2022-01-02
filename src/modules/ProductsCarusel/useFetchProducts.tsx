@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from "react";
-import axios from "axios";
+import axios, { CancelTokenSource } from "axios";
 import { useUser } from "../../context/UserContext";
 import RemoveProductsRepetition from "../../functions/RemoveRepetition";
 import { Product } from "../../@types/types";
@@ -28,7 +28,7 @@ export default function useFetchProducts<T>(path: string, deps: any[] = []) {
   });
 
   const FetchAllProducts = useCallback(
-    async (url?: string | undefined) => {
+    async (url?: string | undefined, cancelToken?: CancelTokenSource) => {
       try {
         setState((prev) => ({ ...prev, loading: true }));
 
@@ -38,6 +38,7 @@ export default function useFetchProducts<T>(path: string, deps: any[] = []) {
           headers: {
             token: user.token,
           },
+          cancelToken: cancelToken?.token,
         });
 
         if (data !== undefined && data.message !== "Token expired") {
@@ -60,7 +61,13 @@ export default function useFetchProducts<T>(path: string, deps: any[] = []) {
   );
 
   useEffect(() => {
-    FetchAllProducts();
+    let cancelToken = axios.CancelToken.source();
+
+    FetchAllProducts(undefined, cancelToken);
+
+    return () => {
+      cancelToken.cancel();
+    };
   }, deps);
 
   return { ...state, FetchAllProducts };
