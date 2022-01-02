@@ -13,6 +13,7 @@ const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
 interface SidebarProps {
   children: React.ReactNode;
   translateX: Animated.Value;
+  translateNavigation: Animated.Value;
 }
 
 const styles = StyleSheet.create({
@@ -46,10 +47,14 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function Sidebar({ children, translateX }: SidebarProps) {
+export default function Sidebar({
+  children,
+  translateX,
+  translateNavigation,
+}: SidebarProps) {
   const scale = translateX.interpolate({
     inputRange: [0, WIDTH / 4],
-    outputRange: [1, 0.8],
+    outputRange: [1, 0.75],
     extrapolate: "clamp",
   });
 
@@ -57,7 +62,12 @@ export default function Sidebar({ children, translateX }: SidebarProps) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.navigation}>
+      <Animated.View
+        style={[
+          styles.navigation,
+          { transform: [{ translateX: translateNavigation }] },
+        ]}
+      >
         <Avatar
           hide={true}
           avatarStyles={{ backgroundColor: Colors.primary }}
@@ -85,7 +95,7 @@ export default function Sidebar({ children, translateX }: SidebarProps) {
             />
           );
         })}
-      </View>
+      </Animated.View>
       <Animated.View
         style={[
           {

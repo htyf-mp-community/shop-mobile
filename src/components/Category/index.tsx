@@ -39,8 +39,11 @@ export default function Category({ category, ...rest }: CategoryProps) {
       style={{
         backgroundColor: Colors.primary100,
         padding: 10,
+        paddingLeft: 20,
+        paddingRight: 20,
         margin: 10,
-        borderRadius: 10,
+        marginRight: 0,
+        borderRadius: 5,
       }}
       {...rest}
     >

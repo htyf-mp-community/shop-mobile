@@ -25,7 +25,9 @@ export default function AuthForm({ onSubmit, header, error }: AuthFormProps) {
       style={[styles.form, { paddingTop: status === "open" ? 10 : 100 }]}
     >
       <Text style={[h1, { fontWeight: "bold" }]}>{header}</Text>
-      {error && <Text style={[h1, { fontWeight: "bold" }]}>{error}</Text>}
+      {typeof error !== "undefined" && error !== "" && (
+        <Text style={[h1, { fontWeight: "bold" }]}>{error}</Text>
+      )}
       <Formik
         validationSchema={schema}
         initialValues={{ email: "", password: "" }}

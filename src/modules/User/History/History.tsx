@@ -12,6 +12,7 @@ export default function History({}: HistoryProps): JSX.Element {
       sharedID="History"
       path={ENDPOINTS.history}
       refresh={false}
+      center
     />
   );
 }

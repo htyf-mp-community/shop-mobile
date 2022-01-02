@@ -61,7 +61,6 @@ export default function Product({
       image,
       sharedID,
       title,
-      imgPath: img_id[0]?.name,
     });
   }
 

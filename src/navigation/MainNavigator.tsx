@@ -11,7 +11,6 @@ import User from "./Screens/User";
 import ProductDetails from "./Screens/ProductDetails";
 import { createSharedElementStackNavigator } from "react-navigation-shared-element";
 import "react-native-gesture-handler";
-import { Colors } from "../constants/styles";
 import { RootStackParams } from "../@types/types";
 import Checkout from "./Screens/Checkout";
 import SearchResults from "./Screens/SearchResults";
@@ -20,7 +19,7 @@ import ProductReviews from "./Screens/Reviews/ProductReviews";
 import useCheckToken from "../hooks/useCheckToken";
 import Landing from "./Screens/Landing";
 import AccountSettings from "./Screens/AccountSettings";
-
+import PurchaseHistory from "./Screens/PurchaseHistory";
 import MyReviews from "./Screens/MyReviews";
 import SearchScreen from "./Screens/Search";
 import {
@@ -74,6 +73,7 @@ export default function MainNavigator(): JSX.Element {
               options={{
                 headerTitleAlign: "center",
                 headerTitle: name.split("@")[0],
+                presentation: "modal",
               }}
             />
             <Stack.Screen
@@ -115,8 +115,16 @@ export default function MainNavigator(): JSX.Element {
                 title: `Rate product: ${params.prod_name}`,
               })}
             />
-            <Stack.Screen name="MyReviews" component={MyReviews} />
-            <Stack.Screen name="AccountSettings" component={AccountSettings} />
+            <Stack.Screen
+              name="MyReviews"
+              component={MyReviews}
+              options={horizontalAnimation}
+            />
+            <Stack.Screen
+              name="AccountSettings"
+              component={AccountSettings}
+              options={horizontalAnimation}
+            />
             <Stack.Screen
               name="Search"
               component={SearchScreen}
@@ -126,18 +134,27 @@ export default function MainNavigator(): JSX.Element {
                 headerTitle: "Searched Phrase",
               }}
             />
+            <Stack.Screen
+              name="PurchaseHistory"
+              component={PurchaseHistory}
+              options={{
+                headerTitle: "Purchase history",
+                headerTitleAlign: "center",
+                ...horizontalAnimation,
+              }}
+            />
           </>
         ) : (
           <>
             <Stack.Screen
               name="Auth"
               component={Auth}
-              options={{ headerShown: false }}
+              options={{ headerShown: false, ...horizontalAnimation }}
             />
             <Stack.Screen
               name="Landing"
               component={Landing}
-              options={{ headerShown: false }}
+              options={{ headerShown: false, ...horizontalAnimation }}
             />
           </>
         )}

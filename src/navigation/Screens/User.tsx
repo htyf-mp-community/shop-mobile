@@ -1,4 +1,3 @@
-import History from "../../modules/User/History/History";
 import React from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import { Colors } from "../../constants/styles";
@@ -13,7 +12,20 @@ export default function User({
   return (
     <ScrollView style={styles.container}>
       <Avatar />
-      <History />
+
+      <Button
+        text="PURCHASE HISTORY"
+        style={{
+          margin: 10,
+          marginTop: 20,
+          backgroundColor: "#1f1f1f",
+          padding: 15,
+        }}
+        callback={() => {
+          navigation.navigate("PurchaseHistory");
+        }}
+      />
+
       <Button
         text="MY REVIEWS"
         style={{ margin: 10, backgroundColor: "#1f1f1f", padding: 15 }}

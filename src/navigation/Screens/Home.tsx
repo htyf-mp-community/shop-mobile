@@ -1,5 +1,6 @@
 import {
   Animated,
+  Easing,
   RefreshControl,
   SafeAreaView,
   ScrollView,
@@ -19,6 +20,8 @@ import { wait } from "../../functions/wait";
 
 let isOpen = false;
 
+const DURATION = 250;
+
 export default function Home() {
   const [refresh, setRefresh] = useState(false);
 
@@ -29,27 +32,46 @@ export default function Home() {
     });
   }, []);
 
-  const translateX = useRef(new Animated.Value(0)).current;
+  const translateList = useRef(new Animated.Value(0)).current;
+  const translateNavigation = useRef(new Animated.Value(-200)).current;
 
   function ToggleSidebar() {
     if (!isOpen) {
-      Animated.spring(translateX, {
+      Animated.timing(translateList, {
         toValue: 250,
+        duration: DURATION,
         useNativeDriver: true,
       }).start();
+      Animated.timing(translateNavigation, {
+        toValue: 0,
+        duration: DURATION,
+        easing: Easing.inOut(Easing.ease),
+        useNativeDriver: true,
+      }).start();
+
       isOpen = true;
     } else {
-      Animated.spring(translateX, {
+      Animated.timing(translateList, {
         toValue: 0,
+        duration: DURATION,
         useNativeDriver: true,
       }).start();
+      Animated.timing(translateNavigation, {
+        toValue: -200,
+        duration: DURATION,
+        useNativeDriver: true,
+      }).start();
+
       isOpen = false;
     }
   }
 
   return (
     <SafeAreaView style={styles.container}>
-      <Sidebar translateX={translateX}>
+      <Sidebar
+        translateX={translateList}
+        translateNavigation={translateNavigation}
+      >
         <SearchBar toggleSidebar={ToggleSidebar} />
         <ScrollView
           bounces={true}
