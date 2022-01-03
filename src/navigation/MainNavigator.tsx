@@ -106,6 +106,7 @@ export default function MainNavigator(): JSX.Element {
               }}
               options={({ route: { params } }) => ({
                 title: `Rate product: ${params.prod_name}`,
+                ...horizontalAnimation,
               })}
             />
             <Stack.Screen
@@ -113,17 +114,26 @@ export default function MainNavigator(): JSX.Element {
               component={ProductReviews}
               options={({ route: { params } }) => ({
                 title: `Rate product: ${params.prod_name}`,
+                ...horizontalAnimation,
               })}
             />
             <Stack.Screen
               name="MyReviews"
               component={MyReviews}
-              options={horizontalAnimation}
+              options={{
+                ...horizontalAnimation,
+                title: "My reviews",
+                headerTitleAlign: "center",
+              }}
             />
             <Stack.Screen
               name="AccountSettings"
               component={AccountSettings}
-              options={horizontalAnimation}
+              options={{
+                ...horizontalAnimation,
+                headerTitle: "Account Settings",
+                headerTitleAlign: "center",
+              }}
             />
             <Stack.Screen
               name="Search"

@@ -38,9 +38,7 @@ export default function Form() {
           console.log(data);
 
           setSuggestion(data);
-        } catch (error) {
-          console.warn("./navigation/Search/Form.tsx: ", error);
-        }
+        } catch (error) {}
       }
     }, 500);
 
