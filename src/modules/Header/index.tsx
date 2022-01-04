@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet } from "react-native";
 import React from "react";
 import Button from "../../components/Button/Button";
 import { useNavigation } from "@react-navigation/native";
@@ -11,7 +11,7 @@ interface SearchBarProps {
   toggleSidebar: () => void;
 }
 
-export default function SearchBar({ toggleSidebar }: SearchBarProps) {
+export default function Header({ toggleSidebar }: SearchBarProps) {
   const navigation = useNavigation<useNavigationProps>();
 
   return (
@@ -21,10 +21,6 @@ export default function SearchBar({ toggleSidebar }: SearchBarProps) {
         callback={toggleSidebar}
         style={{ margin: 5, backgroundColor: "transparent" }}
       />
-
-      <Text style={{ fontFamily: "PoppinsBold", color: "#fff", fontSize: 18 }}>
-        Welcome
-      </Text>
 
       <Button
         callback={() => navigation.navigate("Search")}

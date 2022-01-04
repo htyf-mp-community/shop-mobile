@@ -7,7 +7,6 @@ import {
   StyleSheet,
 } from "react-native";
 import React, { useRef } from "react";
-import SearchBar from "../../modules/Searchbar/SearchBar";
 import { Colors } from "../../constants/styles";
 import { useState } from "react";
 import ProductsCarusel from "../../modules/ProductsCarusel/ProductsCarusel";
@@ -17,6 +16,7 @@ import Sidebar from "../../modules/Sidebar";
 import Categories from "../../modules/Categories";
 import Newsletter from "../../components/Newsletter";
 import { wait } from "../../functions/wait";
+import Header from "../../modules/Header";
 
 let isOpen = false;
 
@@ -72,7 +72,7 @@ export default function Home() {
         translateX={translateList}
         translateNavigation={translateNavigation}
       >
-        <SearchBar toggleSidebar={ToggleSidebar} />
+        <Header toggleSidebar={ToggleSidebar} />
         <ScrollView
           bounces={true}
           refreshControl={
