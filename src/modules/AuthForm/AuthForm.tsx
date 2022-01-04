@@ -24,7 +24,9 @@ export default function AuthForm({ onSubmit, header, error }: AuthFormProps) {
       contentContainerStyle={{ alignItems: "center" }}
       style={[styles.form, { paddingTop: status === "open" ? 10 : 100 }]}
     >
-      <Text style={[h1, { fontWeight: "bold" }]}>{header}</Text>
+      <Text style={[h1, { fontWeight: "bold" }]} testID="HEADER_TEXT">
+        {header}
+      </Text>
       {typeof error !== "undefined" && error !== "" && (
         <Text style={[h1, { fontWeight: "bold" }]}>{error}</Text>
       )}
@@ -61,7 +63,7 @@ export default function AuthForm({ onSubmit, header, error }: AuthFormProps) {
             <Input
               value={values.password}
               onChangeText={handleChange("password")}
-              name={errors.password ? errors.password : "Email"}
+              name={errors.password ? errors.password : "Password"}
               placeholder="password"
               style={{
                 ...styles.input,
@@ -83,6 +85,7 @@ export default function AuthForm({ onSubmit, header, error }: AuthFormProps) {
               ]}
               disabled={!isValid}
               fontStyle={{ fontWeight: "bold" }}
+              testID="SUBMIT_BUTTON"
             />
           </>
         )}
