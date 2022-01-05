@@ -93,3 +93,15 @@ export interface SuggestionType {
   title: string;
   price: number;
 }
+
+export interface HistoryResponse {
+  hasMore: boolean;
+  results: {
+    product: Product;
+    details: {
+      purchase_id: number;
+      date: string;
+      status: string;
+    };
+  }[];
+}
