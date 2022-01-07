@@ -4,7 +4,7 @@ import { Dimensions, StyleSheet, View, Text, Image } from "react-native";
 import { Colors } from "../../constants/styles";
 import Button from "../../components/Button/Button";
 
-const { width: WIDTH, height: HEIGHT } = Dimensions.get("screen");
+const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   container: {
@@ -44,11 +44,11 @@ export default function Landing({ route, navigation }: any) {
       <Image
         source={require("../../assets/blob-haikei.png")}
         style={{
-          height: HEIGHT * 0.5,
+          height: HEIGHT * 0.45,
           width: WIDTH,
         }}
       />
-      <View style={{ height: HEIGHT * 0.4 }}>
+      <View style={{ height: HEIGHT * 0.5 }}>
         <View style={styles.block}>
           <Text
             style={[

@@ -1,14 +1,17 @@
 import React, { useRef } from "react";
 import { ScrollView, Animated, RefreshControl } from "react-native";
-import { Colors } from "../../constants/styles";
-import AddToCart from "../../modules/AddToCart/AddToCart";
-import ImagesCarusel from "../../modules/ImagesCarusel/ImagesCarusel";
-import ProductDetailsText from "../../modules/ProductDetailsText/ProductDetailsText";
-import ProductDetailsButtons from "../../modules/ProductDetailsButtons/ProductDetailsButtons";
+import { Colors } from "../../../constants/styles";
+import AddToCart from "../../../modules/AddToCart/AddToCart";
+import ImagesCarusel from "../../../modules/ImagesCarusel/ImagesCarusel";
+import ProductDetailsText from "../../../modules/ProductDetailsText/ProductDetailsText";
+import ProductDetailsButtons from "../../../modules/ProductDetailsButtons/ProductDetailsButtons";
 import { useIsFocused } from "@react-navigation/native";
-import useFetch from "../../hooks/useFetch";
-import { ProductImageProps, ScreenNavigationProps } from "../../@types/types";
-import { wait } from "../../functions/wait";
+import useFetch from "../../../hooks/useFetch";
+import {
+  ProductImageProps,
+  ScreenNavigationProps,
+} from "../../../@types/types";
+import { wait } from "../../../functions/wait";
 
 export default function ProductDetails({
   route,

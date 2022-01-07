@@ -77,21 +77,22 @@ export default function ProductsCarusel({
         </View>
       )}
 
+      {!loading && !error && data.length === 0 && (
+        <View
+          style={{
+            backgroundColor: Colors.primary,
+            height: HEIGHT / 3,
+            width: WIDTH * 0.95,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Text style={{ color: "#fff", fontSize: 30 }}>Nothing yet </Text>
+        </View>
+      )}
+
       {!error && (
         <VirtualizedList
-          ListEmptyComponent={
-            <View
-              style={{
-                backgroundColor: Colors.primary,
-                height: HEIGHT / 3,
-                width: WIDTH * 0.95,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Text style={{ color: "#fff", fontSize: 30 }}>Nothing yet </Text>
-            </View>
-          }
           data={data}
           onEndReached={onSkip}
           horizontal
