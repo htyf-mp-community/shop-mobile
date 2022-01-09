@@ -3,31 +3,26 @@ import { View, Dimensions } from "react-native";
 import { Colors } from "../../constants/styles";
 import Button from "../../components/Button/Button";
 import { ProductRatingProps, useNavigationProps } from "../../@types/types";
+import { useNavigation } from "@react-navigation/native";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
-interface ProdButtonsProps {
-  navigation: useNavigationProps;
-  propsAdd: {
-    thumbnail: string;
-    prod_id: number;
-    sharedID: string;
-    prod_name: string;
-  };
-  propsRead: {
-    reviews: ProductRatingProps[];
-    thumbnail: string;
-    prod_id: number;
-    sharedID: string;
-    prod_name: string;
-  };
+interface DetailsButtonsProps {
+  name: string;
+  thumbnail: string;
+  sharedID: string;
+  prod_id: number;
+  reviews: ProductRatingProps[];
 }
 
 export default function ProductDetailsButtons({
-  navigation,
-  propsAdd,
-  propsRead,
-}: ProdButtonsProps) {
+  name,
+  thumbnail,
+  sharedID,
+  prod_id,
+  reviews,
+}: DetailsButtonsProps) {
+  const navigation = useNavigation<useNavigationProps>();
   return (
     <View
       style={{
@@ -38,23 +33,30 @@ export default function ProductDetailsButtons({
       }}
     >
       <Button
-        text="Add review"
-        variant="secondary"
-        callback={() => navigation.navigate("CreateReview", propsAdd)}
-        style={{
-          width: SCREEN_WIDTH * 0.4,
-          backgroundColor: Colors.primary400,
-          justifyContent: "center",
-        }}
+        text="Create review"
+        variant="primary"
+        style={{ width: "40%", justifyContent: "center" }}
+        callback={() =>
+          navigation.navigate("CreateReview", {
+            thumbnail,
+            prod_id,
+            prod_name: name,
+            sharedID,
+          })
+        }
       />
       <Button
         variant="primary"
-        text="Ratings"
-        callback={() => navigation.navigate("ProductReviews", propsRead)}
-        style={{
-          width: SCREEN_WIDTH * 0.4,
-          justifyContent: "center",
-        }}
+        text="Reviews"
+        style={{ width: "40%", justifyContent: "center" }}
+        callback={() =>
+          navigation.navigate("ProductReviews", {
+            prod_id,
+            prod_name: name,
+            reviews,
+            sharedID,
+          })
+        }
       />
     </View>
   );

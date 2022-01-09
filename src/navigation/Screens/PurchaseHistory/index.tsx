@@ -1,6 +1,7 @@
 import { useIsFocused } from "@react-navigation/native";
 import React, { useMemo, useState } from "react";
 import { View, Text, FlatList } from "react-native";
+import { HistoryResponse } from "../../../@types/types";
 import useFetch from "../../../hooks/useFetch";
 import Product from "../../../modules/Product/Product";
 import { structureOutput } from "./structure";
@@ -9,9 +10,11 @@ export default function PurchaseHistory() {
   const isFocused = useIsFocused();
   const [skip, setSkip] = useState(0);
 
-  const { data, error, loading } = useFetch<any>(`/payments/history?skip=0`, [
-    isFocused,
-  ]);
+  const { data } = useFetch<HistoryResponse>(
+    `/payments/history?skip=0`,
+    [isFocused],
+    {}
+  );
 
   function onReachEnd() {
     setSkip(skip + 5);
@@ -42,10 +45,10 @@ export default function PurchaseHistory() {
               keyExtractor={({ details }) => details.purchase_id.toString()}
               renderItem={({ item }) => (
                 <Product
-                  {...item.product}
                   ammount={0}
                   sharedID="HISTORY"
                   fullSize
+                  {...item.product}
                 />
               )}
             />

@@ -1,23 +1,14 @@
 import React, { useEffect, useRef } from "react";
-import { Animated, StyleSheet, Dimensions } from "react-native";
-import { ProductImageProps } from "../../@types/types";
-import Dots from "../../components/Dots/Dots";
+import { Animated, StyleSheet } from "react-native";
 import { Colors } from "../../constants/styles";
+import AddToCart from "../AddToCart/AddToCart";
 import { ProductTypeProps } from "../Product/Product";
 
 interface DetailsProps {
   result: ProductTypeProps;
-  images: ProductImageProps[];
-  scrollX: Animated.Value;
 }
 
-const { width: SCREEN_WIDTH } = Dimensions.get("screen");
-
-export default function ProductDetailsText({
-  result,
-  images,
-  scrollX,
-}: DetailsProps) {
+export default function ProductDetailsText({ result }: DetailsProps) {
   const opacity = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -30,17 +21,24 @@ export default function ProductDetailsText({
   }, [result.prod_id]);
   return (
     <>
-      <Animated.View style={[styles.dots, { opacity }]}>
-        <Dots arr={[...images, 1]} x={scrollX} />
-      </Animated.View>
-
       <Animated.Text style={[styles.text, styles.title, { opacity }]}>
         {result?.title}
       </Animated.Text>
 
-      <Animated.Text style={[styles.text, { opacity, fontSize: 25 }]}>
-        ${result?.price}
-      </Animated.Text>
+      <Animated.View
+        style={[{ opacity }, { flexDirection: "row", marginTop: 20 }]}
+      >
+        <AddToCart
+          prod_id={result.prod_id}
+          relative
+          style={{ marginLeft: 20, marginRight: 20 }}
+        />
+        <Animated.Text
+          style={[styles.text, { opacity, fontSize: 25, padding: 5 }]}
+        >
+          ${result?.price}
+        </Animated.Text>
+      </Animated.View>
 
       <Animated.Text style={[styles.text, { opacity, fontSize: 17 }]}>
         {result?.description}
@@ -54,24 +52,14 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 18,
     padding: 20,
-
     backgroundColor: Colors.primary,
     fontFamily: "PoppinsMedium",
   },
   title: {
-    fontSize: 31,
+    fontSize: 25,
     padding: 10,
     paddingLeft: 15,
     fontFamily: "PoppinsBold",
     backgroundColor: Colors.primary400,
-  },
-  dots: {
-    position: "absolute",
-    top: 210,
-    zIndex: 11,
-    flexDirection: "row",
-    padding: 10,
-    width: SCREEN_WIDTH,
-    justifyContent: "center",
   },
 });

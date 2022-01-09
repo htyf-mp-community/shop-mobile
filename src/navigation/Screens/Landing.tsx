@@ -44,7 +44,7 @@ export default function Landing({ route, navigation }: any) {
       <Image
         source={require("../../assets/blob-haikei.png")}
         style={{
-          height: HEIGHT * 0.45,
+          height: HEIGHT * 0.5,
           width: WIDTH,
         }}
       />

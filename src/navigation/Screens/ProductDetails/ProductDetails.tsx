@@ -1,17 +1,18 @@
-import React, { useRef } from "react";
-import { ScrollView, Animated, RefreshControl } from "react-native";
+import React, { useState } from "react";
+import { ScrollView, RefreshControl } from "react-native";
 import { Colors } from "../../../constants/styles";
-import AddToCart from "../../../modules/AddToCart/AddToCart";
 import ImagesCarusel from "../../../modules/ImagesCarusel/ImagesCarusel";
 import ProductDetailsText from "../../../modules/ProductDetailsText/ProductDetailsText";
 import ProductDetailsButtons from "../../../modules/ProductDetailsButtons/ProductDetailsButtons";
 import { useIsFocused } from "@react-navigation/native";
 import useFetch from "../../../hooks/useFetch";
 import {
+  Product,
   ProductImageProps,
   ScreenNavigationProps,
 } from "../../../@types/types";
 import { wait } from "../../../functions/wait";
+import { ProductTypeProps } from "../../../modules/Product/Product";
 
 export default function ProductDetails({
   route,
@@ -27,14 +28,16 @@ export default function ProductDetails({
     wait(1000).then(() => setRefreshing(false));
   }, []);
 
-  const { data: result } = useFetch<any>(`/products/product/${prod_id}`, [
-    isFocused,
-    refreshing,
-  ]);
+  const { data: result } = useFetch<Product>(
+    `/products/product/${prod_id}`,
+    [isFocused, refreshing],
+    {}
+  );
 
   const imgList = result?.img_id as ProductImageProps[];
   const images = imgList?.length > 1 ? imgList.splice(1, imgList.length) : [];
-  const scrollX = useRef(new Animated.Value(0)).current;
+
+  const [showModal, setShowModal] = useState(false);
 
   return (
     <ScrollView
@@ -51,37 +54,19 @@ export default function ProductDetails({
       }
     >
       <ImagesCarusel
-        scrollX={scrollX}
         sharedID={sharedID}
         prod_id={prod_id}
         image={image}
         images={images}
       />
 
-      <AddToCart
-        prod_id={prod_id}
-        style={{
-          zIndex: 10,
-          top: 260,
-        }}
-      />
-
-      <ProductDetailsText result={result} images={images} scrollX={scrollX} />
+      <ProductDetailsText result={result as ProductTypeProps} />
       <ProductDetailsButtons
-        navigation={navigation}
-        propsAdd={{
-          thumbnail: image,
-          prod_id,
-          sharedID,
-          prod_name: result.title,
-        }}
-        propsRead={{
-          reviews: result.rating_id,
-          thumbnail: image,
-          prod_id,
-          sharedID,
-          prod_name: result.title,
-        }}
+        thumbnail={image}
+        prod_id={prod_id}
+        sharedID={sharedID}
+        reviews={result.rating_id}
+        name={result.title}
       />
     </ScrollView>
   );

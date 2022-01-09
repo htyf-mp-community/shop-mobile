@@ -13,6 +13,7 @@ interface AddtoCartProps {
   prod_id: number;
   style?: StyleProp<ViewStyle>;
   refetch?: () => void;
+  relative?: boolean;
 }
 
 interface IconProps {
@@ -50,6 +51,7 @@ export default function AddToCart({
   prod_id,
   style,
   refetch = () => {},
+  relative = false,
 }: AddtoCartProps) {
   const { user } = useUser();
 
@@ -96,13 +98,11 @@ export default function AddToCart({
       style={[
         {
           width: 50,
-          position: "absolute",
-          bottom: 10,
-          right: 10,
           height: 50,
           backgroundColor:
             result === "Added" ? Colors.ternary : Colors.secondary,
         },
+        !relative && { position: "absolute", bottom: 10, right: 10 },
         style,
       ]}
       icon={<Icon loading={loading} success={result} error={!!error} />}
