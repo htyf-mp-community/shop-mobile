@@ -21,13 +21,6 @@ interface IconProps {
   error: boolean;
 }
 
-/**
- * It shows Icon based on arguments
- * @param {Boolean} loading represents if query have finished
- * @param {String} success response from the server, based on Component displays icon
- * @param {Boolean} error
- **/
-
 const Icon = ({ loading, success, error }: IconProps) => {
   if (loading) {
     return (

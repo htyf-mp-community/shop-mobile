@@ -8,12 +8,12 @@ import useFetch from "../../hooks/useFetch";
  * Fetches all kinds of categories from the server and displays them
  **/
 export default function Categories() {
-  const { data } = useFetch<string[]>("/products/categories");
+  const { data } = useFetch<readonly string[]>("/products/categories");
   return (
     <FlatList
       horizontal
       style={{ height: 60 }}
-      data={data as string[]}
+      data={data}
       keyExtractor={(_, i) => i.toString()}
       renderItem={({ item }) => <Category category={item} />}
     />

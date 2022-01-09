@@ -20,7 +20,7 @@ export default function Purchase({ cart }: IPurchaseProps) {
   }
 
   return (
-    <View style={{ width, alignItems: "center", padding: 10, bottom: 5 }}>
+    <View style={{ width, alignItems: "center", padding: 10 }}>
       <View
         style={{
           width: width * 0.9,
@@ -50,7 +50,7 @@ export default function Purchase({ cart }: IPurchaseProps) {
       </View>
       <Button
         disabled={cart.length === 0}
-        text={`Check out `}
+        text={`Continue $${totalPrice} `}
         callback={PurchaseProduct}
         style={{
           backgroundColor: Colors.secondary,

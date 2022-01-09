@@ -1,4 +1,3 @@
-import { RouteProp } from "@react-navigation/native";
 import { StackNavigationOptions } from "@react-navigation/stack";
 import { ScreenNavigationProps } from "../@types/types";
 import { Colors } from "../constants/styles";

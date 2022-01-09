@@ -4,14 +4,14 @@ import { API } from "../constants/routes";
 import { useUser } from "../context/UserContext";
 
 interface StateProps<T> {
-  data: T | T[];
+  data: T | undefined;
   loading: boolean;
   error: string;
 }
 
 export default function useFetch<DataType>(path: string, deps: any[] = []) {
   const [state, setState] = useState<StateProps<DataType>>({
-    data: [],
+    data: undefined,
     loading: false,
     error: "",
   });

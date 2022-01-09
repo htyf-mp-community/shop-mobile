@@ -10,6 +10,7 @@ import { Colors } from "../../constants/styles";
 import { useUser } from "../../context/UserContext";
 import Personals from "../../modules/Checkout";
 import PersonalProvider from "../../modules/Checkout/PersonalProvider";
+import { ProductTypeProps } from "../../modules/Product/Product";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -34,7 +35,7 @@ function CheckoutComponent({ route }: any) {
       const response = await axios.post(
         `${API}/payments/purchase`,
         {
-          prod_id: cart.map(({ prod_id }: any) => prod_id),
+          prod_id: cart.map(({ prod_id }: ProductTypeProps) => prod_id),
         },
         {
           headers: {

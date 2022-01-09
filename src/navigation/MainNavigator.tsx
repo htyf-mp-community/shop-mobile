@@ -35,11 +35,11 @@ export const Stack = createSharedElementStackNavigator<RootStackParams>();
 export default function MainNavigator(): JSX.Element {
   const { ReadUser } = useUser();
   const { token, isLoggedIn, name } = useCheckToken();
+  const { expoPushToken } = useNotifications();
 
   useEffect(() => {
     ReadUser();
   }, []);
-  const { expoPushToken } = useNotifications();
 
   useEffect(() => {
     if (typeof expoPushToken !== "undefined") {
