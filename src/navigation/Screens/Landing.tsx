@@ -1,15 +1,21 @@
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Dimensions, StyleSheet, View, Text, Image } from "react-native";
+import {
+  Dimensions,
+  StyleSheet,
+  View,
+  Text,
+  ImageBackground,
+} from "react-native";
 import { Colors } from "../../constants/styles";
 import Button from "../../components/Button/Button";
-
-const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.primary,
     flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
   block: {
     margin: 10,
@@ -41,19 +47,17 @@ export default function Landing({ route, navigation }: any) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Image
-        source={require("../../assets/blob-haikei.png")}
-        style={{
-          height: HEIGHT * 0.5,
-          width: WIDTH,
-        }}
+      <ImageBackground
+        source={require("../../assets/blob-scene-haikei.png")}
+        resizeMode="cover"
+        style={StyleSheet.absoluteFillObject}
       />
-      <View style={{ height: HEIGHT * 0.5 }}>
+      <View style={{ zIndex: 2 }}>
         <View style={styles.block}>
           <Text
             style={[
               styles.text,
-              { fontSize: 50, marginLeft: 10, fontWeight: "bold" },
+              { fontSize: 100, marginLeft: 10, fontWeight: "bold" },
             ]}
           >
             Join us

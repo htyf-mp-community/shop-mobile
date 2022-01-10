@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { View } from "react-native";
 import Button from "../../../components/Button/Button";
 import Input from "../../../components/Input/Input";
+import { Colors } from "../../../constants/styles";
 
 async function changeEmail(token: string) {
   try {
@@ -18,7 +19,7 @@ async function changePassword(token: string) {
 export default function AccountSettings() {
   const [email, setEmail] = useState("");
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: Colors.primary }}>
       <Input
         keyboardType="email-address"
         name="Change e-mail"

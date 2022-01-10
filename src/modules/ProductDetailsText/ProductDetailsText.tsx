@@ -40,7 +40,18 @@ export default function ProductDetailsText({ result }: DetailsProps) {
         </Animated.Text>
       </Animated.View>
 
-      <Animated.Text style={[styles.text, { opacity, fontSize: 17 }]}>
+      <Animated.Text
+        style={[
+          styles.text,
+          {
+            opacity,
+            fontSize: 17,
+            borderBottomWidth: 1,
+            borderBottomColor: "#434655",
+            marginBottom: 20,
+          },
+        ]}
+      >
         {result?.description}
       </Animated.Text>
     </>
@@ -60,6 +71,7 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingLeft: 15,
     fontFamily: "PoppinsBold",
-    backgroundColor: Colors.primary400,
+    borderBottomWidth: 1,
+    borderBottomColor: "#434655",
   },
 });

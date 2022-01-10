@@ -13,6 +13,7 @@ import {
 } from "../../../@types/types";
 import { wait } from "../../../functions/wait";
 import { ProductTypeProps } from "../../../modules/Product/Product";
+import PopUpCarusel from "../../../modules/PopUpCarusel";
 
 export default function ProductDetails({
   route,
@@ -68,6 +69,7 @@ export default function ProductDetails({
         reviews={result.rating_id}
         name={result.title}
       />
+      <PopUpCarusel />
     </ScrollView>
   );
 }

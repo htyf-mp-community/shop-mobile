@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#1E1E1E",
+    backgroundColor: Colors.primary100,
   },
   username: {
     fontFamily: "PoppinsBold",

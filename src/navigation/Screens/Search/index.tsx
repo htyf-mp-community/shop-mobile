@@ -6,6 +6,7 @@ import { SuggestionType, useNavigationProps } from "../../../@types/types";
 import Input from "../../../components/Input/Input";
 import Suggestion from "../../../components/Suggestion";
 import { API } from "../../../constants/routes";
+import { Colors } from "../../../constants/styles";
 import { useUser } from "../../../context/UserContext";
 
 export default function SearchScreen() {
@@ -35,8 +36,6 @@ export default function SearchScreen() {
             },
           });
 
-          console.log(data);
-
           setSuggestion(data);
         } catch (error) {
           console.warn("./navigation/Search/Form.tsx: ", error);
@@ -55,8 +54,9 @@ export default function SearchScreen() {
   return (
     <View
       style={{
-        width,
+        flex: 1,
         alignItems: "center",
+        backgroundColor: Colors.primary,
       }}
     >
       <Input
@@ -65,10 +65,7 @@ export default function SearchScreen() {
         placeholder="Search..."
         placeholderTextColor={"#fff"}
         style={{
-          width,
-          borderColor: "#FF0056",
-          borderWidth: 2,
-          borderRadius: 0,
+          width: width - 20,
           margin: 0,
         }}
       />

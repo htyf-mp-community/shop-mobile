@@ -19,7 +19,7 @@ interface SidebarProps {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.primary300,
+    backgroundColor: Colors.primary,
   },
   navigation: {
     position: "absolute",
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     marginTop: 50,
   },
   button: {
-    backgroundColor: Colors.primary,
+    backgroundColor: Colors.primary100,
     flexDirection: "row-reverse",
     width: WIDTH * 0.5,
     justifyContent: "center",
@@ -70,7 +70,7 @@ export default function Sidebar({
       >
         <Avatar
           hide={true}
-          avatarStyles={{ backgroundColor: Colors.primary }}
+          avatarStyles={{ backgroundColor: Colors.primary100 }}
         />
         {[
           { text: "Cart", icon: "shoppingcart" },
@@ -101,6 +101,15 @@ export default function Sidebar({
           {
             transform: [{ translateX }, { scale }],
             backgroundColor: Colors.primary,
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 12,
+            },
+            shadowOpacity: 0.58,
+            shadowRadius: 16.0,
+
+            elevation: 24,
           },
         ]}
       >

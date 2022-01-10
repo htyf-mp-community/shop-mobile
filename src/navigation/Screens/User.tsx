@@ -17,9 +17,9 @@ export default function User({
         text="PURCHASE HISTORY"
         style={{
           margin: 10,
-          marginTop: 20,
-          backgroundColor: "#1f1f1f",
+          backgroundColor: Colors.primary100,
           padding: 15,
+          marginTop: 20,
         }}
         callback={() => {
           navigation.navigate("PurchaseHistory");
@@ -28,14 +28,14 @@ export default function User({
 
       <Button
         text="MY REVIEWS"
-        style={{ margin: 10, backgroundColor: "#1f1f1f", padding: 15 }}
+        style={{ margin: 10, backgroundColor: Colors.primary100, padding: 15 }}
         callback={() => {
           navigation.navigate("MyReviews");
         }}
       />
       <Button
         text="ACCOUNT SETTINGS"
-        style={{ margin: 10, backgroundColor: "#1f1f1f", padding: 15 }}
+        style={{ margin: 10, backgroundColor: Colors.primary100, padding: 15 }}
         callback={() => {
           navigation.navigate("AccountSettings");
         }}

@@ -4,6 +4,7 @@ import Button from "../Button/Button";
 import Input from "../Input/Input";
 
 import { Feather } from "@expo/vector-icons";
+import { Colors } from "../../constants/styles";
 
 export default function Newsletter() {
   const { width } = useWindowDimensions();
@@ -14,9 +15,9 @@ export default function Newsletter() {
         height: 100,
         flexDirection: "row",
         alignItems: "center",
-        backgroundColor: "#000000",
+        backgroundColor: Colors.primary,
         marginTop: 10,
-        marginBottom: 10,
+        marginBottom: 60,
       }}
     >
       <Input

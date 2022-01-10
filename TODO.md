@@ -1,0 +1,27 @@
+# What to do next?
+
+- product's price discounting
+- notification's history
+- follow category to get notified when something changes
+- internet Connection check
+- Images upload with review
+- search suggestions
+- promo code
+- Refactor component names
+- mailing
+- email & password change
+- Facebook and Google signup?
+- add some cool placeholder images
+- style inputs diffrently
+- add some testing e2e or unit
+- Splash loading screen
+- rename default name and change icon
+- invent name for store
+- add theme toggling
+- Add some diversity on home screen
+- change cart icon
+- Stripe payments
+- Change Checkout screen, current is really ugly and doesnt work
+- drag to close home screen sidebar
+- Pinch to zoom image in ProductDetails Screen
+- Apply paging on both sides, Purchase History

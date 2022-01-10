@@ -13,6 +13,7 @@ export default function Categories() {
     <FlatList
       horizontal
       style={{ height: 60 }}
+      showsHorizontalScrollIndicator={false}
       data={data}
       keyExtractor={(_, i) => i.toString()}
       renderItem={({ item }) => <Category category={item} />}

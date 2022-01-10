@@ -51,13 +51,17 @@ export default function AuthForm({ onSubmit, header, error }: AuthFormProps) {
               placeholder="Email"
               style={{
                 ...styles.input,
-                borderColor: errors.email ? "#FF3030" : "#fff",
+                borderColor: errors.email ? "#FF3030" : Colors.primary100,
               }}
-              labelStyle={{ color: errors.email ? "#FF3030" : "#fff" }}
+              labelStyle={{
+                color: errors.email ? "#FF3030" : "#fff",
+              }}
               placeholderTextColor={errors.email ? "#FF3030" : "#fff"}
               keyboardType="email-address"
               helperText="6-60 characters"
-              helperStyle={{ color: errors.email ? "#FF3030" : "#fff" }}
+              helperStyle={{
+                color: errors.email ? "#FF3030" : "#fff",
+              }}
               onBlur={handleBlur("email")}
             />
             <Input
@@ -67,7 +71,7 @@ export default function AuthForm({ onSubmit, header, error }: AuthFormProps) {
               placeholder="password"
               style={{
                 ...styles.input,
-                borderColor: errors.password ? "#FF3030" : "#fff",
+                borderColor: errors.password ? "#FF3030" : Colors.primary100,
               }}
               labelStyle={{ color: errors.password ? "#FF3030" : "#fff" }}
               placeholderTextColor={errors.password ? "#FF3030" : "#fff"}
@@ -81,7 +85,7 @@ export default function AuthForm({ onSubmit, header, error }: AuthFormProps) {
               callback={handleSubmit}
               style={[
                 styles.btn,
-                { backgroundColor: isValid ? "#FF0056" : "#111111" },
+                { backgroundColor: isValid ? "#FF0056" : Colors.primary },
               ]}
               disabled={!isValid}
               fontStyle={{ fontWeight: "bold" }}

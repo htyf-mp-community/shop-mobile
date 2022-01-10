@@ -67,7 +67,6 @@ export default function Form() {
         placeholderTextColor={"#fff"}
         style={{
           width,
-          borderColor: "#FF0056",
           borderWidth: 2,
           borderRadius: 0,
           margin: 0,

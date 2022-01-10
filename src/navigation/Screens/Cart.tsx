@@ -18,19 +18,15 @@ export default function Cart() {
   const isFocused = useIsFocused();
   const [deleted, setDeleted] = useState(0);
   const [refetch, setRefetch] = useState(0);
-  const { data } = useFetch<ProductTypeProps[]>("/cart", [
-    deleted,
-    isFocused,
-    refetch,
-  ]);
+  const { data } = useFetch<ProductTypeProps[]>(
+    "/cart",
+    [deleted, isFocused, refetch],
+    []
+  );
   return (
     <View style={styles.container}>
-      <CartList
-        setDeleted={setDeleted}
-        setRefetch={setRefetch}
-        data={data || []}
-      />
-      <Purchase cart={data || []} />
+      <CartList setDeleted={setDeleted} setRefetch={setRefetch} data={data} />
+      <Purchase cart={data} />
     </View>
   );
 }

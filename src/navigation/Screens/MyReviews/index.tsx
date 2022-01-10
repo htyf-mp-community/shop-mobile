@@ -1,5 +1,6 @@
 import React from "react";
 import { View, FlatList, ActivityIndicator } from "react-native";
+import { Colors } from "../../../constants/styles";
 import useFetch from "../../../hooks/useFetch";
 import Ratings from "../../../modules/Ratings/Ratings";
 
@@ -15,9 +16,17 @@ export default function MyReviews() {
   const { data, loading } = useFetch<Reviews[]>("/ratings/my");
 
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: Colors.primary,
+      }}
+    >
       {loading && <ActivityIndicator size="large" />}
       <FlatList
+        initialNumToRender={2}
         data={data as Reviews[]}
         keyExtractor={({ rating_id }) => rating_id.toString()}
         renderItem={({ item }) => <Ratings {...item} />}

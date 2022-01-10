@@ -21,11 +21,6 @@ export default function Payment() {
           placeholder="0000-0000-0000-0000"
           placeholderColor={Colors.text}
           keyboardType="numeric"
-          style={{
-            color: Colors.text,
-            borderColor: Colors.text,
-            borderWidth: 0.5,
-          }}
           {...{ textContentType: "creditCardNumber", maxLength: 19 }}
         />
       </View>

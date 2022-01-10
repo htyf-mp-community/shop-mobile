@@ -1,6 +1,7 @@
 import { useIsFocused } from "@react-navigation/native";
 import React, { useMemo, useState } from "react";
 import { View, Text, FlatList } from "react-native";
+import { Colors } from "../../../constants/styles";
 import { HistoryResponse } from "../../../@types/types";
 import useFetch from "../../../hooks/useFetch";
 import Product from "../../../modules/Product/Product";
@@ -23,10 +24,11 @@ export default function PurchaseHistory() {
   const result = useMemo(() => structureOutput(data), [data]);
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: Colors.primary }}>
       <FlatList
         data={result}
         keyExtractor={(_, i) => i.toString()}
+        initialNumToRender={3}
         renderItem={({ item }) => (
           <View style={{ marginBottom: 10, marginTop: 10 }}>
             <Text
