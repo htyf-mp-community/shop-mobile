@@ -31,10 +31,33 @@ export default function ProductDetailsText({ result }: DetailsProps) {
         <AddToCart
           prod_id={result.prod_id}
           relative
-          style={{ marginLeft: 20, marginRight: 20 }}
+          style={{ marginLeft: 20, marginRight: 10 }}
         />
+
         <Animated.Text
-          style={[styles.text, { opacity, fontSize: 25, padding: 5 }]}
+          style={[
+            {
+              opacity,
+              color: "#fff",
+              padding: 15,
+              backgroundColor: Colors.primary100,
+              borderRadius: 10,
+              marginRight: 10,
+            },
+          ]}
+        >
+          {result?.category}
+        </Animated.Text>
+
+        <Animated.Text
+          style={[
+            styles.text,
+            {
+              opacity,
+              fontSize: 25,
+              padding: 5,
+            },
+          ]}
         >
           ${result?.price}
         </Animated.Text>

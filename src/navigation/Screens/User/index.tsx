@@ -1,10 +1,10 @@
 import React from "react";
 import { ScrollView, StyleSheet } from "react-native";
-import { Colors } from "../../constants/styles";
-import Avatar from "../../modules/User/Avatar/Avatar";
-import Settings from "../../modules/User/Settings/Settings";
-import Button from "../../components/Button/Button";
-import { ScreenNavigationProps } from "../../@types/types";
+import { Colors } from "../../../constants/styles";
+import Avatar from "../../../modules/User/Avatar/Avatar";
+import Settings from "../../../modules/User/Settings/Settings";
+import Button from "../../../components/Button/Button";
+import { ScreenNavigationProps } from "../../../@types/types";
 
 export default function User({
   navigation,

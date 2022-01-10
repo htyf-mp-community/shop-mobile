@@ -7,16 +7,16 @@ import {
   StyleSheet,
 } from "react-native";
 import React, { useRef } from "react";
-import { Colors } from "../../constants/styles";
+import { Colors } from "../../../constants/styles";
 import { useState } from "react";
-import ProductsCarusel from "../../modules/ProductsCarusel/ProductsCarusel";
+import ProductsCarusel from "../../../modules/ProductsCarusel/ProductsCarusel";
 import { useCallback } from "react";
-import { ENDPOINTS } from "../../constants/routes";
-import Sidebar from "../../modules/Sidebar";
-import Categories from "../../modules/Categories";
-import Newsletter from "../../components/Newsletter";
-import { wait } from "../../functions/wait";
-import Header from "../../modules/Header";
+import { ENDPOINTS } from "../../../constants/routes";
+import Sidebar from "../../../modules/Sidebar";
+import Categories from "../../../modules/Categories";
+import Newsletter from "../../../components/Newsletter";
+import { wait } from "../../../functions/wait";
+import Header from "../../../modules/Header";
 
 let isOpen = false;
 

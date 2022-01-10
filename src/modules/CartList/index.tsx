@@ -1,27 +1,9 @@
 import React from "react";
-import axios from "axios";
-import { API } from "../../constants/routes";
-import { useUser } from "../../context/UserContext";
-import { FlatList, StyleProp, TextStyle } from "react-native";
+import { FlatList } from "react-native";
 import Product, { ProductTypeProps } from "../Product/Product";
 import { View, Text } from "react-native";
-import { Colors, radius } from "../../constants/styles";
-
-const text: StyleProp<TextStyle> = {
-  width: 45,
-  height: 45,
-  color: Colors.text,
-  fontFamily: "PoppinsMedium",
-  position: "absolute",
-  zIndex: 3,
-  right: 15,
-  fontSize: 25,
-  padding: 5,
-  top: 5,
-  borderRadius: radius.medium,
-  backgroundColor: Colors.secondary,
-  textAlign: "center",
-};
+import useCartDelete from "./useCartDelete";
+import text from "./styles";
 
 interface CartListProps {
   setDeleted: (value: any) => void;
@@ -38,26 +20,7 @@ export default function CartList({
   setRefetch,
   data,
 }: CartListProps) {
-  const { user } = useUser();
-
-  async function RemoveCartProduct(cart_id: number) {
-    try {
-      const { data } = await axios.delete(`${API}/cart`, {
-        headers: {
-          token: user.token,
-        },
-        params: {
-          id: cart_id,
-        },
-      });
-
-      if (data.status === "Deleted") {
-        setDeleted((deleted: number) => deleted + 1);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  const removeCartProduct = useCartDelete(setDeleted);
 
   const RefreshCart = () => {
     setRefetch((refetch: number) => refetch + 1);
@@ -71,7 +34,7 @@ export default function CartList({
         <View style={{ position: "relative" }}>
           <Product
             route="Cart"
-            deleteFn={() => RemoveCartProduct(item.cart_id)}
+            deleteFn={() => removeCartProduct(item.cart_id)}
             sharedID="CartItems"
             RefetchCart={RefreshCart}
             fullSize

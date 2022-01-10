@@ -1,19 +1,17 @@
 import axios from "axios";
 import React from "react";
 import { useState } from "react";
-import { View, StyleSheet, Image, Dimensions, ScrollView } from "react-native";
+import { View, Image, ScrollView } from "react-native";
 import { SharedElement } from "react-navigation-shared-element";
 import { ScreenNavigationProps } from "../../../@types/types";
 import Button from "../../../components/Button/Button";
 import Input from "../../../components/Input/Input";
 import Message from "../../../components/Message/Message";
 import { API } from "../../../constants/routes";
-import { Colors } from "../../../constants/styles";
 import { useUser } from "../../../context/UserContext";
 import useListenKeyboard from "../../../hooks/useListenKeyboard";
 import StarsTouch from "../../../modules/Stars/Stars";
-
-const { width } = Dimensions.get("screen");
+import { createStyles as styles } from "./styles";
 
 export default function CreateReview({
   route,
@@ -63,64 +61,34 @@ export default function CreateReview({
 
       {!!response && <Message status={response} />}
 
-      <ScrollView style={styles.form}>
+      <ScrollView
+        style={{ flex: 1 }}
+        contentContainerStyle={{ alignItems: "center" }}
+      >
         <StarsTouch setRating={setRating} />
         <Input
-          name="Title"
           value={title}
           setValue={setTitle}
-          placeholder="Rating's title"
+          placeholder="Title"
           style={styles.input}
           placeholderColor="white"
           labelStyle={{ paddingBottom: 5, color: "#fff" }}
         />
         <Input
-          name="Description"
           value={description}
           setValue={setDescription}
-          placeholder="Describe your feelings about the product"
+          placeholder="Description"
           style={styles.input}
           placeholderColor="white"
           labelStyle={{ paddingBottom: 5, color: "#fff" }}
-          {...{
-            multiline: true,
-            numberOfLines: 6,
-            scrollEnabled: true,
-            textAlignVertical: "top",
-          }}
+          scrollEnabled
+          multiline
+          textAlignVertical="top"
+          numberOfLines={5}
         />
-        <View style={{ width, alignItems: "center" }}>
-          <Button
-            text="Add review"
-            callback={PostReview}
-            style={{
-              width: width * 0.9,
-              backgroundColor: Colors.secondary,
-              marginTop: 20,
-              justifyContent: "center",
-            }}
-          />
-        </View>
+
+        <Button text="Add review" callback={PostReview} style={styles.button} />
       </ScrollView>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.primary,
-  },
-  img: {
-    width,
-    height: 200,
-  },
-  form: {
-    width,
-  },
-  input: {
-    borderColor: "white",
-    borderWidth: 0.5,
-    color: "white",
-  },
-});

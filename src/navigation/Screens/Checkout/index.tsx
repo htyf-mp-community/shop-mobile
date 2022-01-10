@@ -2,15 +2,15 @@ import axios from "axios";
 import React from "react";
 import { useState } from "react";
 import { View, StyleSheet, Dimensions, ScrollView } from "react-native";
-import { ScreenNavigationProps } from "../../@types/types";
-import Button from "../../components/Button/Button";
-import Message from "../../components/Message/Message";
-import { API } from "../../constants/routes";
-import { Colors } from "../../constants/styles";
-import { useUser } from "../../context/UserContext";
-import Personals from "../../modules/Checkout";
-import PersonalProvider from "../../modules/Checkout/PersonalProvider";
-import { ProductTypeProps } from "../../modules/Product/Product";
+import { ScreenNavigationProps } from "../../../@types/types";
+import Button from "../../../components/Button/Button";
+import Message from "../../../components/Message/Message";
+import { API } from "../../../constants/routes";
+import { Colors } from "../../../constants/styles";
+import { useUser } from "../../../context/UserContext";
+import Personals from "../../../modules/Checkout";
+import PersonalProvider from "../../../modules/Checkout/PersonalProvider";
+import { ProductTypeProps } from "../../../modules/Product/Product";
 
 const { width, height } = Dimensions.get("screen");
 

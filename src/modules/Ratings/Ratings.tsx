@@ -16,6 +16,7 @@ interface RatingProps {
 }
 
 import { API } from "../../constants/routes";
+import { Colors } from "../../constants/styles";
 import { Stars } from "../Stars/Stars";
 
 const { width } = Dimensions.get("screen");
@@ -76,7 +77,7 @@ export default function Ratings({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#212121",
+    backgroundColor: Colors.primary100,
     padding: 10,
     marginTop: 20,
   },

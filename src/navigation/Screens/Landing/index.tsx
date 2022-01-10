@@ -1,14 +1,8 @@
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import {
-  Dimensions,
-  StyleSheet,
-  View,
-  Text,
-  ImageBackground,
-} from "react-native";
-import { Colors } from "../../constants/styles";
-import Button from "../../components/Button/Button";
+import { StyleSheet, View, Text, ImageBackground } from "react-native";
+import { Colors } from "../../../constants/styles";
+import Button from "../../../components/Button/Button";
 
 const styles = StyleSheet.create({
   container: {
@@ -34,7 +28,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function Landing({ route, navigation }: any) {
+export default function Landing({ navigation }: any) {
   function onNavigateLogin() {
     navigation.navigate("Auth", {
       screen: "Login",
@@ -48,7 +42,7 @@ export default function Landing({ route, navigation }: any) {
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground
-        source={require("../../assets/blob-scene-haikei.png")}
+        source={require("../../../assets/blob-scene-haikei.png")}
         resizeMode="cover"
         style={StyleSheet.absoluteFillObject}
       />

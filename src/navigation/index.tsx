@@ -8,7 +8,7 @@ import Cart from "./Screens/Cart";
 import { UploadExpoTokenToServer } from "../notifications/MainNotifications";
 import useNotifications from "../notifications/MainNotifications";
 import User from "./Screens/User";
-import ProductDetails from "./Screens/ProductDetails/ProductDetails";
+import ProductDetails from "./Screens/ProductDetails";
 import { createSharedElementStackNavigator } from "react-navigation-shared-element";
 import "react-native-gesture-handler";
 import { RootStackParams } from "../@types/types";
@@ -30,7 +30,7 @@ import {
   horizontalAnimation,
 } from "./options";
 
-export const Stack = createSharedElementStackNavigator<RootStackParams>();
+const Stack = createSharedElementStackNavigator<RootStackParams>();
 
 export default function MainNavigator(): JSX.Element {
   const { ReadUser } = useUser();

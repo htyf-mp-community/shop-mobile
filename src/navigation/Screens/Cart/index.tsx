@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
-import { Colors } from "../../constants/styles";
-import { ProductTypeProps } from "../../modules/Product/Product";
+import { Colors } from "../../../constants/styles";
+import { ProductTypeProps } from "../../../modules/Product/Product";
 import { useIsFocused } from "@react-navigation/native";
-import Purchase from "../../modules/Purchase/Purchase";
-import useFetch from "../../hooks/useFetch";
-import CartList from "../../modules/CartList";
+import Purchase from "../../../modules/Purchase/Purchase";
+import useFetch from "../../../hooks/useFetch";
+import CartList from "../../../modules/CartList";
 
 const styles = StyleSheet.create({
   container: {
