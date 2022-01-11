@@ -1,5 +1,4 @@
 import React, { useContext, createContext, useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   UserContextProviderType,
   UserContextType,
@@ -7,6 +6,8 @@ import {
 } from "../@types/types";
 
 export const USER_PREFIX = "react-native-shop-user";
+
+import * as SecureStore from "expo-secure-store";
 
 export const init: UserType = {
   token: "",
@@ -30,7 +31,7 @@ export const UserContextProvider = ({ children }: UserContextProviderType) => {
 
   async function SaveUser(props: UserType) {
     try {
-      await AsyncStorage.setItem(USER_PREFIX, JSON.stringify(props)).then(
+      await SecureStore.setItemAsync(USER_PREFIX, JSON.stringify(props)).then(
         () => {
           setUser(props);
           setLoggedIn();
@@ -43,7 +44,7 @@ export const UserContextProvider = ({ children }: UserContextProviderType) => {
 
   async function ReadUser(): Promise<UserType | undefined> {
     try {
-      const value = await AsyncStorage.getItem(USER_PREFIX);
+      const value = await SecureStore.getItemAsync(USER_PREFIX);
 
       if (value !== null) {
         setUser(JSON.parse(value));
@@ -55,7 +56,7 @@ export const UserContextProvider = ({ children }: UserContextProviderType) => {
   }
 
   async function RemoveUser() {
-    await AsyncStorage.removeItem(USER_PREFIX);
+    await SecureStore.deleteItemAsync(USER_PREFIX);
     setUser(init);
   }
 

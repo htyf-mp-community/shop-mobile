@@ -11,6 +11,7 @@
   "dependencies": {
     "@expo/vector-icons": "^12.0.5",
     "@react-native-async-storage/async-storage": "^1.15.6",
+    "@react-native-community/netinfo": "6.0.0",
     "@react-navigation/native": "^6.0.2",
     "@react-navigation/stack": "^6.0.6",
     "@testing-library/user-event": "^13.5.0",
@@ -19,6 +20,8 @@
     "expo-app-loading": "1.1.2",
     "expo-font": "~9.2.1",
     "expo-notifications": "~0.12.3",
+    "expo-secure-store": "~10.2.0",
+    "expo-splash-screen": "~0.11.2",
     "expo-status-bar": "~1.0.4",
     "formik": "^2.2.9",
     "jest-native": "^3.0.0",
