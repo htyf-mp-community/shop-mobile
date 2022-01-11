@@ -31,18 +31,21 @@ export const UserContextProvider = ({ children }: UserContextProviderType) => {
 
   async function SaveUser(props: UserType) {
     try {
-      await SecureStore.setItemAsync(USER_PREFIX, JSON.stringify(props)).then(
-        () => {
-          setUser(props);
-          setLoggedIn();
-        }
+      const value = await SecureStore.setItemAsync(
+        USER_PREFIX,
+        JSON.stringify(props)
       );
+
+      if (value !== null) {
+        setUser(props);
+        setLoggedIn();
+      }
     } catch (error) {
-      return null;
+      console.warn(error);
     }
   }
 
-  async function ReadUser(): Promise<UserType | undefined> {
+  async function ReadUser() {
     try {
       const value = await SecureStore.getItemAsync(USER_PREFIX);
 
@@ -51,7 +54,7 @@ export const UserContextProvider = ({ children }: UserContextProviderType) => {
         setLoggedIn();
       }
     } catch (error) {
-      return undefined;
+      console.warn(error);
     }
   }
 

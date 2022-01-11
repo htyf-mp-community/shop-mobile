@@ -1,32 +1,17 @@
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { StyleSheet, View, Text, ImageBackground } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  ImageBackground,
+  useWindowDimensions,
+} from "react-native";
 import { Colors } from "../../../constants/styles";
 import Button from "../../../components/Button/Button";
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: Colors.primary,
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  block: {
-    margin: 10,
-    position: "relative",
-  },
-  text: {
-    color: Colors.text,
-    fontSize: 18,
-    marginTop: 5,
-  },
-  button: {
-    marginBottom: 15,
-    justifyContent: "center",
-    borderRadius: 15,
-    padding: 20,
-  },
-});
+import styles from "./styles";
+import { FontAwesome } from "@expo/vector-icons";
+import { LandingIcon } from "../../../components";
 
 export default function Landing({ navigation }: any) {
   function onNavigateLogin() {
@@ -39,30 +24,27 @@ export default function Landing({ navigation }: any) {
     navigation.navigate("Auth", { screen: "Register" });
   }
 
+  const { width } = useWindowDimensions();
+
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground
-        source={require("../../../assets/blob-scene-haikei.png")}
+        source={require("../../../assets/landing-bg.png")}
         resizeMode="cover"
         style={StyleSheet.absoluteFillObject}
       />
       <View style={{ zIndex: 2 }}>
-        <View style={styles.block}>
-          <Text
-            style={[
-              styles.text,
-              { fontSize: 100, marginLeft: 10, fontWeight: "bold" },
-            ]}
-          >
-            Join us
-          </Text>
-          <Text style={[styles.text, { padding: 10 }]}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore
-            labore dolor tempore ab rerum commodi amet architecto incidunt,
-            blanditiis obcaecati qui
-          </Text>
-        </View>
-        <View style={[styles.block]}>
+        <Text
+          style={[
+            styles.text,
+            { fontSize: 100, marginLeft: 10, fontWeight: "bold" },
+          ]}
+        >
+          Join us
+        </Text>
+        <LandingIcon width={width} height={400} />
+
+        <View style={[styles.block, { width }]}>
           <Button
             fontStyle={{ fontSize: 20 }}
             style={styles.button}
@@ -71,10 +53,24 @@ export default function Landing({ navigation }: any) {
           />
           <Button
             fontStyle={{ fontSize: 20 }}
-            style={[styles.button, { backgroundColor: Colors.primary300 }]}
+            style={[styles.button, { backgroundColor: Colors.primary100 }]}
             text="Log in"
             callback={onNavigateLogin}
           />
+          <View style={{ flexDirection: "row", justifyContent: "center" }}>
+            <Button
+              style={styles.social}
+              icon={<FontAwesome name="facebook" size={24} color="white" />}
+            />
+            <Button
+              style={[styles.social]}
+              icon={<FontAwesome name="google" size={24} color="white" />}
+            />
+            <Button
+              style={styles.social}
+              icon={<FontAwesome name="apple" size={24} color="white" />}
+            />
+          </View>
         </View>
       </View>
     </SafeAreaView>

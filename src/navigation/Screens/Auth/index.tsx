@@ -1,6 +1,7 @@
 import React from "react";
 import { createSharedElementStackNavigator } from "react-navigation-shared-element";
 import { RootStackParams } from "../../../@types/types";
+import { Colors } from "../../../constants/styles";
 import LoginScreen from "./Login";
 import RegisterScreen from "./Register";
 
@@ -10,8 +11,11 @@ export default function Auth() {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerShown: false,
         presentation: "modal",
+        headerTitle: "",
+        headerStyle: {
+          backgroundColor: Colors.primary,
+        },
       }}
     >
       <Stack.Screen name="Register" component={RegisterScreen} />

@@ -19,8 +19,18 @@ export default function Purchase({ cart }: IPurchaseProps) {
     navigation.navigate("Checkout", { cart, total: totalPrice });
   }
 
+  const disabled = cart.length === 0;
+
   return (
-    <View style={{ width, alignItems: "center", padding: 10 }}>
+    <View
+      style={{
+        width,
+        alignItems: "center",
+        padding: 10,
+        borderTopWidth: 1,
+        borderTopColor: Colors.primary100,
+      }}
+    >
       <View
         style={{
           width: width * 0.9,
@@ -49,13 +59,14 @@ export default function Purchase({ cart }: IPurchaseProps) {
         </Text>
       </View>
       <Button
-        disabled={cart.length === 0}
-        text={`Continue $${totalPrice} `}
+        disabled={disabled}
+        text={`Continue with $${totalPrice} `}
         callback={PurchaseProduct}
         style={{
-          backgroundColor: Colors.secondary,
+          backgroundColor: !disabled ? Colors.secondary : Colors.primary,
           width: width * 0.9,
           justifyContent: "center",
+          padding: 15,
         }}
       />
     </View>

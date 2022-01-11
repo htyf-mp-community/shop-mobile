@@ -13,7 +13,7 @@ import { Colors, radius } from "../../constants/styles";
 
 interface ButtonProps extends TouchableOpacityProps {
   text?: string;
-  callback: () => void;
+  callback?: () => void;
   icon?: React.ReactNode;
   style?: StyleProp<ViewStyle>;
   fontStyle?: StyleProp<TextStyle>;
@@ -40,7 +40,7 @@ const VARIANTS = {
 
 export default function Button({
   text,
-  callback,
+  callback = () => {},
   icon,
   style,
   fontStyle,
