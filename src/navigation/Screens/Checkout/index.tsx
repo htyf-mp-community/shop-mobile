@@ -1,87 +1,69 @@
-import axios from "axios";
-import React from "react";
-import { useState } from "react";
-import { View, StyleSheet, Dimensions, ScrollView } from "react-native";
+import React, { useEffect } from "react";
+import { StyleSheet, Dimensions, ScrollView, View } from "react-native";
 import { ScreenNavigationProps } from "../../../@types/types";
-import Button from "../../../components/Button/Button";
-import Message from "../../../components/Message/Message";
-import { API } from "../../../constants/routes";
+import { Button } from "../../../components";
 import { Colors } from "../../../constants/styles";
-import { useUser } from "../../../context/UserContext";
-import Personals from "../../../modules/Checkout";
-import PersonalProvider from "../../../modules/Checkout/PersonalProvider";
-import { ProductTypeProps } from "../../../modules/Product/Product";
+import useCheckout from "../../../hooks/useCheckout";
+import { CardField, initStripe } from "@stripe/stripe-react-native";
 
-const { width, height } = Dimensions.get("screen");
+const { width, height } = Dimensions.get("window");
 
-export default function Checkout({ route }: ScreenNavigationProps<"Checkout">) {
-  return (
-    <PersonalProvider>
-      <CheckoutComponent route={route} />
-    </PersonalProvider>
-  );
-}
+export default function Checkout({
+  route,
+  navigation,
+}: Required<ScreenNavigationProps<"Checkout">>) {
+  const [purchase, result, total] = useCheckout({ route });
 
-function CheckoutComponent({ route }: any) {
-  const { cart, total } = route.params;
-  const { user } = useUser();
-
-  const [result, setResult] = useState("");
-
-  // const {} = usePersonalContext();
-
-  async function Purchase() {
-    try {
-      const response = await axios.post(
-        `${API}/payments/purchase`,
-        {
-          prod_id: cart.map(({ prod_id }: ProductTypeProps) => prod_id),
-        },
-        {
-          headers: {
-            token: user.token,
-          },
-        }
-      );
-      if (response.data !== null) {
-        setResult(response.data.message);
-        console.log(response.data);
-      }
-    } catch (error) {}
-  }
+  useEffect(() => {
+    initStripe({
+      publishableKey:
+        "pk_test_51KHt5OJFFDDymwGwp9gsCogqhxvzYvyo2wJsIAwSrPflIZjFZn2OtUhBbQAwt9SNek6Ol2e7QZUSh86NJyNByl2m00scfwXXjW",
+      merchantIdentifier: "merchant.identifier",
+    });
+  }, []);
 
   return (
-    <ScrollView style={styles.container}>
-      <Personals />
-
-      {!!result && <Message status={result} />}
-
-      <View style={{ width: width, justifyContent: "center" }}>
-        <Button
-          callback={Purchase}
-          disabled={false}
-          text={`Purchase $${total}`}
+    <View style={[styles.container]}>
+      <ScrollView style={[styles.list]}>
+        <CardField
+          postalCodeEnabled={true}
+          placeholder={{
+            number: "4242 4242 4242 4242",
+          }}
+          cardStyle={{
+            backgroundColor: "#FFFFFF",
+            textColor: "#000000",
+          }}
           style={{
-            margin: 25,
-            backgroundColor: Colors.secondary,
-            width: width * 0.9,
+            width: "100%",
+            height: 50,
+            marginVertical: 30,
           }}
         />
+      </ScrollView>
+      <View style={[styles.bottomTab]}>
+        <Button
+          text={`Pay $${total}`}
+          style={{ padding: 15, justifyContent: "center" }}
+          onPress={purchase}
+        />
       </View>
-    </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    width,
-    height,
     backgroundColor: Colors.primary,
+    flex: 1,
   },
-  text: {
-    fontSize: 25,
-    fontFamily: "PoppinsBold",
-    color: Colors.text,
+  list: {
+    height: height * 0.9,
+  },
+  bottomTab: {
+    borderWidth: 1,
+    borderTopColor: Colors.primary100,
+    height: height * 0.1,
     padding: 10,
   },
 });

@@ -69,6 +69,7 @@ export default function ProductDetails({
         reviews={result.rating_id}
         name={result.title}
       />
+
       <PopUpCarusel />
     </ScrollView>
   );

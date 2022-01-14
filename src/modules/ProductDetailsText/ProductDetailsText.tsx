@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { Animated, StyleSheet } from "react-native";
 import { Colors } from "../../constants/styles";
 import AddToCart from "../AddToCart/AddToCart";
+import Delivery from "../Delivery";
 import { ProductTypeProps } from "../Product/Product";
 
 interface DetailsProps {
@@ -48,6 +49,7 @@ export default function ProductDetailsText({ result }: DetailsProps) {
         >
           {result?.category}
         </Animated.Text>
+        <Delivery />
 
         <Animated.Text
           style={[

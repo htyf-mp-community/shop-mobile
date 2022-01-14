@@ -30,6 +30,10 @@ import {
   horizontalAnimation,
 } from "./options";
 
+import { StatusBar } from "expo-status-bar";
+
+import useColorTheme from "../context/ThemeContext";
+
 const Stack = createSharedElementStackNavigator<RootStackParams>();
 
 export default function MainNavigator(): JSX.Element {
@@ -47,128 +51,133 @@ export default function MainNavigator(): JSX.Element {
     }
   }, [expoPushToken]);
 
+  const theme = useColorTheme();
+
   return (
-    <NavigationContainer theme={DarkTheme}>
-      <Stack.Navigator
-        initialRouteName="Landing"
-        screenOptions={defaultStackOptions}
-      >
-        {isLoggedIn ? (
-          <>
-            <Stack.Screen
-              name="Home"
-              component={Home}
-              options={{
-                headerShown: false,
-              }}
-            />
-            <Stack.Screen
-              name="Cart"
-              component={Cart}
-              options={cartScreenOptions}
-            />
-            <Stack.Screen
-              component={User}
-              name="User"
-              options={{
-                headerTitleAlign: "center",
-                headerTitle: name.split("@")[0],
-                presentation: "modal",
-              }}
-            />
-            <Stack.Screen
-              component={ProductDetails}
-              name="Details"
-              options={detailsScreenOptions}
-              sharedElements={({ params }) => {
-                const { prod_id, sharedID } = params;
-                return ["prod_id." + prod_id + sharedID];
-              }}
-            />
-            <Stack.Screen
-              name="Checkout"
-              component={Checkout}
-              options={checkOutScreenOptions}
-            />
-            <Stack.Screen
-              name="SearchResults"
-              component={SearchResults}
-              options={({ route }) => ({
-                title: `Search Results: ${route.params.length}`,
-              })}
-            />
-            <Stack.Screen
-              name="CreateReview"
-              component={CreateReview}
-              sharedElements={(route) => {
-                const { prod_id, sharedID } = route.params;
-                return ["prod_id." + prod_id + sharedID];
-              }}
-              options={({ route: { params } }) => ({
-                title: `Rate product: ${params.prod_name}`,
-                ...horizontalAnimation,
-              })}
-            />
-            <Stack.Screen
-              name="ProductReviews"
-              component={ProductReviews}
-              options={({ route: { params } }) => ({
-                title: `Rate product: ${params.prod_name}`,
-                ...horizontalAnimation,
-              })}
-            />
-            <Stack.Screen
-              name="MyReviews"
-              component={MyReviews}
-              options={{
-                ...horizontalAnimation,
-                title: "My reviews",
-                headerTitleAlign: "center",
-              }}
-            />
-            <Stack.Screen
-              name="AccountSettings"
-              component={AccountSettings}
-              options={{
-                ...horizontalAnimation,
-                headerTitle: "Account Settings",
-                headerTitleAlign: "center",
-              }}
-            />
-            <Stack.Screen
-              name="Search"
-              component={SearchScreen}
-              options={{
-                ...horizontalAnimation,
-                headerTitleAlign: "center",
-                headerTitle: "Searched Phrase",
-              }}
-            />
-            <Stack.Screen
-              name="PurchaseHistory"
-              component={PurchaseHistory}
-              options={{
-                headerTitle: "Purchase history",
-                headerTitleAlign: "center",
-                ...horizontalAnimation,
-              }}
-            />
-          </>
-        ) : (
-          <>
-            <Stack.Screen
-              name="Auth"
-              component={Auth}
-              options={{ headerShown: false, ...horizontalAnimation }}
-            />
-            <Stack.Screen
-              name="Landing"
-              component={Landing}
-              options={{ headerShown: false, ...horizontalAnimation }}
-            />
-          </>
-        )}
-      </Stack.Navigator>
-    </NavigationContainer>
+    <>
+      <StatusBar backgroundColor={theme.primary} />
+      <NavigationContainer theme={DarkTheme}>
+        <Stack.Navigator
+          initialRouteName="Landing"
+          screenOptions={defaultStackOptions}
+        >
+          {isLoggedIn ? (
+            <>
+              <Stack.Screen
+                name="Home"
+                component={Home}
+                options={{
+                  headerShown: false,
+                }}
+              />
+              <Stack.Screen
+                name="Cart"
+                component={Cart}
+                options={cartScreenOptions}
+              />
+              <Stack.Screen
+                component={User}
+                name="User"
+                options={{
+                  headerTitleAlign: "center",
+                  headerTitle: name.split("@")[0],
+                  presentation: "modal",
+                }}
+              />
+              <Stack.Screen
+                component={ProductDetails}
+                name="Details"
+                options={detailsScreenOptions}
+                sharedElements={({ params }) => {
+                  const { prod_id, sharedID } = params;
+                  return ["prod_id." + prod_id + sharedID];
+                }}
+              />
+              <Stack.Screen
+                name="Checkout"
+                component={Checkout}
+                options={checkOutScreenOptions}
+              />
+              <Stack.Screen
+                name="SearchResults"
+                component={SearchResults}
+                options={({ route }) => ({
+                  title: `Search Results: ${route.params.length}`,
+                })}
+              />
+              <Stack.Screen
+                name="CreateReview"
+                component={CreateReview}
+                sharedElements={(route) => {
+                  const { prod_id, sharedID } = route.params;
+                  return ["prod_id." + prod_id + sharedID];
+                }}
+                options={({ route: { params } }) => ({
+                  title: `Rate product: ${params.prod_name}`,
+                  ...horizontalAnimation,
+                })}
+              />
+              <Stack.Screen
+                name="ProductReviews"
+                component={ProductReviews}
+                options={({ route: { params } }) => ({
+                  title: `Rate product: ${params.prod_name}`,
+                  ...horizontalAnimation,
+                })}
+              />
+              <Stack.Screen
+                name="MyReviews"
+                component={MyReviews}
+                options={{
+                  ...horizontalAnimation,
+                  title: "My reviews",
+                  headerTitleAlign: "center",
+                }}
+              />
+              <Stack.Screen
+                name="AccountSettings"
+                component={AccountSettings}
+                options={{
+                  ...horizontalAnimation,
+                  headerTitle: "Account Settings",
+                  headerTitleAlign: "center",
+                }}
+              />
+              <Stack.Screen
+                name="Search"
+                component={SearchScreen}
+                options={{
+                  ...horizontalAnimation,
+                  headerTitleAlign: "center",
+                  headerTitle: "Searched Phrase",
+                }}
+              />
+              <Stack.Screen
+                name="PurchaseHistory"
+                component={PurchaseHistory}
+                options={{
+                  headerTitle: "Purchase history",
+                  headerTitleAlign: "center",
+                  ...horizontalAnimation,
+                }}
+              />
+            </>
+          ) : (
+            <>
+              <Stack.Screen
+                name="Auth"
+                component={Auth}
+                options={{ headerShown: false, ...horizontalAnimation }}
+              />
+              <Stack.Screen
+                name="Landing"
+                component={Landing}
+                options={{ headerShown: false, ...horizontalAnimation }}
+              />
+            </>
+          )}
+        </Stack.Navigator>
+      </NavigationContainer>
+    </>
   );
 }

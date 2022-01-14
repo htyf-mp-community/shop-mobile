@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useState } from "react";
+import { useColorScheme } from "react-native";
 import { Colors } from "../constants/styles";
-
-import { Appearance } from "react-native";
 
 interface ThemeContextType {
   theme: typeof Colors;
@@ -11,21 +10,26 @@ const ThemeContext = createContext<ThemeContextType>({
   theme: Colors,
 });
 
-export default function useTheme(): ThemeContextType {
-  return useContext(ThemeContext);
-}
-
 const THEMES = {
   dark: Colors,
-  light: Colors,
+  light: {
+    ...Colors,
+    text: "#000",
+    primary: "#fff",
+  },
 };
 
 export const ThemeContextProvider: React.FC = ({ children }) => {
-  const colorScheme = Appearance.getColorScheme();
-
-  const [theme, setTheme] = useState(THEMES[colorScheme ?? "dark"]);
+  const colorScheme = useColorScheme() as "light" | "dark";
 
   return (
-    <ThemeContext.Provider value={{ theme }}>{children}</ThemeContext.Provider>
+    <ThemeContext.Provider value={{ theme: THEMES[colorScheme] }}>
+      {children}
+    </ThemeContext.Provider>
   );
 };
+
+export default function useColorTheme(): typeof Colors {
+  const { theme } = useContext(ThemeContext);
+  return theme;
+}
