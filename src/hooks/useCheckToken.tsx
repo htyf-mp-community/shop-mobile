@@ -14,29 +14,44 @@ export default function useCheckToken(): UserType {
   const { user, SaveUser, setUser } = useUser();
 
   useEffect(() => {
+    const cancelToken = axios.CancelToken.source();
     if (user.token) {
-      axios
-        .post(`${API}/auth/token`, {}, { headers: { token: user.token } })
-        .then(({ data }) => {
-          SaveUser({
-            isLoggedIn: true,
-            token: data.token,
-            name: user.name,
-            user_id: data.id,
-          });
-        })
-        .catch(async () => {
-          Alert.alert("Session Expired", "Please login again", [
+      (async () => {
+        try {
+          const { data } = await axios.post(
+            `${API}/auth/token`,
+            {},
             {
-              text: "Log in",
-              onPress: async () => {
-                await AsyncStorage.removeItem(USER_PREFIX);
-                setUser((p: UserType) => ({ ...p, isLoggedIn: false }));
+              headers: { token: user.token },
+              cancelToken: cancelToken.token,
+            }
+          );
+
+          if (data) {
+            SaveUser({
+              isLoggedIn: true,
+              token: data.token,
+              name: user.name,
+              user_id: data.id,
+            });
+          }
+        } catch (err: any) {
+          if (typeof err?.response?.data !== "undefined") {
+            Alert.alert("Session Expired", "Please login again", [
+              {
+                text: "Log in",
+                onPress: async () => {
+                  await AsyncStorage.removeItem(USER_PREFIX);
+                  setUser((p: UserType) => ({ ...p, isLoggedIn: false }));
+                },
               },
-            },
-          ]);
-        });
+            ]);
+          }
+        }
+      })();
     }
+
+    return () => cancelToken.cancel("Canceled");
   }, [user.token]);
 
   return user;

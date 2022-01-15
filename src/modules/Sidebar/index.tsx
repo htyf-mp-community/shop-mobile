@@ -96,6 +96,7 @@ export default function Sidebar({
           );
         })}
       </Animated.View>
+
       <Animated.View
         style={[
           {
@@ -108,8 +109,8 @@ export default function Sidebar({
             },
             shadowOpacity: 0.58,
             shadowRadius: 16.0,
-
             elevation: 24,
+            position: "relative",
           },
         ]}
       >

@@ -40,11 +40,13 @@ export default function useFetch<T>(
           error: "",
         });
       } catch (error: any) {
-        setState((p) => ({
-          ...p,
-          error: error?.response?.data?.message || error.message,
-          loading: false,
-        }));
+        if (!axios.isCancel(error)) {
+          setState((p) => ({
+            ...p,
+            error: error?.response?.data?.message || error.message,
+            loading: false,
+          }));
+        }
       }
     })();
 

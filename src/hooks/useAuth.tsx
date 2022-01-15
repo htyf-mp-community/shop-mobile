@@ -16,14 +16,6 @@ interface useAuthReturn {
   onSubmit: ({ email, password }: OnSubmitType) => void;
 }
 
-/**
- * Hook for user authentication (register,login)
- * @param {String} route based on route argument ENDPOINT changes
- * @returns {useAuthReturn} Object with loading status, error if there is one,
-  onSubmit function that takes object with email and password properties as an argument, 
-  if request is successfull it saves user in AsyncStorage and sets UserState
- **/
-
 export default function useAuth(route: Route): useAuthReturn {
   const { SaveUser } = useUser();
 
@@ -31,10 +23,6 @@ export default function useAuth(route: Route): useAuthReturn {
   const [error, setError] = useState<null | string>(null);
 
   const url = route === "login" ? `${API}/auth/login` : `${API}/auth/register`;
-
-  /**
-   * @param {OnSubmitType} { email,password } are user's credentials
-   **/
 
   async function onSubmit({ email, password }: OnSubmitType): Promise<void> {
     setLoading(true);

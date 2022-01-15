@@ -27,7 +27,7 @@ const dailyStyle = StyleSheet.create({
     position: "absolute",
     width: WIDTH - 40,
     padding: 10,
-    borderRadius: 20,
+    borderRadius: 10,
     backgroundColor: Colors.primary100,
     flexDirection: "row",
     bottom: -40,

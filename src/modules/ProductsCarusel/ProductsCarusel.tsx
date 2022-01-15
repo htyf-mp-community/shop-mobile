@@ -33,11 +33,11 @@ export default function ProductsCarusel({
     ProductTypeProps[]
   >(`${path}?skip=0`, [refresh]);
 
-  function onSkip() {
+  async function onSkip() {
     if (hasMore) {
       setSkip(skip + 5);
       const cancelToken = axios.CancelToken.source();
-      FetchAllProducts(`${path}?skip=${skip}`, cancelToken);
+      await FetchAllProducts(`${path}?skip=${skip}`, cancelToken);
     }
   }
 

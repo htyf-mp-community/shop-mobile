@@ -30,10 +30,12 @@ export default function useSearch() {
             },
           });
 
-          console.log(data);
-
-          setSuggestion(data);
-        } catch (error) {}
+          if (data !== null) {
+            setSuggestion(data);
+          }
+        } catch (error) {
+          console.log(error);
+        }
       }
     }, 500);
 

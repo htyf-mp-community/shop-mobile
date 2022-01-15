@@ -46,10 +46,6 @@ export default function ProductDetails({
   const imgList = result?.img_id as ProductImageProps[];
   const images = imgList?.length > 1 ? imgList.splice(1, imgList.length) : [];
 
-  function navigate() {
-    navigation.goBack();
-  }
-
   return (
     <>
       <ScrollView

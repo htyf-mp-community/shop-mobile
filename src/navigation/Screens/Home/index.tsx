@@ -38,9 +38,8 @@ export default function Home() {
 
   function ToggleSidebar() {
     if (!isOpen) {
-      Animated.timing(translateList, {
+      Animated.spring(translateList, {
         toValue: 250,
-        duration: DURATION,
         useNativeDriver: true,
       }).start();
       Animated.timing(translateNavigation, {

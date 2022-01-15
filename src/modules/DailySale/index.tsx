@@ -9,11 +9,12 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 import { useNavigationProps } from "../../@types/types";
 import AddToCart from "../AddToCart/AddToCart";
+import Placeholder from "../../components/Placeholder";
 
 interface DailySaleProps {}
 
 export default function DailySale({}: DailySaleProps) {
-  const { data } = useFetch<ProductTypeProps>("/sales/daily", [], {});
+  const { data, loading } = useFetch<ProductTypeProps>("/sales/daily", [], {});
 
   const navigation = useNavigation<useNavigationProps>();
 
@@ -56,6 +57,7 @@ export default function DailySale({}: DailySaleProps) {
           </View>
         </View>
       )}
+      {loading && <Placeholder loading={loading} />}
     </View>
   );
 }
