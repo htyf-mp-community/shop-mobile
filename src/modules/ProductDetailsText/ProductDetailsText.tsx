@@ -1,6 +1,5 @@
 import React from "react";
 import { View, Text } from "react-native";
-import AddToCart from "../AddToCart/AddToCart";
 import Delivery from "../Delivery";
 import { ProductTypeProps } from "../Product/Product";
 import styles from "./productDetailsStyle";
@@ -14,15 +13,7 @@ export default function ProductDetailsText({ result }: DetailsProps) {
     <>
       <Text style={[styles.text, styles.title]}>{result?.title}</Text>
 
-      <View
-        style={[
-          {
-            flexDirection: "row-reverse",
-            justifyContent: "space-around",
-            marginTop: 10,
-          },
-        ]}
-      >
+      <View style={[styles.container]}>
         <Text style={[styles.category]}>{result?.category}</Text>
         <Delivery />
 

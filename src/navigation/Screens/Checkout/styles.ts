@@ -1,7 +1,7 @@
 import { StyleSheet, Dimensions } from "react-native";
 import { Colors } from "../../../constants/styles";
 
-const { width } = Dimensions.get("window");
+const { width, height } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   container: {
@@ -21,6 +21,26 @@ const styles = StyleSheet.create({
   input: {
     width: width - 20,
     marginBottom: 5,
+  },
+  button: {
+    flexDirection: "row-reverse",
+    alignItems: "center",
+    padding: 15,
+    justifyContent: "center",
+  },
+  modal: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 10,
+  },
+  modalItems: {
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: Colors.primary,
+    height: width * 0.6,
+    width: width * 0.6,
+    borderRadius: 10,
   },
 });
 

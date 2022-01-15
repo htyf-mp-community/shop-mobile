@@ -37,7 +37,14 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary100,
     borderRadius: RADIUS,
   },
-  cart: {},
+  container: {
+    flexDirection: "row-reverse",
+    justifyContent: "space-around",
+    marginTop: 10,
+    paddingBottom: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.primary100,
+  },
 });
 
 export default styles;

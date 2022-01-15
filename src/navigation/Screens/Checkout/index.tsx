@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { ScrollView } from "react-native";
+import { ActivityIndicator, Modal, ScrollView, View, Text } from "react-native";
 import { ScreenNavigationProps } from "../../../@types/types";
 import { Button, Input } from "../../../components";
 import useCheckout from "../../../hooks/useCheckout";
@@ -7,13 +7,14 @@ import { CardField, initStripe } from "@stripe/stripe-react-native";
 import { Formik } from "formik";
 import checkoutSchema from "./checkoutSchema";
 import { Colors } from "../../../constants/styles";
-
+import { AntDesign } from "@expo/vector-icons";
 import styles from "./styles";
 
 export default function Checkout({
   route,
+  navigation,
 }: Required<ScreenNavigationProps<"Checkout">>) {
-  const [purchase, result, total] = useCheckout({ route });
+  const { purchase, result, total, loading } = useCheckout({ route });
 
   useEffect(() => {
     initStripe({
@@ -107,17 +108,43 @@ export default function Checkout({
 
             <Button
               disabled={!isValid}
-              text={`Pay $${total}`}
-              style={{
-                padding: 15,
-                justifyContent: "center",
-                backgroundColor: isValid ? "#FF0056" : Colors.primary,
-              }}
+              text={`PAY $${total}`}
+              icon={
+                <AntDesign
+                  name="creditcard"
+                  size={24}
+                  color="white"
+                  style={{ marginRight: 10 }}
+                />
+              }
+              style={[
+                styles.button,
+                { backgroundColor: isValid ? "#FF0056" : Colors.primary },
+              ]}
               callback={handleSubmit}
             />
           </>
         )}
       </Formik>
+
+      <Modal visible={loading} transparent animationType="slide">
+        <View style={styles.modal}>
+          <View style={styles.modalItems}>
+            {!result && <ActivityIndicator size={"large"} color={"red"} />}
+
+            {result === "OK" && (
+              <>
+                <Text style={{ color: "#fff", fontSize: 30 }}>Success</Text>
+                <Button
+                  text="Click to get back"
+                  style={{ marginTop: 10 }}
+                  onPress={() => navigation.navigate("Home")}
+                />
+              </>
+            )}
+          </View>
+        </View>
+      </Modal>
     </ScrollView>
   );
 }

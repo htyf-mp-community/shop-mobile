@@ -1,8 +1,9 @@
 import React from "react";
-import { View, Dimensions } from "react-native";
+import { View, Dimensions, StyleProp, ViewStyle } from "react-native";
 import Button from "../../components/Button/Button";
 import { ProductRatingProps, useNavigationProps } from "../../@types/types";
 import { useNavigation } from "@react-navigation/native";
+import { Colors } from "../../constants/styles";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
@@ -13,6 +14,12 @@ interface DetailsButtonsProps {
   prod_id: number;
   reviews: ProductRatingProps[];
 }
+
+const buttonStyle: StyleProp<ViewStyle> = {
+  width: "45%",
+  justifyContent: "center",
+  backgroundColor: Colors.primary100,
+};
 
 export default function ProductDetailsButtons({
   name,
@@ -34,7 +41,7 @@ export default function ProductDetailsButtons({
       <Button
         text="Create review"
         variant="primary"
-        style={{ width: "40%", justifyContent: "center" }}
+        style={buttonStyle}
         callback={() =>
           navigation.navigate("CreateReview", {
             thumbnail,
@@ -47,7 +54,7 @@ export default function ProductDetailsButtons({
       <Button
         variant="primary"
         text="Reviews"
-        style={{ width: "40%", justifyContent: "center" }}
+        style={buttonStyle}
         callback={() =>
           navigation.navigate("ProductReviews", {
             prod_id,

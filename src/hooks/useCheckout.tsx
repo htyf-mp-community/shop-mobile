@@ -1,12 +1,11 @@
 import { useUser } from "../context/UserContext";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import axios from "axios";
 import { ProductTypeProps } from "../modules/Product/Product";
 import { API } from "../constants/routes";
 import { useStripe } from "@stripe/stripe-react-native";
-import { Alert } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { useNavigationProps } from "../@types/types";
+import { checkoutActions } from "../redux/Checkout";
+import { useAppDispatch, useAppSelector } from "./hooks";
 
 interface useCheckoutProps {
   route: any;
@@ -21,12 +20,11 @@ interface PurchaseProps {
 export default function useCheckout({ route }: useCheckoutProps) {
   const { cart, total } = route.params;
   const { user } = useUser();
-
-  const [key, setKey] = useState("");
-
   const { confirmPayment } = useStripe();
 
-  const [result, setResult] = useState("");
+  const dispatch = useAppDispatch();
+  const { paymentIntentClientSecret, paymentResult, paymentLoading } =
+    useAppSelector((state) => state.checkout);
 
   async function getClientSecret() {
     axios
@@ -40,7 +38,7 @@ export default function useCheckout({ route }: useCheckoutProps) {
         }
       )
       .then(({ data }) => {
-        setKey(data.clientSecret);
+        dispatch(checkoutActions.setSecret(data.clientSecret));
       })
 
       .catch((err) => console.warn(err.message));
@@ -50,44 +48,51 @@ export default function useCheckout({ route }: useCheckoutProps) {
     getClientSecret();
   }, []);
 
-  const navigation = useNavigation<useNavigationProps>();
-
   async function Purchase({ address, name, surname }: PurchaseProps) {
+    dispatch(checkoutActions.toggleLoading());
     try {
-      if (key) {
-        const { paymentIntent, error } = await confirmPayment(key, {
-          type: "Card",
-          billingDetails: {
-            email: user.name,
-            name: `${name} ${surname}`,
-            addressCity: address,
-          },
-        });
+      if (paymentIntentClientSecret) {
+        const { paymentIntent, error } = await confirmPayment(
+          paymentIntentClientSecret,
+          {
+            type: "Card",
+            billingDetails: {
+              email: user.name,
+              name: `${name} ${surname}`,
+              addressCity: address,
+            },
+          }
+        );
 
         if (!error) {
           console.log(`[STRIPE] billed for ${paymentIntent.amount}`);
-          try {
-            const response = await axios.post(
-              `${API}/payments/purchase`,
-              {
-                prod_id: cart.map(({ prod_id }: ProductTypeProps) => prod_id),
+
+          const response = await axios.post(
+            `${API}/payments/purchase`,
+            {
+              prod_id: cart.map(({ prod_id }: ProductTypeProps) => prod_id),
+            },
+            {
+              headers: {
+                token: user.token,
               },
-              {
-                headers: {
-                  token: user.token,
-                },
-              }
-            );
-            if (response.data !== null) {
-              setResult(response.data.message);
-              Alert.alert("Thank you", "Payment succed");
-              navigation.navigate("Home");
             }
-          } catch (error) {}
+          );
+          if (response.data !== null) {
+            dispatch(checkoutActions.setResult("OK"));
+            dispatch(checkoutActions.toggleLoading());
+          }
         }
       }
-    } catch (error) {}
+    } catch (error) {
+      dispatch(checkoutActions.toggleLoading());
+    }
   }
 
-  return [Purchase, result, total];
+  return {
+    purchase: Purchase,
+    result: paymentResult,
+    total,
+    loading: paymentLoading,
+  };
 }

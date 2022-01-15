@@ -13,12 +13,6 @@ interface AddtoCartProps {
   text?: string;
 }
 
-/**
- * @param {Number} prod_id
- * @param {StyleProp<ViewStyle>} style styling for Component
- * @param {Function} refetch function that refreshes other component, is not compulsory
- **/
-
 export default function AddToCart({
   prod_id,
   style,
