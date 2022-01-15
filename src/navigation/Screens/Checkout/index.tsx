@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
-import { StyleSheet, Dimensions, ScrollView, View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { ScreenNavigationProps } from "../../../@types/types";
-import { Button } from "../../../components";
-import { Colors } from "../../../constants/styles";
+import { Button, Input } from "../../../components";
 import useCheckout from "../../../hooks/useCheckout";
 import { CardField, initStripe } from "@stripe/stripe-react-native";
+import { Formik } from "formik";
+import checkoutSchema from "./checkoutSchema";
+import { Colors } from "../../../constants/styles";
 
-const { width, height } = Dimensions.get("window");
+import styles from "./styles";
 
 export default function Checkout({
   route,
@@ -24,46 +26,99 @@ export default function Checkout({
 
   return (
     <View style={[styles.container]}>
-      <ScrollView style={[styles.list]}>
-        <CardField
-          postalCodeEnabled={true}
-          placeholder={{
-            number: "4242 4242 4242 4242",
-          }}
-          cardStyle={{
-            backgroundColor: "#FFFFFF",
-            textColor: "#000000",
-          }}
-          style={{
-            width: "100%",
-            height: 50,
-            marginVertical: 30,
-          }}
-        />
-      </ScrollView>
-      <View style={[styles.bottomTab]}>
-        <Button
-          text={`Pay $${total}`}
-          style={{ padding: 15, justifyContent: "center" }}
-          onPress={purchase}
-        />
-      </View>
+      <Formik
+        initialValues={{
+          name: "",
+          surname: "",
+          address: "",
+        }}
+        onSubmit={purchase}
+        validationSchema={checkoutSchema}
+      >
+        {({
+          handleChange,
+          handleBlur,
+          isValid,
+          handleSubmit,
+          values,
+          errors,
+        }) => (
+          <>
+            <Input
+              value={values.name}
+              onChangeText={handleChange("name")}
+              name={errors.name || "Name"}
+              placeholder="Name"
+              style={{
+                ...styles.input,
+                borderColor: errors.name ? "#FF3030" : Colors.primary100,
+              }}
+              labelStyle={{
+                color: errors.name ? "#FF3030" : "#fff",
+              }}
+              placeholderTextColor={errors.name ? "#FF3030" : "#fff"}
+              onBlur={handleBlur("name")}
+            />
+
+            <Input
+              value={values.surname}
+              onChangeText={handleChange("surname")}
+              name={errors.name || "Surname"}
+              placeholder="Surname"
+              style={{
+                ...styles.input,
+                borderColor: errors.surname ? "#FF3030" : Colors.primary100,
+              }}
+              labelStyle={{
+                color: errors.surname ? "#FF3030" : "#fff",
+              }}
+              placeholderTextColor={errors.surname ? "#FF3030" : "#fff"}
+              onBlur={handleBlur("surname")}
+            />
+
+            <Input
+              value={values.address}
+              onChangeText={handleChange("address")}
+              name={errors.name || "Address"}
+              placeholder="2780 Quincy Mountain Suite 162"
+              style={{
+                ...styles.input,
+                borderColor: errors.address ? "#FF3030" : Colors.primary100,
+              }}
+              labelStyle={{
+                color: errors.address ? "#FF3030" : "#fff",
+              }}
+              placeholderTextColor={errors.address ? "#FF3030" : "#e3e3e3"}
+              onBlur={handleBlur("address")}
+            />
+
+            <CardField
+              placeholder={{
+                number: "4242 4242 4242 4242",
+              }}
+              cardStyle={{
+                backgroundColor: "#1e293b",
+                placeholderColor: "#ffffff",
+                textColor: "#ffffff",
+                borderRadius: 10,
+                cursorColor: "#ffffff",
+              }}
+              style={styles.card}
+            />
+
+            <Button
+              disabled={!isValid}
+              text={`Pay $${total}`}
+              style={{
+                padding: 15,
+                justifyContent: "center",
+                backgroundColor: isValid ? "#FF0056" : Colors.primary,
+              }}
+              callback={handleSubmit}
+            />
+          </>
+        )}
+      </Formik>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: Colors.primary,
-    flex: 1,
-  },
-  list: {
-    height: height * 0.9,
-  },
-  bottomTab: {
-    borderWidth: 1,
-    borderTopColor: Colors.primary100,
-    height: height * 0.1,
-    padding: 10,
-  },
-});

@@ -90,7 +90,9 @@ export default function MainNavigator(): JSX.Element {
                 options={detailsScreenOptions}
                 sharedElements={({ params }) => {
                   const { prod_id, sharedID } = params;
-                  return ["prod_id." + prod_id + sharedID];
+                  if (sharedID) {
+                    return ["prod_id." + prod_id + sharedID];
+                  }
                 }}
               />
               <Stack.Screen
@@ -121,7 +123,7 @@ export default function MainNavigator(): JSX.Element {
                 name="ProductReviews"
                 component={ProductReviews}
                 options={({ route: { params } }) => ({
-                  title: `Rate product: ${params.prod_name}`,
+                  title: `Rate: ${params.prod_name}`,
                   ...horizontalAnimation,
                 })}
               />

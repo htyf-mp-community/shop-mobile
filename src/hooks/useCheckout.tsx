@@ -12,6 +12,12 @@ interface useCheckoutProps {
   route: any;
 }
 
+interface PurchaseProps {
+  name: string;
+  surname: string;
+  address: string;
+}
+
 export default function useCheckout({ route }: useCheckoutProps) {
   const { cart, total } = route.params;
   const { user } = useUser();
@@ -42,21 +48,21 @@ export default function useCheckout({ route }: useCheckoutProps) {
 
   useEffect(() => {
     getClientSecret();
-  }, [user.isLoggedIn]);
+  }, []);
 
   const navigation = useNavigation<useNavigationProps>();
 
-  async function Purchase() {
+  async function Purchase({ address, name, surname }: PurchaseProps) {
     try {
       if (key) {
         const { paymentIntent, error } = await confirmPayment(key, {
           type: "Card",
           billingDetails: {
-            email: "JohnDoe@gmail.com",
+            email: user.name,
+            name: `${name} ${surname}`,
+            addressCity: address,
           },
         });
-
-        console.log(error);
 
         if (!error) {
           console.log(`[STRIPE] billed for ${paymentIntent.amount}`);

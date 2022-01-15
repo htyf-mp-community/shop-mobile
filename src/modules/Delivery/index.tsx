@@ -1,5 +1,5 @@
 import React from "react";
-import { useWindowDimensions, View, Text } from "react-native";
+import { Text } from "react-native";
 import { Colors } from "../../constants/styles";
 
 export default function Delivery() {
@@ -10,7 +10,6 @@ export default function Delivery() {
         padding: 15,
         color: "#fff",
         borderRadius: 10,
-        marginRight: 10,
       }}
     >
       24h delivery

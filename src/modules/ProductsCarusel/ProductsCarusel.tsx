@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { View, Text, Dimensions, VirtualizedList } from "react-native";
+import { View, Text, VirtualizedList } from "react-native";
 import Product from "../Product/Product";
 import { ProductTypeProps } from "../Product/Product";
-import ProductLoader from "../ProductLoader/ProductLoader";
 import styles from "../Product/styles";
-import { Colors } from "../../constants/styles";
 import useFetchProducts from "./useFetchProducts";
+import Placeholder from "../../components/Placeholder";
+import caruselStyles from "./caruselStyles";
+import axios from "axios";
 
 interface MostRecentProps {
   path: string;
@@ -15,16 +16,6 @@ interface MostRecentProps {
   center?: boolean;
 }
 
-const { width: WIDTH, height: HEIGHT } = Dimensions.get("screen");
-
-/** 
- * @param {String} path server EndPoint
- * @param {String} title text displayed as title of the component
- * @param {String} sharedID SharedElement key for carusel
- * @param {Boolean} center if true component will take full screen width
- * @param {Boolean} refresh triggers refetch
-
- **/
 export default function ProductsCarusel({
   path,
   title,
@@ -45,32 +36,19 @@ export default function ProductsCarusel({
   function onSkip() {
     if (hasMore) {
       setSkip(skip + 5);
-      FetchAllProducts(`${path}?skip=${skip}`);
+      const cancelToken = axios.CancelToken.source();
+      FetchAllProducts(`${path}?skip=${skip}`, cancelToken);
     }
   }
 
   return (
-    <View style={{ width: WIDTH }}>
-      <Text
-        style={{
-          fontWeight: "bold",
-          color: "#fff",
-          fontSize: 35,
-          paddingLeft: 10,
-        }}
-      >
-        {title}
-      </Text>
-      {loading && data.length === 0 && <ProductLoader />}
+    <View style={caruselStyles.container}>
+      <Text style={[caruselStyles.title]}>{title}</Text>
+      {loading && data.length === 0 && <Placeholder loading={loading} />}
       {!!error && (
         <View style={styles.container}>
-          <View
-            style={[
-              styles.product,
-              { justifyContent: "center", alignItems: "center" },
-            ]}
-          >
-            <Text style={{ fontFamily: "PoppinsBold", color: Colors.text }}>
+          <View style={[styles.product, caruselStyles.errorContainer]}>
+            <Text style={[caruselStyles.errorText]}>
               {error || "Failed to fetch products"}
             </Text>
           </View>
@@ -78,15 +56,7 @@ export default function ProductsCarusel({
       )}
 
       {!loading && !error && data.length === 0 && (
-        <View
-          style={{
-            backgroundColor: Colors.primary,
-            height: HEIGHT / 3,
-            width: WIDTH * 0.95,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
+        <View style={[caruselStyles.nothing]}>
           <Text style={{ color: "#fff", fontSize: 30 }}>Nothing yet </Text>
         </View>
       )}

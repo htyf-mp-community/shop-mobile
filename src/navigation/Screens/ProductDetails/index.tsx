@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import { ScrollView, RefreshControl } from "react-native";
-import { Colors } from "../../../constants/styles";
 import ImagesCarusel from "../../../modules/ImagesCarusel/ImagesCarusel";
 import ProductDetailsText from "../../../modules/ProductDetailsText/ProductDetailsText";
 import ProductDetailsButtons from "../../../modules/ProductDetailsButtons/ProductDetailsButtons";
@@ -14,10 +13,11 @@ import {
 import { wait } from "../../../functions/wait";
 import { ProductTypeProps } from "../../../modules/Product/Product";
 import PopUpCarusel from "../../../modules/PopUpCarusel";
+import useColorTheme from "../../../context/ThemeContext";
+import ProductLoader from "./loader";
 
 export default function ProductDetails({
   route,
-  navigation,
 }: Required<ScreenNavigationProps<"Details">>) {
   const { prod_id, image, sharedID } = route.params;
   const isFocused = useIsFocused();
@@ -29,7 +29,7 @@ export default function ProductDetails({
     wait(1000).then(() => setRefreshing(false));
   }, []);
 
-  const { data: result } = useFetch<Product>(
+  const { data: result, loading } = useFetch<Product>(
     `/products/product/${prod_id}`,
     [isFocused, refreshing],
     {}
@@ -38,13 +38,13 @@ export default function ProductDetails({
   const imgList = result?.img_id as ProductImageProps[];
   const images = imgList?.length > 1 ? imgList.splice(1, imgList.length) : [];
 
-  const [showModal, setShowModal] = useState(false);
+  const theme = useColorTheme();
 
   return (
     <ScrollView
       style={{
         flex: 1,
-        backgroundColor: Colors.primary,
+        backgroundColor: theme.primary,
       }}
       showsHorizontalScrollIndicator={false}
       scrollEventThrottle={16}
@@ -61,14 +61,20 @@ export default function ProductDetails({
         images={images}
       />
 
-      <ProductDetailsText result={result as ProductTypeProps} />
-      <ProductDetailsButtons
-        thumbnail={image}
-        prod_id={prod_id}
-        sharedID={sharedID}
-        reviews={result.rating_id}
-        name={result.title}
-      />
+      {loading && <ProductLoader loading={loading} />}
+
+      {!loading && result && (
+        <>
+          <ProductDetailsText result={result as ProductTypeProps} />
+          <ProductDetailsButtons
+            thumbnail={image}
+            prod_id={prod_id}
+            sharedID={sharedID}
+            reviews={result.rating_id}
+            name={result.title}
+          />
+        </>
+      )}
 
       <PopUpCarusel />
     </ScrollView>
