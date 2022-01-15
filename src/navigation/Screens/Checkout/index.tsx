@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { ScrollView, View } from "react-native";
+import { ScrollView } from "react-native";
 import { ScreenNavigationProps } from "../../../@types/types";
 import { Button, Input } from "../../../components";
 import useCheckout from "../../../hooks/useCheckout";
@@ -12,7 +12,6 @@ import styles from "./styles";
 
 export default function Checkout({
   route,
-  navigation,
 }: Required<ScreenNavigationProps<"Checkout">>) {
   const [purchase, result, total] = useCheckout({ route });
 
@@ -25,7 +24,7 @@ export default function Checkout({
   }, []);
 
   return (
-    <View style={[styles.container]}>
+    <ScrollView style={[styles.container]}>
       <Formik
         initialValues={{
           name: "",
@@ -63,7 +62,7 @@ export default function Checkout({
             <Input
               value={values.surname}
               onChangeText={handleChange("surname")}
-              name={errors.name || "Surname"}
+              name={errors.surname || "Surname"}
               placeholder="Surname"
               style={{
                 ...styles.input,
@@ -119,6 +118,6 @@ export default function Checkout({
           </>
         )}
       </Formik>
-    </View>
+    </ScrollView>
   );
 }

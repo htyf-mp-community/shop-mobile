@@ -1,5 +1,10 @@
 import React from "react";
-import { ScrollView, RefreshControl } from "react-native";
+import {
+  ScrollView,
+  RefreshControl,
+  View,
+  TouchableOpacity,
+} from "react-native";
 import ImagesCarusel from "../../../modules/ImagesCarusel/ImagesCarusel";
 import ProductDetailsText from "../../../modules/ProductDetailsText/ProductDetailsText";
 import ProductDetailsButtons from "../../../modules/ProductDetailsButtons/ProductDetailsButtons";
@@ -13,11 +18,14 @@ import {
 import { wait } from "../../../functions/wait";
 import { ProductTypeProps } from "../../../modules/Product/Product";
 import PopUpCarusel from "../../../modules/PopUpCarusel";
-import useColorTheme from "../../../context/ThemeContext";
 import ProductLoader from "./loader";
+import AddToCart from "../../../modules/AddToCart/AddToCart";
+import styles from "./styles";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function ProductDetails({
   route,
+  navigation,
 }: Required<ScreenNavigationProps<"Details">>) {
   const { prod_id, image, sharedID } = route.params;
   const isFocused = useIsFocused();
@@ -38,45 +46,54 @@ export default function ProductDetails({
   const imgList = result?.img_id as ProductImageProps[];
   const images = imgList?.length > 1 ? imgList.splice(1, imgList.length) : [];
 
-  const theme = useColorTheme();
+  function navigate() {
+    navigation.goBack();
+  }
 
   return (
-    <ScrollView
-      style={{
-        flex: 1,
-        backgroundColor: theme.primary,
-      }}
-      showsHorizontalScrollIndicator={false}
-      scrollEventThrottle={16}
-      showsVerticalScrollIndicator={false}
-      bounces
-      refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-      }
-    >
-      <ImagesCarusel
-        sharedID={sharedID}
-        prod_id={prod_id}
-        image={image}
-        images={images}
-      />
+    <>
+      <ScrollView
+        style={styles.container}
+        showsHorizontalScrollIndicator={false}
+        scrollEventThrottle={16}
+        showsVerticalScrollIndicator={false}
+        bounces
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
+        <ImagesCarusel
+          sharedID={sharedID}
+          prod_id={prod_id}
+          image={image}
+          images={images}
+        />
 
-      {loading && <ProductLoader loading={loading} />}
+        {loading && <ProductLoader loading={loading} />}
 
-      {!loading && result && (
-        <>
-          <ProductDetailsText result={result as ProductTypeProps} />
-          <ProductDetailsButtons
-            thumbnail={image}
-            prod_id={prod_id}
-            sharedID={sharedID}
-            reviews={result.rating_id}
-            name={result.title}
-          />
-        </>
-      )}
+        {!loading && result && (
+          <>
+            <ProductDetailsText result={result as ProductTypeProps} />
+            <ProductDetailsButtons
+              thumbnail={image}
+              prod_id={prod_id}
+              sharedID={sharedID}
+              reviews={result.rating_id}
+              name={result.title}
+            />
+          </>
+        )}
 
-      <PopUpCarusel />
-    </ScrollView>
+        <PopUpCarusel />
+      </ScrollView>
+      <View style={styles.buttonContainer}>
+        <AddToCart
+          relative
+          prod_id={result.prod_id}
+          text="ADD TO CART"
+          style={styles.button}
+        />
+      </View>
+    </>
   );
 }

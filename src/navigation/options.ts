@@ -8,7 +8,7 @@ export const detailsScreenOptions = ({
   ScreenNavigationProps<"Details">,
   "route"
 >): StackNavigationOptions => ({
-  title: route.params.title,
+  headerTitle: "",
   headerTitleAlign: "center",
   gestureEnabled: true,
   gestureDirection: "vertical",

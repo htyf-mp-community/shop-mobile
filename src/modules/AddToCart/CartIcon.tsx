@@ -1,8 +1,8 @@
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
 import { ActivityIndicator } from "react-native";
 import { Colors } from "../../constants/styles";
+import { Feather } from "@expo/vector-icons";
 
 interface IconProps {
   loading: boolean;
@@ -26,7 +26,7 @@ const CartIcon = ({ loading, success, error }: IconProps) => {
   if (success === "Added") {
     return <Ionicons name="checkmark-done" size={22} color={Colors.text} />;
   }
-  return <AntDesign name="shoppingcart" size={24} color="white" />;
+  return <Feather name="shopping-bag" size={24} color="white" />;
 };
 
 export default CartIcon;

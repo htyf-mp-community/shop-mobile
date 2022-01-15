@@ -23,8 +23,6 @@ export default function ProductDetailsText({ result }: DetailsProps) {
           },
         ]}
       >
-        <AddToCart prod_id={result.prod_id} relative style={styles.cart} />
-
         <Text style={[styles.category]}>{result?.category}</Text>
         <Delivery />
 

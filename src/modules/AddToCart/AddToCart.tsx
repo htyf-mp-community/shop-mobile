@@ -10,6 +10,7 @@ interface AddtoCartProps {
   style?: StyleProp<ViewStyle>;
   refetch?: () => void;
   relative?: boolean;
+  text?: string;
 }
 
 /**
@@ -23,15 +24,19 @@ export default function AddToCart({
   style,
   refetch = () => {},
   relative = false,
+  text,
 }: AddtoCartProps) {
   const { pushToCart, loading, error, result } = useCart(prod_id, refetch);
   return (
     <Button
+      text={text}
       callback={pushToCart}
+      fontStyle={{ marginLeft: typeof text !== "undefined" ? 10 : 0 }}
       style={[
         {
           width: 50,
           height: 50,
+          justifyContent: "center",
           backgroundColor:
             result === "Added" ? Colors.ternary : Colors.secondary,
         },

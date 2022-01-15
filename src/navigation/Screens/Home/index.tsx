@@ -17,6 +17,7 @@ import Categories from "../../../modules/Categories";
 import Newsletter from "../../../components/Newsletter";
 import { wait } from "../../../functions/wait";
 import Header from "../../../modules/Header";
+import DailySale from "../../../modules/DailySale";
 
 let isOpen = false;
 
@@ -81,13 +82,14 @@ export default function Home() {
         >
           <Categories />
 
-          <ProductsCarusel
+          {/* <ProductsCarusel
             path={ENDPOINTS.dailySale}
             title="Today's discount"
             sharedID="Promotion"
             refresh={refresh}
             center
-          />
+          /> */}
+          <DailySale />
 
           <ProductsCarusel
             path={ENDPOINTS.goodRatedProducts}
