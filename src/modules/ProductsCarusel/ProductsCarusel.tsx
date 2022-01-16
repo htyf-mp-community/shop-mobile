@@ -7,6 +7,7 @@ import useFetchProducts from "./useFetchProducts";
 import Placeholder from "../../components/Placeholder";
 import caruselStyles from "./caruselStyles";
 import axios from "axios";
+import { Colors } from "../../constants/styles";
 
 interface MostRecentProps {
   path: string;
@@ -56,7 +57,16 @@ export default function ProductsCarusel({
       )}
 
       {!loading && !error && data.length === 0 && (
-        <View style={[caruselStyles.nothing]}>
+        <View
+          style={[
+            caruselStyles.nothing,
+            {
+              backgroundColor: Colors.primary100,
+              marginLeft: 10,
+              borderRadius: 10,
+            },
+          ]}
+        >
           <Text style={{ color: "#fff", fontSize: 30 }}>Nothing yet </Text>
         </View>
       )}

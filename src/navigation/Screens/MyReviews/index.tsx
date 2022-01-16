@@ -1,5 +1,7 @@
 import React from "react";
 import { View, FlatList, ActivityIndicator } from "react-native";
+import SkeletonContent from "react-native-skeleton-content";
+import Placeholder from "../../../components/Placeholder";
 import { Colors } from "../../../constants/styles";
 import useFetch from "../../../hooks/useFetch";
 import Ratings from "../../../modules/Ratings/Ratings";
@@ -24,7 +26,8 @@ export default function MyReviews() {
         backgroundColor: Colors.primary,
       }}
     >
-      {loading && <ActivityIndicator size="large" />}
+      {loading && <Placeholder ammount={3} loading />}
+
       <FlatList
         initialNumToRender={2}
         data={data as Reviews[]}

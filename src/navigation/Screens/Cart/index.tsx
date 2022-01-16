@@ -18,7 +18,7 @@ export default function Cart() {
   const isFocused = useIsFocused();
   const [deleted, setDeleted] = useState(0);
   const [refetch, setRefetch] = useState(0);
-  const { data } = useFetch<ProductTypeProps[]>(
+  const { data, loading } = useFetch<ProductTypeProps[]>(
     "/cart",
     [deleted, isFocused, refetch],
     []

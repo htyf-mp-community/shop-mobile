@@ -6,25 +6,22 @@ import { HistoryResponse } from "../../../@types/types";
 import useFetch from "../../../hooks/useFetch";
 import Product from "../../../modules/Product/Product";
 import { structureOutput } from "./structure";
+import Placeholder from "../../../components/Placeholder";
 
 export default function PurchaseHistory() {
   const isFocused = useIsFocused();
-  const [skip, setSkip] = useState(0);
 
-  const { data } = useFetch<HistoryResponse>(
+  const { data, loading } = useFetch<HistoryResponse>(
     `/payments/history?skip=0`,
     [isFocused],
     {}
   );
 
-  function onReachEnd() {
-    setSkip(skip + 5);
-  }
-
   const result = useMemo(() => structureOutput(data), [data]);
 
   return (
     <View style={{ flex: 1, backgroundColor: Colors.primary }}>
+      {loading && <Placeholder loading ammount={3} />}
       <FlatList
         data={result}
         keyExtractor={(_, i) => i.toString()}

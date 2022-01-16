@@ -63,7 +63,7 @@ export default function Purchase({ cart }: IPurchaseProps) {
         text={`Continue with $${totalPrice} `}
         callback={PurchaseProduct}
         style={{
-          backgroundColor: !disabled ? Colors.secondary : Colors.primary,
+          backgroundColor: !disabled ? Colors.secondary : Colors.primary100,
           width: width * 0.9,
           justifyContent: "center",
           padding: 15,
