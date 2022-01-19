@@ -90,9 +90,8 @@ export default function MainNavigator(): JSX.Element {
                 options={detailsScreenOptions}
                 sharedElements={({ params }) => {
                   const { prod_id, sharedID } = params;
-                  if (sharedID) {
-                    return ["prod_id." + prod_id + sharedID];
-                  }
+
+                  return ["prod_id." + prod_id + sharedID];
                 }}
               />
               <Stack.Screen

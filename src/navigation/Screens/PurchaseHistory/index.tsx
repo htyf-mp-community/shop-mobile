@@ -21,7 +21,9 @@ export default function PurchaseHistory() {
 
   return (
     <View style={{ flex: 1, backgroundColor: Colors.primary }}>
-      {loading && <Placeholder loading ammount={3} />}
+      {loading && typeof data.results === "undefined" && (
+        <Placeholder loading ammount={3} />
+      )}
       <FlatList
         data={result}
         keyExtractor={(_, i) => i.toString()}
@@ -45,7 +47,7 @@ export default function PurchaseHistory() {
               renderItem={({ item }) => (
                 <Product
                   ammount={0}
-                  sharedID="HISTORY"
+                  sharedID={"HISTORY" + item.details.purchase_id}
                   fullSize
                   {...item.product}
                 />

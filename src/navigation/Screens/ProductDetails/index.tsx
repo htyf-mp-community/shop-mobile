@@ -21,11 +21,9 @@ import PopUpCarusel from "../../../modules/PopUpCarusel";
 import ProductLoader from "./loader";
 import AddToCart from "../../../modules/AddToCart/AddToCart";
 import styles from "./styles";
-import { Ionicons } from "@expo/vector-icons";
 
 export default function ProductDetails({
   route,
-  navigation,
 }: Required<ScreenNavigationProps<"Details">>) {
   const { prod_id, image, sharedID } = route.params;
   const isFocused = useIsFocused();
@@ -65,7 +63,9 @@ export default function ProductDetails({
           images={images}
         />
 
-        {loading && <ProductLoader loading={loading} />}
+        {loading && typeof result.prod_id === "undefined" && (
+          <ProductLoader loading={loading} />
+        )}
 
         {!loading && result && (
           <>
