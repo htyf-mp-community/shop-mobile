@@ -1,35 +1,21 @@
-import React from "react";
-import { useWindowDimensions } from "react-native";
-import SkeletonContent from "react-native-skeleton-content";
+import { useWindowDimensions, Animated, ActivityIndicator } from "react-native";
 
-interface PlaceholderProps {
-  loading: boolean;
-  ammount?: number;
-}
-
-export default function Placeholder({
-  loading,
-  ammount = 1,
-}: PlaceholderProps) {
+export default function Placeholder({}) {
   const { width } = useWindowDimensions();
 
-  const layoutArrayWithKeys = Array(ammount)
-    .fill({
-      width: width - 20,
-      height: 250,
-      marginBottom: 6,
-    })
-    .map((props, i) => ({ ...props, key: i.toString() }));
-
   return (
-    <SkeletonContent
-      containerStyle={{ marginTop: 10, alignItems: "center" }}
-      isLoading={loading}
-      animationDirection="horizontalRight"
-      animationType="shiver"
-      boneColor="#1e293b"
-      highlightColor="#2a3a54"
-      layout={layoutArrayWithKeys}
-    />
+    <Animated.View
+      style={{
+        backgroundColor: "#1e293b",
+        width: width - 20,
+        height: 250,
+        margin: 10,
+        borderRadius: 5,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <ActivityIndicator color={"#fff"} size="large" />
+    </Animated.View>
   );
 }

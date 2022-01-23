@@ -45,7 +45,9 @@ export default function ProductsCarusel({
   return (
     <View style={caruselStyles.container}>
       <Text style={[caruselStyles.title]}>{title}</Text>
-      {loading && data.length === 0 && <Placeholder loading={loading} />}
+
+      {loading && data.length === 0 && <Placeholder />}
+
       {!!error && (
         <View style={styles.container}>
           <View style={[styles.product, caruselStyles.errorContainer]}>
