@@ -2,21 +2,25 @@ import { StackNavigationOptions } from "@react-navigation/stack";
 import { ScreenNavigationProps } from "../@types/types";
 import { Colors } from "../constants/styles";
 
+export const defaultStackOptions: StackNavigationOptions = {
+  headerShown: true,
+  headerStyle: { backgroundColor: Colors.primary },
+  headerTintColor: Colors.text,
+};
+
 export const detailsScreenOptions = ({
   route,
 }: Pick<
   ScreenNavigationProps<"Details">,
   "route"
 >): StackNavigationOptions => ({
-  headerTitle: "",
+  ...defaultStackOptions,
+  headerTitle: route.params.title,
   headerTitleAlign: "center",
   gestureEnabled: true,
   gestureDirection: "vertical",
   gestureResponseDistance: 100,
   presentation: "modal",
-  headerShown: true,
-  headerStyle: { backgroundColor: Colors.primary },
-  headerTintColor: "white",
 });
 
 export const checkOutScreenOptions: StackNavigationOptions = {
@@ -32,12 +36,6 @@ export const cartScreenOptions: StackNavigationOptions = {
   gestureDirection: "vertical",
   gestureResponseDistance: 200,
   presentation: "modal",
-};
-
-export const defaultStackOptions: StackNavigationOptions = {
-  headerShown: true,
-  headerStyle: { backgroundColor: Colors.primary },
-  headerTintColor: Colors.text,
 };
 
 export const horizontalAnimation: StackNavigationOptions = {

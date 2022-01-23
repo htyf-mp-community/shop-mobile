@@ -1,9 +1,10 @@
 import React from "react";
-import { StyleProp, ViewStyle } from "react-native";
+import { StyleProp, TextStyle, ViewStyle } from "react-native";
 import { Button } from "../../components";
 import { Colors } from "../../constants/styles";
 import CartIcon from "./CartIcon";
 import useCart from "./useCart";
+import { notUndefined } from "../../functions/typecheckers";
 
 interface AddtoCartProps {
   prod_id: number;
@@ -11,6 +12,8 @@ interface AddtoCartProps {
   refetch?: () => void;
   relative?: boolean;
   text?: string;
+  iconStyle?: StyleProp<ViewStyle & TextStyle>;
+  fontStyle?: StyleProp<TextStyle>;
 }
 
 export default function AddToCart({
@@ -19,13 +22,20 @@ export default function AddToCart({
   refetch = () => {},
   relative = false,
   text,
+  iconStyle,
+  fontStyle,
 }: AddtoCartProps) {
   const { pushToCart, loading, error, result } = useCart(prod_id, refetch);
   return (
     <Button
       text={text}
       callback={pushToCart}
-      fontStyle={{ marginLeft: typeof text !== "undefined" ? 10 : 0 }}
+      fontStyle={[
+        {
+          marginLeft: notUndefined(text) ? 10 : 0,
+        },
+        fontStyle,
+      ]}
       style={[
         {
           width: 50,
@@ -37,7 +47,14 @@ export default function AddToCart({
         !relative && { position: "absolute", bottom: 10, right: 10 },
         style,
       ]}
-      icon={<CartIcon loading={loading} success={result} error={!!error} />}
+      icon={
+        <CartIcon
+          style={iconStyle}
+          loading={loading}
+          success={result}
+          error={!!error}
+        />
+      }
     />
   );
 }

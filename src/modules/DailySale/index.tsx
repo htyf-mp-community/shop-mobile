@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Text, Image } from "react-native";
 import { SharedElement } from "react-navigation-shared-element";
 import useFetch from "../../hooks/useFetch";
@@ -6,10 +6,12 @@ import { ProductTypeProps } from "../Product/Product";
 import dailyStyle from "./styles";
 import { API } from "../../constants/routes";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { useNavigationProps } from "../../@types/types";
 import AddToCart from "../AddToCart/AddToCart";
 import Placeholder from "../../components/Placeholder";
+
+import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 
 interface DailySaleProps {}
 
@@ -29,6 +31,8 @@ export default function DailySale({}: DailySaleProps) {
     }
   }
 
+  const isFocused = useIsFocused();
+
   return (
     <View style={[dailyStyle.container]}>
       <Text style={[dailyStyle.title]}>Daily Sale</Text>
@@ -46,18 +50,26 @@ export default function DailySale({}: DailySaleProps) {
               />
             </SharedElement>
           </TouchableOpacity>
-          <View style={[dailyStyle.buttonsContainer]}>
-            <Text style={[dailyStyle.price]}>${data?.price}</Text>
-            <AddToCart
-              prod_id={data.prod_id}
-              relative
-              text="Add"
-              style={[dailyStyle.button]}
-            />
-          </View>
+          {isFocused && (
+            <Animated.View
+              style={[dailyStyle.buttonsContainer]}
+              entering={FadeIn.delay(500).duration(100)}
+              exiting={FadeOut}
+            >
+              <Text style={[dailyStyle.price]}>${data?.price}</Text>
+              <AddToCart
+                iconStyle={{ color: "#000" }}
+                prod_id={data.prod_id}
+                relative
+                text="Add"
+                fontStyle={{ color: "#000" }}
+                style={[dailyStyle.button, { backgroundColor: "#fff" }]}
+              />
+            </Animated.View>
+          )}
         </View>
       )}
-      {loading && <Placeholder loading={loading} />}
+      {loading && <Placeholder />}
     </View>
   );
 }

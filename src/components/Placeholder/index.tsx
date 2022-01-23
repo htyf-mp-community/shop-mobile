@@ -1,10 +1,13 @@
-import { useWindowDimensions, Animated, ActivityIndicator } from "react-native";
+import { useWindowDimensions, ActivityIndicator } from "react-native";
+import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 
 export default function Placeholder({}) {
   const { width } = useWindowDimensions();
 
   return (
     <Animated.View
+      entering={FadeIn}
+      exiting={FadeOut}
       style={{
         backgroundColor: "#1e293b",
         width: width - 20,

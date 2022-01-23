@@ -7,7 +7,8 @@ const caruselStyles = StyleSheet.create({
   nothing: {
     backgroundColor: Colors.primary,
     height: HEIGHT / 3,
-    width: WIDTH * 0.95,
+    width: WIDTH - 20,
+    margin: 10,
     justifyContent: "center",
     alignItems: "center",
   },

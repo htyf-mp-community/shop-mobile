@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  ScrollView,
-  RefreshControl,
-  View,
-  TouchableOpacity,
-} from "react-native";
+import { ScrollView, RefreshControl, View } from "react-native";
 import ImagesCarusel from "../../../modules/ImagesCarusel/ImagesCarusel";
 import ProductDetailsText from "../../../modules/ProductDetailsText/ProductDetailsText";
 import ProductDetailsButtons from "../../../modules/ProductDetailsButtons/ProductDetailsButtons";
@@ -21,6 +16,12 @@ import PopUpCarusel from "../../../modules/PopUpCarusel";
 import ProductLoader from "./loader";
 import AddToCart from "../../../modules/AddToCart/AddToCart";
 import styles from "./styles";
+import Animated, {
+  SlideInDown,
+  SlideInUp,
+  Layout,
+} from "react-native-reanimated";
+import { Colors } from "../../../constants/styles";
 
 export default function ProductDetails({
   route,
@@ -45,8 +46,9 @@ export default function ProductDetails({
   const images = imgList?.length > 1 ? imgList.splice(1, imgList.length) : [];
 
   return (
-    <>
-      <ScrollView
+    <View style={{ flex: 1, backgroundColor: Colors.primary }}>
+      <Animated.ScrollView
+        layout={Layout}
         style={styles.container}
         showsHorizontalScrollIndicator={false}
         scrollEventThrottle={16}
@@ -81,15 +83,19 @@ export default function ProductDetails({
         )}
 
         <PopUpCarusel />
-      </ScrollView>
-      <View style={styles.buttonContainer}>
+      </Animated.ScrollView>
+      <Animated.View
+        style={styles.buttonContainer}
+        entering={SlideInDown}
+        exiting={SlideInUp}
+      >
         <AddToCart
           relative
           prod_id={result.prod_id}
           text="ADD TO CART"
           style={styles.button}
         />
-      </View>
-    </>
+      </Animated.View>
+    </View>
   );
 }

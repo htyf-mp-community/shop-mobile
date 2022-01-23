@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { View, Text, VirtualizedList } from "react-native";
 import Product from "../Product/Product";
 import { ProductTypeProps } from "../Product/Product";
@@ -6,8 +6,9 @@ import styles from "../Product/styles";
 import useFetchProducts from "./useFetchProducts";
 import Placeholder from "../../components/Placeholder";
 import caruselStyles from "./caruselStyles";
-import axios from "axios";
 import { Colors } from "../../constants/styles";
+import { notEmpty } from "../../functions/typecheckers";
+import EmptyList from "./Info";
 
 interface MostRecentProps {
   path: string;
@@ -17,6 +18,10 @@ interface MostRecentProps {
   center?: boolean;
 }
 
+const getItem = (data: ProductTypeProps[], key: number) => {
+  return data[key];
+};
+
 export default function ProductsCarusel({
   path,
   title,
@@ -24,57 +29,24 @@ export default function ProductsCarusel({
   refresh,
   center = false,
 }: MostRecentProps) {
-  const getItem = (data: ProductTypeProps[], key: number) => {
-    return data[key];
-  };
+  const { loading, data, error, onSkip } = useFetchProducts<ProductTypeProps[]>(
+    `${path}?skip=0`,
+    [refresh]
+  );
 
-  const [skip, setSkip] = useState(5);
-
-  const { loading, data, error, hasMore, FetchAllProducts } = useFetchProducts<
-    ProductTypeProps[]
-  >(`${path}?skip=0`, [refresh]);
-
-  async function onSkip() {
-    if (hasMore) {
-      setSkip(skip + 5);
-      const cancelToken = axios.CancelToken.source();
-      await FetchAllProducts(`${path}?skip=${skip}`, cancelToken);
-    }
+  if (!notEmpty(data) && loading) {
+    return <Placeholder />;
   }
 
   return (
     <View style={caruselStyles.container}>
       <Text style={[caruselStyles.title]}>{title}</Text>
 
-      {loading && data.length === 0 && <Placeholder />}
+      {!!error && <EmptyList variant="error" error={error} />}
 
-      {!!error && (
-        <View style={styles.container}>
-          <View style={[styles.product, caruselStyles.errorContainer]}>
-            <Text style={[caruselStyles.errorText]}>
-              {error || "Failed to fetch products"}
-            </Text>
-          </View>
-        </View>
-      )}
-
-      {!loading && !error && data.length === 0 && (
-        <View
-          style={[
-            caruselStyles.nothing,
-            {
-              backgroundColor: Colors.primary100,
-              marginLeft: 10,
-              borderRadius: 10,
-            },
-          ]}
-        >
-          <Text style={{ color: "#fff", fontSize: 30 }}>Nothing yet </Text>
-        </View>
-      )}
-
-      {!error && (
+      {!error && data && (
         <VirtualizedList
+          ListEmptyComponent={EmptyList}
           data={data}
           onEndReached={onSkip}
           horizontal
