@@ -70,15 +70,5 @@ export default function useFetchProducts<T>(path: string, deps: any[] = []) {
     };
   }, deps);
 
-  const [skip, setSkip] = useState(5);
-
-  async function onSkip() {
-    if (state.hasMore) {
-      setSkip(skip + 5);
-      const cancelToken = axios.CancelToken.source();
-      await FetchAllProducts(`${path}?skip=${skip}`, cancelToken);
-    }
-  }
-
-  return { ...state, onSkip };
+  return { ...state, FetchAllProducts };
 }

@@ -14,6 +14,7 @@ interface AddtoCartProps {
   text?: string;
   iconStyle?: StyleProp<ViewStyle & TextStyle>;
   fontStyle?: StyleProp<TextStyle>;
+  disabled?: boolean;
 }
 
 export default function AddToCart({
@@ -24,10 +25,14 @@ export default function AddToCart({
   text,
   iconStyle,
   fontStyle,
+
+  disabled,
 }: AddtoCartProps) {
   const { pushToCart, loading, error, result } = useCart(prod_id, refetch);
+
   return (
     <Button
+      disabled={disabled}
       text={text}
       callback={pushToCart}
       fontStyle={[

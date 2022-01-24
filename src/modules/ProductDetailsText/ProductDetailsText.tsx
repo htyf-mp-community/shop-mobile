@@ -1,27 +1,30 @@
 import React from "react";
 import { View, Text } from "react-native";
-import Delivery from "../Delivery";
-import { ProductTypeProps } from "../Product/Product";
+import { Available, Avatar } from "../../components";
 import styles from "./productDetailsStyle";
+import { Product } from "../../@types/types";
+import Delivery from "../Delivery";
 
-interface DetailsProps {
-  result: ProductTypeProps;
-}
-
-export default function ProductDetailsText({ result }: DetailsProps) {
+export default function ProductDetailsText({
+  title,
+  description,
+  quantity,
+  price,
+}: Product) {
   return (
     <>
-      <Text style={[styles.text, styles.title]}>{result?.title}</Text>
+      <Text style={[styles.text, styles.title]}>{title}</Text>
 
       <View style={[styles.container]}>
-        <Text style={[styles.category]}>{result?.category}</Text>
+        <Avatar url={require("../../assets/notfound.png")} />
+        <Available quantity={quantity} styles={{ margin: 5 }} />
         <Delivery />
 
-        <Text style={[styles.text, styles.price]}>${result?.price}</Text>
+        <Text style={styles.price}>${price}</Text>
       </View>
 
-      <Text style={[styles.text, styles.description]}>
-        {result?.description}
+      <Text style={[styles.text, styles.description, { marginTop: 15 }]}>
+        {description}
       </Text>
     </>
   );

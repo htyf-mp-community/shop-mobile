@@ -8,3 +8,5 @@ export { default as Newsletter } from "./Newsletter/index";
 export { default as Overlay } from "./Overlay/Overlay";
 export { default as Suggestion } from "./Suggestion/index";
 export { default as LandingIcon } from "./LandingIcon/index";
+export { default as Avatar } from "./Avatar/index";
+export { default as Available } from "./AvailableProduct/index";

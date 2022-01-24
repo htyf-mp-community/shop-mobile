@@ -1,18 +1,37 @@
 import React from "react";
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 import { Colors } from "../../constants/styles";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function Delivery() {
   return (
-    <Text
+    <View
       style={{
         backgroundColor: Colors.primary100,
-        padding: 15,
-        color: "#fff",
-        borderRadius: 10,
+        borderRadius: 5,
+        alignItems: "center",
+        flexDirection: "row",
+        padding: 8,
+        width: 75,
+        justifyContent: "center",
       }}
     >
-      24h delivery
-    </Text>
+      <MaterialCommunityIcons
+        name="truck-delivery"
+        size={24}
+        color="white"
+        style={{ marginRight: 5 }}
+      />
+      <Text
+        style={{
+          color: "#fff",
+          fontWeight: "bold",
+          fontFamily: "PoppinsMedium",
+          fontSize: 16,
+        }}
+      >
+        24h
+      </Text>
+    </View>
   );
 }

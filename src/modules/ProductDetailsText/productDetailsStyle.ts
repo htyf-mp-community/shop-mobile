@@ -7,29 +7,32 @@ const styles = StyleSheet.create({
   text: {
     color: "white",
     fontSize: 18,
-    padding: 20,
     backgroundColor: Colors.primary,
     fontFamily: "PoppinsMedium",
   },
   title: {
     fontSize: 25,
-    padding: 10,
-    paddingLeft: 15,
     fontFamily: "PoppinsBold",
     borderBottomWidth: 1,
     borderBottomColor: "#434655",
+    paddingLeft: 10,
+    padding: 15,
   },
   description: {
     fontSize: 17,
     borderBottomWidth: 1,
     borderBottomColor: "#434655",
     marginBottom: 20,
+    paddingLeft: 15,
   },
   price: {
-    fontSize: 20,
-    padding: 10,
+    color: "#fff",
+    fontSize: 18,
     backgroundColor: Colors.primary100,
-    borderRadius: RADIUS,
+    padding: 7,
+    borderRadius: 5,
+    width: 75,
+    textAlign: "center",
   },
   category: {
     color: "#fff",
@@ -38,12 +41,13 @@ const styles = StyleSheet.create({
     borderRadius: RADIUS,
   },
   container: {
-    flexDirection: "row-reverse",
+    flexDirection: "row",
     justifyContent: "space-around",
     marginTop: 10,
     paddingBottom: 10,
     borderBottomWidth: 1,
     borderBottomColor: Colors.primary100,
+    alignItems: "center",
   },
 });
 

@@ -1,7 +1,16 @@
+import { CardFieldInput } from "@stripe/stripe-react-native";
 import { StyleSheet, Dimensions } from "react-native";
 import { Colors } from "../../../constants/styles";
 
-const { width, height } = Dimensions.get("window");
+const { width, height } = Dimensions.get("screen");
+
+export const cardFieldStyles: CardFieldInput.Styles = {
+  backgroundColor: "#1e293b",
+  placeholderColor: "#ffffff",
+  textColor: "#ffffff",
+  borderRadius: 10,
+  cursorColor: "#ffffff",
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -16,6 +25,8 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 20,
     marginTop: 20,
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   input: {
@@ -29,18 +40,27 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   modal: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 10,
+    position: "absolute",
+    zIndex: 10,
+    height,
+    width,
+    backgroundColor: "rgba(0,0,0,0.3)",
   },
-  modalItems: {
-    justifyContent: "center",
-    alignItems: "center",
+  innerModal: {
+    width,
+    height: height * 0.8,
     backgroundColor: Colors.primary,
-    height: width * 0.6,
-    width: width * 0.6,
-    borderRadius: 10,
+    position: "absolute",
+    bottom: 0,
+    borderTopEndRadius: 30,
+    borderTopLeftRadius: 30,
+    alignItems: "center",
+  },
+  innerText: {
+    color: "#fff",
+    fontSize: 60,
+    textAlign: "center",
+    fontFamily: "PoppinsBold",
   },
 });
 

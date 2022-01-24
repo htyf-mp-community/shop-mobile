@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+type TransactionStatus = "PREPARING" | "PENDING" | "FINISHED" | "FAILED";
+
 const checkoutSlice = createSlice({
   name: "checkout",
   initialState: {
@@ -7,19 +9,43 @@ const checkoutSlice = createSlice({
     paymentError: "",
     paymentLoading: false,
     paymentIntentClientSecret: "",
+
+    status: "PREPARING" as TransactionStatus,
+    ammountCharged: 0,
   },
   reducers: {
-    toggleLoading(state) {
-      state.paymentLoading = !state.paymentLoading;
-    },
-    setError(state, { payload }: { payload: string }) {
-      state.paymentError = payload;
-    },
     setSecret(state, { payload }: { payload: string }) {
       state.paymentIntentClientSecret = payload;
     },
-    setResult(state, { payload }: { payload: string }) {
-      state.paymentResult = payload;
+
+    updateTransactionStatus(state) {
+      if (state.status === "PREPARING") {
+        state.status = "PENDING";
+      } else if (state.status === "PENDING") {
+        state.status = "FINISHED";
+      }
+    },
+
+    setCharged(state, { payload }) {
+      state.ammountCharged = payload;
+    },
+
+    startTransaction(state) {
+      state.paymentLoading = true;
+    },
+    failTransaction(state, { payload }) {
+      state.paymentLoading = false;
+      state.paymentError = payload;
+      state.status = "FAILED";
+    },
+
+    destroySession(state) {
+      state.ammountCharged = 0;
+      state.paymentLoading = false;
+      state.status = "PREPARING";
+      state.paymentError = "";
+      state.paymentIntentClientSecret = "";
+      state.paymentResult = "";
     },
   },
 });

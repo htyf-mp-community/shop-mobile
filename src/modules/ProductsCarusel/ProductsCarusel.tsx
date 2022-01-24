@@ -1,14 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, VirtualizedList } from "react-native";
 import Product from "../Product/Product";
 import { ProductTypeProps } from "../Product/Product";
-import styles from "../Product/styles";
-import useFetchProducts from "./useFetchProducts";
 import Placeholder from "../../components/Placeholder";
 import caruselStyles from "./caruselStyles";
-import { Colors } from "../../constants/styles";
 import { notEmpty } from "../../functions/typecheckers";
 import EmptyList from "./Info";
+import useFetchProducts from "./useFetchProducts";
+import axios from "axios";
 
 interface MostRecentProps {
   path: string;
@@ -29,10 +28,19 @@ export default function ProductsCarusel({
   refresh,
   center = false,
 }: MostRecentProps) {
-  const { loading, data, error, onSkip } = useFetchProducts<ProductTypeProps[]>(
-    `${path}?skip=0`,
-    [refresh]
-  );
+  const { loading, data, error, hasMore, FetchAllProducts } = useFetchProducts<
+    ProductTypeProps[]
+  >(`${path}?skip=0`, [refresh]);
+
+  const [skip, setSkip] = useState(5);
+
+  async function onSkip() {
+    if (hasMore) {
+      setSkip(skip + 5);
+      const cancelToken = axios.CancelToken.source();
+      await FetchAllProducts(`${path}?skip=${skip}`, cancelToken);
+    }
+  }
 
   if (!notEmpty(data) && loading) {
     return <Placeholder />;

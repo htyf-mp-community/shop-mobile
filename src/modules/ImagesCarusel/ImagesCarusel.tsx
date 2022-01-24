@@ -1,18 +1,10 @@
 import React, { useRef } from "react";
-import {
-  Animated,
-  Image,
-  StyleSheet,
-  Dimensions,
-  FlatList,
-  View,
-} from "react-native";
+import { Animated, Dimensions, FlatList, View } from "react-native";
 import { SharedElement } from "react-navigation-shared-element";
 import { ProductImageProps } from "../../@types/types";
 import { API } from "../../constants/routes";
 import Dots from "../../components/Dots/Dots";
-
-const { width: SCREEN_WIDTH } = Dimensions.get("screen");
+import CaruselItem from "./CaruselItem";
 
 interface ImagesCaruselProps {
   sharedID: string;
@@ -21,13 +13,7 @@ interface ImagesCaruselProps {
   image: string;
 }
 
-const styles = StyleSheet.create({
-  img: {
-    width: SCREEN_WIDTH,
-    height: 250,
-    zIndex: 1,
-  },
-});
+const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
 export default function ImagesCarusel({
   sharedID,
@@ -37,7 +23,7 @@ export default function ImagesCarusel({
 }: ImagesCaruselProps) {
   const scrollX = useRef(new Animated.Value(0)).current;
   return (
-    <View>
+    <>
       <FlatList
         horizontal
         pagingEnabled
@@ -53,21 +39,18 @@ export default function ImagesCarusel({
         renderItem={({ item }) => {
           if (item.id === 1) {
             return (
-              <SharedElement id={`prod_id.${prod_id}${sharedID}`} key={item.id}>
-                <Animated.Image
-                  source={{ uri: image }}
-                  style={[styles.img]}
-                  resizeMode="cover"
-                  resizeMethod="scale"
-                />
-              </SharedElement>
+              <CaruselItem
+                source={{ uri: image }}
+                key={item.id}
+                prod_id={prod_id}
+                sharedID={sharedID}
+              />
             );
           } else {
             return (
-              <Image
+              <CaruselItem
                 key={item.id}
                 source={{ uri: `${API}/upload/images=${item.name}` }}
-                style={styles.img}
               />
             );
           }
@@ -86,6 +69,6 @@ export default function ImagesCarusel({
       >
         <Dots arr={[...images, 1]} x={scrollX} />
       </View>
-    </View>
+    </>
   );
 }

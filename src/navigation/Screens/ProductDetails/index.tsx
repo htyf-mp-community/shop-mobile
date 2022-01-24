@@ -47,8 +47,7 @@ export default function ProductDetails({
 
   return (
     <View style={{ flex: 1, backgroundColor: Colors.primary }}>
-      <Animated.ScrollView
-        layout={Layout}
+      <ScrollView
         style={styles.container}
         showsHorizontalScrollIndicator={false}
         scrollEventThrottle={16}
@@ -71,7 +70,7 @@ export default function ProductDetails({
 
         {!loading && result && (
           <>
-            <ProductDetailsText result={result as ProductTypeProps} />
+            <ProductDetailsText {...result} />
             <ProductDetailsButtons
               thumbnail={image}
               prod_id={prod_id}
@@ -81,19 +80,24 @@ export default function ProductDetails({
             />
           </>
         )}
-
-        <PopUpCarusel />
-      </Animated.ScrollView>
+      </ScrollView>
       <Animated.View
         style={styles.buttonContainer}
         entering={SlideInDown}
         exiting={SlideInUp}
       >
         <AddToCart
+          disabled={result.quantity === 0}
           relative
           prod_id={result.prod_id}
           text="ADD TO CART"
-          style={styles.button}
+          style={[
+            styles.button,
+            {
+              backgroundColor:
+                result.quantity === 0 ? Colors.primary : "#1e3a8a",
+            },
+          ]}
         />
       </Animated.View>
     </View>

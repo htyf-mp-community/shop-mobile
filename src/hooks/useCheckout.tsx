@@ -6,9 +6,13 @@ import { API } from "../constants/routes";
 import { useStripe } from "@stripe/stripe-react-native";
 import { checkoutActions } from "../redux/Checkout";
 import { useAppDispatch, useAppSelector } from "./hooks";
+import { useNavigation } from "@react-navigation/native";
+import { useNavigationProps } from "../@types/types";
+import { notUndefined } from "../functions/typecheckers";
 
 interface useCheckoutProps {
   route: any;
+  redirect?: boolean;
 }
 
 interface PurchaseProps {
@@ -17,7 +21,10 @@ interface PurchaseProps {
   address: string;
 }
 
-export default function useCheckout({ route }: useCheckoutProps) {
+export default function useCheckout({
+  route,
+  redirect = false,
+}: useCheckoutProps) {
   const { cart, total } = route.params;
   const { user } = useUser();
   const { confirmPayment } = useStripe();
@@ -48,14 +55,18 @@ export default function useCheckout({ route }: useCheckoutProps) {
     getClientSecret();
   }, []);
 
+  const navigation = useNavigation<useNavigationProps>();
+
   async function Purchase({ address, name, surname }: PurchaseProps) {
-    dispatch(checkoutActions.toggleLoading());
+    dispatch(checkoutActions.startTransaction());
+    dispatch(checkoutActions.updateTransactionStatus());
     try {
       if (paymentIntentClientSecret) {
-        const { paymentIntent, error } = await confirmPayment(
+        const { error, paymentIntent } = await confirmPayment(
           paymentIntentClientSecret,
           {
             type: "Card",
+
             billingDetails: {
               email: user.name,
               name: `${name} ${surname}`,
@@ -64,9 +75,10 @@ export default function useCheckout({ route }: useCheckoutProps) {
           }
         );
 
-        if (!error) {
-          console.log(`[STRIPE] billed for ${paymentIntent.amount}`);
+        dispatch(checkoutActions.setCharged(paymentIntent?.amount));
 
+        if (!error) {
+          dispatch(checkoutActions.updateTransactionStatus());
           const response = await axios.post(
             `${API}/payments/purchase`,
             {
@@ -78,14 +90,20 @@ export default function useCheckout({ route }: useCheckoutProps) {
               },
             }
           );
-          if (response.data !== null) {
-            dispatch(checkoutActions.setResult("OK"));
-            dispatch(checkoutActions.toggleLoading());
+          if (response.data !== null && notUndefined(response.data)) {
+            dispatch(checkoutActions.updateTransactionStatus());
+            if (redirect) {
+              navigation.navigate("Home");
+            }
           }
+        } else {
+          console.warn(error);
+          dispatch(checkoutActions.failTransaction(error));
         }
       }
     } catch (error) {
-      dispatch(checkoutActions.toggleLoading());
+      console.warn(error);
+      dispatch(checkoutActions.failTransaction(error));
     }
   }
 

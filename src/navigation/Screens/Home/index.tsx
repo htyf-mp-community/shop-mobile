@@ -81,13 +81,6 @@ export default function Home() {
         >
           <Categories />
 
-          {/* <ProductsCarusel
-            path={ENDPOINTS.dailySale}
-            title="Today's discount"
-            sharedID="Promotion"
-            refresh={refresh}
-            center
-          /> */}
           <DailySale />
 
           <ProductsCarusel

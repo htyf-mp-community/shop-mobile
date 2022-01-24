@@ -28,6 +28,14 @@ export interface Product {
   category: string;
   img_id: ProductImageProps[];
   rating_id: ProductRatingProps[];
+  manufacturer: string;
+  vendor: {
+    id?: number;
+    email?: string;
+    name?: string;
+    surname?: string;
+  };
+  quantity: number;
 }
 
 export type UserType = {

@@ -1,9 +1,18 @@
 import { StackNavigationOptions } from "@react-navigation/stack";
+import { Platform } from "react-native";
 import { ScreenNavigationProps } from "../@types/types";
 import { Colors } from "../constants/styles";
 
+const HEADER = {
+  android: true,
+  ios: false,
+  windows: true,
+  macos: true,
+  web: false,
+};
+
 export const defaultStackOptions: StackNavigationOptions = {
-  headerShown: true,
+  headerShown: HEADER[Platform.OS],
   headerStyle: { backgroundColor: Colors.primary },
   headerTintColor: Colors.text,
 };
@@ -15,12 +24,14 @@ export const detailsScreenOptions = ({
   "route"
 >): StackNavigationOptions => ({
   ...defaultStackOptions,
-  headerTitle: route.params.title,
+  headerTitle: route.params.title.split("").slice(0, 25).join(""),
   headerTitleAlign: "center",
-  gestureEnabled: true,
-  gestureDirection: "vertical",
-  gestureResponseDistance: 100,
   presentation: "modal",
+  detachPreviousScreen: false,
+  transitionSpec: {
+    open: { animation: "timing", config: { duration: 200 } },
+    close: { animation: "timing", config: { duration: 200 } },
+  },
 });
 
 export const checkOutScreenOptions: StackNavigationOptions = {
