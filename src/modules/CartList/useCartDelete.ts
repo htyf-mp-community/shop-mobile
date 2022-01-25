@@ -1,10 +1,14 @@
-import React from "react";
 import axios from "axios";
 import { useUser } from "../../context/UserContext";
 import { API } from "../../constants/routes";
+import { useAppDispatch } from "../../hooks/hooks";
+import { cartActions } from "../../redux/Cart";
+import mode from "../../constants/settings";
 
-export default function useCartDelete(setDeleted: (e: any) => void) {
+export default function useCartDelete() {
   const { user } = useUser();
+
+  const dispatch = useAppDispatch();
 
   async function RemoveCartProduct(cart_id: number) {
     try {
@@ -18,10 +22,10 @@ export default function useCartDelete(setDeleted: (e: any) => void) {
       });
 
       if (data.status === "Deleted") {
-        setDeleted((deleted: number) => deleted + 1);
+        dispatch(cartActions.removeById(cart_id));
       }
     } catch (error) {
-      console.log(error);
+      mode === "dev" && console.warn(error);
     }
   }
 

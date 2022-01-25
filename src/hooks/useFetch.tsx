@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { API } from "../constants/routes";
 import { useUser } from "../context/UserContext";
+import { notUndefined } from "../functions/typecheckers";
 
 interface StateProps<T> {
   data: T;
@@ -12,7 +13,8 @@ interface StateProps<T> {
 export default function useFetch<T>(
   path: string,
   deps: any[] = [],
-  defaultValue?: any
+  defaultValue?: any,
+  setter?: (arg: any) => void
 ) {
   const [state, setState] = useState<StateProps<T>>({
     data: defaultValue,
@@ -34,11 +36,15 @@ export default function useFetch<T>(
           },
           cancelToken: cancelToken.token,
         });
-        setState({
-          loading: false,
-          data: data,
-          error: "",
-        });
+        if (notUndefined(setter)) {
+          setter?.(data);
+        } else {
+          setState({
+            loading: false,
+            data: data,
+            error: "",
+          });
+        }
       } catch (error: any) {
         if (!axios.isCancel(error)) {
           setState((p) => ({

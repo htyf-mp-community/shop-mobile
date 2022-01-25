@@ -66,47 +66,47 @@ export default function Product({
   const ElementWidth = fullSize ? SCREEN_WIDTH * 0.95 : SCREEN_WIDTH * 0.9;
 
   return (
-    <View
+    <TouchableOpacity
+      onPress={ShowMore}
+      activeOpacity={0.9}
       style={[
         styles.container,
         style,
         { width: fullSize ? SCREEN_WIDTH : SCREEN_WIDTH * 0.95 },
       ]}
     >
-      <TouchableOpacity onPress={ShowMore} activeOpacity={0.9}>
-        <View style={[styles.product, { width: ElementWidth }]}>
-          <SharedElement
-            id={`prod_id.${prod_id}${sharedID}`}
-            style={[styles.product, { width: ElementWidth }]}
-          >
-            <Image
-              source={{ uri: image }}
-              style={[styles.img]}
-              resizeMode="cover"
-            />
-          </SharedElement>
+      <View style={[styles.product, { width: ElementWidth }]}>
+        <SharedElement
+          id={`prod_id.${prod_id}${sharedID}`}
+          style={[styles.product, { width: ElementWidth }]}
+        >
+          <Image
+            source={{ uri: image }}
+            style={[styles.img]}
+            resizeMode="cover"
+          />
+        </SharedElement>
 
-          {!hide && (
-            <>
-              {route === "Cart" && (
-                <Button
-                  callback={deleteFn}
-                  style={[styles.button, { backgroundColor: "red" }]}
-                  icon={<Ionicons name="close" size={22} color={Colors.text} />}
-                />
-              )}
-
-              <AddToCart
-                refetch={RefetchCart}
-                prod_id={prod_id}
-                style={{ right: route === "Cart" ? 70 : 10 }}
+        {!hide && (
+          <>
+            {route === "Cart" && (
+              <Button
+                callback={deleteFn}
+                style={[styles.button, { backgroundColor: "red" }]}
+                icon={<Ionicons name="close" size={22} color={Colors.text} />}
               />
-            </>
-          )}
+            )}
 
-          <Text style={styles.info}>${price}</Text>
-        </View>
-      </TouchableOpacity>
-    </View>
+            <AddToCart
+              refetch={RefetchCart}
+              prod_id={prod_id}
+              style={{ right: route === "Cart" ? 70 : 10 }}
+            />
+          </>
+        )}
+
+        <Text style={styles.info}>${price}</Text>
+      </View>
+    </TouchableOpacity>
   );
 }

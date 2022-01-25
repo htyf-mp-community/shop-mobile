@@ -42,13 +42,6 @@ export const checkOutScreenOptions: StackNavigationOptions = {
   headerTitleAlign: "center",
 };
 
-export const cartScreenOptions: StackNavigationOptions = {
-  gestureEnabled: true,
-  gestureDirection: "vertical",
-  gestureResponseDistance: 200,
-  presentation: "modal",
-};
-
 export const horizontalAnimation: StackNavigationOptions = {
   cardStyleInterpolator: ({ current, layouts }) => {
     return {
@@ -64,4 +57,9 @@ export const horizontalAnimation: StackNavigationOptions = {
       },
     };
   },
+};
+
+export const cartScreenOptions: StackNavigationOptions = {
+  presentation: "modal",
+  ...horizontalAnimation,
 };
