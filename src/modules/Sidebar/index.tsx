@@ -1,73 +1,31 @@
 import { useNavigation } from "@react-navigation/core";
 import React from "react";
-import { View, Animated, StyleSheet, Dimensions } from "react-native";
+import { View, Dimensions } from "react-native";
 import Button from "../../components/Button/Button";
 import { Colors } from "../../constants/styles";
-
 import { AntDesign } from "@expo/vector-icons";
 import Avatar from "../User/Avatar/Avatar";
 import { useNavigationProps } from "../../@types/types";
+import Animated from "react-native-reanimated";
 
-const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
+import styles from "./styles";
 
 interface SidebarProps {
   children: React.ReactNode;
-  translateX: Animated.Value;
-  translateNavigation: Animated.Value;
+  animatedStyle: Animated.AnimateStyle<any>;
+  animatedButtons: Animated.AnimateStyle<any>;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.primary,
-  },
-  navigation: {
-    position: "absolute",
-    alignItems: "center",
-    justifyContent: "center",
-    width: WIDTH * 0.6,
-    height: HEIGHT * 0.8,
-  },
-  head: {
-    color: Colors.text,
-    fontSize: 50,
-    fontWeight: "bold",
-    fontFamily: "PoppinsBold",
-    marginBottom: 10,
-    marginTop: 50,
-  },
-  button: {
-    backgroundColor: Colors.primary100,
-    flexDirection: "row-reverse",
-    width: WIDTH * 0.5,
-    justifyContent: "center",
-    marginTop: 10,
-    padding: 20,
-    borderRadius: 10,
-  },
-});
 
 export default function Sidebar({
   children,
-  translateX,
-  translateNavigation,
+  animatedStyle,
+  animatedButtons,
 }: SidebarProps) {
-  const scale = translateX.interpolate({
-    inputRange: [0, WIDTH / 4],
-    outputRange: [1, 0.75],
-    extrapolate: "clamp",
-  });
-
   const navigation = useNavigation<useNavigationProps>();
 
   return (
     <View style={styles.container}>
-      <Animated.View
-        style={[
-          styles.navigation,
-          { transform: [{ translateX: translateNavigation }] },
-        ]}
-      >
+      <Animated.View style={[styles.navigation, animatedButtons]}>
         <Avatar
           hide={true}
           avatarStyles={{ backgroundColor: Colors.primary100 }}
@@ -90,30 +48,13 @@ export default function Sidebar({
               }
               style={styles.button}
               text={text}
-              /* @ts-ignore */
-              callback={() => navigation.navigate(text)}
+              onPress={() => navigation.navigate(text as any)}
             />
           );
         })}
       </Animated.View>
 
-      <Animated.View
-        style={[
-          {
-            transform: [{ translateX }, { scale }],
-            backgroundColor: Colors.primary,
-            shadowColor: "#000",
-            shadowOffset: {
-              width: 0,
-              height: 12,
-            },
-            shadowOpacity: 0.58,
-            shadowRadius: 16.0,
-            elevation: 24,
-            position: "relative",
-          },
-        ]}
-      >
+      <Animated.View style={[styles.sidebar, animatedStyle]}>
         {children}
       </Animated.View>
     </View>

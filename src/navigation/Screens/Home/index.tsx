@@ -1,12 +1,11 @@
 import {
-  Animated,
-  Easing,
+  Dimensions,
   RefreshControl,
   SafeAreaView,
   ScrollView,
   StyleSheet,
 } from "react-native";
-import React, { useRef } from "react";
+import React from "react";
 import { Colors } from "../../../constants/styles";
 import { useState } from "react";
 import ProductsCarusel from "../../../modules/ProductsCarusel/ProductsCarusel";
@@ -18,10 +17,17 @@ import Newsletter from "../../../components/Newsletter";
 import { wait } from "../../../functions/wait";
 import Header from "../../../modules/Header";
 import DailySale from "../../../modules/DailySale";
+import {
+  Extrapolate,
+  interpolate,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
+import { Gesture } from "react-native-gesture-handler";
+import { StatusBar } from "expo-status-bar";
 
-let isOpen = false;
-
-const DURATION = 250;
+const { width: WIDTH } = Dimensions.get("window");
 
 export default function Home() {
   const [refresh, setRefresh] = useState(false);
@@ -33,52 +39,56 @@ export default function Home() {
     });
   }, []);
 
-  const translateList = useRef(new Animated.Value(0)).current;
-  const translateNavigation = useRef(new Animated.Value(-200)).current;
+  const translateX = useSharedValue(0); // to -200
+  const isOpen = useSharedValue(false);
 
-  function ToggleSidebar() {
-    if (!isOpen) {
-      Animated.spring(translateList, {
-        toValue: 250,
-        useNativeDriver: true,
-      }).start();
-      Animated.timing(translateNavigation, {
-        toValue: 0,
-        duration: DURATION,
-        easing: Easing.inOut(Easing.ease),
-        useNativeDriver: true,
-      }).start();
+  const animatedStyle = useAnimatedStyle(() => {
+    const scale = interpolate(
+      translateX.value,
+      [0, WIDTH / 4],
+      [1, 0.75],
+      Extrapolate.CLAMP
+    );
+    return {
+      transform: [{ translateX: translateX.value }, { scale }],
+    };
+  }, []);
 
-      isOpen = true;
+  const animatedButtons = useAnimatedStyle(() => {
+    const translationX = interpolate(
+      translateX.value,
+      [0, WIDTH * 0.7],
+      [-300, 0]
+    );
+    return {
+      transform: [{ translateX: translationX }],
+    };
+  });
+  const start = useSharedValue(0);
+
+  function toggle() {
+    isOpen.value = !isOpen.value;
+    if (isOpen.value) {
+      translateX.value = withTiming(WIDTH * 0.7);
     } else {
-      Animated.timing(translateList, {
-        toValue: 0,
-        duration: DURATION,
-        useNativeDriver: true,
-      }).start();
-      Animated.timing(translateNavigation, {
-        toValue: -200,
-        duration: DURATION,
-        useNativeDriver: true,
-      }).start();
-
-      isOpen = false;
+      translateX.value = withTiming(0);
+      start.value = 0;
     }
   }
 
   return (
     <SafeAreaView style={styles.container}>
-      <Sidebar
-        translateX={translateList}
-        translateNavigation={translateNavigation}
-      >
-        <Header toggleSidebar={ToggleSidebar} />
+      <StatusBar animated backgroundColor={Colors.primary} translucent />
+      <Sidebar animatedStyle={animatedStyle} animatedButtons={animatedButtons}>
         <ScrollView
+          alwaysBounceVertical
+          stickyHeaderIndices={[0]}
           bounces={true}
           refreshControl={
             <RefreshControl onRefresh={onRefresh} refreshing={refresh} />
           }
         >
+          <Header toggleSidebar={toggle} />
           <Categories />
 
           <DailySale />

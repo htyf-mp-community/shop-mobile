@@ -21,7 +21,6 @@ export default function Checkout({
     initStripe({
       publishableKey:
         "pk_test_51KHt5OJFFDDymwGwp9gsCogqhxvzYvyo2wJsIAwSrPflIZjFZn2OtUhBbQAwt9SNek6Ol2e7QZUSh86NJyNByl2m00scfwXXjW",
-      merchantIdentifier: "merchant.identifier",
     });
   }, []);
 

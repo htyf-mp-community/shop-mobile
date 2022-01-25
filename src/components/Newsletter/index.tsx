@@ -17,7 +17,6 @@ export default function Newsletter() {
         alignItems: "center",
         backgroundColor: Colors.primary,
         marginTop: 10,
-        marginBottom: 60,
       }}
     >
       <Input

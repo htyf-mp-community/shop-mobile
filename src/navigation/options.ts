@@ -61,5 +61,4 @@ export const horizontalAnimation: StackNavigationOptions = {
 
 export const cartScreenOptions: StackNavigationOptions = {
   presentation: "modal",
-  ...horizontalAnimation,
 };
