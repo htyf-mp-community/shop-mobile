@@ -5,6 +5,7 @@ import { ProductImageProps } from "../../@types/types";
 import { API } from "../../constants/routes";
 import Dots from "../../components/Dots/Dots";
 import CaruselItem from "./CaruselItem";
+import { sortImages } from "../../functions/sortImages";
 
 interface ImagesCaruselProps {
   sharedID: string;
@@ -34,10 +35,10 @@ export default function ImagesCarusel({
             useNativeDriver: false,
           }
         )}
-        data={[{ name: image, id: 1 }, ...images]}
+        data={sortImages([{ name: image, id: 0 }, ...images])}
         keyExtractor={({ id }) => id.toString()}
         renderItem={({ item }) => {
-          if (item.id === 1) {
+          if (item.id === 0) {
             return (
               <CaruselItem
                 source={{ uri: image }}

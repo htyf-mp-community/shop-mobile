@@ -16,7 +16,6 @@ import { SharedElement } from "react-navigation-shared-element";
 import { Ionicons } from "@expo/vector-icons";
 import styles from "./styles";
 import { Colors } from "../../constants/styles";
-
 import * as Types from "../../@types/types";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
