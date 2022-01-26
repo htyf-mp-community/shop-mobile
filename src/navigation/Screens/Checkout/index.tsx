@@ -10,10 +10,10 @@ import { Colors } from "../../../constants/styles";
 import { AntDesign } from "@expo/vector-icons";
 import styles, { cardFieldStyles } from "./styles";
 import Modal from "./Modal";
+import PaymentMethods from "./PaymentMethods";
 
 export default function Checkout({
   route,
-  navigation,
 }: Required<ScreenNavigationProps<"Checkout">>) {
   const { purchase, result, total, loading } = useCheckout({ route });
 
@@ -27,6 +27,7 @@ export default function Checkout({
   return (
     <>
       <ScrollView style={[styles.container]}>
+        <PaymentMethods />
         <Formik
           initialValues={{
             name: "",
@@ -52,6 +53,7 @@ export default function Checkout({
                 placeholder="Name"
                 style={{
                   ...styles.input,
+                  borderWidth: 1,
                   borderColor: errors.name ? "#FF3030" : Colors.primary100,
                 }}
                 labelStyle={{
@@ -68,6 +70,7 @@ export default function Checkout({
                 placeholder="Surname"
                 style={{
                   ...styles.input,
+                  borderWidth: 1,
                   borderColor: errors.surname ? "#FF3030" : Colors.primary100,
                 }}
                 labelStyle={{
@@ -84,6 +87,7 @@ export default function Checkout({
                 placeholder="2780 Quincy Mountain Suite 162"
                 style={{
                   ...styles.input,
+                  borderWidth: 1,
                   borderColor: errors.address ? "#FF3030" : Colors.primary100,
                 }}
                 labelStyle={{

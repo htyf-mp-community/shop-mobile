@@ -5,9 +5,9 @@ import {
   UserType,
 } from "../@types/types";
 
-export const USER_PREFIX = "react-native-shop-user";
+import { setItemAsync, getItemAsync, deleteItemAsync } from "expo-secure-store";
 
-import * as SecureStore from "expo-secure-store";
+export const USER_PREFIX = "react-native-shop-user";
 
 export const init: UserType = {
   token: "",
@@ -31,10 +31,7 @@ export const UserContextProvider = ({ children }: UserContextProviderType) => {
 
   async function SaveUser(props: UserType) {
     try {
-      const value = await SecureStore.setItemAsync(
-        USER_PREFIX,
-        JSON.stringify(props)
-      );
+      const value = await setItemAsync(USER_PREFIX, JSON.stringify(props));
 
       if (value !== null) {
         setUser(props);
@@ -47,7 +44,7 @@ export const UserContextProvider = ({ children }: UserContextProviderType) => {
 
   async function ReadUser() {
     try {
-      const value = await SecureStore.getItemAsync(USER_PREFIX);
+      const value = await getItemAsync(USER_PREFIX);
 
       if (value !== null) {
         setUser(JSON.parse(value));
@@ -59,7 +56,7 @@ export const UserContextProvider = ({ children }: UserContextProviderType) => {
   }
 
   async function RemoveUser() {
-    await SecureStore.deleteItemAsync(USER_PREFIX);
+    await deleteItemAsync(USER_PREFIX);
     setUser(init);
   }
 

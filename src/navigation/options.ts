@@ -35,9 +35,6 @@ export const detailsScreenOptions = ({
 });
 
 export const checkOutScreenOptions: StackNavigationOptions = {
-  gestureEnabled: true,
-  gestureDirection: "vertical",
-  gestureResponseDistance: 200,
   presentation: "modal",
   headerTitleAlign: "center",
 };

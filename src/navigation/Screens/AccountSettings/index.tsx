@@ -1,51 +1,43 @@
-import axios from "axios";
-import React, { useState } from "react";
-import { View } from "react-native";
-import Button from "../../../components/Button/Button";
-import Input from "../../../components/Input/Input";
-import { Colors } from "../../../constants/styles";
+import React from "react";
+import { View, Text, TouchableOpacity } from "react-native";
+import { useSharedValue } from "react-native-reanimated";
+import AddressModal from "./Modals/Address";
+import styles from "./styles";
 
-async function changeEmail(token: string) {
-  try {
-    const {} = await axios.post("");
-  } catch (error) {}
-}
-async function changePassword(token: string) {
-  try {
-    const {} = await axios.post("");
-  } catch (error) {}
-}
+type ModalType = "Address" | "Personal Data" | "Delivery" | "";
 
 export default function AccountSettings() {
-  const [email, setEmail] = useState("");
-  return (
-    <View style={{ flex: 1, backgroundColor: Colors.primary }}>
-      <Input
-        keyboardType="email-address"
-        name="Change e-mail"
-        value={email}
-        setValue={setEmail}
-        placeholder={"New e-mail"}
-        placeholderColor="#fff"
-        style={{ color: "#fff" }}
-        labelStyle={{ color: "#fff" }}
-      />
-      <Input
-        keyboardType="email-address"
-        name="Repeat email"
-        value={email}
-        setValue={setEmail}
-        placeholder={"New e-mail"}
-        placeholderColor="#fff"
-        style={{ color: "#fff" }}
-        labelStyle={{ color: "#fff" }}
-      />
+  const modal = useSharedValue<ModalType>("");
 
-      <Button
-        text="CHANGE EMAIL"
-        style={{ margin: 20, padding: 15 }}
-        callback={async () => await changeEmail("")}
-      />
+  const onModal = (type: ModalType) => {
+    modal.value = type;
+  };
+
+  return (
+    <View style={styles.container}>
+      <TouchableOpacity
+        style={styles.card}
+        activeOpacity={0.8}
+        onPress={() => onModal("Address")}
+      >
+        <Text style={styles.cardText}>Address</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.card}
+        activeOpacity={0.8}
+        onPress={() => onModal("Personal Data")}
+      >
+        <Text style={styles.cardText}>Personal Data</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.card}
+        activeOpacity={0.8}
+        onPress={() => onModal("Delivery")}
+      >
+        <Text style={styles.cardText}>Delivery</Text>
+      </TouchableOpacity>
+
+      <AddressModal show={modal} />
     </View>
   );
 }
