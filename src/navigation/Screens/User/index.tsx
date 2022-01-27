@@ -1,23 +1,24 @@
 import React from "react";
-import { ScrollView, StyleSheet } from "react-native";
-import { Colors } from "../../../constants/styles";
+import { ScrollView } from "react-native";
 import Avatar from "../../../modules/User/Avatar/Avatar";
 import Settings from "../../../modules/User/Settings/Settings";
 import Button from "../../../components/Button/Button";
 import { ScreenNavigationProps } from "../../../@types/types";
+import useColorTheme from "../../../context/ThemeContext";
 
 export default function User({
   navigation,
 }: Required<ScreenNavigationProps<"User">>) {
+  const { theme } = useColorTheme();
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={{ flex: 1, backgroundColor: theme.primary }}>
       <Avatar />
 
       <Button
         text="PURCHASE HISTORY"
         style={{
           margin: 10,
-          backgroundColor: Colors.primary100,
+          backgroundColor: theme.primary100,
           padding: 15,
           marginTop: 20,
         }}
@@ -28,14 +29,14 @@ export default function User({
 
       <Button
         text="MY REVIEWS"
-        style={{ margin: 10, backgroundColor: Colors.primary100, padding: 15 }}
+        style={{ margin: 10, backgroundColor: theme.primary100, padding: 15 }}
         callback={() => {
           navigation.navigate("MyReviews");
         }}
       />
       <Button
         text="ACCOUNT SETTINGS"
-        style={{ margin: 10, backgroundColor: Colors.primary100, padding: 15 }}
+        style={{ margin: 10, backgroundColor: theme.primary100, padding: 15 }}
         callback={() => {
           navigation.navigate("AccountSettings");
         }}
@@ -44,10 +45,3 @@ export default function User({
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.primary,
-  },
-});

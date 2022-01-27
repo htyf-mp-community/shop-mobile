@@ -5,23 +5,17 @@ const RADIUS = 10;
 
 const styles = StyleSheet.create({
   text: {
-    color: "white",
     fontSize: 18,
-    backgroundColor: Colors.primary,
     fontFamily: "PoppinsMedium",
   },
   title: {
     fontSize: 25,
     fontFamily: "PoppinsBold",
-    borderBottomWidth: 1,
-    borderBottomColor: "#434655",
     paddingLeft: 10,
     padding: 15,
   },
   description: {
     fontSize: 17,
-    borderBottomWidth: 1,
-    borderBottomColor: "#434655",
     marginBottom: 20,
     paddingLeft: 15,
   },

@@ -4,6 +4,7 @@ import { View, Text, useWindowDimensions } from "react-native";
 import { Product, useNavigationProps } from "../../@types/types";
 import Button from "../../components/Button/Button";
 import { Colors } from "../../constants/styles";
+import useColorTheme from "../../context/ThemeContext";
 import { CalcTotalCartPrice } from "../../functions/CalcTotalCartPrice";
 
 interface IPurchaseProps {
@@ -21,6 +22,8 @@ export default function Purchase({ cart }: IPurchaseProps) {
 
   const disabled = cart.length === 0;
 
+  const { theme } = useColorTheme();
+
   return (
     <View
       style={{
@@ -28,7 +31,7 @@ export default function Purchase({ cart }: IPurchaseProps) {
         alignItems: "center",
         padding: 10,
         borderTopWidth: 1,
-        borderTopColor: Colors.primary100,
+        borderTopColor: theme.primary100,
       }}
     >
       <View
@@ -41,7 +44,7 @@ export default function Purchase({ cart }: IPurchaseProps) {
       >
         <Text
           style={{
-            color: Colors.text,
+            color: theme.text,
             fontSize: 20,
             fontFamily: "PoppinsRegular",
           }}
@@ -50,7 +53,7 @@ export default function Purchase({ cart }: IPurchaseProps) {
         </Text>
         <Text
           style={{
-            color: Colors.text,
+            color: theme.text,
             fontSize: 20,
             fontFamily: "PoppinsRegular",
           }}
@@ -63,7 +66,7 @@ export default function Purchase({ cart }: IPurchaseProps) {
         text={`Continue with $${totalPrice} `}
         callback={PurchaseProduct}
         style={{
-          backgroundColor: !disabled ? Colors.secondary : Colors.primary100,
+          backgroundColor: !disabled ? theme.secondary : theme.primary100,
           width: width * 0.9,
           justifyContent: "center",
           padding: 15,

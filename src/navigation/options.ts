@@ -1,7 +1,6 @@
 import { StackNavigationOptions } from "@react-navigation/stack";
 import { Platform } from "react-native";
 import { ScreenNavigationProps } from "../@types/types";
-import { Colors } from "../constants/styles";
 
 const HEADER = {
   android: true,
@@ -13,8 +12,6 @@ const HEADER = {
 
 export const defaultStackOptions: StackNavigationOptions = {
   headerShown: HEADER[Platform.OS],
-  headerStyle: { backgroundColor: Colors.primary },
-  headerTintColor: Colors.text,
 };
 
 export const detailsScreenOptions = ({

@@ -9,6 +9,7 @@ import { useNavigationProps } from "../../@types/types";
 import Animated from "react-native-reanimated";
 
 import styles from "./styles";
+import useColorTheme from "../../context/ThemeContext";
 
 interface SidebarProps {
   children: React.ReactNode;
@@ -23,12 +24,16 @@ export default function Sidebar({
 }: SidebarProps) {
   const navigation = useNavigation<useNavigationProps>();
 
+  const { theme } = useColorTheme();
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.primary }]}>
       <Animated.View style={[styles.navigation, animatedButtons]}>
         <Avatar
           hide={true}
-          avatarStyles={{ backgroundColor: Colors.primary100 }}
+          avatarStyles={{
+            backgroundColor: theme.primary100,
+          }}
         />
         {[
           { text: "Cart", icon: "shoppingcart" },
@@ -43,10 +48,11 @@ export default function Sidebar({
                   name={icon}
                   style={{ marginRight: 10 }}
                   size={30}
-                  color={Colors.text}
+                  color={theme.text}
                 />
               }
-              style={styles.button}
+              style={[styles.button, { backgroundColor: theme.primary100 }]}
+              fontStyle={{ color: theme.text }}
               text={text}
               onPress={() => navigation.navigate(text as any)}
             />
@@ -54,7 +60,13 @@ export default function Sidebar({
         })}
       </Animated.View>
 
-      <Animated.View style={[styles.sidebar, animatedStyle]}>
+      <Animated.View
+        style={[
+          styles.sidebar,
+          animatedStyle,
+          { backgroundColor: theme.primary },
+        ]}
+      >
         {children}
       </Animated.View>
     </View>

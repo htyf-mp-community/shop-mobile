@@ -11,17 +11,12 @@ import {
   ScreenNavigationProps,
 } from "../../../@types/types";
 import { wait } from "../../../functions/wait";
-import { ProductTypeProps } from "../../../modules/Product/Product";
-import PopUpCarusel from "../../../modules/PopUpCarusel";
 import ProductLoader from "./loader";
 import AddToCart from "../../../modules/AddToCart/AddToCart";
 import styles from "./styles";
-import Animated, {
-  SlideInDown,
-  SlideInUp,
-  Layout,
-} from "react-native-reanimated";
+import Animated, { SlideInDown, SlideInUp } from "react-native-reanimated";
 import { Colors } from "../../../constants/styles";
+import useColorTheme from "../../../context/ThemeContext";
 
 export default function ProductDetails({
   route,
@@ -45,10 +40,12 @@ export default function ProductDetails({
   const imgList = result?.img_id as ProductImageProps[];
   const images = imgList?.length > 1 ? imgList.splice(1, imgList.length) : [];
 
+  const { theme } = useColorTheme();
+
   return (
-    <View style={{ flex: 1, backgroundColor: Colors.primary }}>
+    <View style={{ flex: 1, backgroundColor: theme.primary }}>
       <ScrollView
-        style={styles.container}
+        style={[styles.container, { backgroundColor: theme.primary }]}
         showsHorizontalScrollIndicator={false}
         scrollEventThrottle={16}
         showsVerticalScrollIndicator={false}
@@ -82,7 +79,7 @@ export default function ProductDetails({
         )}
       </ScrollView>
       <Animated.View
-        style={styles.buttonContainer}
+        style={[styles.buttonContainer, { backgroundColor: theme.primary }]}
         entering={SlideInDown}
         exiting={SlideInUp}
       >
@@ -95,7 +92,7 @@ export default function ProductDetails({
             styles.button,
             {
               backgroundColor:
-                result.quantity === 0 ? Colors.primary : "#1e3a8a",
+                result.quantity === 0 ? theme.primary : "#1e3a8a",
             },
           ]}
         />

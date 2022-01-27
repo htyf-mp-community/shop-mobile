@@ -3,6 +3,10 @@ import React from "react";
 import { render } from "@testing-library/react-native";
 import Available from "../../components/AvailableProduct/index";
 
+jest.mock("@react-native-async-storage/async-storage", () => ({
+  AsyncStorageLib: jest.fn(),
+}));
+
 describe("Available Component", () => {
   test("It has green color AND text if product is in stock", async () => {
     const { queryByText, getByTestId } = render(<Available quantity={10} />);
@@ -13,7 +17,7 @@ describe("Available Component", () => {
     });
 
     expect(getByTestId("TEXT.STATUS")).toHaveStyle({
-      color: "white",
+      color: "#fff",
     });
   });
   test("It has red color AND text if product is OUT of stock", () => {

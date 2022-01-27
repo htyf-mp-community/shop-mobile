@@ -4,8 +4,6 @@ import Product, { ProductTypeProps } from "../Product/Product";
 import { Text } from "react-native";
 import useCartDelete from "./useCartDelete";
 import text from "./styles";
-import Animated, { FadeIn, FadeOut, Layout } from "react-native-reanimated";
-import { ScrollView } from "react-native-gesture-handler";
 
 interface CartProps extends ProductTypeProps {
   cart_id: number;
@@ -26,13 +24,19 @@ export default function CartList({ updateCartState, data }: CartListProps) {
   // Higher Performance
   return (
     <VirtualizedList
+      testID="CART.LIST"
       showsVerticalScrollIndicator={false}
       getItem={getItem}
+      initialNumToRender={3}
       getItemCount={(data) => data.length}
       keyExtractor={({ prod_id }) => prod_id.toString()}
       data={data}
       renderItem={({ item }) => (
-        <View style={{ position: "relative" }}>
+        <View
+          style={{ position: "relative" }}
+          testID="CART.ELEMENT"
+          accessibilityLabel="Item"
+        >
           <Product
             route="Cart"
             deleteFn={() => removeCartProduct(item.cart_id)}

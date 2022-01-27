@@ -3,9 +3,12 @@ interface AvailableProps {
   styles?: StyleProp<ViewStyle>;
 }
 import { View, Text, StyleProp, ViewStyle } from "react-native";
+import useColorTheme from "../../context/ThemeContext";
 
 export default function Available({ quantity, styles }: AvailableProps) {
   const isInStock = quantity > 0;
+
+  const { theme } = useColorTheme();
 
   return (
     <View
@@ -32,7 +35,7 @@ export default function Available({ quantity, styles }: AvailableProps) {
         }}
       />
       <Text
-        style={{ marginLeft: 5, color: isInStock ? "white" : "red" }}
+        style={{ marginLeft: 5, color: isInStock ? theme.text : "red" }}
         testID="TEXT.STATUS"
       >
         {isInStock ? "Available" : "Not Available"}

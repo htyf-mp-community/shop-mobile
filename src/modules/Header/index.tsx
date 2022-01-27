@@ -6,6 +6,7 @@ import { Colors } from "../../constants/styles";
 import { MaterialIcons } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 import { useNavigationProps } from "../../@types/types";
+import useColorTheme from "../../context/ThemeContext";
 
 interface SearchBarProps {
   toggleSidebar: () => void;
@@ -14,10 +15,12 @@ interface SearchBarProps {
 export default function Header({ toggleSidebar }: SearchBarProps) {
   const navigation = useNavigation<useNavigationProps>();
 
+  const { theme } = useColorTheme();
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.primary }]}>
       <Button
-        icon={<EvilIcons name="navicon" size={30} color="white" />}
+        icon={<EvilIcons name="navicon" size={30} color={theme.text} />}
         callback={toggleSidebar}
         style={{ margin: 5, backgroundColor: "transparent" }}
       />
@@ -25,7 +28,7 @@ export default function Header({ toggleSidebar }: SearchBarProps) {
       <Button
         callback={() => navigation.navigate("Search")}
         style={{ margin: 5, backgroundColor: "transparent" }}
-        icon={<MaterialIcons name="search" size={25} color={Colors.text} />}
+        icon={<MaterialIcons name="search" size={25} color={theme.text} />}
       />
     </View>
   );
@@ -33,7 +36,6 @@ export default function Header({ toggleSidebar }: SearchBarProps) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.primary,
     flexDirection: "row",
     alignItems: "center",
     zIndex: 10,

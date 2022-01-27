@@ -6,7 +6,6 @@ const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.primary,
   },
   navigation: {
     position: "absolute",
@@ -24,7 +23,6 @@ const styles = StyleSheet.create({
     marginTop: 50,
   },
   button: {
-    backgroundColor: Colors.primary100,
     flexDirection: "row-reverse",
     width: WIDTH * 0.5,
     justifyContent: "center",
@@ -33,7 +31,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   sidebar: {
-    backgroundColor: Colors.primary,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,

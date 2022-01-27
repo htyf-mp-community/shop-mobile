@@ -26,6 +26,7 @@ import {
 } from "react-native-reanimated";
 import { Gesture } from "react-native-gesture-handler";
 import { StatusBar } from "expo-status-bar";
+import useColorTheme from "../../../context/ThemeContext";
 
 const { width: WIDTH } = Dimensions.get("window");
 
@@ -76,9 +77,10 @@ export default function Home() {
     }
   }
 
+  const { theme } = useColorTheme();
+
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar animated backgroundColor={Colors.primary} translucent />
+    <SafeAreaView style={{ backgroundColor: theme.primary, flex: 1 }}>
       <Sidebar animatedStyle={animatedStyle} animatedButtons={animatedButtons}>
         <ScrollView
           alwaysBounceVertical
@@ -119,15 +121,3 @@ export default function Home() {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.primary,
-  },
-  text: {
-    color: "white",
-    fontFamily: "PoppinsRegular",
-    padding: 20,
-  },
-});

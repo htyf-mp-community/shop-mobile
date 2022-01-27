@@ -7,6 +7,7 @@ import Input from "../../../components/Input/Input";
 import Suggestion from "../../../components/Suggestion";
 import { API } from "../../../constants/routes";
 import { Colors } from "../../../constants/styles";
+import useColorTheme from "../../../context/ThemeContext";
 import { useUser } from "../../../context/UserContext";
 
 export default function SearchScreen() {
@@ -51,12 +52,14 @@ export default function SearchScreen() {
 
   const navigation = useNavigation<useNavigationProps>();
 
+  const { theme } = useColorTheme();
+
   return (
     <View
       style={{
         flex: 1,
         alignItems: "center",
-        backgroundColor: Colors.primary,
+        backgroundColor: theme.primary,
       }}
     >
       <Input

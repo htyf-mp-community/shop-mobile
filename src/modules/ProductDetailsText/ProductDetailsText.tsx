@@ -4,6 +4,7 @@ import { Available, Avatar } from "../../components";
 import styles from "./productDetailsStyle";
 import { Product } from "../../@types/types";
 import Delivery from "../Delivery";
+import useColorTheme from "../../context/ThemeContext";
 
 export default function ProductDetailsText({
   title,
@@ -11,9 +12,12 @@ export default function ProductDetailsText({
   quantity,
   price,
 }: Product) {
+  const { theme } = useColorTheme();
   return (
     <>
-      <Text style={[styles.text, styles.title]}>{title}</Text>
+      <Text style={[styles.text, styles.title, { color: theme.text }]}>
+        {title}
+      </Text>
 
       <View style={[styles.container]}>
         <Avatar url={require("../../assets/notfound.png")} />
@@ -23,7 +27,13 @@ export default function ProductDetailsText({
         <Text style={styles.price}>${price}</Text>
       </View>
 
-      <Text style={[styles.text, styles.description, { marginTop: 15 }]}>
+      <Text
+        style={[
+          styles.text,
+          styles.description,
+          { marginTop: 15, color: theme.text },
+        ]}
+      >
         {description}
       </Text>
     </>

@@ -1,20 +1,21 @@
 import React from "react";
 import { createSharedElementStackNavigator } from "react-navigation-shared-element";
 import { RootStackParams } from "../../../@types/types";
-import { Colors } from "../../../constants/styles";
+import useColorTheme from "../../../context/ThemeContext";
 import LoginScreen from "./Login";
 import RegisterScreen from "./Register";
 
 const Stack = createSharedElementStackNavigator<RootStackParams>();
 
 export default function Auth() {
+  const { theme } = useColorTheme();
   return (
     <Stack.Navigator
       screenOptions={{
         presentation: "modal",
         headerTitle: "",
         headerStyle: {
-          backgroundColor: Colors.primary,
+          backgroundColor: theme.primary,
         },
       }}
     >

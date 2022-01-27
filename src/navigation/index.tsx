@@ -51,15 +51,19 @@ export default function MainNavigator(): JSX.Element {
     }
   }, [expoPushToken]);
 
-  const theme = useColorTheme();
+  const { theme, current } = useColorTheme();
 
   return (
     <>
       <StatusBar backgroundColor={theme.primary} />
-      <NavigationContainer theme={DarkTheme}>
+      <NavigationContainer theme={current === "dark" ? DarkTheme : undefined}>
         <Stack.Navigator
           initialRouteName="Landing"
-          screenOptions={defaultStackOptions}
+          screenOptions={{
+            ...defaultStackOptions,
+            headerStyle: { backgroundColor: theme.primary },
+            headerTintColor: theme.text,
+          }}
         >
           {isLoggedIn ? (
             <>

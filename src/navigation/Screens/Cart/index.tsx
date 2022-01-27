@@ -1,6 +1,5 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
-import { Colors } from "../../../constants/styles";
+import { View } from "react-native";
 import { ProductTypeProps } from "../../../modules/Product/Product";
 import { useIsFocused } from "@react-navigation/native";
 import Purchase from "../../../modules/Purchase/Purchase";
@@ -8,13 +7,7 @@ import useFetch from "../../../hooks/useFetch";
 import CartList from "../../../modules/CartList";
 import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
 import { cartActions } from "../../../redux/Cart";
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.primary,
-  },
-});
+import useColorTheme from "../../../context/ThemeContext";
 
 export default function Cart() {
   const isFocused = useIsFocused();
@@ -29,8 +22,10 @@ export default function Cart() {
     dispatch(cartActions.incrementAmmount(id));
   }
 
+  const { theme } = useColorTheme();
+
   return (
-    <View style={styles.container}>
+    <View style={{ flex: 1, backgroundColor: theme.primary }}>
       <CartList updateCartState={updateCartState} data={cart} />
       <Purchase cart={cart} />
     </View>

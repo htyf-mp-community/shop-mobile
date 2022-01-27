@@ -6,13 +6,11 @@ const { width, height } = Dimensions.get("window");
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.primary,
     alignItems: "center",
   },
   card: {
     width: width - 20,
     height: 100,
-    backgroundColor: Colors.primary100,
     borderRadius: 5,
     justifyContent: "center",
     alignItems: "center",
@@ -24,7 +22,6 @@ export default StyleSheet.create({
   },
   innerAddressModal: {
     position: "absolute",
-    backgroundColor: Colors.primary,
     width,
     height: height * 0.9,
     bottom: 0,

@@ -5,17 +5,20 @@ import Input from "../Input/Input";
 
 import { Feather } from "@expo/vector-icons";
 import { Colors } from "../../constants/styles";
+import useColorTheme from "../../context/ThemeContext";
 
 export default function Newsletter() {
   const { width } = useWindowDimensions();
   const [email, setEmail] = useState("");
+
+  const { theme } = useColorTheme();
   return (
     <View
       style={{
         height: 100,
         flexDirection: "row",
         alignItems: "center",
-        backgroundColor: Colors.primary,
+        backgroundColor: theme.primary,
         marginTop: 10,
       }}
     >

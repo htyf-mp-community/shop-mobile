@@ -6,13 +6,11 @@ const { width, height } = Dimensions.get("window");
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.primary,
     height: height * 0.9,
   },
   buttonContainer: {
     width,
     padding: 10,
-    backgroundColor: Colors.primary,
     height: height * 0.1,
   },
   button: {
