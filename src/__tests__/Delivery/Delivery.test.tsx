@@ -1,9 +1,13 @@
 import "@testing-library/jest-native/extend-expect";
-import React from "react";
-import { render, waitFor } from "@testing-library/react-native";
+import { render } from "@testing-library/react-native";
 import Delivery from "../../modules/Delivery";
-import { View } from "react-native";
+
+jest.mock("../../modules/Delivery", () => () => "Delivery");
 
 describe("Delivery", () => {
-  test("It renders", () => {});
+  test("It renders", () => {
+    const { queryByText } = render(<Delivery />);
+
+    queryByText(/24h/);
+  });
 });

@@ -29,6 +29,15 @@ const cartSlice = createSlice({
       state.loading = true;
     },
 
+    incrementAmmount(state, { payload }) {
+      state.cart = state.cart.map((prod) => {
+        if (prod.prod_id === payload) {
+          return { ...prod, ammount: prod.ammount + 1 };
+        }
+        return prod;
+      });
+    },
+
     removeById(state, { payload }: { payload: number }) {
       const cart = [];
 
@@ -41,6 +50,7 @@ const cartSlice = createSlice({
           continue;
         }
       }
+
       state.cart = cart;
     },
   },

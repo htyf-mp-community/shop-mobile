@@ -26,7 +26,7 @@ export type ProductTypeProps = Types.Product & {
   sharedID?: string;
   hide?: boolean;
   ammount: number;
-  RefetchCart?: () => void;
+  RefetchCart?: (id: number) => void;
   style?: StyleProp<ViewStyle>;
   fullSize?: boolean;
   discounted_price?: null | undefined | number;
@@ -98,7 +98,7 @@ export default function Product({
             )}
 
             <AddToCart
-              refetch={RefetchCart}
+              refetch={() => RefetchCart?.(prod_id!)}
               prod_id={prod_id}
               style={{ right: route === "Cart" ? 70 : 10 }}
             />

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View, StyleSheet, Dimensions } from "react-native";
+import React from "react";
+import { View, StyleSheet } from "react-native";
 import { Colors } from "../../../constants/styles";
 import { ProductTypeProps } from "../../../modules/Product/Product";
 import { useIsFocused } from "@react-navigation/native";
@@ -18,16 +18,20 @@ const styles = StyleSheet.create({
 
 export default function Cart() {
   const isFocused = useIsFocused();
-  const [refetch, setRefetch] = useState(0);
   const dispatch = useAppDispatch();
   const { cart } = useAppSelector((state) => state.cart);
 
-  useFetch<ProductTypeProps[]>("/cart", [isFocused, refetch], [], (state) => {
+  useFetch<ProductTypeProps[]>("/cart", [isFocused], [], (state) => {
     dispatch(cartActions.setCart(state));
   });
+
+  function updateCartState(id: number) {
+    dispatch(cartActions.incrementAmmount(id));
+  }
+
   return (
     <View style={styles.container}>
-      <CartList setRefetch={setRefetch} data={cart} />
+      <CartList updateCartState={updateCartState} data={cart} />
       <Purchase cart={cart} />
     </View>
   );

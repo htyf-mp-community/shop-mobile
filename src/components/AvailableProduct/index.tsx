@@ -23,6 +23,7 @@ export default function Available({ quantity, styles }: AvailableProps) {
       ]}
     >
       <View
+        testID="STATUS.INDICATOR"
         style={{
           width: 10,
           height: 10,
@@ -30,7 +31,10 @@ export default function Available({ quantity, styles }: AvailableProps) {
           borderRadius: 10,
         }}
       />
-      <Text style={{ marginLeft: 5, color: isInStock ? "white" : "red" }}>
+      <Text
+        style={{ marginLeft: 5, color: isInStock ? "white" : "red" }}
+        testID="TEXT.STATUS"
+      >
         {isInStock ? "Available" : "Not Available"}
       </Text>
     </View>

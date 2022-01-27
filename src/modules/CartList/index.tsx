@@ -12,7 +12,7 @@ interface CartProps extends ProductTypeProps {
 }
 
 interface CartListProps {
-  setRefetch: (value: any) => void;
+  updateCartState: (id: number) => void;
   data: CartProps[];
 }
 
@@ -20,12 +20,8 @@ const getItem = (data: CartProps[], key: number) => {
   return data[key];
 };
 
-export default function CartList({ setRefetch, data }: CartListProps) {
+export default function CartList({ updateCartState, data }: CartListProps) {
   const removeCartProduct = useCartDelete();
-
-  const RefreshCart = () => {
-    setRefetch((refetch: number) => refetch + 1);
-  };
 
   // Higher Performance
   return (
@@ -36,17 +32,12 @@ export default function CartList({ setRefetch, data }: CartListProps) {
       keyExtractor={({ prod_id }) => prod_id.toString()}
       data={data}
       renderItem={({ item }) => (
-        <View
-          style={{ position: "relative" }}
-          /*  layout={Layout.delay(200)}
-          entering={FadeIn}
-          exiting={FadeOut} */
-        >
+        <View style={{ position: "relative" }}>
           <Product
             route="Cart"
             deleteFn={() => removeCartProduct(item.cart_id)}
             sharedID="CartItems"
-            RefetchCart={RefreshCart}
+            RefetchCart={updateCartState}
             fullSize
             {...item}
           />
