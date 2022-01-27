@@ -10,3 +10,4 @@ export { default as Suggestion } from "./Suggestion/index";
 export { default as LandingIcon } from "./LandingIcon/index";
 export { default as Avatar } from "./Avatar/index";
 export { default as Available } from "./AvailableProduct/index";
+export { default as SkeletonPlaceholder } from "./Skeleton/index";

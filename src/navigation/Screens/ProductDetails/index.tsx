@@ -1,5 +1,10 @@
 import React from "react";
-import { ScrollView, RefreshControl, View } from "react-native";
+import {
+  ScrollView,
+  RefreshControl,
+  View,
+  useWindowDimensions,
+} from "react-native";
 import ImagesCarusel from "../../../modules/ImagesCarusel/ImagesCarusel";
 import ProductDetailsText from "../../../modules/ProductDetailsText/ProductDetailsText";
 import ProductDetailsButtons from "../../../modules/ProductDetailsButtons/ProductDetailsButtons";
@@ -11,12 +16,11 @@ import {
   ScreenNavigationProps,
 } from "../../../@types/types";
 import { wait } from "../../../functions/wait";
-import ProductLoader from "./loader";
 import AddToCart from "../../../modules/AddToCart/AddToCart";
 import styles from "./styles";
 import Animated, { SlideInDown, SlideInUp } from "react-native-reanimated";
-import { Colors } from "../../../constants/styles";
 import useColorTheme from "../../../context/ThemeContext";
+import { SkeletonPlaceholder } from "../../../components";
 
 export default function ProductDetails({
   route,
@@ -42,6 +46,8 @@ export default function ProductDetails({
 
   const { theme } = useColorTheme();
 
+  const { width, height } = useWindowDimensions();
+
   return (
     <View style={{ flex: 1, backgroundColor: theme.primary }}>
       <ScrollView
@@ -62,7 +68,17 @@ export default function ProductDetails({
         />
 
         {loading && typeof result.prod_id === "undefined" && (
-          <ProductLoader loading={loading} />
+          <SkeletonPlaceholder
+            size={{ width, height: 420 }}
+            backgroundColor={"#1f2b3d"}
+            highlightColor={"#2a3a52"}
+          >
+            <View style={{ width, alignItems: "center" }}>
+              <SkeletonPlaceholder.Item height={60} width={width - 20} />
+              <SkeletonPlaceholder.Item height={60} width={width - 20} />
+              <SkeletonPlaceholder.Item height={260} width={width - 20} />
+            </View>
+          </SkeletonPlaceholder>
         )}
 
         {!loading && result && (

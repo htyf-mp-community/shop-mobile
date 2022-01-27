@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { useSharedValue } from "react-native-reanimated";
+import Skeleton from "../../../components/Skeleton";
 import useColorTheme from "../../../context/ThemeContext";
 import AddressModal from "./Modals/Address";
 import styles from "./styles";

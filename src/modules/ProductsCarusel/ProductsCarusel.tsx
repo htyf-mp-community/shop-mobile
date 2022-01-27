@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { View, Text, VirtualizedList } from "react-native";
+import { View, Text, VirtualizedList, useWindowDimensions } from "react-native";
 import Product from "../Product/Product";
 import { ProductTypeProps } from "../Product/Product";
-import Placeholder from "../../components/Placeholder";
 import caruselStyles from "./caruselStyles";
 import { notEmpty } from "../../functions/typecheckers";
 import EmptyList from "./Info";
 import useFetchProducts from "./useFetchProducts";
 import axios from "axios";
+import { SkeletonPlaceholder } from "../../components";
 
 interface MostRecentProps {
   path: string;
@@ -32,6 +32,8 @@ export default function ProductsCarusel({
     ProductTypeProps[]
   >(`${path}?skip=0`, [refresh]);
 
+  const { width, height } = useWindowDimensions();
+
   const [skip, setSkip] = useState(5);
 
   async function onSkip() {
@@ -43,7 +45,21 @@ export default function ProductsCarusel({
   }
 
   if (!notEmpty(data) && loading) {
-    return <Placeholder />;
+    return (
+      <View style={caruselStyles.container}>
+        <Text style={[caruselStyles.title]}>{title}</Text>
+
+        <SkeletonPlaceholder
+          backgroundColor={"#1f2b3d"}
+          highlightColor={"#2a3a52"}
+          size={{ width, height: 250 }}
+        >
+          <View style={{ width, height: 250, alignItems: "center" }}>
+            <SkeletonPlaceholder.Item height={250} width={width - 20} />
+          </View>
+        </SkeletonPlaceholder>
+      </View>
+    );
   }
 
   return (

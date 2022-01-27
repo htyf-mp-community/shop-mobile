@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, useWindowDimensions } from "react-native";
 import { SharedElement } from "react-navigation-shared-element";
 import useFetch from "../../hooks/useFetch";
 import { ProductTypeProps } from "../Product/Product";
@@ -12,6 +12,7 @@ import AddToCart from "../AddToCart/AddToCart";
 import Placeholder from "../../components/Placeholder";
 
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
+import { SkeletonPlaceholder } from "../../components";
 
 interface DailySaleProps {}
 
@@ -32,6 +33,8 @@ export default function DailySale({}: DailySaleProps) {
   }
 
   const isFocused = useIsFocused();
+
+  const { width, height } = useWindowDimensions();
 
   return (
     <View style={[dailyStyle.container]}>
@@ -69,7 +72,21 @@ export default function DailySale({}: DailySaleProps) {
           )}
         </View>
       )}
-      {loading && <Placeholder />}
+      {loading && (
+        <SkeletonPlaceholder
+          backgroundColor={"#1f2b3d"}
+          highlightColor={"#2a3a52"}
+          size={{ width, height: 300 }}
+        >
+          <View style={{ width, height: 300, alignItems: "center" }}>
+            <SkeletonPlaceholder.Item
+              height={250}
+              width={width - 20}
+              margin={0}
+            />
+          </View>
+        </SkeletonPlaceholder>
+      )}
     </View>
   );
 }

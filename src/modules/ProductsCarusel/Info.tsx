@@ -1,6 +1,6 @@
 import caruselStyles from "./caruselStyles";
 import { Colors } from "../../constants/styles";
-import { View, Text } from "react-native";
+import { View, Text, useWindowDimensions } from "react-native";
 import styles from "../Product/styles";
 
 export default function EmptyList({
@@ -10,9 +10,10 @@ export default function EmptyList({
   variant: "empty" | "error";
   error?: string;
 }) {
+  const { width } = useWindowDimensions();
   if (variant === "error") {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, { width: width - 20 }]}>
         <View
           style={[
             styles.product,
