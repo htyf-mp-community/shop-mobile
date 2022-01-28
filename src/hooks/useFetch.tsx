@@ -14,7 +14,7 @@ export default function useFetch<T>(
   path: string,
   deps: any[] = [],
   defaultValue?: any,
-  setter?: (arg: any) => void
+  setter?: (arg: T) => void
 ) {
   const [state, setState] = useState<StateProps<T>>({
     data: defaultValue,

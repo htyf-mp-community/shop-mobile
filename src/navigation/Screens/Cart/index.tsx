@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
 import { cartActions } from "../../../redux/Cart";
 import useColorTheme from "../../../context/ThemeContext";
 import { SkeletonPlaceholder } from "../../../components";
+import { notEmpty } from "../../../functions/typecheckers";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -17,7 +18,7 @@ export default function Cart() {
   const dispatch = useAppDispatch();
   const { cart } = useAppSelector((state) => state.cart);
 
-  const { loading } = useFetch<ProductTypeProps[]>(
+  const { loading, data } = useFetch<ProductTypeProps[]>(
     "/cart",
     [isFocused],
     [],
@@ -34,20 +35,22 @@ export default function Cart() {
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.primary }}>
-      <SkeletonPlaceholder
-        backgroundColor={"#1f2b3d"}
-        highlightColor={"#2a3a52"}
-        size={{ width, height }}
-      >
-        <FlatList
-          contentContainerStyle={{ alignItems: "center" }}
-          data={new Array(3).fill({})}
-          keyExtractor={(_, i) => i.toString()}
-          renderItem={() => (
-            <SkeletonPlaceholder.Item height={240} width={width - 20} />
-          )}
-        />
-      </SkeletonPlaceholder>
+      {loading && notEmpty(data) && (
+        <SkeletonPlaceholder
+          backgroundColor={"#1f2b3d"}
+          highlightColor={"#2a3a52"}
+          size={{ width, height }}
+        >
+          <FlatList
+            contentContainerStyle={{ alignItems: "center" }}
+            data={new Array(3).fill({})}
+            keyExtractor={(_, i) => i.toString()}
+            renderItem={() => (
+              <SkeletonPlaceholder.Item height={240} width={width - 20} />
+            )}
+          />
+        </SkeletonPlaceholder>
+      )}
 
       <CartList updateCartState={updateCartState} data={cart} />
 

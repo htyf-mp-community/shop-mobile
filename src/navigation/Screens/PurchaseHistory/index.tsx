@@ -1,12 +1,13 @@
 import { useIsFocused } from "@react-navigation/native";
 import React, { useMemo, useState } from "react";
-import { View, Text, FlatList } from "react-native";
+import { View, Text, FlatList, useWindowDimensions } from "react-native";
 import { Colors } from "../../../constants/styles";
 import { HistoryResponse } from "../../../@types/types";
 import useFetch from "../../../hooks/useFetch";
 import Product from "../../../modules/Product/Product";
 import { structureOutput } from "./structure";
 import Placeholder from "../../../components/Placeholder";
+import { SkeletonPlaceholder } from "../../../components";
 
 export default function PurchaseHistory() {
   const isFocused = useIsFocused();
@@ -19,10 +20,25 @@ export default function PurchaseHistory() {
 
   const result = useMemo(() => structureOutput(data), [data]);
 
+  const { width, height } = useWindowDimensions();
+
   return (
     <View style={{ flex: 1, backgroundColor: Colors.primary }}>
       {loading && typeof data.results === "undefined" && (
-        <Placeholder loading ammount={3} />
+        <SkeletonPlaceholder
+          backgroundColor={"#1f2b3d"}
+          highlightColor={"#2a3a52"}
+          size={{ width, height }}
+        >
+          <FlatList
+            contentContainerStyle={{ alignItems: "center" }}
+            data={new Array(3).fill({})}
+            keyExtractor={(_, i) => i.toString()}
+            renderItem={() => (
+              <SkeletonPlaceholder.Item height={240} width={width - 20} />
+            )}
+          />
+        </SkeletonPlaceholder>
       )}
       <FlatList
         data={result}

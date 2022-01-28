@@ -1,21 +1,15 @@
 import React from "react";
-import { View, FlatList, ActivityIndicator } from "react-native";
-import SkeletonContent from "react-native-skeleton-content";
-import Placeholder from "../../../components/Placeholder";
+import { View, FlatList, useWindowDimensions } from "react-native";
+import { ProductRatingProps } from "../../../@types/types";
+import { SkeletonPlaceholder } from "../../../components";
 import { Colors } from "../../../constants/styles";
 import useFetch from "../../../hooks/useFetch";
 import Ratings from "../../../modules/Ratings/Ratings";
 
-interface Reviews {
-  rating_id: number;
-  user_id: number;
-  rating: number;
-  title: string;
-  description: string;
-}
-
 export default function MyReviews() {
-  const { data, loading } = useFetch<Reviews[]>("/ratings/my");
+  const { data, loading } = useFetch<ProductRatingProps[]>("/ratings/my");
+
+  const { width, height } = useWindowDimensions();
 
   return (
     <View
@@ -26,11 +20,27 @@ export default function MyReviews() {
         backgroundColor: Colors.primary,
       }}
     >
-      {loading && <Placeholder ammount={3} loading />}
+      {loading && (
+        <SkeletonPlaceholder
+          backgroundColor={"#1f2b3d"}
+          highlightColor={"#2a3a52"}
+          size={{ width, height }}
+        >
+          <FlatList
+            style={{ marginTop: 20 }}
+            contentContainerStyle={{ alignItems: "center" }}
+            data={new Array(3).fill({})}
+            keyExtractor={(_, i) => i.toString()}
+            renderItem={() => (
+              <SkeletonPlaceholder.Item height={240} width={width - 20} />
+            )}
+          />
+        </SkeletonPlaceholder>
+      )}
 
       <FlatList
         initialNumToRender={2}
-        data={data as Reviews[]}
+        data={data}
         keyExtractor={({ rating_id }) => rating_id.toString()}
         renderItem={({ item }) => <Ratings {...item} />}
       />
