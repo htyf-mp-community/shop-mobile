@@ -1,6 +1,7 @@
+import { RouteProp } from "@react-navigation/native";
 import { StackNavigationOptions } from "@react-navigation/stack";
 import { Platform } from "react-native";
-import { ScreenNavigationProps } from "../@types/types";
+import { RootStackParams, ScreenNavigationProps } from "../@types/types";
 
 const HEADER = {
   android: true,
@@ -8,6 +9,23 @@ const HEADER = {
   windows: true,
   macos: true,
   web: false,
+};
+
+const horizontalAnimation: StackNavigationOptions = {
+  cardStyleInterpolator: ({ current, layouts }) => {
+    return {
+      cardStyle: {
+        transform: [
+          {
+            translateX: current.progress.interpolate({
+              inputRange: [0, 1],
+              outputRange: [layouts.screen.width, 0],
+            }),
+          },
+        ],
+      },
+    };
+  },
 };
 
 export const defaultStackOptions: StackNavigationOptions = {
@@ -36,23 +54,65 @@ export const checkOutScreenOptions: StackNavigationOptions = {
   headerTitleAlign: "center",
 };
 
-export const horizontalAnimation: StackNavigationOptions = {
-  cardStyleInterpolator: ({ current, layouts }) => {
-    return {
-      cardStyle: {
-        transform: [
-          {
-            translateX: current.progress.interpolate({
-              inputRange: [0, 1],
-              outputRange: [layouts.screen.width, 0],
-            }),
-          },
-        ],
-      },
-    };
-  },
-};
+export const userScreenOptions = (name: string): StackNavigationOptions => ({
+  headerTitleAlign: "center",
+  headerTitle: name.split("@")[0],
+  presentation: "modal",
+});
+
+export const homeScreenOptions: StackNavigationOptions = { headerShown: false };
 
 export const cartScreenOptions: StackNavigationOptions = {
   presentation: "modal",
+};
+
+export const createReviewOptions = ({
+  route: { params },
+}: {
+  route: RouteProp<RootStackParams, "CreateReview">;
+}): StackNavigationOptions => ({
+  title: `Rate product: ${params.prod_name}`,
+  ...horizontalAnimation,
+});
+
+export const productReviewsOption = ({
+  route: { params },
+}: {
+  route: RouteProp<RootStackParams, "ProductReviews">;
+}): StackNavigationOptions => ({
+  title: `Rate: ${params.prod_name}`,
+  ...horizontalAnimation,
+});
+
+export const myReviewsOption: StackNavigationOptions = {
+  title: "My reviews",
+  headerTitleAlign: "center",
+  ...horizontalAnimation,
+};
+
+export const accountSettingsOption: StackNavigationOptions = {
+  headerTitle: "Account Settings",
+  headerTitleAlign: "center",
+  ...horizontalAnimation,
+};
+
+export const searchOptions: StackNavigationOptions = {
+  headerTitleAlign: "center",
+  headerTitle: "Searched Phrase",
+  ...horizontalAnimation,
+};
+
+export const purchaseHistoryOption: StackNavigationOptions = {
+  headerTitle: "Purchase history",
+  headerTitleAlign: "center",
+  ...horizontalAnimation,
+};
+
+export const authOptions: StackNavigationOptions = {
+  headerShown: false,
+  ...horizontalAnimation,
+};
+
+export const landingOptions: StackNavigationOptions = {
+  ...authOptions,
 };

@@ -1,37 +1,15 @@
 import { DarkTheme, NavigationContainer } from "@react-navigation/native";
 import React from "react";
-import Home from "./Screens/Home";
-import Auth from "./Screens/Auth";
 import { useUser } from "../context/UserContext";
 import { useEffect } from "react";
-import Cart from "./Screens/Cart";
 import { UploadExpoTokenToServer } from "../notifications/MainNotifications";
 import useNotifications from "../notifications/MainNotifications";
-import User from "./Screens/User";
-import ProductDetails from "./Screens/ProductDetails";
 import { createSharedElementStackNavigator } from "react-navigation-shared-element";
-import "react-native-gesture-handler";
 import { RootStackParams } from "../@types/types";
-import Checkout from "./Screens/Checkout";
-import SearchResults from "./Screens/SearchResults";
-import CreateReview from "./Screens/Reviews/CreateReview";
-import ProductReviews from "./Screens/Reviews/ProductReviews";
 import useCheckToken from "../hooks/useCheckToken";
-import Landing from "./Screens/Landing";
-import AccountSettings from "./Screens/AccountSettings";
-import PurchaseHistory from "./Screens/PurchaseHistory";
-import MyReviews from "./Screens/MyReviews";
-import SearchScreen from "./Screens/Search";
-import {
-  cartScreenOptions,
-  checkOutScreenOptions,
-  defaultStackOptions,
-  detailsScreenOptions,
-  horizontalAnimation,
-} from "./options";
-
+import * as Screen from "./Screens";
+import * as Option from "./options";
 import { StatusBar } from "expo-status-bar";
-
 import useColorTheme from "../context/ThemeContext";
 
 const Stack = createSharedElementStackNavigator<RootStackParams>();
@@ -60,7 +38,7 @@ export default function MainNavigator(): JSX.Element {
         <Stack.Navigator
           initialRouteName="Landing"
           screenOptions={{
-            ...defaultStackOptions,
+            ...Option.defaultStackOptions,
             headerStyle: { backgroundColor: theme.primary },
             headerTintColor: theme.text,
           }}
@@ -69,115 +47,86 @@ export default function MainNavigator(): JSX.Element {
             <>
               <Stack.Screen
                 name="Home"
-                component={Home}
-                options={{
-                  headerShown: false,
-                }}
+                component={Screen.Home}
+                options={Option.homeScreenOptions}
               />
               <Stack.Screen
                 name="Cart"
-                component={Cart}
-                options={cartScreenOptions}
+                component={Screen.Cart}
+                options={Option.cartScreenOptions}
               />
               <Stack.Screen
-                component={User}
+                component={Screen.User}
                 name="User"
-                options={{
-                  headerTitleAlign: "center",
-                  headerTitle: name.split("@")[0],
-                  presentation: "modal",
-                }}
+                options={() => Option.userScreenOptions(name)}
               />
               <Stack.Screen
-                component={ProductDetails}
+                component={Screen.ProductDetails}
                 name="Details"
-                options={detailsScreenOptions}
+                options={Option.detailsScreenOptions}
                 sharedElements={({ params }) => {
                   const { prod_id, sharedID } = params;
-
                   return ["prod_id." + prod_id + sharedID];
                 }}
               />
               <Stack.Screen
                 name="Checkout"
-                component={Checkout}
-                options={checkOutScreenOptions}
+                component={Screen.Checkout}
+                options={Option.checkOutScreenOptions}
               />
               <Stack.Screen
                 name="SearchResults"
-                component={SearchResults}
+                component={Screen.SearchResults}
                 options={({ route }) => ({
                   title: `Search Results: ${route.params.length}`,
                 })}
               />
               <Stack.Screen
                 name="CreateReview"
-                component={CreateReview}
+                component={Screen.CreateReview}
                 sharedElements={(route) => {
                   const { prod_id, sharedID } = route.params;
                   return ["prod_id." + prod_id + sharedID];
                 }}
-                options={({ route: { params } }) => ({
-                  title: `Rate product: ${params.prod_name}`,
-                  ...horizontalAnimation,
-                })}
+                options={Option.createReviewOptions}
               />
               <Stack.Screen
                 name="ProductReviews"
-                component={ProductReviews}
-                options={({ route: { params } }) => ({
-                  title: `Rate: ${params.prod_name}`,
-                  ...horizontalAnimation,
-                })}
+                component={Screen.ProductReviews}
+                options={Option.productReviewsOption}
               />
               <Stack.Screen
                 name="MyReviews"
-                component={MyReviews}
-                options={{
-                  ...horizontalAnimation,
-                  title: "My reviews",
-                  headerTitleAlign: "center",
-                }}
+                component={Screen.MyReviews}
+                options={Option.myReviewsOption}
               />
               <Stack.Screen
                 name="AccountSettings"
-                component={AccountSettings}
-                options={{
-                  ...horizontalAnimation,
-                  headerTitle: "Account Settings",
-                  headerTitleAlign: "center",
-                }}
+                component={Screen.AccountSettings}
+                options={Option.accountSettingsOption}
               />
               <Stack.Screen
                 name="Search"
-                component={SearchScreen}
-                options={{
-                  ...horizontalAnimation,
-                  headerTitleAlign: "center",
-                  headerTitle: "Searched Phrase",
-                }}
+                component={Screen.SearchScreen}
+                options={Option.searchOptions}
               />
               <Stack.Screen
                 name="PurchaseHistory"
-                component={PurchaseHistory}
-                options={{
-                  headerTitle: "Purchase history",
-                  headerTitleAlign: "center",
-                  ...horizontalAnimation,
-                }}
+                component={Screen.PurchaseHistory}
+                options={Option.purchaseHistoryOption}
               />
             </>
           ) : (
             <>
               <Stack.Screen
                 name="Auth"
-                component={Auth}
-                options={{ headerShown: false, ...horizontalAnimation }}
+                component={Screen.Auth}
+                options={Option.authOptions}
               />
               <Stack.Screen
                 name="Landing"
-                component={Landing}
-                options={{ headerShown: false, ...horizontalAnimation }}
+                component={Screen.Landing}
+                options={Option.landingOptions}
               />
             </>
           )}
