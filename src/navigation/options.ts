@@ -41,7 +41,6 @@ export const detailsScreenOptions = ({
   ...defaultStackOptions,
   headerTitle: route.params.title.split("").slice(0, 25).join(""),
   headerTitleAlign: "center",
-  presentation: "modal",
   detachPreviousScreen: false,
   transitionSpec: {
     open: { animation: "timing", config: { duration: 200 } },

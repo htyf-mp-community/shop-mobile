@@ -18,13 +18,14 @@ interface ButtonProps extends TouchableOpacityProps {
   style?: StyleProp<ViewStyle>;
   fontStyle?: StyleProp<TextStyle>;
   iconStyle?: StyleProp<ViewStyle>;
-  variant?: "primary" | "secondary" | "ternary";
+  variant?: "primary" | "secondary" | "ternary" | "disabled";
 }
 
 const VARIANTS = {
   primary: "#FF0056",
   secondary: Colors.primary,
   ternary: Colors.secondary,
+  disabled: "#131d33",
 };
 
 /**

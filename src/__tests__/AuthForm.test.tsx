@@ -15,17 +15,17 @@ jest.mock("react-native/Libraries/Animated/NativeAnimatedHelper");
 
 describe("It validates Form", () => {
   test("it renders correctly", () => {
-    render(<AuthForm header="LOGIN" onSubmit={() => {}} error="" />);
+    render(<AuthForm header="Login" onSubmit={() => {}} error="" />);
   });
 
   test("shows invalid message if values are incorrect", async () => {
     const { getByPlaceholderText, queryByText, queryByTestId } = render(
-      <AuthForm header="LOGIN" onSubmit={() => {}} error="" />
+      <AuthForm header="Login" onSubmit={() => {}} error="" />
     );
 
     act(() => {
-      fireEvent.changeText(getByPlaceholderText("Email"), "aa");
-      fireEvent.changeText(getByPlaceholderText("password"), "aa");
+      fireEvent.changeText(getByPlaceholderText(/Email/), "aa");
+      fireEvent.changeText(getByPlaceholderText(/Password/), "aa");
     });
 
     await waitFor(() => {
@@ -37,23 +37,23 @@ describe("It validates Form", () => {
 
   test("it handles validation successfully then changes screen", async () => {
     const onSubmit = jest.fn();
-    const { getByPlaceholderText, queryByText, queryByTestId, getByText } =
-      render(<AuthForm header="LOGIN" onSubmit={onSubmit} error="" />);
+    const { getByPlaceholderText, getByText, getAllByText } = render(
+      <AuthForm header="Login" onSubmit={onSubmit} error="" />
+    );
 
     act(() => {
       fireEvent.changeText(
-        getByPlaceholderText("Email"),
+        getByPlaceholderText(/Email/),
         "testingemail@gmail.com"
       );
       fireEvent.changeText(
-        getByPlaceholderText("password"),
+        getByPlaceholderText(/Password/),
         "atleast6characters"
       );
     });
 
     await waitFor(() => {
-      getByText(/Email/);
-      getByText(/Password/);
+      expect(getAllByText("6-60 characters*").length).toEqual(2);
     });
   });
 });

@@ -1,32 +1,27 @@
 import { Formik } from "formik";
-import React from "react";
-import { ScrollView, StyleSheet, Dimensions, Text } from "react-native";
+import React, { useEffect, useRef } from "react";
+import { KeyboardAvoidingView, Text, TextInput } from "react-native";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
-import { Colors, h1, radius } from "../../constants/styles";
-import useListenKeyboard from "../../hooks/useListenKeyboard";
-
+import { Colors, h1 } from "../../constants/styles";
+import styles from "./styles";
 import schema from "./schema";
 
-const { width: SCREEN_WIDTH } = Dimensions.get("screen");
-
-type AuthFormProps = {
+interface AuthFormProps {
   onSubmit: ({ email, password }: { email: string; password: string }) => void;
-  header: string;
+  header: "Login" | "Register";
   error?: string;
-};
+}
 
 export default function AuthForm({ onSubmit, header, error }: AuthFormProps) {
-  const { status } = useListenKeyboard();
+  const initRef = useRef<null | TextInput>(null);
+
+  useEffect(() => {
+    initRef.current?.focus();
+  }, []);
 
   return (
-    <ScrollView
-      contentContainerStyle={{ alignItems: "center" }}
-      style={[styles.form, { paddingTop: status === "open" ? 10 : 100 }]}
-    >
-      <Text style={[h1, { fontWeight: "bold" }]} testID="HEADER_TEXT">
-        {header}
-      </Text>
+    <KeyboardAvoidingView style={[styles.form]}>
       {typeof error !== "undefined" && error !== "" && (
         <Text style={[h1, { fontWeight: "bold" }]}>{error}</Text>
       )}
@@ -42,23 +37,21 @@ export default function AuthForm({ onSubmit, header, error }: AuthFormProps) {
           values,
           errors,
           isValid,
+          dirty,
         }) => (
           <>
             <Input
+              inputRef={initRef}
               value={values.email}
               onChangeText={handleChange("email")}
-              name={errors.email ? errors.email : "Email"}
-              placeholder="Email"
+              placeholder="Email*"
               style={{
                 ...styles.input,
                 borderColor: errors.email ? "#FF3030" : Colors.primary100,
               }}
-              labelStyle={{
-                color: errors.email ? "#FF3030" : "#fff",
-              }}
               placeholderTextColor={errors.email ? "#FF3030" : "#fff"}
               keyboardType="email-address"
-              helperText="6-60 characters"
+              helperText={errors.email || "6-60 characters*"}
               helperStyle={{
                 color: errors.email ? "#FF3030" : "#fff",
               }}
@@ -67,15 +60,13 @@ export default function AuthForm({ onSubmit, header, error }: AuthFormProps) {
             <Input
               value={values.password}
               onChangeText={handleChange("password")}
-              name={errors.password ? errors.password : "Password"}
-              placeholder="password"
+              placeholder="Password*"
               style={{
                 ...styles.input,
                 borderColor: errors.password ? "#FF3030" : Colors.primary100,
               }}
-              labelStyle={{ color: errors.password ? "#FF3030" : "#fff" }}
               placeholderTextColor={errors.password ? "#FF3030" : "#fff"}
-              helperText="6-60 characters"
+              helperText={errors.password || "6-60 characters*"}
               helperStyle={{ color: errors.password ? "#FF3030" : "#fff" }}
               onBlur={handleBlur("password")}
               secureTextEntry
@@ -83,37 +74,15 @@ export default function AuthForm({ onSubmit, header, error }: AuthFormProps) {
             <Button
               text={header.toUpperCase()}
               callback={handleSubmit}
-              style={[
-                styles.btn,
-                { backgroundColor: isValid ? "#FF0056" : Colors.primary },
-              ]}
-              disabled={!isValid}
+              style={[styles.btn]}
+              variant={isValid && dirty ? "primary" : "disabled"}
+              disabled={!(isValid && dirty)}
               fontStyle={{ fontWeight: "bold" }}
               testID="SUBMIT_BUTTON"
             />
           </>
         )}
       </Formik>
-    </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
-
-const styles = StyleSheet.create({
-  form: {
-    flex: 1,
-    backgroundColor: Colors.primary,
-  },
-  input: {
-    borderWidth: 1,
-    marginTop: 5,
-    textDecorationLine: "none",
-  },
-  btn: {
-    width: SCREEN_WIDTH * 0.45,
-    marginTop: 5,
-    padding: 15,
-    color: Colors.text,
-    justifyContent: "center",
-    borderRadius: radius.medium,
-  },
-});

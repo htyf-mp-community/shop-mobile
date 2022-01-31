@@ -66,6 +66,7 @@ export default function MainNavigator(): JSX.Element {
                 options={Option.detailsScreenOptions}
                 sharedElements={({ params }) => {
                   const { prod_id, sharedID } = params;
+
                   return ["prod_id." + prod_id + sharedID];
                 }}
               />

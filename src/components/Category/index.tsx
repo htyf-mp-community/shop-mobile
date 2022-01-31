@@ -35,6 +35,7 @@ export default function Category({ category, ...rest }: CategoryProps) {
 
   return (
     <TouchableOpacity
+      testID="CATEGORY.ELEMENT"
       onPress={GetProductsByCategory}
       style={{
         backgroundColor: Colors.primary100,

@@ -19,8 +19,22 @@ export default function Auth() {
         },
       }}
     >
-      <Stack.Screen name="Register" component={RegisterScreen} />
-      <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen
+        name="Register"
+        component={RegisterScreen}
+        options={{
+          headerTitleAlign: "center",
+          headerTitle: "Sign up",
+        }}
+      />
+      <Stack.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{
+          headerTitleAlign: "center",
+          headerTitle: "Log in",
+        }}
+      />
     </Stack.Navigator>
   );
 }

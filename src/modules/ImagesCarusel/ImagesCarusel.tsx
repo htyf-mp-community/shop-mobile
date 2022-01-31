@@ -1,10 +1,11 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Animated, Dimensions, FlatList, View } from "react-native";
 import { ProductImageProps } from "../../@types/types";
 import { API } from "../../constants/routes";
 import Dots from "../../components/Dots/Dots";
 import CaruselItem from "./CaruselItem";
 import { sortImages } from "../../functions/sortImages";
+import useListenBackPress from "../../hooks/useListenBackPress";
 
 interface ImagesCaruselProps {
   sharedID: string;
@@ -22,6 +23,7 @@ export default function ImagesCarusel({
   image,
 }: ImagesCaruselProps) {
   const scrollX = useRef(new Animated.Value(0)).current;
+
   return (
     <>
       <FlatList
