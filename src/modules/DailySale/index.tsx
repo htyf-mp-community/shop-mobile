@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { View, Text, Image, useWindowDimensions } from "react-native";
 import { SharedElement } from "react-navigation-shared-element";
 import useFetch from "../../hooks/useFetch";
@@ -9,10 +9,9 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { useNavigationProps } from "../../@types/types";
 import AddToCart from "../AddToCart/AddToCart";
-import Placeholder from "../../components/Placeholder";
-
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import { SkeletonPlaceholder } from "../../components";
+import { notUndefined } from "../../functions/typecheckers";
 
 interface DailySaleProps {}
 
@@ -34,7 +33,7 @@ export default function DailySale({}: DailySaleProps) {
 
   const isFocused = useIsFocused();
 
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
 
   return (
     <View style={[dailyStyle.container]}>
@@ -72,7 +71,7 @@ export default function DailySale({}: DailySaleProps) {
           )}
         </View>
       )}
-      {loading && (
+      {loading && !notUndefined(data.prod_id) && (
         <SkeletonPlaceholder
           backgroundColor={"#1f2b3d"}
           highlightColor={"#2a3a52"}

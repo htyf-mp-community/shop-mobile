@@ -37,9 +37,8 @@ describe("It validates Form", () => {
 
   test("it handles validation successfully then changes screen", async () => {
     const onSubmit = jest.fn();
-    const { getByPlaceholderText, queryByText, queryByTestId } = render(
-      <AuthForm header="LOGIN" onSubmit={onSubmit} error="" />
-    );
+    const { getByPlaceholderText, queryByText, queryByTestId, getByText } =
+      render(<AuthForm header="LOGIN" onSubmit={onSubmit} error="" />);
 
     act(() => {
       fireEvent.changeText(
@@ -53,8 +52,8 @@ describe("It validates Form", () => {
     });
 
     await waitFor(() => {
-      queryByText(/Email/);
-      queryByText(/Password/);
+      getByText(/Email/);
+      getByText(/Password/);
     });
   });
 });

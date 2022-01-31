@@ -1,6 +1,5 @@
 import React, { useRef } from "react";
 import { Animated, Dimensions, FlatList, View } from "react-native";
-import { SharedElement } from "react-navigation-shared-element";
 import { ProductImageProps } from "../../@types/types";
 import { API } from "../../constants/routes";
 import Dots from "../../components/Dots/Dots";

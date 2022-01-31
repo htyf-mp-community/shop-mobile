@@ -14,7 +14,7 @@ const cartSlice = createSlice({
     empty: false,
   },
   reducers: {
-    setCart(state, { payload }) {
+    setCart(state, { payload }: { payload: any[] }) {
       state.loading = false;
       state.cart = payload;
       state.error = "";

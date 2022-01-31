@@ -18,7 +18,6 @@ export const createStyles = StyleSheet.create({
   },
   button: {
     width: width * 0.9,
-    backgroundColor: "#FF0056",
     marginTop: 20,
     justifyContent: "center",
     padding: 15,

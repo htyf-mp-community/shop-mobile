@@ -1,16 +1,19 @@
 import axios from "axios";
+import { Formik } from "formik";
 import React from "react";
 import { useState } from "react";
-import { View, Image, ScrollView } from "react-native";
+import { View, Image, KeyboardAvoidingView } from "react-native";
 import { SharedElement } from "react-navigation-shared-element";
 import { ScreenNavigationProps } from "../../../@types/types";
 import Button from "../../../components/Button/Button";
 import Input from "../../../components/Input/Input";
 import Message from "../../../components/Message/Message";
 import { API } from "../../../constants/routes";
+import useColorTheme from "../../../context/ThemeContext";
 import { useUser } from "../../../context/UserContext";
 import useListenKeyboard from "../../../hooks/useListenKeyboard";
 import StarsTouch from "../../../modules/Stars/Stars";
+import schema from "./schema";
 import { createStyles as styles } from "./styles";
 
 export default function CreateReview({
@@ -18,17 +21,13 @@ export default function CreateReview({
 }: ScreenNavigationProps<"CreateReview">) {
   const { prod_id, thumbnail, sharedID } = route.params;
   const { user } = useUser();
-
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
   const [rating, setRating] = useState(0);
 
   const { status, variants } = useListenKeyboard();
 
   const [response, setResponse] = useState("");
 
-  async function PostReview() {
-    if (!title || !description || !rating) return;
+  async function PostReview({ description, title }: any) {
     axios
       .post(
         `${API}/ratings`,
@@ -40,11 +39,17 @@ export default function CreateReview({
           },
         }
       )
-      .then(() => setResponse("Success"))
-      .catch(() => {
+      .then((res) => {
+        console.log(res);
+        setResponse("Success");
+      })
+      .catch((err) => {
+        console.log(err?.response?.body);
         setResponse("Failed");
       });
   }
+
+  const { theme } = useColorTheme();
 
   return (
     <View style={styles.container}>
@@ -61,34 +66,85 @@ export default function CreateReview({
 
       {!!response && <Message status={response} />}
 
-      <ScrollView
-        style={{ flex: 1 }}
-        contentContainerStyle={{ alignItems: "center" }}
-      >
-        <StarsTouch setRating={setRating} />
-        <Input
-          value={title}
-          setValue={setTitle}
-          placeholder="Title"
-          style={styles.input}
-          placeholderColor="white"
-          labelStyle={{ paddingBottom: 5, color: "#fff" }}
-        />
-        <Input
-          value={description}
-          setValue={setDescription}
-          placeholder="Description"
-          style={styles.input}
-          placeholderColor="white"
-          labelStyle={{ paddingBottom: 5, color: "#fff" }}
-          scrollEnabled
-          multiline
-          textAlignVertical="top"
-          numberOfLines={5}
-        />
+      <KeyboardAvoidingView style={{ alignItems: "center" }}>
+        <Formik
+          initialValues={{
+            description: "",
+            title: "",
+          }}
+          validationSchema={schema}
+          onSubmit={PostReview}
+        >
+          {({
+            handleBlur,
+            handleChange,
+            handleSubmit,
+            errors,
+            isValid,
+            values,
+          }) => (
+            <>
+              <StarsTouch setRating={setRating} />
+              <Input
+                value={values.title}
+                setValue={handleChange("title")}
+                onBlur={handleBlur("title")}
+                placeholder="Title"
+                name={"Title"}
+                helperText={errors.title || "Atleast 6 characters*"}
+                labelStyle={{
+                  color: errors.title ? "red" : "#e0e0e0",
+                }}
+                helperStyle={{
+                  color: errors.description ? "red" : "#e0e0e0",
+                }}
+                style={[
+                  styles.input,
+                  {
+                    borderColor: errors.title ? "red" : theme.primary,
+                    borderWidth: 2,
+                  },
+                ]}
+                placeholderColor={errors.title ? "red" : "white"}
+              />
+              <Input
+                value={values.description}
+                setValue={handleChange("description")}
+                onBlur={handleBlur("description")}
+                placeholder="Description"
+                name={"Description"}
+                helperText={errors.description || "Atleast 6 characters*"}
+                helperStyle={{
+                  color: errors.description ? "red" : "#e0e0e0",
+                }}
+                labelStyle={{
+                  color: errors.description ? "red" : "#e0e0e0",
+                }}
+                style={[
+                  styles.input,
+                  {
+                    borderColor: errors.description ? "red" : theme.primary,
+                    borderWidth: 2,
+                  },
+                ]}
+                placeholderColor={errors.description ? "red" : "#fff"}
+                scrollEnabled
+                multiline
+                textAlignVertical="top"
+                numberOfLines={5}
+              />
 
-        <Button text="Add review" callback={PostReview} style={styles.button} />
-      </ScrollView>
+              <Button
+                disabled={!isValid}
+                text="Add review"
+                callback={handleSubmit}
+                variant={isValid ? "primary" : "secondary"}
+                style={[styles.button]}
+              />
+            </>
+          )}
+        </Formik>
+      </KeyboardAvoidingView>
     </View>
   );
 }
