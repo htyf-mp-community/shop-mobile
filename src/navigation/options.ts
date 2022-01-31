@@ -62,7 +62,7 @@ export const userScreenOptions = (name: string): StackNavigationOptions => ({
 export const homeScreenOptions: StackNavigationOptions = { headerShown: false };
 
 export const cartScreenOptions: StackNavigationOptions = {
-  presentation: "modal",
+  // ...horizontalAnimation,
 };
 
 export const createReviewOptions = ({

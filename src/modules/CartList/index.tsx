@@ -24,7 +24,7 @@ export default function CartList({ updateCartState, data }: CartListProps) {
   // Higher Performance
   return (
     <VirtualizedList
-      testID="CART.LIST"
+      testID="cart-list"
       showsVerticalScrollIndicator={false}
       getItem={getItem}
       initialNumToRender={3}

@@ -18,7 +18,12 @@ import {
 import { wait } from "../../../functions/wait";
 import AddToCart from "../../../modules/AddToCart/AddToCart";
 import styles from "./styles";
-import Animated, { SlideInDown, SlideInUp } from "react-native-reanimated";
+import Animated, {
+  FadeOut,
+  SlideInDown,
+  SlideInUp,
+  ZoomIn,
+} from "react-native-reanimated";
 import useColorTheme from "../../../context/ThemeContext";
 import { SkeletonPlaceholder } from "../../../components";
 
@@ -46,7 +51,7 @@ export default function ProductDetails({
 
   const { theme } = useColorTheme();
 
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.primary }}>
@@ -82,7 +87,10 @@ export default function ProductDetails({
         )}
 
         {!loading && result && (
-          <>
+          <Animated.View
+            entering={SlideInDown.delay(0).duration(100)}
+            exiting={FadeOut}
+          >
             <ProductDetailsText {...result} />
             <ProductDetailsButtons
               thumbnail={image}
@@ -91,13 +99,12 @@ export default function ProductDetails({
               reviews={result.rating_id}
               name={result.title}
             />
-          </>
+          </Animated.View>
         )}
       </ScrollView>
       <Animated.View
         style={[styles.buttonContainer, { backgroundColor: theme.primary }]}
-        entering={SlideInDown}
-        exiting={SlideInUp}
+        entering={ZoomIn.duration(200)}
       >
         <AddToCart
           disabled={result.quantity === 0}

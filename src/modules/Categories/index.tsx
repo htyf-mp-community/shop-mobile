@@ -8,6 +8,7 @@ export default function Categories() {
 
   return (
     <FlatList
+      testID="categories-list"
       horizontal
       style={{ height: 60 }}
       showsHorizontalScrollIndicator={false}

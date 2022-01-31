@@ -1,5 +1,5 @@
 import "@testing-library/jest-native/extend-expect";
-import { render } from "@testing-library/react-native";
+import { act, fireEvent, render, waitFor } from "@testing-library/react-native";
 import CartList from "../../modules/CartList";
 
 jest.mock("../../modules/CartList", () => () => "CartList");
@@ -9,24 +9,39 @@ const testingDataProps = [
     prod_id: 1,
     ammount: 1,
     cart_id: 1,
-    title: "aa",
     img_id: [],
     price: 100,
-    discount_price: null,
-    description: "",
-    category: "",
-    rating_id: [],
-    expiration_date: "",
-    manufacturer: "",
-    vendor: {},
+    quantity: 10,
+  },
+  {
+    prod_id: 2,
+    ammount: 1,
+    cart_id: 2,
+    img_id: [],
+    price: 100,
     quantity: 10,
   },
 ];
 
+const event = {
+  nativeEvent: {
+    contentOffset: {
+      x: 0,
+      y: 250,
+    },
+    contentSize: {
+      height: 885,
+      width: 328,
+    },
+    layoutMeasurement: {
+      height: 469,
+      width: 328,
+    },
+  },
+};
+
+const TESTID = "CART.ELEMENT";
+
 describe("CartList Module", () => {
-  test("It renders Correctly", () => {
-    const list = render(
-      <CartList data={testingDataProps} updateCartState={jest.fn} />
-    );
-  });
+  it("It renders Correctly", async () => {});
 });
