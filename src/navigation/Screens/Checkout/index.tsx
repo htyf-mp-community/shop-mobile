@@ -15,7 +15,7 @@ import PaymentMethods from "./PaymentMethods";
 export default function Checkout({
   route,
 }: Required<ScreenNavigationProps<"Checkout">>) {
-  const { purchase, result, total, loading } = useCheckout({ route });
+  const { purchase, total } = useCheckout({ route });
 
   useEffect(() => {
     initStripe({

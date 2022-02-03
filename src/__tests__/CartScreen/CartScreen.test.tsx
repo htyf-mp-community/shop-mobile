@@ -5,6 +5,6 @@ jest.mock("../../navigation/Screens/Cart/index", () => () => "Cart");
 
 describe("Cart Screen", () => {
   it("Adds element on click", async () => {
-    render(<Cart />);
+    const { getByText } = render(<Cart />);
   });
 });

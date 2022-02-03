@@ -35,29 +35,36 @@ export default function Sidebar({
             backgroundColor: theme.primary100,
           }}
         />
-        {[
-          { text: "Cart", icon: "shoppingcart" },
-          { text: "User", icon: "user" },
-        ].map(({ text, icon }, i) => {
-          return (
-            <Button
-              key={i}
-              icon={
-                <AntDesign
-                  //@ts-ignore
-                  name={icon}
-                  style={{ marginRight: 10 }}
-                  size={30}
-                  color={theme.text}
-                />
-              }
-              style={[styles.button, { backgroundColor: theme.primary100 }]}
-              fontStyle={{ color: theme.text }}
-              text={text}
-              onPress={() => navigation.navigate(text as any)}
+
+        <Button
+          icon={
+            <AntDesign
+              name={"shoppingcart"}
+              style={{ marginRight: 10 }}
+              size={30}
+              color={theme.text}
             />
-          );
-        })}
+          }
+          style={[styles.button]}
+          fontStyle={{ color: theme.text }}
+          text={"Cart"}
+          onPress={() => navigation.navigate("Cart")}
+        />
+
+        <Button
+          icon={
+            <AntDesign
+              name={"user"}
+              style={{ marginRight: 10 }}
+              size={30}
+              color={theme.text}
+            />
+          }
+          style={[styles.button]}
+          fontStyle={{ color: theme.text }}
+          text={"User"}
+          onPress={() => navigation.navigate("User")}
+        />
       </Animated.View>
 
       <Animated.View

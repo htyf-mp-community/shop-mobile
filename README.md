@@ -1,19 +1,26 @@
-# React-Native shop application
+# Mobile Shop
 
-### Web
+Mobile shop app created with React-Native,Typescript.
 
-```bash
-$ yarn web
-```
+## Used Technologies:
 
-### Android
+- **React-Native**
+- **Typescript**
+- **expo** with **expo-notifications**
+- **React Navigation**
+- **React-Native-Reanimated for animations**
+- **Formik** with **yup** for form validation
 
-```bash
-$ yarn android
-```
+## Application Screens:
 
-### IOS
-
-```bash
-$ yarn ios
-```
+- Login
+- Register
+- Search
+- Settings
+- Cart
+- Checkout
+- Landing
+- Reviews
+- Purchase History
+- Product Details
+- Account

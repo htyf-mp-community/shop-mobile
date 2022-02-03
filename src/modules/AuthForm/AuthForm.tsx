@@ -56,6 +56,7 @@ export default function AuthForm({ onSubmit, header, error }: AuthFormProps) {
                 color: errors.email ? "#FF3030" : "#fff",
               }}
               onBlur={handleBlur("email")}
+              clearButtonMode={"always"}
             />
             <Input
               value={values.password}

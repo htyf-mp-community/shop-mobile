@@ -32,7 +32,7 @@ export default function ProductsCarusel({
     ProductTypeProps[]
   >(`${path}?skip=0`, [refresh]);
 
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
 
   const [skip, setSkip] = useState(5);
 

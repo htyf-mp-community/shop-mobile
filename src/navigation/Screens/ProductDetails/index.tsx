@@ -87,10 +87,7 @@ export default function ProductDetails({
         )}
 
         {!loading && result && (
-          <Animated.View
-            entering={SlideInDown.delay(0).duration(100)}
-            exiting={FadeOut}
-          >
+          <>
             <ProductDetailsText {...result} />
             <ProductDetailsButtons
               thumbnail={image}
@@ -99,7 +96,7 @@ export default function ProductDetails({
               reviews={result.rating_id}
               name={result.title}
             />
-          </Animated.View>
+          </>
         )}
       </ScrollView>
       <Animated.View

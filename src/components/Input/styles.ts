@@ -10,7 +10,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   input: {
-    borderColor: "#111111",
     width: WIDTH * 0.9,
     padding: 15,
     fontSize: 18,

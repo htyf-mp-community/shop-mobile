@@ -1,15 +1,11 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import MainNavigator from "./src/navigation";
-import { UserContextProvider } from "./src/context/UserContext";
 import * as Notification from "expo-notifications";
-import { useFonts } from "expo-font";
-import AppLoading from "expo-app-loading";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from "./src/constants/styles";
-import { ThemeContextProvider } from "./src/context/ThemeContext";
-import { Provider } from "react-redux";
-import store from "./src/redux/store";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
+import AppProviders from "./src/providers";
+import * as SplashScreen from "expo-splash-screen";
+import * as Font from "expo-font";
 
 Notification.setNotificationHandler({
   handleNotification: async () => ({
@@ -20,30 +16,49 @@ Notification.setNotificationHandler({
 });
 
 export default function App() {
-  const [loaded] = useFonts({
-    PoppinsBold: require("./assets/fonts/Poppins-Bold.ttf"),
-    PoppinsThin: require("./assets/fonts/Poppins-Thin.ttf"),
-    PoppinsMedium: require("./assets/fonts/Poppins-Medium.ttf"),
-    PoppinsRegular: require("./assets/fonts/Poppins-Regular.ttf"),
-    PoppinsLight: require("./assets/fonts/Poppins-Light.ttf"),
-    PoppinsBlack: require("./assets/fonts/Poppins-Black.ttf"),
-  });
+  const [appReady, setAppReady] = useState(false);
 
-  if (!loaded) {
-    return <AppLoading />;
+  useEffect(() => {
+    async function prepare() {
+      try {
+        await SplashScreen.preventAutoHideAsync();
+        await Font.loadAsync({
+          PoppinsBold: require("./assets/fonts/Poppins-Bold.ttf"),
+          PoppinsThin: require("./assets/fonts/Poppins-Thin.ttf"),
+          PoppinsMedium: require("./assets/fonts/Poppins-Medium.ttf"),
+          PoppinsRegular: require("./assets/fonts/Poppins-Regular.ttf"),
+          PoppinsLight: require("./assets/fonts/Poppins-Light.ttf"),
+          PoppinsBlack: require("./assets/fonts/Poppins-Black.ttf"),
+        });
+      } catch (error) {
+        console.warn(error);
+      } finally {
+        setAppReady(true);
+      }
+    }
+    prepare();
+  }, []);
+
+  const onLayoutRootView = useCallback(async () => {
+    try {
+      if (appReady) {
+        await SplashScreen.hideAsync();
+      }
+    } catch (error) {}
+  }, [appReady]);
+
+  if (!appReady) {
+    return null;
   }
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <SafeAreaView style={{ flex: 1, backgroundColor: Colors.primary }}>
-        <Provider store={store}>
-          <ThemeContextProvider>
-            <UserContextProvider>
-              <MainNavigator />
-            </UserContextProvider>
-          </ThemeContextProvider>
-        </Provider>
-      </SafeAreaView>
-    </GestureHandlerRootView>
+    <SafeAreaView
+      style={{ flex: 1, backgroundColor: Colors.primary }}
+      onLayout={onLayoutRootView}
+    >
+      <AppProviders>
+        <MainNavigator />
+      </AppProviders>
+    </SafeAreaView>
   );
 }
