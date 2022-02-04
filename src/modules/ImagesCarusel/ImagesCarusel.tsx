@@ -35,7 +35,7 @@ export default function ImagesCarusel({
             useNativeDriver: false,
           }
         )}
-        data={sortImages([{ name: image, id: 0 }, ...images])}
+        data={[{ name: image, id: 0 }, ...images]}
         keyExtractor={({ id }) => id.toString()}
         renderItem={({ item }) => {
           if (item.id === 0) {

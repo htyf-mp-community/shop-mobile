@@ -14,13 +14,13 @@
 - add some cool placeholder images
 - style inputs diffrently
 - add some testing e2e or unit
-- Splash loading screen
+- Splash loading screen [HALF DONE]
 - rename default name and change icon
 - invent name for store
-- add theme toggling
+- add theme toggling [DONE]
 - Add some diversity on home screen
 - change cart icon
-- Stripe payments
+- Stripe payments [DONE]
 - Change Checkout screen, current is really ugly and doesnt work
 - drag to close home screen sidebar
 - Pinch to zoom image in ProductDetails Screen

@@ -1,30 +1,21 @@
 import { Formik } from "formik";
-import React, { useEffect, useRef } from "react";
-import { KeyboardAvoidingView, Text, TextInput } from "react-native";
+import React from "react";
+import { KeyboardAvoidingView } from "react-native";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
-import { Colors, h1 } from "../../constants/styles";
+import { Colors } from "../../constants/styles";
 import styles from "./styles";
 import schema from "./schema";
+import type { UserInputProps } from "../../hooks/useAuth";
 
 interface AuthFormProps {
-  onSubmit: ({ email, password }: { email: string; password: string }) => void;
+  onSubmit: ({ email, password }: UserInputProps) => void;
   header: "Login" | "Register";
-  error?: string;
 }
 
-export default function AuthForm({ onSubmit, header, error }: AuthFormProps) {
-  const initRef = useRef<null | TextInput>(null);
-
-  useEffect(() => {
-    initRef.current?.focus();
-  }, []);
-
+export default function AuthForm({ onSubmit, header }: AuthFormProps) {
   return (
     <KeyboardAvoidingView style={[styles.form]}>
-      {typeof error !== "undefined" && error !== "" && (
-        <Text style={[h1, { fontWeight: "bold" }]}>{error}</Text>
-      )}
       <Formik
         validationSchema={schema}
         initialValues={{ email: "", password: "" }}
@@ -41,7 +32,7 @@ export default function AuthForm({ onSubmit, header, error }: AuthFormProps) {
         }) => (
           <>
             <Input
-              inputRef={initRef}
+              autoFocus
               value={values.email}
               onChangeText={handleChange("email")}
               placeholder="Email*"
@@ -53,7 +44,7 @@ export default function AuthForm({ onSubmit, header, error }: AuthFormProps) {
               keyboardType="email-address"
               helperText={errors.email || "6-60 characters*"}
               helperStyle={{
-                color: errors.email ? "#FF3030" : "#fff",
+                color: errors.email ? "#d63939" : "#fff",
               }}
               onBlur={handleBlur("email")}
               clearButtonMode={"always"}
