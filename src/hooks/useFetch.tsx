@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { API } from "@constants/routes";
 import { useUser } from "@context/UserContext";
 import { notUndefined } from "@functions/typecheckers";
@@ -16,6 +16,7 @@ export default function useFetch<T>(
   defaultValue?: any,
   setter?: (arg: T) => void
 ) {
+  const mounted = useRef(false);
   const [state, setState] = useState<StateProps<T>>({
     data: defaultValue,
     loading: false,
@@ -25,6 +26,7 @@ export default function useFetch<T>(
   const { user } = useUser();
 
   useEffect(() => {
+    mounted.current = true;
     const cancelToken = axios.CancelToken.source();
 
     (async () => {
@@ -36,14 +38,16 @@ export default function useFetch<T>(
           },
           cancelToken: cancelToken.token,
         });
-        if (notUndefined(setter)) {
+        if (notUndefined(setter) && mounted.current) {
           setter?.(data);
         } else {
-          setState({
-            loading: false,
-            data: data,
-            error: "",
-          });
+          if (mounted.current) {
+            setState({
+              loading: false,
+              data: data,
+              error: "",
+            });
+          }
         }
       } catch (error: any) {
         if (!axios.isCancel(error)) {
@@ -57,6 +61,7 @@ export default function useFetch<T>(
     })();
 
     return () => {
+      mounted.current = false;
       cancelToken.cancel();
     };
   }, deps);

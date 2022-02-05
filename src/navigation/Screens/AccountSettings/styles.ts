@@ -4,35 +4,40 @@ import { Colors } from "../../../constants/styles";
 const { width, height } = Dimensions.get("window");
 
 export default StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
+  header: {
+    width: "100%",
+    justifyContent: "space-between",
+    flexDirection: "row",
   },
-  card: {
-    width: width - 20,
-    height: 100,
-    borderRadius: 5,
+  heading: {
+    fontSize: 35,
+    fontFamily: "PoppinsMedium",
+  },
+  block: {
+    width: "100%",
+    marginTop: 15,
+  },
+  blockLabel: {
+    color: "#DEDEDE",
+    fontSize: 18,
+    fontFamily: "PoppinsMedium",
+  },
+  blockText: {
+    color: "white",
+    fontSize: 20,
+    fontFamily: "PoppinsMedium",
+  },
+  blockRow: {
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  button: {
+    margin: 10,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 10,
-  },
-  cardText: {
-    color: "#fff",
-    fontSize: 25,
-  },
-  innerAddressModal: {
-    position: "absolute",
-    width,
-    height: height * 0.9,
-    bottom: 0,
-    borderTopWidth: 2,
-    borderColor: Colors.primary100,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  map: {
-    marginTop: 10,
-    width: width - 20,
-    height: 250,
+    width: "60%",
+    backgroundColor: "transparent",
   },
 });

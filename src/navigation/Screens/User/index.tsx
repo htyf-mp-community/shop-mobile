@@ -15,7 +15,7 @@ export default function User({
       <Avatar />
 
       <Button
-        text="PURCHASE HISTORY"
+        text="Purchase history"
         style={{
           margin: 10,
           backgroundColor: theme.primary100,
@@ -28,14 +28,14 @@ export default function User({
       />
 
       <Button
-        text="MY REVIEWS"
+        text="My reviews"
         style={{ margin: 10, backgroundColor: theme.primary100, padding: 15 }}
         callback={() => {
           navigation.navigate("MyReviews");
         }}
       />
       <Button
-        text="ACCOUNT SETTINGS"
+        text="Account settings"
         style={{ margin: 10, backgroundColor: theme.primary100, padding: 15 }}
         callback={() => {
           navigation.navigate("AccountSettings");

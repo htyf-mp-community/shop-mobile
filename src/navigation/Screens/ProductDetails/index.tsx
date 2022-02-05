@@ -18,12 +18,7 @@ import {
 import { wait } from "../../../functions/wait";
 import AddToCart from "../../../modules/AddToCart/AddToCart";
 import styles from "./styles";
-import Animated, {
-  FadeOut,
-  SlideInDown,
-  SlideInUp,
-  ZoomIn,
-} from "react-native-reanimated";
+import Animated, { ZoomIn } from "react-native-reanimated";
 import useColorTheme from "../../../context/ThemeContext";
 import { SkeletonPlaceholder } from "../../../components";
 

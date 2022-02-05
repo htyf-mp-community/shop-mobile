@@ -90,8 +90,7 @@ export const myReviewsOption: StackNavigationOptions = {
 };
 
 export const accountSettingsOption: StackNavigationOptions = {
-  headerTitle: "Account Settings",
-  headerTitleAlign: "center",
+  headerShown: false,
   ...horizontalAnimation,
 };
 

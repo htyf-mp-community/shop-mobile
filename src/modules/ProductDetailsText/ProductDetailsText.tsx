@@ -15,7 +15,13 @@ export default function ProductDetailsText({
   const { theme } = useColorTheme();
   return (
     <>
-      <Text style={[styles.text, styles.title, { color: theme.text }]}>
+      <Text
+        style={[
+          styles.text,
+          styles.title,
+          { color: theme.text, textAlign: "center" },
+        ]}
+      >
         {title}
       </Text>
 
