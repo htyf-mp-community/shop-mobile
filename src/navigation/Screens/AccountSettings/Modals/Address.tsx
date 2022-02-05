@@ -1,13 +1,11 @@
-import { useWindowDimensions, View, Text } from "react-native";
+import { useWindowDimensions, View } from "react-native";
 import { GestureDetector } from "react-native-gesture-handler";
 import Animated, {
   useAnimatedStyle,
   withTiming,
 } from "react-native-reanimated";
 import styles from "../styles";
-import MapView, { Marker, Region } from "react-native-maps";
-import { Input } from "../../../../components";
-import { useState } from "react";
+import { Input } from "@components/index";
 
 interface AddressModalProps {
   show: Animated.SharedValue<string>;

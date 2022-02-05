@@ -8,8 +8,9 @@ Mobile shop app created with React-Native,Typescript.
 - **Typescript**
 - **expo** with **expo-notifications**
 - **React Navigation**
-- **React-Native-Reanimated for animations**
+- **React-Native-Reanimated** for animations
 - **Formik** with **yup** for form validation
+- **React-Native Stripe** [Card payment only for now]
 
 ## Application Screens:
 
@@ -24,3 +25,4 @@ Mobile shop app created with React-Native,Typescript.
 - Purchase History
 - Product Details
 - Account
+- Home

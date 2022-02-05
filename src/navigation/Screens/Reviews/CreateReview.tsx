@@ -4,15 +4,13 @@ import React from "react";
 import { useState } from "react";
 import { View, Image, KeyboardAvoidingView } from "react-native";
 import { SharedElement } from "react-navigation-shared-element";
-import { ScreenNavigationProps } from "../../../@types/types";
-import Button from "../../../components/Button/Button";
-import Input from "../../../components/Input/Input";
-import Message from "../../../components/Message/Message";
-import { API } from "../../../constants/routes";
-import useColorTheme from "../../../context/ThemeContext";
-import { useUser } from "../../../context/UserContext";
-import useListenKeyboard from "../../../hooks/useListenKeyboard";
-import StarsTouch from "../../../modules/Stars/Stars";
+import { ScreenNavigationProps } from "/@types/types";
+import { Button, Input, Message } from "@components/index";
+import { API } from "@constants/routes";
+import useColorTheme from "@context/ThemeContext";
+import { useUser } from "@context/UserContext";
+import useListenKeyboard from "@hooks/useListenKeyboard";
+import StarsTouch from "@modules/Stars/Stars";
 import schema from "./schema";
 import { createStyles as styles } from "./styles";
 
@@ -82,6 +80,7 @@ export default function CreateReview({
             errors,
             isValid,
             values,
+            dirty,
           }) => (
             <>
               <StarsTouch setRating={setRating} />
@@ -135,10 +134,10 @@ export default function CreateReview({
               />
 
               <Button
-                disabled={!isValid}
+                variant={isValid && dirty ? "primary" : "disabled"}
+                disabled={!(isValid && dirty)}
                 text="Add review"
                 callback={handleSubmit}
-                variant={isValid ? "primary" : "secondary"}
                 style={[styles.button]}
               />
             </>

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ProductTypeProps } from "../../modules/Product/Product";
+import { ProductTypeProps } from "@modules/Product/Product";
 
 interface Cart extends ProductTypeProps {
   cart_id: number;
@@ -29,7 +29,7 @@ const cartSlice = createSlice({
       state.loading = true;
     },
 
-    incrementAmmount(state, { payload }) {
+    incrementAmmount(state, { payload }: { payload: number }) {
       state.cart = state.cart.map((prod) => {
         if (prod.prod_id === payload) {
           return { ...prod, ammount: prod.ammount + 1 };

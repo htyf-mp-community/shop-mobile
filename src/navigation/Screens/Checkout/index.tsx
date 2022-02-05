@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { ScrollView } from "react-native";
-import { ScreenNavigationProps } from "../../../@types/types";
-import { Button, Input } from "../../../components";
-import useCheckout from "../../../hooks/useCheckout";
+import { ScreenNavigationProps } from "/@types/types";
+import { Button, Input } from "@components/index";
+import useCheckout from "@hooks/useCheckout";
 import { CardField, initStripe } from "@stripe/stripe-react-native";
 import { Formik } from "formik";
 import checkoutSchema from "./checkoutSchema";
-import { Colors } from "../../../constants/styles";
+import { Colors } from "@constants/styles";
 import { AntDesign } from "@expo/vector-icons";
 import styles, { cardFieldStyles } from "./styles";
 import Modal from "./Modal";
@@ -44,6 +44,7 @@ export default function Checkout({
             handleSubmit,
             values,
             errors,
+            dirty,
           }) => (
             <>
               <Input
@@ -106,7 +107,8 @@ export default function Checkout({
               />
 
               <Button
-                disabled={!isValid}
+                disabled={isValid || dirty}
+                variant={isValid && dirty ? "primary" : "disabled"}
                 text={`PAY $${total}`}
                 icon={
                   <AntDesign
@@ -116,10 +118,7 @@ export default function Checkout({
                     style={{ marginRight: 10 }}
                   />
                 }
-                style={[
-                  styles.button,
-                  { backgroundColor: isValid ? "#FF0056" : Colors.primary },
-                ]}
+                style={[styles.button]}
                 callback={handleSubmit}
               />
             </>

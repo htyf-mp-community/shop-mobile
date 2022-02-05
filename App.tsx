@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
 import MainNavigator from "./src/navigation";
-import * as Notification from "expo-notifications";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from "./src/constants/styles";
 import AppProviders from "./src/providers";
 import * as SplashScreen from "expo-splash-screen";
 import * as Font from "expo-font";
+import * as Notification from "expo-notifications";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 Notification.setNotificationHandler({
   handleNotification: async () => ({

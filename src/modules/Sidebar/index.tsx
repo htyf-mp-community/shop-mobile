@@ -28,7 +28,7 @@ export default function Sidebar({
     <View style={[styles.container, { backgroundColor: theme.primary }]}>
       <Animated.View style={[styles.navigation, animatedButtons]}>
         <Avatar
-          hide={true}
+          hide
           avatarStyles={{
             backgroundColor: theme.primary100,
           }}

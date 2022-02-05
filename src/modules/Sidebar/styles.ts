@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   },
   button: {
     flexDirection: "row-reverse",
-    justifyContent: "flex-end",
+    justifyContent: "center",
     width: WIDTH * 0.5,
     marginTop: 10,
     padding: 20,

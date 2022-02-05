@@ -1,12 +1,11 @@
 import React from "react";
-import AuthForm from "../../../modules/AuthForm/AuthForm";
-import useAuth from "../../../hooks/useAuth";
+import AuthForm from "@modules/AuthForm/AuthForm";
+import useAuth from "@hooks/useAuth";
 import { Text, ActivityIndicator } from "react-native";
 import AuthModal from "./Modal";
 import styles from "./styles";
-import useColorTheme from "../../../context/ThemeContext";
-import { Button } from "../../../components";
-import { Container } from "../../../components";
+import useColorTheme from "@context/ThemeContext";
+import { Button, Container } from "@components/index";
 
 export default function LoginScreen() {
   const { onLogin, error, loading, onClear } = useAuth("login");
