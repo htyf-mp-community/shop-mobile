@@ -1,10 +1,10 @@
 import React from "react";
 import { StyleProp, TextStyle, ViewStyle } from "react-native";
-import { Button } from "../../components";
-import { Colors } from "../../constants/styles";
+import { Button } from "@components/index";
+import { Colors } from "@constants/styles";
 import CartIcon from "./CartIcon";
 import useCart from "./useCart";
-import { notUndefined } from "../../functions/typecheckers";
+import { notUndefined } from "@functions/typecheckers";
 
 interface AddtoCartProps {
   prod_id: number;

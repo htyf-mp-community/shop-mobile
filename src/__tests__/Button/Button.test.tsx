@@ -1,3 +1,4 @@
+import React from "react";
 import "@testing-library/jest-native/extend-expect";
 import { render } from "@testing-library/react-native";
 import Button from "../../components/Button/Button";

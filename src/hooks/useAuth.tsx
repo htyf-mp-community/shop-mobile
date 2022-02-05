@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { useUser } from "../context/UserContext";
+import { useUser } from "@context/UserContext";
 import axios from "axios";
-import { API } from "../constants/routes";
+import { API } from "@constants/routes";
 
 export interface UserInputProps {
   email: string;

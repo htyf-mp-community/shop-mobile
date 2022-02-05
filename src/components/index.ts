@@ -11,3 +11,4 @@ export { default as LandingIcon } from "./LandingIcon/index";
 export { default as Avatar } from "./Avatar/index";
 export { default as Available } from "./AvailableProduct/index";
 export { default as SkeletonPlaceholder } from "./Skeleton/index";
+export { default as Container } from "./Container/index";

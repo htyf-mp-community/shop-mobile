@@ -1,4 +1,4 @@
-import { Colors, radius } from "../../constants/styles";
+import { Colors, radius } from "@constants/styles";
 import { StyleProp, ViewStyle } from "react-native";
 
 export default {

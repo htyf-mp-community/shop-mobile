@@ -1,16 +1,16 @@
 import { DarkTheme, NavigationContainer } from "@react-navigation/native";
 import React from "react";
-import { useUser } from "../context/UserContext";
+import { useUser } from "@context/UserContext";
 import { useEffect } from "react";
 import { UploadExpoTokenToServer } from "../notifications/MainNotifications";
 import useNotifications from "../notifications/MainNotifications";
 import { createSharedElementStackNavigator } from "react-navigation-shared-element";
-import { RootStackParams } from "../@types/types";
-import useCheckToken from "../hooks/useCheckToken";
+import type { RootStackParams } from "../@types/types";
+import useCheckToken from "@hooks/useCheckToken";
 import * as Screen from "./Screens";
 import * as Option from "./options";
 import { StatusBar } from "expo-status-bar";
-import useColorTheme from "../context/ThemeContext";
+import useColorTheme from "@context/ThemeContext";
 
 const Stack = createSharedElementStackNavigator<RootStackParams>();
 

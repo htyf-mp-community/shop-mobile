@@ -1,3 +1,4 @@
+import React from "react";
 import "@testing-library/jest-native/extend-expect";
 import { act, fireEvent, render, waitFor } from "@testing-library/react-native";
 import CartList from "../../modules/CartList";

@@ -1,15 +1,13 @@
 import { useNavigation } from "@react-navigation/core";
 import React from "react";
-import { View, Dimensions } from "react-native";
-import Button from "../../components/Button/Button";
-import { Colors } from "../../constants/styles";
+import { View } from "react-native";
+import { Button } from "@components/index";
 import { AntDesign } from "@expo/vector-icons";
-import Avatar from "../User/Avatar/Avatar";
+import Avatar from "@modules/User/Avatar/Avatar";
 import { useNavigationProps } from "../../@types/types";
 import Animated from "react-native-reanimated";
-
 import styles from "./styles";
-import useColorTheme from "../../context/ThemeContext";
+import useColorTheme from "@context/ThemeContext";
 
 interface SidebarProps {
   children: React.ReactNode;

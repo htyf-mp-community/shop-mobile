@@ -1,9 +1,11 @@
+import React from "react";
+import { View, Text, StyleProp, ViewStyle } from "react-native";
+import useColorTheme from "@context/ThemeContext";
+
 interface AvailableProps {
   quantity: number;
   styles?: StyleProp<ViewStyle>;
 }
-import { View, Text, StyleProp, ViewStyle } from "react-native";
-import useColorTheme from "../../context/ThemeContext";
 
 export default function Available({ quantity, styles }: AvailableProps) {
   const isInStock = quantity > 0;

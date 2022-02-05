@@ -1,5 +1,5 @@
 import React, { useContext, createContext, useState } from "react";
-import {
+import type {
   UserContextProviderType,
   UserContextType,
   UserType,
@@ -20,7 +20,7 @@ const User = createContext<UserContextType>({
   user: init,
   ReadUser: () => {},
   RemoveUser: () => {},
-  SaveUser: () => {},
+  SaveUser: (props: UserType) => {},
   setUser: () => {},
 });
 

@@ -1,12 +1,12 @@
 import { Formik } from "formik";
 import React from "react";
 import { KeyboardAvoidingView } from "react-native";
-import Button from "../../components/Button/Button";
-import Input from "../../components/Input/Input";
-import { Colors } from "../../constants/styles";
+import Button from "@components/Button/Button";
+import Input from "@components/Input/Input";
+import { Colors } from "@constants/styles";
 import styles from "./styles";
 import schema from "./schema";
-import type { UserInputProps } from "../../hooks/useAuth";
+import type { UserInputProps } from "@hooks/useAuth";
 
 interface AuthFormProps {
   onSubmit: ({ email, password }: UserInputProps) => void;

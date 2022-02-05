@@ -1,8 +1,8 @@
 import AsyncStorageLib from "@react-native-async-storage/async-storage";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useColorScheme } from "react-native";
-import { Colors } from "../constants/styles";
-import { notUndefined } from "../functions/typecheckers";
+import { Colors } from "@constants/styles";
+import { notUndefined } from "@functions/typecheckers";
 
 type Variant = "light" | "dark";
 
@@ -32,13 +32,13 @@ const KEY = "SHOP_CURRENT_THEME";
 
 export const ThemeContextProvider: React.FC = ({ children }) => {
   const colorScheme = useColorScheme()! as Variant;
+
   const [{ theme, current }, setTheme] = useState<{
     theme: typeof THEMES.dark;
     current: Variant;
   }>({
-    //theme: THEMES[colorScheme],
-    theme: THEMES["light"],
-    current: "light",
+    theme: THEMES[colorScheme],
+    current: colorScheme,
   });
 
   useEffect(() => {

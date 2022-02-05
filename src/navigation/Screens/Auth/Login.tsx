@@ -1,11 +1,12 @@
 import React from "react";
 import AuthForm from "../../../modules/AuthForm/AuthForm";
 import useAuth from "../../../hooks/useAuth";
-import { View, Text, ActivityIndicator } from "react-native";
+import { Text, ActivityIndicator } from "react-native";
 import AuthModal from "./Modal";
 import styles from "./styles";
 import useColorTheme from "../../../context/ThemeContext";
 import { Button } from "../../../components";
+import { Container } from "../../../components";
 
 export default function LoginScreen() {
   const { onLogin, error, loading, onClear } = useAuth("login");
@@ -13,7 +14,7 @@ export default function LoginScreen() {
 
   if (error) {
     return (
-      <View style={styles.container}>
+      <Container centerVertical>
         <AuthModal>
           <Text style={[styles.text, { color: theme.text, fontSize: 50 }]}>
             Oops...
@@ -27,12 +28,12 @@ export default function LoginScreen() {
             style={{ margin: 20, justifyContent: "center" }}
           />
         </AuthModal>
-      </View>
+      </Container>
     );
   }
 
   return (
-    <View style={styles.container}>
+    <Container centerVertical>
       {loading && !error && (
         <AuthModal>
           <Text style={[styles.text, { color: theme.text }]}>Please Wait</Text>
@@ -41,6 +42,6 @@ export default function LoginScreen() {
       )}
 
       <AuthForm onSubmit={onLogin} header="Login" />
-    </View>
+    </Container>
   );
 }

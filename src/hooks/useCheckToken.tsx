@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect } from "react";
-import { API } from "../constants/routes";
-import { USER_PREFIX, useUser } from "../context/UserContext";
+import { API } from "@constants/routes";
+import { USER_PREFIX, useUser } from "@context/UserContext";
 import { Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { UserType } from "../@types/types";

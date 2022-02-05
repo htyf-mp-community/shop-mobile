@@ -1,5 +1,5 @@
-import "@testing-library/jest-native/extend-expect";
 import React from "react";
+import "@testing-library/jest-native/extend-expect";
 import { render } from "@testing-library/react-native";
 import Available from "../../components/AvailableProduct/index";
 
@@ -11,7 +11,7 @@ describe("Available Component", () => {
   test("It has green color AND text if product is in stock", async () => {
     const { queryByText, getByTestId } = render(<Available quantity={10} />);
 
-    queryByText(/Available/);
+    queryByText(/Available/i);
     expect(getByTestId("STATUS.INDICATOR")).toHaveStyle({
       backgroundColor: "green",
     });
@@ -23,7 +23,7 @@ describe("Available Component", () => {
   test("It has red color AND text if product is OUT of stock", () => {
     const { queryByText, getByTestId } = render(<Available quantity={0} />);
 
-    queryByText(/Not Available/);
+    queryByText(/Not Available/i);
     expect(getByTestId("STATUS.INDICATOR")).toHaveStyle({
       backgroundColor: "red",
     });

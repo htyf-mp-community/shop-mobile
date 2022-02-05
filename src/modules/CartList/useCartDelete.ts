@@ -1,9 +1,9 @@
 import axios from "axios";
-import { useUser } from "../../context/UserContext";
-import { API } from "../../constants/routes";
-import { useAppDispatch } from "../../hooks/hooks";
-import { cartActions } from "../../redux/Cart";
-import mode from "../../constants/settings";
+import { useUser } from "@context/UserContext";
+import { API } from "@constants/routes";
+import { useAppDispatch } from "@hooks/hooks";
+import { cartActions } from "@redux/Cart";
+import mode from "@constants/settings";
 
 export default function useCartDelete() {
   const { user } = useUser();

@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { API } from "../constants/routes";
-import { useUser } from "../context/UserContext";
-import { notUndefined } from "../functions/typecheckers";
+import { API } from "@constants/routes";
+import { useUser } from "@context/UserContext";
+import { notUndefined } from "@functions/typecheckers";
 
 interface StateProps<T> {
   data: T;
