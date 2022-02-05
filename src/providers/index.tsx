@@ -8,14 +8,20 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 interface AppProvidersProps {
   children: ReactNode;
+  onSplashScreen: () => void;
 }
 
-export default function AppProviders({ children }: AppProvidersProps) {
+export default function AppProviders({
+  children,
+  onSplashScreen,
+}: AppProvidersProps) {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <Provider store={store}>
         <ThemeContextProvider>
-          <UserContextProvider>{children}</UserContextProvider>
+          <UserContextProvider onSplashScreen={onSplashScreen}>
+            {children}
+          </UserContextProvider>
         </ThemeContextProvider>
       </Provider>
     </GestureHandlerRootView>

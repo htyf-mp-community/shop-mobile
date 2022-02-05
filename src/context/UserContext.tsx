@@ -24,7 +24,10 @@ const User = createContext<UserContextType>({
   setUser: () => {},
 });
 
-export const UserContextProvider = ({ children }: UserContextProviderType) => {
+export const UserContextProvider = ({
+  children,
+  onSplashScreen,
+}: UserContextProviderType) => {
   const [user, setUser] = useState<UserType>(init);
 
   const setLoggedIn = () => setUser((p) => ({ ...p, isLoggedIn: true }));
@@ -52,6 +55,8 @@ export const UserContextProvider = ({ children }: UserContextProviderType) => {
       }
     } catch (error) {
       console.warn(error);
+    } finally {
+      onSplashScreen();
     }
   }
 

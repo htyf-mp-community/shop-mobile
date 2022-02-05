@@ -6,7 +6,7 @@ import { AntDesign } from "@expo/vector-icons";
 import Avatar from "@modules/User/Avatar/Avatar";
 import { useNavigationProps } from "../../@types/types";
 import Animated from "react-native-reanimated";
-import styles from "./styles";
+import styles from "./Sidebar.styles";
 import useColorTheme from "@context/ThemeContext";
 
 interface SidebarProps {
@@ -30,7 +30,7 @@ export default function Sidebar({
         <Avatar
           hide
           avatarStyles={{
-            backgroundColor: theme.primary100,
+            backgroundColor: "#131d33",
           }}
         />
 

@@ -39,7 +39,7 @@ export default function App() {
     prepare();
   }, []);
 
-  const onLayoutRootView = useCallback(async () => {
+  const onSplashScreen = useCallback(async () => {
     try {
       if (appReady) {
         await SplashScreen.hideAsync();
@@ -52,11 +52,8 @@ export default function App() {
   }
 
   return (
-    <SafeAreaView
-      style={{ flex: 1, backgroundColor: Colors.primary }}
-      onLayout={onLayoutRootView}
-    >
-      <AppProviders>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.primary }}>
+      <AppProviders onSplashScreen={onSplashScreen}>
         <MainNavigator />
       </AppProviders>
     </SafeAreaView>

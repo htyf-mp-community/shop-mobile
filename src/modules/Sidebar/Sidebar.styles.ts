@@ -28,8 +28,9 @@ const styles = StyleSheet.create({
     width: WIDTH * 0.5,
     marginTop: 10,
     padding: 20,
-    backgroundColor: Colors.primary,
+    backgroundColor: "#131d33",
     alignItems: "center",
+    borderRadius: 10,
   },
   sidebar: {
     shadowColor: "#000",

@@ -3,6 +3,7 @@ import { RouteProp } from "@react-navigation/native";
 
 export type UserContextProviderType = {
   children: React.ReactNode;
+  onSplashScreen: () => void;
 };
 
 export interface ProductImageProps {
