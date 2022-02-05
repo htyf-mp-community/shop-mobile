@@ -107,8 +107,8 @@ export default function Checkout({
               />
 
               <Button
-                disabled={isValid || dirty}
                 variant={isValid && dirty ? "primary" : "disabled"}
+                disabled={!(isValid && dirty)}
                 text={`PAY $${total}`}
                 icon={
                   <AntDesign
