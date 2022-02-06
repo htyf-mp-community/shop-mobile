@@ -33,11 +33,4 @@ export default StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
   },
-  button: {
-    margin: 10,
-    justifyContent: "center",
-    alignItems: "center",
-    width: "60%",
-    backgroundColor: "transparent",
-  },
 });

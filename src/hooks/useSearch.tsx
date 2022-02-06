@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { useUser } from "@context/UserContext";
 import axios from "axios";
-import { useUser } from "../../../context/UserContext";
-import { SuggestionType } from "../../../@types/types";
-import { API } from "../../../constants/routes";
+import { SuggestionType } from "/@types/types";
+import { API } from "constants/routes";
 
 export default function useSearch() {
   const [query, setQuery] = useState("");
@@ -30,11 +30,9 @@ export default function useSearch() {
             },
           });
 
-          if (data !== null) {
-            setSuggestion(data);
-          }
+          setSuggestion(data);
         } catch (error) {
-          console.log(error);
+          console.warn("./navigation/Search/Form.tsx: ", error);
         }
       }
     }, 500);
@@ -45,5 +43,5 @@ export default function useSearch() {
     };
   }, [query]);
 
-  return { suggestion, setQuery, query };
+  return { setQuery, query, suggestion };
 }

@@ -95,8 +95,7 @@ export const accountSettingsOption: StackNavigationOptions = {
 };
 
 export const searchOptions: StackNavigationOptions = {
-  headerTitleAlign: "center",
-  headerTitle: "Searched Phrase",
+  headerShown: false,
   ...horizontalAnimation,
 };
 

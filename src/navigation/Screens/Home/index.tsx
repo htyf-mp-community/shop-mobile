@@ -114,8 +114,6 @@ export default function Home() {
             sharedID="All"
             refresh={refresh}
           />
-
-          <Newsletter />
         </ScrollView>
       </Sidebar>
     </SafeAreaView>

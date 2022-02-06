@@ -1,67 +1,52 @@
 import { useNavigation } from "@react-navigation/native";
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useWindowDimensions, View } from "react-native";
-import { SuggestionType, useNavigationProps } from "../../../@types/types";
-import Input from "../../../components/Input/Input";
-import Suggestion from "../../../components/Suggestion";
-import { API } from "../../../constants/routes";
-import { Colors } from "../../../constants/styles";
-import useColorTheme from "../../../context/ThemeContext";
-import { useUser } from "../../../context/UserContext";
+import {
+  Container,
+  Suggestion,
+  Input,
+  Header,
+  Button,
+} from "@components/index";
+import React, { useCallback, useRef } from "react";
+import { FlatList, useWindowDimensions, Text } from "react-native";
+import { useNavigationProps } from "/@types/types";
+import { Colors } from "constants/styles";
+import useSearch from "hooks/useSearch";
+import BottomSheet, { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
 
 export default function SearchScreen() {
   const { width } = useWindowDimensions();
-  const [query, setQuery] = useState("");
-  const [suggestion, setSuggestion] = useState<SuggestionType[]>([]);
-
-  const {
-    user: { token },
-  } = useUser();
-
-  useEffect(() => {
-    const cancelToken = axios.CancelToken.source();
-
-    const delay = setTimeout(async () => {
-      if (query.trim() !== "") {
-        try {
-          const { data } = await axios({
-            method: "GET",
-            headers: {
-              token,
-            },
-            url: `${API}/products/suggestions`,
-            cancelToken: cancelToken.token,
-            params: {
-              q: query,
-            },
-          });
-
-          setSuggestion(data);
-        } catch (error) {
-          console.warn("./navigation/Search/Form.tsx: ", error);
-        }
-      }
-    }, 500);
-
-    return () => {
-      cancelToken.cancel();
-      clearTimeout(delay);
-    };
-  }, [query]);
-
+  const sheetRef = useRef<BottomSheet>(null);
   const navigation = useNavigation<useNavigationProps>();
 
-  const { theme } = useColorTheme();
+  const { query, setQuery, suggestion } = useSearch();
+
+  function onSheetOpen() {
+    sheetRef.current?.snapToIndex(0);
+  }
+
+  const renderBackdrop = useCallback(
+    (props) => (
+      <BottomSheetBackdrop
+        {...props}
+        disappearsOnIndex={-1}
+        appearsOnIndex={0}
+      />
+    ),
+    []
+  );
 
   return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: "center",
-        backgroundColor: theme.primary,
-      }}
-    >
+    <Container centerVertical>
+      <Header
+        children={
+          <Button
+            onPress={onSheetOpen}
+            text="Filters"
+            style={{ backgroundColor: Colors.primary, padding: 5 }}
+            fontStyle={{ color: "#00D85D" }}
+          />
+        }
+      />
       <Input
         value={query}
         setValue={setQuery}
@@ -72,13 +57,35 @@ export default function SearchScreen() {
           margin: 0,
         }}
       />
-      {suggestion.map((suggestion) => (
-        <Suggestion
-          key={suggestion.prod_id}
-          navigation={navigation}
-          {...suggestion}
-        />
-      ))}
-    </View>
+
+      <FlatList
+        data={suggestion}
+        keyExtractor={({ prod_id }) => prod_id.toString()}
+        renderItem={({ item }) => (
+          <Suggestion navigation={navigation} {...item} />
+        )}
+      />
+
+      <BottomSheet
+        ref={sheetRef}
+        snapPoints={["60%"]}
+        index={-1}
+        backdropComponent={renderBackdrop}
+        enablePanDownToClose
+        backgroundStyle={{
+          backgroundColor: Colors.primary100,
+        }}
+        handleIndicatorStyle={{
+          backgroundColor: "#00D85D",
+        }}
+        style={{ padding: 10 }}
+      >
+        <Text
+          style={{ fontSize: 20, fontFamily: "PoppinsBold", color: "#00D85D" }}
+        >
+          Test
+        </Text>
+      </BottomSheet>
+    </Container>
   );
 }
