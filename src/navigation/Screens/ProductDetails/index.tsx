@@ -1,26 +1,26 @@
-import React from "react";
+import { useState, useCallback } from "react";
 import {
   ScrollView,
   RefreshControl,
   View,
   useWindowDimensions,
 } from "react-native";
-import ImagesCarusel from "../../../modules/ImagesCarusel/ImagesCarusel";
+import ImagesCarusel from "@modules/ImagesCarusel/ImagesCarusel";
 import ProductDetailsText from "./components/ProductDetailsText/ProductDetailsText";
 import ProductDetailsButtons from "./components/ProductDetailsButtons/ProductDetailsButtons";
 import { useIsFocused } from "@react-navigation/native";
-import useFetch from "../../../utils/hooks/useFetch";
+import useFetch from "@utils/hooks/useFetch";
 import {
   Product,
   ProductImageProps,
   ScreenNavigationProps,
-} from "../../../@types/types";
-import { wait } from "../../../functions/wait";
-import AddToCart from "../../../modules/AddToCart/AddToCart";
+} from "/@types/types";
+import { wait } from "@functions/wait";
+import AddToCart from "@modules/AddToCart/AddToCart";
 import styles from "./styles";
 import Animated, { ZoomIn } from "react-native-reanimated";
 import useColorTheme from "@utils/context/ThemeContext";
-import { SkeletonPlaceholder } from "../../../components";
+import { SkeletonPlaceholder } from "@components/index";
 
 export default function ProductDetails({
   route,
@@ -28,9 +28,9 @@ export default function ProductDetails({
   const { prod_id, image, sharedID } = route.params;
   const isFocused = useIsFocused();
 
-  const [refreshing, setRefreshing] = React.useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
-  const onRefresh = React.useCallback(() => {
+  const onRefresh = useCallback(() => {
     setRefreshing(true);
     wait(1000).then(() => setRefreshing(false));
   }, []);

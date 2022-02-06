@@ -4,7 +4,11 @@ import axios from "axios";
 import { SuggestionType } from "/@types/types";
 import { API } from "constants/routes";
 
-export default function useSearch() {
+export default function useSearch(params: {
+  title?: string;
+  price?: string;
+  category?: string;
+}) {
   const [query, setQuery] = useState("");
   const [suggestion, setSuggestion] = useState<SuggestionType[]>([]);
 
@@ -27,6 +31,7 @@ export default function useSearch() {
             cancelToken: cancelToken.token,
             params: {
               q: query,
+              ...params,
             },
           });
 
@@ -41,7 +46,7 @@ export default function useSearch() {
       cancelToken.cancel();
       clearTimeout(delay);
     };
-  }, [query]);
+  }, [query, params]);
 
   return { setQuery, query, suggestion };
 }

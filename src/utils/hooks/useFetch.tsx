@@ -50,7 +50,7 @@ export default function useFetch<T>(
           }
         }
       } catch (error: any) {
-        if (!axios.isCancel(error)) {
+        if (!axios.isCancel(error) && mounted.current) {
           setState((p) => ({
             ...p,
             error: error?.response?.data?.message || error.message,

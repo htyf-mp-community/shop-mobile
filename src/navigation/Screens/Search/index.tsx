@@ -6,19 +6,30 @@ import {
   Header,
   Button,
 } from "@components/index";
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { FlatList, useWindowDimensions, Text } from "react-native";
 import { useNavigationProps } from "/@types/types";
 import { Colors } from "constants/styles";
-import useSearch from "utils/hooks/useSearch";
+import useSearch from "@utils/hooks/useSearch";
 import BottomSheet, { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
+import Filters from "./components/Filters";
 
 export default function SearchScreen() {
   const { width } = useWindowDimensions();
   const sheetRef = useRef<BottomSheet>(null);
   const navigation = useNavigation<useNavigationProps>();
 
-  const { query, setQuery, suggestion } = useSearch();
+  const [params, setParams] = useState<{
+    [key: string]: string;
+  }>({});
+
+  function onSetParams(key: string, value: string) {
+    setParams((p) => ({
+      ...p,
+      [key]: value,
+    }));
+  }
+  const { query, setQuery, suggestion } = useSearch(params);
 
   function onSheetOpen() {
     sheetRef.current?.snapToIndex(0);
@@ -34,6 +45,8 @@ export default function SearchScreen() {
     ),
     []
   );
+
+  console.log(params);
 
   return (
     <Container centerVertical>
@@ -78,13 +91,8 @@ export default function SearchScreen() {
         handleIndicatorStyle={{
           backgroundColor: "#00D85D",
         }}
-        style={{ padding: 10 }}
       >
-        <Text
-          style={{ fontSize: 20, fontFamily: "PoppinsBold", color: "#00D85D" }}
-        >
-          Test
-        </Text>
+        <Filters onSetParams={onSetParams} />
       </BottomSheet>
     </Container>
   );
