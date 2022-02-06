@@ -5,7 +5,7 @@ import Input from "../Input/Input";
 
 import { Feather } from "@expo/vector-icons";
 import { Colors } from "../../constants/styles";
-import useColorTheme from "../../context/ThemeContext";
+import useColorTheme from "@utils/context/ThemeContext";
 
 export default function Newsletter() {
   const { width } = useWindowDimensions();

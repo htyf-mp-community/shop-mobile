@@ -4,7 +4,7 @@ import Avatar from "../../../modules/User/Avatar/Avatar";
 import Settings from "../../../modules/User/Settings/Settings";
 import Button from "../../../components/Button/Button";
 import { ScreenNavigationProps } from "../../../@types/types";
-import useColorTheme from "../../../context/ThemeContext";
+import useColorTheme from "@utils/context/ThemeContext";
 
 export default function User({
   navigation,

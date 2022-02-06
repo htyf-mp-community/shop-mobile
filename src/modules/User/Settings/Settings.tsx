@@ -4,8 +4,8 @@ import { useState } from "react";
 import { View, Text, StyleSheet, Switch } from "react-native";
 import { API, ENDPOINTS } from "../../../constants/routes";
 import { Colors } from "../../../constants/styles";
-import useColorTheme from "../../../context/ThemeContext";
-import { useUser } from "../../../context/UserContext";
+import useColorTheme from "@utils/context/ThemeContext";
+import { useUser } from "@utils/context/UserContext";
 import SignOut from "../../Signout/Signout";
 
 export default function Settings() {

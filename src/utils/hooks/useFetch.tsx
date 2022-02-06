@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { API } from "@constants/routes";
-import { useUser } from "@context/UserContext";
+import { useUser } from "@utils/context/UserContext";
 import { notUndefined } from "@functions/typecheckers";
 
 interface StateProps<T> {

@@ -1,6 +1,6 @@
 import Button from "../../components/Button/Button";
 import React, { useState } from "react";
-import { useUser } from "../../context/UserContext";
+import { useUser } from "@utils/context/UserContext";
 
 export default function SignOut() {
   const { RemoveUser } = useUser();

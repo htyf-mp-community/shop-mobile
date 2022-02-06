@@ -19,7 +19,7 @@ import { wait } from "../../../functions/wait";
 import AddToCart from "../../../modules/AddToCart/AddToCart";
 import styles from "./styles";
 import Animated, { ZoomIn } from "react-native-reanimated";
-import useColorTheme from "../../../context/ThemeContext";
+import useColorTheme from "@utils/context/ThemeContext";
 import { SkeletonPlaceholder } from "../../../components";
 
 export default function ProductDetails({

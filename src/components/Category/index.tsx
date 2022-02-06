@@ -5,7 +5,7 @@ import { Text, TouchableOpacity } from "react-native";
 import { useNavigationProps } from "../../@types/types";
 import { API } from "../../constants/routes";
 import { Colors } from "../../constants/styles";
-import { useUser } from "../../context/UserContext";
+import { useUser } from "@utils/context/UserContext";
 
 type CategoryProps = {
   category: string;

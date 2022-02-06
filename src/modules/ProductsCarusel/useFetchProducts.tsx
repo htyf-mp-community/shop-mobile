@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from "react";
 import axios, { CancelTokenSource } from "axios";
-import { useUser } from "../../context/UserContext";
+import { useUser } from "@utils/context/UserContext";
 import RemoveProductsRepetition from "../../functions/RemoveRepetition";
 import { Product } from "../../@types/types";
 

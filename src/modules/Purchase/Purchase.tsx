@@ -3,8 +3,7 @@ import React from "react";
 import { View, Text, useWindowDimensions } from "react-native";
 import { Product, useNavigationProps } from "../../@types/types";
 import Button from "../../components/Button/Button";
-import { Colors } from "../../constants/styles";
-import useColorTheme from "../../context/ThemeContext";
+import useColorTheme from "@utils/context/ThemeContext";
 import { CalcTotalCartPrice } from "../../functions/CalcTotalCartPrice";
 
 interface IPurchaseProps {

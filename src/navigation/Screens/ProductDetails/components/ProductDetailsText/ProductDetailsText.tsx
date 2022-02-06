@@ -4,7 +4,7 @@ import { Available, Avatar } from "@components/index";
 import styles from "./productDetailsStyle";
 import { Product } from "/@types/types";
 import Delivery from "@modules/Delivery";
-import useColorTheme from "@context/ThemeContext";
+import useColorTheme from "@utils/context/ThemeContext";
 
 export default function ProductDetailsText({
   title,
@@ -26,7 +26,7 @@ export default function ProductDetailsText({
       </Text>
 
       <View style={[styles.container]}>
-        <Avatar url={require("../../assets/notfound.png")} />
+        <Avatar url={require("@assets/notfound.png")} />
         <Available quantity={quantity} styles={{ margin: 5 }} />
         <Delivery />
 

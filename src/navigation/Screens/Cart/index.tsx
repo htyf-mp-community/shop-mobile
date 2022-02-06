@@ -7,7 +7,7 @@ import useFetch from "../../../utils/hooks/useFetch";
 import CartList from "../../../modules/CartList";
 import { useAppDispatch, useAppSelector } from "../../../utils/hooks/hooks";
 import { cartActions } from "../../../redux/Cart";
-import useColorTheme from "../../../context/ThemeContext";
+import useColorTheme from "@utils/context/ThemeContext";
 import { SkeletonPlaceholder } from "../../../components";
 import { notEmpty } from "../../../functions/typecheckers";
 

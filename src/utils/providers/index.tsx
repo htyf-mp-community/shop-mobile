@@ -1,8 +1,8 @@
 import { Provider } from "react-redux";
 import store from "@redux/store";
 
-import { ThemeContextProvider } from "@context/ThemeContext";
-import { UserContextProvider } from "@context/UserContext";
+import { ThemeContextProvider } from "@utils/context/ThemeContext";
+import { UserContextProvider } from "@utils/context/UserContext";
 import { ReactNode } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 

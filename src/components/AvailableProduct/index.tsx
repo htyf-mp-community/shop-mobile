@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleProp, ViewStyle } from "react-native";
-import useColorTheme from "@context/ThemeContext";
+import useColorTheme from "@utils/context/ThemeContext";
 
 interface AvailableProps {
   quantity: number;

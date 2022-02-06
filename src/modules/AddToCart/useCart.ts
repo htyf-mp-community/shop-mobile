@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useUser } from "../../context/UserContext";
+import { useUser } from "@utils/context/UserContext";
 import axios from "axios";
 import { ENDPOINTS } from "../../constants/routes";
 

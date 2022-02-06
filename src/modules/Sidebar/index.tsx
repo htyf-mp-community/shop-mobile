@@ -7,7 +7,7 @@ import Avatar from "@modules/User/Avatar/Avatar";
 import { useNavigationProps } from "../../@types/types";
 import Animated from "react-native-reanimated";
 import styles from "./Sidebar.styles";
-import useColorTheme from "@context/ThemeContext";
+import useColorTheme from "@utils/context/ThemeContext";
 
 interface SidebarProps {
   children: React.ReactNode;

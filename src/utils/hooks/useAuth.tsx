@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useUser } from "@context/UserContext";
+import { useUser } from "@utils/context/UserContext";
 import axios from "axios";
 import { API } from "@constants/routes";
 

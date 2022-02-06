@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { StyleProp, View, ViewStyle } from "react-native";
-import useColorTheme from "../../context/ThemeContext";
+import useColorTheme from "@utils/context/ThemeContext";
 
 interface ContainerProps {
   children: ReactNode;

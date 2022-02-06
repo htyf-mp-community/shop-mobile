@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useUser } from "@context/UserContext";
+import { useUser } from "@utils/context/UserContext";
 import axios from "axios";
 import { SuggestionType } from "/@types/types";
 import { API } from "constants/routes";

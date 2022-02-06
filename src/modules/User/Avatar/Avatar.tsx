@@ -8,7 +8,7 @@ import {
   StyleProp,
 } from "react-native";
 import { Colors } from "../../../constants/styles";
-import { useUser } from "../../../context/UserContext";
+import { useUser } from "@utils/context/UserContext";
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("screen");
 

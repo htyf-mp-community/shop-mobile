@@ -4,7 +4,7 @@ interface AuthModalProps {
 
 import Animated, { SlideInDown } from "react-native-reanimated";
 import styles from "../Auth.styles";
-import useColorTheme from "../../../../context/ThemeContext";
+import useColorTheme from "@utils/context/ThemeContext";
 import { ReactNode } from "react";
 
 export default function AuthModal({ children }: AuthModalProps) {

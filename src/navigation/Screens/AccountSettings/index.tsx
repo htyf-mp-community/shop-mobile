@@ -1,6 +1,6 @@
 import React, { useLayoutEffect, useRef, useState } from "react";
 import { View, Text } from "react-native";
-import useColorTheme from "@context/ThemeContext";
+import useColorTheme from "@utils/context/ThemeContext";
 import styles from "./AccountSettings.styles";
 import { Avatar, Container, BackButton } from "@components/index";
 import BottomSheet from "@gorhom/bottom-sheet";

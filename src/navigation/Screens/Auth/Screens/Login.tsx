@@ -4,7 +4,7 @@ import useAuth from "utils/hooks/useAuth";
 import { Text, ActivityIndicator } from "react-native";
 import AuthModal from "../components/Modal";
 import styles from "../Auth.styles";
-import useColorTheme from "@context/ThemeContext";
+import useColorTheme from "@utils/context/ThemeContext";
 import { Button, Container } from "@components/index";
 
 export default function LoginScreen() {

@@ -6,7 +6,7 @@ import { Colors } from "../../constants/styles";
 import { MaterialIcons } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 import { useNavigationProps } from "../../@types/types";
-import useColorTheme from "../../context/ThemeContext";
+import useColorTheme from "@utils/context/ThemeContext";
 
 interface SearchBarProps {
   toggleSidebar: () => void;

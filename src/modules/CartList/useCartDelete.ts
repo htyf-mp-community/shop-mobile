@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useUser } from "@context/UserContext";
+import { useUser } from "@utils/context/UserContext";
 import { API } from "@constants/routes";
 import { useAppDispatch } from "utils/hooks/hooks";
 import { cartActions } from "@redux/Cart";

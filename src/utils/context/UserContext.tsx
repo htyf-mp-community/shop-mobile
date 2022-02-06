@@ -3,7 +3,7 @@ import type {
   UserContextProviderType,
   UserContextType,
   UserType,
-} from "../@types/types";
+} from "/@types/types";
 
 import { setItemAsync, getItemAsync, deleteItemAsync } from "expo-secure-store";
 

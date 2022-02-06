@@ -3,17 +3,14 @@ import {
   RefreshControl,
   SafeAreaView,
   ScrollView,
-  StyleSheet,
 } from "react-native";
 import React from "react";
-import { Colors } from "../../../constants/styles";
 import { useState } from "react";
 import ProductsCarusel from "../../../modules/ProductsCarusel/ProductsCarusel";
 import { useCallback } from "react";
 import { ENDPOINTS } from "../../../constants/routes";
 import Sidebar from "../../../modules/Sidebar";
 import Categories from "../../../modules/Categories";
-import Newsletter from "../../../components/Newsletter";
 import { wait } from "../../../functions/wait";
 import Header from "../../../modules/Header";
 import DailySale from "../../../modules/DailySale";
@@ -24,9 +21,8 @@ import {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
-import { Gesture } from "react-native-gesture-handler";
-import { StatusBar } from "expo-status-bar";
-import useColorTheme from "../../../context/ThemeContext";
+
+import useColorTheme from "@utils/context/ThemeContext";
 
 const { width: WIDTH } = Dimensions.get("window");
 

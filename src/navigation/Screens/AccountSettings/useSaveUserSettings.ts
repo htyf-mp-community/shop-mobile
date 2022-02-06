@@ -1,6 +1,6 @@
 import axios from "axios";
 import { API } from "constants/routes";
-import { useUser } from "context/UserContext";
+import { useUser } from "@utils/context/UserContext";
 
 export default function useSaveUserSettings(onClose: () => void) {
   const { user } = useUser();
