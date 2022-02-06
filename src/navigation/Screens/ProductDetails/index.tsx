@@ -6,10 +6,10 @@ import {
   useWindowDimensions,
 } from "react-native";
 import ImagesCarusel from "../../../modules/ImagesCarusel/ImagesCarusel";
-import ProductDetailsText from "../../../modules/ProductDetailsText/ProductDetailsText";
-import ProductDetailsButtons from "../../../modules/ProductDetailsButtons/ProductDetailsButtons";
+import ProductDetailsText from "./components/ProductDetailsText/ProductDetailsText";
+import ProductDetailsButtons from "./components/ProductDetailsButtons/ProductDetailsButtons";
 import { useIsFocused } from "@react-navigation/native";
-import useFetch from "../../../hooks/useFetch";
+import useFetch from "../../../utils/hooks/useFetch";
 import {
   Product,
   ProductImageProps,

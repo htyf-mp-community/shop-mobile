@@ -1,4 +1,4 @@
-import styles from "./styles";
+import styles from "../AccountSettings.styles";
 import { View, Text } from "react-native";
 import Edit from "./Edit";
 

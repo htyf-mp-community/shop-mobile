@@ -2,8 +2,8 @@ import React from "react";
 import { createSharedElementStackNavigator } from "react-navigation-shared-element";
 import type { RootStackParams } from "/@types/types";
 import useColorTheme from "@context/ThemeContext";
-import LoginScreen from "./Login";
-import RegisterScreen from "./Register";
+import LoginScreen from "./Screens/Login";
+import RegisterScreen from "./Screens/Register";
 
 const Stack = createSharedElementStackNavigator<RootStackParams>();
 

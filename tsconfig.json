@@ -7,14 +7,15 @@
       "*": ["src/*"],
       "@components/*": ["src/components/*"],
       "@context/*": ["src/context/*"],
-      "@hooks/*": ["src/hooks/*"],
+      "@hooks/*": ["src/utils/hooks/*"],
       "@redux/*": ["src/redux/*"],
       "@navigation/*": ["src/navigation/*"],
       "@modules/*": ["src/modules/*"],
       "@assets/*": ["src/assets/*"],
       "@constants/*": ["src/constants/*"],
       "@functions/*": ["src/functions/*"],
-      "@types/*": ["src/@types/*"]
+      "@types/*": ["src/@types/*"],
+      "@utils/*": ["src/utils/*"]
     }
   },
   "exclude": ["node_modules"]

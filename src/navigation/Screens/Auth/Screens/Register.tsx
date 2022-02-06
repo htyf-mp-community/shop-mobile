@@ -1,12 +1,12 @@
 import React from "react";
-import AuthForm from "../../../modules/AuthForm/AuthForm";
-import useAuth from "../../../hooks/useAuth";
+import AuthForm from "../../../../modules/AuthForm/AuthForm";
+import useAuth from "../../../../utils/hooks/useAuth";
 import { Text } from "react-native";
-import useColorTheme from "../../../context/ThemeContext";
-import styles from "./styles";
-import { Button } from "../../../components";
-import AuthModal from "./Modal";
-import { Container } from "../../../components";
+import useColorTheme from "../../../../context/ThemeContext";
+import styles from "../Auth.styles";
+import { Button } from "../../../../components";
+import AuthModal from "../components/Modal";
+import { Container } from "../../../../components";
 
 export default function RegisterScreen({ navigation }: any) {
   const { onRegister, error, status, onClear } = useAuth("register");

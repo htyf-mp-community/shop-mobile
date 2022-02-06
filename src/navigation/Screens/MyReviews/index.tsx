@@ -3,7 +3,7 @@ import { View, FlatList, useWindowDimensions } from "react-native";
 import { ProductRatingProps } from "../../../@types/types";
 import { SkeletonPlaceholder } from "../../../components";
 import { Colors } from "../../../constants/styles";
-import useFetch from "../../../hooks/useFetch";
+import useFetch from "../../../utils/hooks/useFetch";
 import Ratings from "../../../modules/Ratings/Ratings";
 
 export default function MyReviews() {

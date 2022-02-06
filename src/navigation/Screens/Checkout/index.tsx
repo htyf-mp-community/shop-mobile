@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { ScrollView } from "react-native";
 import { ScreenNavigationProps } from "/@types/types";
 import { Button, Input } from "@components/index";
-import useCheckout from "@hooks/useCheckout";
+import useCheckout from "utils/hooks/useCheckout";
 import { CardField, initStripe } from "@stripe/stripe-react-native";
 import { Formik } from "formik";
 import checkoutSchema from "./checkoutSchema";

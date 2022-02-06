@@ -3,7 +3,7 @@ import React, { useMemo, useState } from "react";
 import { View, Text, FlatList, useWindowDimensions } from "react-native";
 import { Colors } from "../../../constants/styles";
 import { HistoryResponse } from "../../../@types/types";
-import useFetch from "../../../hooks/useFetch";
+import useFetch from "../../../utils/hooks/useFetch";
 import Product from "../../../modules/Product/Product";
 import { structureOutput } from "./structure";
 import Placeholder from "../../../components/Placeholder";

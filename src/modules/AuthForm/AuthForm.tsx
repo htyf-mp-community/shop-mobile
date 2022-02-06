@@ -6,7 +6,7 @@ import Input from "@components/Input/Input";
 import { Colors } from "@constants/styles";
 import styles from "./styles";
 import schema from "./schema";
-import type { UserInputProps } from "@hooks/useAuth";
+import type { UserInputProps } from "utils/hooks/useAuth";
 
 interface AuthFormProps {
   onSubmit: ({ email, password }: UserInputProps) => void;

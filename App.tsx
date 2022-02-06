@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import MainNavigator from "./src/navigation";
 import { Colors } from "./src/constants/styles";
-import AppProviders from "./src/providers";
+import AppProviders from "./src/utils/providers/index";
 import * as SplashScreen from "expo-splash-screen";
 import * as Font from "expo-font";
 import * as Notification from "expo-notifications";

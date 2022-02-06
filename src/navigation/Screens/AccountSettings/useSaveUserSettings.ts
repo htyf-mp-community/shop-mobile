@@ -6,7 +6,7 @@ export default function useSaveUserSettings(onClose: () => void) {
   const { user } = useUser();
   async function onSave(key: string, value: string) {
     try {
-      const { data } = await axios.put(
+      await axios.put(
         `${API}/auth/credentials`,
         {
           [key]: value,

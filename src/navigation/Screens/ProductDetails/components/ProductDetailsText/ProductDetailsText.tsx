@@ -1,10 +1,10 @@
 import React from "react";
 import { View, Text } from "react-native";
-import { Available, Avatar } from "../../components";
+import { Available, Avatar } from "@components/index";
 import styles from "./productDetailsStyle";
-import { Product } from "../../@types/types";
-import Delivery from "../Delivery";
-import useColorTheme from "../../context/ThemeContext";
+import { Product } from "/@types/types";
+import Delivery from "@modules/Delivery";
+import useColorTheme from "@context/ThemeContext";
 
 export default function ProductDetailsText({
   title,

@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, Image, useWindowDimensions } from "react-native";
 import { SharedElement } from "react-navigation-shared-element";
-import useFetch from "../../hooks/useFetch";
+import useFetch from "../../utils/hooks/useFetch";
 import { ProductTypeProps } from "../Product/Product";
 import dailyStyle from "./styles";
 import { API } from "../../constants/routes";

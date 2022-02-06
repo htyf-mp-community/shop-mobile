@@ -7,7 +7,7 @@ import {
 } from "react-native";
 
 import Animated, { SlideInDown } from "react-native-reanimated";
-import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
+import { useAppDispatch, useAppSelector } from "../../../utils/hooks/hooks";
 import styles from "./styles";
 import { Ionicons } from "@expo/vector-icons";
 import { Button } from "../../../components";

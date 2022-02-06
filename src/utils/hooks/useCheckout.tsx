@@ -7,7 +7,7 @@ import { useStripe } from "@stripe/stripe-react-native";
 import { checkoutActions } from "@redux/Checkout";
 import { useAppDispatch, useAppSelector } from "./hooks";
 import { useNavigation } from "@react-navigation/native";
-import { useNavigationProps } from "../@types/types";
+import { useNavigationProps } from "../../@types/types";
 import { notUndefined } from "@functions/typecheckers";
 
 interface useCheckoutProps {

@@ -10,7 +10,7 @@ import React, { useCallback, useRef } from "react";
 import { FlatList, useWindowDimensions, Text } from "react-native";
 import { useNavigationProps } from "/@types/types";
 import { Colors } from "constants/styles";
-import useSearch from "hooks/useSearch";
+import useSearch from "utils/hooks/useSearch";
 import BottomSheet, { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
 
 export default function SearchScreen() {

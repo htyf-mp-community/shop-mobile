@@ -1,7 +1,7 @@
 import React from "react";
 import "@testing-library/jest-native/extend-expect";
 import { act, fireEvent, render, waitFor } from "@testing-library/react-native";
-import CreateReview from "../../navigation/Screens/Reviews/CreateReview";
+import CreateReview from "../../navigation/Screens/Reviews/Screens/CreateReview";
 
 jest.mock(
   "../../navigation/Screens/Reviews/CreateReview",

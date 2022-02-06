@@ -4,7 +4,7 @@ import { API } from "@constants/routes";
 import { USER_PREFIX, useUser } from "@context/UserContext";
 import { Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { UserType } from "../@types/types";
+import { UserType } from "../../@types/types";
 
 /**
  * Hook that sends request for new JWT token to the server, if current token is invalid it displays global modal and forces user to sign again

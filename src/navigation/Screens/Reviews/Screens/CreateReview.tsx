@@ -9,10 +9,10 @@ import { Button, Input, Message } from "@components/index";
 import { API } from "@constants/routes";
 import useColorTheme from "@context/ThemeContext";
 import { useUser } from "@context/UserContext";
-import useListenKeyboard from "@hooks/useListenKeyboard";
+import useListenKeyboard from "utils/hooks/useListenKeyboard";
 import StarsTouch from "@modules/Stars/Stars";
-import schema from "./schema";
-import { createStyles as styles } from "./styles";
+import schema from "../schema";
+import { createStyles as styles } from "../Reviews.styles";
 
 export default function CreateReview({
   route,

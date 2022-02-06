@@ -1,9 +1,9 @@
 import React from "react";
 import { View, Dimensions, StyleProp, ViewStyle } from "react-native";
-import Button from "../../components/Button/Button";
-import { ProductRatingProps, useNavigationProps } from "../../@types/types";
+import Button from "@components/Button/Button";
+import { ProductRatingProps, useNavigationProps } from "/@types/types";
 import { useNavigation } from "@react-navigation/native";
-import { Colors } from "../../constants/styles";
+import { Colors } from "@constants/styles";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 

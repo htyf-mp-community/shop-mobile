@@ -1,9 +1,9 @@
 import React from "react";
 import AuthForm from "@modules/AuthForm/AuthForm";
-import useAuth from "@hooks/useAuth";
+import useAuth from "utils/hooks/useAuth";
 import { Text, ActivityIndicator } from "react-native";
-import AuthModal from "./Modal";
-import styles from "./styles";
+import AuthModal from "../components/Modal";
+import styles from "../Auth.styles";
 import useColorTheme from "@context/ThemeContext";
 import { Button, Container } from "@components/index";
 

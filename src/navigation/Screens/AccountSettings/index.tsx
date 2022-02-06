@@ -1,12 +1,12 @@
 import React, { useLayoutEffect, useRef, useState } from "react";
 import { View, Text } from "react-native";
 import useColorTheme from "@context/ThemeContext";
-import styles from "./styles";
+import styles from "./AccountSettings.styles";
 import { Avatar, Container, BackButton } from "@components/index";
 import BottomSheet from "@gorhom/bottom-sheet";
-import useListenKeyboard from "hooks/useListenKeyboard";
-import useFetch from "hooks/useFetch";
-import Block from "./Block";
+import useListenKeyboard from "utils/hooks/useListenKeyboard";
+import useFetch from "utils/hooks/useFetch";
+import Block from "./components/Block";
 import SettingsBottomSheet from "modules/SettingsBottomSheet";
 
 type CurrentOptionType = "NAME" | "ADDRESS" | "PHONE_NUMBER" | "SURNAME" | "";

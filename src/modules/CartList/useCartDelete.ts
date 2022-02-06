@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useUser } from "@context/UserContext";
 import { API } from "@constants/routes";
-import { useAppDispatch } from "@hooks/hooks";
+import { useAppDispatch } from "utils/hooks/hooks";
 import { cartActions } from "@redux/Cart";
 import mode from "@constants/settings";
 

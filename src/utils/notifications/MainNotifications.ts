@@ -1,5 +1,5 @@
 import * as Notifications from "expo-notifications";
-import { ENDPOINTS } from "../constants/routes";
+import { ENDPOINTS } from "@constants/routes";
 import { useState, useRef, useEffect } from "react";
 import { registerForPushNotificationsAsync } from "./registerForPushNotificationsAsync";
 import axios from "axios";

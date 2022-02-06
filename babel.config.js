@@ -16,7 +16,7 @@ module.exports = function (api) {
           alias: {
             "@components": "./src/components",
             "@context": "./src/context",
-            "@hooks": "./src/hooks",
+            "@hooks": "./src/utils/hooks",
             "@redux": "./src/redux",
             "@navigation": "./src/navigation",
             "@modules": "./src/modules",
@@ -24,6 +24,7 @@ module.exports = function (api) {
             "@constants": "./src/constants",
             "@functions": "./src/functions",
             "@types": "./src/@types",
+            "@utils": "./src/utils",
           },
         },
       ],
