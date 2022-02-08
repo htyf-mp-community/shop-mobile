@@ -46,8 +46,6 @@ export default function SearchScreen() {
     []
   );
 
-  console.log(params);
-
   return (
     <Container centerVertical>
       <Header
@@ -92,7 +90,7 @@ export default function SearchScreen() {
           backgroundColor: "#00D85D",
         }}
       >
-        <Filters onSetParams={onSetParams} />
+        <Filters onSetParams={onSetParams} params={params} />
       </BottomSheet>
     </Container>
   );

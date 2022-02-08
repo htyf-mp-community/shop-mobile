@@ -8,7 +8,7 @@ import * as Notification from "expo-notifications";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 Notification.setNotificationHandler({
-  handleNotification: async () => ({ 
+  handleNotification: async () => ({
     shouldShowAlert: true,
     shouldPlaySound: false,
     shouldSetBadge: false,

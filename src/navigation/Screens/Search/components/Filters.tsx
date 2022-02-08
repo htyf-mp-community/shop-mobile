@@ -27,9 +27,14 @@ const pressable: StyleProp<ViewStyle> = {
 
 interface FiltersProps {
   onSetParams: (key: string, value: string) => void;
+  params: {
+    title?: string;
+    price?: string;
+    category?: string;
+  };
 }
 
-const Filters = ({ onSetParams }: FiltersProps) => {
+const Filters = ({ onSetParams, params }: FiltersProps) => {
   const { data } = useFetch<readonly string[]>("/products/categories", [], []);
 
   return (
@@ -41,7 +46,13 @@ const Filters = ({ onSetParams }: FiltersProps) => {
             <Pressable
               key={text}
               onPress={() => onSetParams("category", text)}
-              style={pressable}
+              style={[
+                pressable,
+                {
+                  backgroundColor:
+                    params.category === text ? "#00D85D" : Colors.primary,
+                },
+              ]}
             >
               <Text style={{ fontSize: 20, color: "white" }}>{text}</Text>
             </Pressable>
@@ -54,12 +65,20 @@ const Filters = ({ onSetParams }: FiltersProps) => {
           <Button
             onPress={() => onSetParams("title", "ASC")}
             text="Sort A-Z"
-            style={{ marginRight: 10, backgroundColor: Colors.primary }}
+            style={{
+              marginRight: 10,
+              backgroundColor:
+                params.title === "ASC" ? "#00D85D" : Colors.primary,
+            }}
           />
           <Button
             onPress={() => onSetParams("title", "DESC")}
             text="Sort Z-A"
-            style={{ marginRight: 10, backgroundColor: Colors.primary }}
+            style={{
+              marginRight: 10,
+              backgroundColor:
+                params.title === "DESC" ? "#00D85D" : Colors.primary,
+            }}
           />
         </View>
       </View>
@@ -69,12 +88,20 @@ const Filters = ({ onSetParams }: FiltersProps) => {
           <Button
             onPress={() => onSetParams("price", "DESC")}
             text="High-Low"
-            style={{ marginRight: 10, backgroundColor: Colors.primary }}
+            style={{
+              marginRight: 10,
+              backgroundColor:
+                params.price === "DESC" ? "#00D85D" : Colors.primary,
+            }}
           />
           <Button
             onPress={() => onSetParams("price", "ASC")}
             text="Low-High"
-            style={{ marginRight: 10, backgroundColor: Colors.primary }}
+            style={{
+              marginRight: 10,
+              backgroundColor:
+                params.price === "ASC" ? "#00D85D" : Colors.primary,
+            }}
           />
         </View>
       </View>
