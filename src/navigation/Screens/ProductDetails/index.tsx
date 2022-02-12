@@ -36,7 +36,7 @@ export default function ProductDetails({
   }, []);
 
   const { data: result, loading } = useFetch<Product>(
-    `/products/product/${prod_id}`,
+    `/products/${prod_id}`,
     [isFocused, refreshing],
     {}
   );

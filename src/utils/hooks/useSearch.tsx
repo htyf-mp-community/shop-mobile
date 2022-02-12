@@ -37,8 +37,8 @@ export default function useSearch(params: {
           });
 
           setSuggestion(data);
-        } catch (error) {
-          console.warn("./navigation/Search/Form.tsx: ", error);
+        } catch (error: any) {
+          console.warn("./navigation/Search/Form.tsx: ", error?.response?.data);
         }
       }
     }, 500);

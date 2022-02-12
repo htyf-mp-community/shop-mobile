@@ -7,12 +7,18 @@ import {
   Button,
 } from "@components/index";
 import React, { useCallback, useRef, useState } from "react";
-import { FlatList, useWindowDimensions, Text } from "react-native";
+import { FlatList, useWindowDimensions } from "react-native";
 import { useNavigationProps } from "/@types/types";
 import { Colors } from "constants/styles";
 import useSearch from "@utils/hooks/useSearch";
 import BottomSheet, { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
 import Filters from "./components/Filters";
+
+export interface Params {
+  category?: string;
+  price?: "ASC" | "DESC";
+  title?: "ASC" | "DESC";
+}
 
 export default function SearchScreen() {
   const { width } = useWindowDimensions();
@@ -20,10 +26,10 @@ export default function SearchScreen() {
   const navigation = useNavigation<useNavigationProps>();
 
   const [params, setParams] = useState<{
-    [key: string]: string;
+    [key in keyof Params]: Params[key];
   }>({});
 
-  function onSetParams(key: string, value: string) {
+  function onSetParams<T extends keyof Params>(key: T, value: Params[T]) {
     setParams((p) => ({
       ...p,
       [key]: value,

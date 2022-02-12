@@ -32,6 +32,7 @@ export default function useFetch<T>(
     (async () => {
       setState((p) => ({ ...p, loading: true }));
       try {
+        if (mounted.current === false) return;
         const { data } = await axios.get(API + path, {
           headers: {
             token: user.token,

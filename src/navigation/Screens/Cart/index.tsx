@@ -1,15 +1,15 @@
 import React from "react";
 import { Dimensions, FlatList, View } from "react-native";
-import { ProductTypeProps } from "../../../modules/Product/Product";
+import { ProductTypeProps } from "@modules/Product/Product";
 import { useIsFocused } from "@react-navigation/native";
-import Purchase from "../../../modules/Purchase/Purchase";
-import useFetch from "../../../utils/hooks/useFetch";
-import CartList from "../../../modules/CartList";
-import { useAppDispatch, useAppSelector } from "../../../utils/hooks/hooks";
-import { cartActions } from "../../../redux/Cart";
+import Purchase from "@modules/Purchase/Purchase";
+import useFetch from "@utils/hooks/useFetch";
+import CartList from "@modules/CartList";
+import { useAppDispatch, useAppSelector } from "@utils/hooks/hooks";
+import { cartActions } from "@redux/Cart";
 import useColorTheme from "@utils/context/ThemeContext";
-import { SkeletonPlaceholder } from "../../../components";
-import { notEmpty } from "../../../functions/typecheckers";
+import { SkeletonPlaceholder } from "@components/index";
+import { notEmpty } from "@functions/typecheckers";
 
 const { width, height } = Dimensions.get("screen");
 

@@ -1,15 +1,9 @@
-import {
-  View,
-  Text,
-  StyleProp,
-  TextStyle,
-  Pressable,
-  ViewStyle,
-} from "react-native";
+import { View, Text, StyleProp, TextStyle, Pressable } from "react-native";
 import useFetch from "@utils/hooks/useFetch";
 import { Colors } from "constants/styles";
 import { memo } from "react";
 import { Button } from "components";
+import { Params } from "..";
 
 const text: StyleProp<TextStyle> = {
   color: "#00D85D",
@@ -17,16 +11,8 @@ const text: StyleProp<TextStyle> = {
   fontSize: 30,
 };
 
-const pressable: StyleProp<ViewStyle> = {
-  marginRight: 10,
-  marginTop: 10,
-  backgroundColor: Colors.primary,
-  padding: 10,
-  borderRadius: 10,
-};
-
 interface FiltersProps {
-  onSetParams: (key: string, value: string) => void;
+  onSetParams: <T extends keyof Params>(key: T, value: Params[T]) => void;
   params: {
     title?: string;
     price?: string;
@@ -46,13 +32,14 @@ const Filters = ({ onSetParams, params }: FiltersProps) => {
             <Pressable
               key={text}
               onPress={() => onSetParams("category", text)}
-              style={[
-                pressable,
-                {
-                  backgroundColor:
-                    params.category === text ? "#00D85D" : Colors.primary,
-                },
-              ]}
+              style={{
+                marginRight: 10,
+                marginTop: 10,
+                padding: 10,
+                borderRadius: 10,
+                backgroundColor:
+                  params.category === text ? "#00D85D" : Colors.primary,
+              }}
             >
               <Text style={{ fontSize: 20, color: "white" }}>{text}</Text>
             </Pressable>

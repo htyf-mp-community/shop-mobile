@@ -20,6 +20,7 @@ export default function AuthForm({ onSubmit, header }: AuthFormProps) {
         validationSchema={schema}
         initialValues={{ email: "", password: "" }}
         onSubmit={(values) => onSubmit(values)}
+        validateOnChange
       >
         {({
           handleChange,
