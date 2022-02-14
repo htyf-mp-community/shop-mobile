@@ -67,7 +67,9 @@ export default function MainNavigator(): JSX.Element {
                 sharedElements={({ params }) => {
                   const { prod_id, sharedID } = params;
 
-                  return ["prod_id." + prod_id + sharedID];
+                  if (sharedID) {
+                    return ["prod_id." + prod_id + sharedID];
+                  }
                 }}
               />
               <Stack.Screen

@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, memo } from "react";
 import {
   ScrollView,
   RefreshControl,
@@ -8,7 +8,6 @@ import {
 import ImagesCarusel from "@modules/ImagesCarusel/ImagesCarusel";
 import ProductDetailsText from "./components/ProductDetailsText/ProductDetailsText";
 import ProductDetailsButtons from "./components/ProductDetailsButtons/ProductDetailsButtons";
-import { useIsFocused } from "@react-navigation/native";
 import useFetch from "@utils/hooks/useFetch";
 import {
   Product,
@@ -22,12 +21,8 @@ import Animated, { ZoomIn } from "react-native-reanimated";
 import useColorTheme from "@utils/context/ThemeContext";
 import { SkeletonPlaceholder } from "@components/index";
 
-export default function ProductDetails({
-  route,
-}: Required<ScreenNavigationProps<"Details">>) {
+function ProductDetails({ route }: Required<ScreenNavigationProps<"Details">>) {
   const { prod_id, image, sharedID } = route.params;
-  const isFocused = useIsFocused();
-
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = useCallback(() => {
@@ -37,7 +32,7 @@ export default function ProductDetails({
 
   const { data: result, loading } = useFetch<Product>(
     `/products/${prod_id}`,
-    [isFocused, refreshing],
+    [refreshing, prod_id],
     {}
   );
 
@@ -115,3 +110,5 @@ export default function ProductDetails({
     </View>
   );
 }
+
+export default memo(ProductDetails);

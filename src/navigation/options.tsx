@@ -1,7 +1,8 @@
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationOptions } from "@react-navigation/stack";
-import { Platform } from "react-native";
+import { Platform, Pressable } from "react-native";
 import { RootStackParams, ScreenNavigationProps } from "../@types/types";
+import { AntDesign } from "@expo/vector-icons";
 
 const HEADER = {
   android: true,
@@ -34,18 +35,24 @@ export const defaultStackOptions: StackNavigationOptions = {
 
 export const detailsScreenOptions = ({
   route,
-}: Pick<
-  ScreenNavigationProps<"Details">,
-  "route"
->): StackNavigationOptions => ({
+  navigation,
+}: ScreenNavigationProps<"Details">): StackNavigationOptions => ({
   ...defaultStackOptions,
-  headerTitle: route.params.title.split("").slice(0, 25).join(""),
+  headerTitle: route.params.title.split("").slice(0, 20).join(""),
   headerTitleAlign: "center",
   detachPreviousScreen: false,
   transitionSpec: {
     open: { animation: "timing", config: { duration: 200 } },
     close: { animation: "timing", config: { duration: 200 } },
   },
+  headerRight: ({ tintColor }) => (
+    <Pressable
+      style={{ marginRight: 15 }}
+      onPress={() => navigation?.navigate("Cart")}
+    >
+      <AntDesign name="shoppingcart" size={24} color={tintColor} />
+    </Pressable>
+  ),
 });
 
 export const checkOutScreenOptions: StackNavigationOptions = {
