@@ -119,4 +119,5 @@ export const authOptions: StackNavigationOptions = {
 
 export const landingOptions: StackNavigationOptions = {
   ...authOptions,
+  animationTypeForReplace: "pop",
 };

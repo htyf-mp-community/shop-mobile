@@ -14,6 +14,7 @@ export const init: UserType = {
   user_id: 0,
   name: "",
   isLoggedIn: false,
+  isLoading: true,
 };
 
 const User = createContext<UserContextType>({
@@ -54,10 +55,10 @@ export const UserContextProvider = ({
         setLoggedIn();
       }
     } catch (error) {
-      console.warn(error);
-    } finally {
-      onSplashScreen();
+      setUser((p) => ({ ...p, isLoading: false }));
     }
+    onSplashScreen();
+    setUser((p) => ({ ...p, isLoading: false }));
   }
 
   async function RemoveUser() {

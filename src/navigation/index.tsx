@@ -14,9 +14,9 @@ import useColorTheme from "@utils/context/ThemeContext";
 
 const Stack = createSharedElementStackNavigator<RootStackParams>();
 
-export default function MainNavigator(): JSX.Element {
+export default function MainNavigator() {
   const { ReadUser } = useUser();
-  const { token, isLoggedIn, name } = useCheckToken();
+  const { token, isLoggedIn, name, isLoading } = useCheckToken();
   const { expoPushToken } = useNotifications();
 
   useEffect(() => {
@@ -30,6 +30,8 @@ export default function MainNavigator(): JSX.Element {
   }, [expoPushToken]);
 
   const { theme, current } = useColorTheme();
+
+  if (isLoading) return null;
 
   return (
     <>
@@ -64,10 +66,18 @@ export default function MainNavigator(): JSX.Element {
                 component={Screen.ProductDetails}
                 name="Details"
                 options={Option.detailsScreenOptions}
-                sharedElements={({ params }) => {
+                sharedElements={({ params }, opt, showing) => {
                   const { prod_id, sharedID } = params;
 
-                  if (sharedID) {
+                  const valid = [
+                    "Home",
+                    "Search",
+                    "SearchResults",
+                    "PurchaseHistory",
+                    "Details",
+                  ]; // Cart causes shared image to stay
+
+                  if (sharedID && valid.includes(opt.name)) {
                     return ["prod_id." + prod_id + sharedID];
                   }
                 }}

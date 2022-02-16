@@ -44,6 +44,7 @@ export type UserType = {
   name: string;
   user_id: number;
   isLoggedIn: boolean;
+  isLoading: boolean;
 };
 
 export type UserContextType = {
