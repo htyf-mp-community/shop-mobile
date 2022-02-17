@@ -11,6 +11,9 @@ import * as Screen from "./Screens";
 import * as Option from "./options";
 import { StatusBar } from "expo-status-bar";
 import useColorTheme from "@utils/context/ThemeContext";
+import useFetch from "utils/hooks/useFetch";
+import { useDispatch } from "react-redux";
+import { userActions } from "redux/User";
 
 const Stack = createSharedElementStackNavigator<RootStackParams>();
 
@@ -28,6 +31,11 @@ export default function MainNavigator() {
       UploadExpoTokenToServer(token, expoPushToken);
     }
   }, [expoPushToken]);
+  const dispatch = useDispatch();
+
+  useFetch<Response>("/auth/credentials", [], {}, (data) => {
+    dispatch(userActions.setCredentials(data));
+  });
 
   const { theme, current } = useColorTheme();
 
@@ -66,7 +74,7 @@ export default function MainNavigator() {
                 component={Screen.ProductDetails}
                 name="Details"
                 options={Option.detailsScreenOptions}
-                sharedElements={({ params }, opt, showing) => {
+                sharedElements={({ params }, opt) => {
                   const { prod_id, sharedID } = params;
 
                   const valid = [

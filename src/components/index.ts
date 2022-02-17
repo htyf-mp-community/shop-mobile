@@ -15,3 +15,4 @@ export { default as Container } from "./Container/index";
 export { default as Modal } from "./Modal/Modal";
 export { default as BackButton } from "./BackButton/index";
 export { default as Header } from "./Header/Header";
+export { default as PulseButton } from "./PulseButton/index";

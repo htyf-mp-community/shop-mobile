@@ -63,7 +63,7 @@ export const UserContextProvider = ({
 
   async function RemoveUser() {
     await deleteItemAsync(USER_PREFIX);
-    setUser(init);
+    setUser({ ...init, isLoading: false });
   }
 
   return (

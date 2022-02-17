@@ -6,11 +6,9 @@ import {
   ViewStyle,
   TextInputProps,
   TextStyle,
-  TouchableWithoutFeedback,
 } from "react-native";
 import styles from "./styles";
-import React, { useState } from "react";
-import { Colors } from "../../constants/styles";
+import React from "react";
 
 interface InputProps extends TextInputProps {
   name?: string;

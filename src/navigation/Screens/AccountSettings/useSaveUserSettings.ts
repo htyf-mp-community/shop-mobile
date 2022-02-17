@@ -1,8 +1,12 @@
 import axios from "axios";
 import { API } from "constants/routes";
 import { useUser } from "@utils/context/UserContext";
+import { useDispatch } from "react-redux";
+import { userActions } from "redux/User";
 
 export default function useSaveUserSettings(onClose: () => void) {
+  const dispatch = useDispatch();
+
   const { user } = useUser();
   async function onSave(key: string, value: string) {
     try {
@@ -19,6 +23,7 @@ export default function useSaveUserSettings(onClose: () => void) {
       );
 
       onClose();
+      dispatch(userActions.setCredentialsKey({ key, value }));
     } catch (error) {
       console.warn(error);
     }

@@ -7,18 +7,23 @@ import {
   Button,
 } from "@components/index";
 import React, { useCallback, useRef, useState } from "react";
-import { FlatList, useWindowDimensions } from "react-native";
+import { VirtualizedList, useWindowDimensions } from "react-native";
 import { useNavigationProps } from "/@types/types";
 import { Colors } from "constants/styles";
 import useSearch from "@utils/hooks/useSearch";
 import BottomSheet, { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
 import Filters from "./components/Filters";
+import type { SuggestionType } from "/@types/types";
 
 export interface Params {
   category?: string;
   price?: "ASC" | "DESC";
   title?: "ASC" | "DESC";
 }
+
+const getItem = (data: SuggestionType[], index: number) => {
+  return data[index];
+};
 
 export default function SearchScreen() {
   const { width } = useWindowDimensions();
@@ -54,16 +59,15 @@ export default function SearchScreen() {
 
   return (
     <Container centerVertical>
-      <Header
-        children={
-          <Button
-            onPress={onSheetOpen}
-            text="Filters"
-            style={{ backgroundColor: Colors.primary, padding: 5 }}
-            fontStyle={{ color: "#00D85D" }}
-          />
-        }
-      />
+      <Header>
+        <Button
+          onPress={onSheetOpen}
+          text="Filters"
+          style={{ backgroundColor: Colors.primary, padding: 5 }}
+          fontStyle={{ color: "#00D85D" }}
+        />
+      </Header>
+
       <Input
         value={query}
         setValue={setQuery}
@@ -75,9 +79,12 @@ export default function SearchScreen() {
         }}
       />
 
-      <FlatList
+      <VirtualizedList
         data={suggestion}
         keyExtractor={({ prod_id }) => prod_id.toString()}
+        getItemCount={(data) => data.length}
+        getItem={getItem}
+        initialNumToRender={2}
         renderItem={({ item }) => (
           <Suggestion navigation={navigation} {...item} />
         )}

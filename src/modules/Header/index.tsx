@@ -1,12 +1,11 @@
 import { View, StyleSheet } from "react-native";
 import React from "react";
-import Button from "../../components/Button/Button";
 import { useNavigation } from "@react-navigation/native";
-import { Colors } from "../../constants/styles";
 import { MaterialIcons } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 import { useNavigationProps } from "../../@types/types";
 import useColorTheme from "@utils/context/ThemeContext";
+import { PulseButton } from "components";
 
 interface SearchBarProps {
   toggleSidebar: () => void;
@@ -14,21 +13,23 @@ interface SearchBarProps {
 
 export default function Header({ toggleSidebar }: SearchBarProps) {
   const navigation = useNavigation<useNavigationProps>();
-
   const { theme } = useColorTheme();
+  const pulseColor = "rgba(255,255,255,0.1)";
 
   return (
     <View style={[styles.container, { backgroundColor: theme.primary }]}>
-      <Button
+      <PulseButton
+        onPress={toggleSidebar}
         icon={<EvilIcons name="navicon" size={30} color={theme.text} />}
-        callback={toggleSidebar}
-        style={{ margin: 5, backgroundColor: "transparent" }}
+        styles={{ marginLeft: 10 }}
+        pulseColor={pulseColor}
       />
 
-      <Button
-        callback={() => navigation.navigate("Search")}
-        style={{ margin: 5, backgroundColor: "transparent" }}
+      <PulseButton
         icon={<MaterialIcons name="search" size={25} color={theme.text} />}
+        onPress={() => navigation.navigate("Search")}
+        styles={{ marginRight: 10 }}
+        pulseColor={pulseColor}
       />
     </View>
   );
@@ -40,5 +41,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     zIndex: 10,
     justifyContent: "space-between",
+    paddingBottom: 10,
+    paddingTop: 10,
   },
 });

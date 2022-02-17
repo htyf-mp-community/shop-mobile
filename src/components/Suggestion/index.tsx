@@ -5,7 +5,7 @@ import {
   Image,
   Text,
   TouchableNativeFeedback,
-  TouchableOpacity,
+  Pressable,
 } from "react-native";
 import { SharedElement } from "react-navigation-shared-element";
 import { SuggestionType, useNavigationProps } from "../../@types/types";
@@ -42,11 +42,7 @@ function Suggestion({
   const { pushToCart, result } = useCart(prod_id);
 
   return (
-    <TouchableOpacity
-      style={styles.container}
-      onPress={navigateToProduct}
-      activeOpacity={0.9}
-    >
+    <Pressable style={styles.container} onPress={navigateToProduct}>
       <SharedElement id={`prod_id.${prod_id}Search`}>
         <Image
           resizeMode="cover"
@@ -83,7 +79,7 @@ function Suggestion({
         </View>
         <Text style={styles.title}>{title}</Text>
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 }
 

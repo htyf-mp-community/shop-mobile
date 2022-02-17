@@ -2,12 +2,12 @@ import React, { useLayoutEffect, useRef, useState } from "react";
 import { View, Text } from "react-native";
 import useColorTheme from "@utils/context/ThemeContext";
 import styles from "./AccountSettings.styles";
-import { Avatar, Container, BackButton } from "@components/index";
+import { Avatar, Container, Header } from "@components/index";
 import BottomSheet from "@gorhom/bottom-sheet";
 import useListenKeyboard from "utils/hooks/useListenKeyboard";
-import useFetch from "utils/hooks/useFetch";
 import Block from "./components/Block";
 import SettingsBottomSheet from "modules/SettingsBottomSheet";
+import { useAppSelector } from "utils/hooks/hooks";
 
 type CurrentOptionType = "NAME" | "ADDRESS" | "PHONE_NUMBER" | "SURNAME" | "";
 
@@ -23,9 +23,6 @@ export default function AccountSettings() {
   const [option, setOption] = useState<CurrentOptionType>("");
   const [text, setText] = useState("");
   const sheetRef = useRef<null | BottomSheet>(null);
-
-  const [reload, setReload] = useState(false);
-
   const { status } = useListenKeyboard();
 
   useLayoutEffect(() => {
@@ -42,39 +39,33 @@ export default function AccountSettings() {
 
   function onSheetClose() {
     sheetRef.current?.close();
-    setReload(!reload);
   }
-
-  const { data } = useFetch<Response>("/auth/credentials", [reload], {});
+  const { name, surname, phone_number, address } = useAppSelector(
+    (state) => state.user.credentials
+  );
 
   return (
     <Container>
-      <View style={{ padding: 15 }}>
-        <BackButton />
-      </View>
+      <Header />
       <View style={{ padding: 20 }}>
         <View style={styles.header}>
           <Text style={[styles.heading, { color: theme.text }]}>Settings</Text>
           <Avatar url={require("@assets/notfound.png")} />
         </View>
 
+        <Block text={name} label="Name" onPress={() => onSheetOpen("NAME")} />
         <Block
-          text={data?.name}
-          label="Name"
-          onPress={() => onSheetOpen("NAME")}
-        />
-        <Block
-          text={data?.surname}
+          text={surname}
           label="Surname"
           onPress={() => onSheetOpen("SURNAME")}
         />
         <Block
-          text={data?.address}
+          text={address}
           label="Address"
           onPress={() => onSheetOpen("ADDRESS")}
         />
         <Block
-          text={data?.phone_number}
+          text={phone_number}
           label="Phone number"
           onPress={() => onSheetOpen("PHONE_NUMBER")}
         />

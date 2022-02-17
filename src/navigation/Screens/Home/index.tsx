@@ -6,14 +6,14 @@ import {
 } from "react-native";
 import React from "react";
 import { useState } from "react";
-import ProductsCarusel from "../../../modules/ProductsCarusel/ProductsCarusel";
+import ProductsCarusel from "@modules/ProductsCarusel/ProductsCarusel";
 import { useCallback } from "react";
-import { ENDPOINTS } from "../../../constants/routes";
-import Sidebar from "../../../modules/Sidebar";
-import Categories from "../../../modules/Categories";
-import { wait } from "../../../functions/wait";
-import Header from "../../../modules/Header";
-import DailySale from "../../../modules/DailySale";
+import { ENDPOINTS } from "@constants/routes";
+import Sidebar from "@modules/Sidebar";
+import Categories from "@modules/Categories";
+import { wait } from "@functions/wait";
+import Header from "@modules/Header";
+import DailySale from "@modules/DailySale";
 import {
   Extrapolate,
   interpolate,
