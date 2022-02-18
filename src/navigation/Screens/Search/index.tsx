@@ -1,3 +1,4 @@
+import React, { useCallback, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import {
   Container,
@@ -6,8 +7,7 @@ import {
   Header,
   Button,
 } from "@components/index";
-import React, { useCallback, useRef, useState } from "react";
-import { VirtualizedList, useWindowDimensions } from "react-native";
+import { VirtualizedList, useWindowDimensions, Text } from "react-native";
 import { useNavigationProps } from "/@types/types";
 import { Colors } from "constants/styles";
 import useSearch from "@utils/hooks/useSearch";

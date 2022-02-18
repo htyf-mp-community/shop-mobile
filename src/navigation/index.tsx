@@ -33,7 +33,7 @@ export default function MainNavigator() {
   }, [expoPushToken]);
   const dispatch = useDispatch();
 
-  useFetch<Response>("/auth/credentials", [], {}, (data) => {
+  useFetch<Response>("/auth/credentials", [isLoggedIn], {}, (data) => {
     dispatch(userActions.setCredentials(data));
   });
 

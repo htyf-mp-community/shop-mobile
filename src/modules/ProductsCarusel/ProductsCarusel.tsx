@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { memo, useCallback, useState } from "react";
 import { View, Text, VirtualizedList, useWindowDimensions } from "react-native";
 import Product from "../Product/Product";
 import { ProductTypeProps } from "../Product/Product";
@@ -21,7 +21,7 @@ const getItem = (data: ProductTypeProps[], key: number) => {
   return data[key];
 };
 
-export default function ProductsCarusel({
+function ProductsCarusel({
   path,
   title,
   sharedID,
@@ -36,13 +36,13 @@ export default function ProductsCarusel({
 
   const [skip, setSkip] = useState(5);
 
-  async function onSkip() {
+  const onSkip = useCallback(async () => {
     if (hasMore) {
       setSkip(skip + 5);
       const cancelToken = axios.CancelToken.source();
       await FetchAllProducts(`${path}?skip=${skip}`, cancelToken);
     }
-  }
+  }, [skip, hasMore]);
 
   if (!notEmpty(data) && loading) {
     return (
@@ -92,3 +92,5 @@ export default function ProductsCarusel({
     </View>
   );
 }
+
+export default memo(ProductsCarusel);
