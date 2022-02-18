@@ -1,7 +1,7 @@
 import React, { memo, useCallback, useState } from "react";
 import { View, Text, VirtualizedList, useWindowDimensions } from "react-native";
-import Product from "../Product/Product";
-import { ProductTypeProps } from "../Product/Product";
+import Product from "../Product";
+import { ProductTypeProps } from "../Product";
 import caruselStyles from "./caruselStyles";
 import { notEmpty } from "../../functions/typecheckers";
 import EmptyList from "./Info";

@@ -2,7 +2,7 @@ import React from "react";
 import { View, StyleSheet, Text, FlatList } from "react-native";
 import { ScreenNavigationProps } from "../../../@types/types";
 import { Colors, h3 } from "../../../constants/styles";
-import Product, { ProductTypeProps } from "../../../modules/Product/Product";
+import Product, { ProductTypeProps } from "../../../modules/Product";
 
 export default function SearchResults({
   route,

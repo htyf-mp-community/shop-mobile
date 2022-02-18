@@ -46,6 +46,7 @@ export default function Home() {
       [1, 0.75],
       Extrapolate.CLAMP
     );
+
     return {
       transform: [{ translateX: translateX.value }, { scale }],
     };

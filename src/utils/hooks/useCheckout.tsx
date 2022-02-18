@@ -1,7 +1,7 @@
 import { useUser } from "@utils/context/UserContext";
 import { useEffect } from "react";
 import axios from "axios";
-import { ProductTypeProps } from "@modules/Product/Product";
+import { ProductTypeProps } from "modules/Product";
 import { API } from "@constants/routes";
 import { useStripe } from "@stripe/stripe-react-native";
 import { checkoutActions } from "@redux/Checkout";

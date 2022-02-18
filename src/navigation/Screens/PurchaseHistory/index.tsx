@@ -4,7 +4,7 @@ import { View, Text, FlatList, useWindowDimensions } from "react-native";
 import { Colors } from "../../../constants/styles";
 import { HistoryResponse } from "../../../@types/types";
 import useFetch from "../../../utils/hooks/useFetch";
-import Product from "../../../modules/Product/Product";
+import Product from "../../../modules/Product";
 import { structureOutput } from "./structure";
 import Placeholder from "../../../components/Placeholder";
 import { SkeletonPlaceholder } from "../../../components";

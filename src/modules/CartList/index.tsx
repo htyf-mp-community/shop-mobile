@@ -1,6 +1,11 @@
 import React from "react";
-import { VirtualizedList, View } from "react-native";
-import Product, { ProductTypeProps } from "../Product/Product";
+import {
+  VirtualizedList,
+  View,
+  Image,
+  useWindowDimensions,
+} from "react-native";
+import Product, { ProductTypeProps } from "../Product";
 import { Text } from "react-native";
 import useCartDelete from "./useCartDelete";
 import text from "./styles";
@@ -21,10 +26,16 @@ const getItem = (data: CartProps[], key: number) => {
 export default function CartList({ updateCartState, data }: CartListProps) {
   const removeCartProduct = useCartDelete();
 
-  // Higher Performance
+  const { width } = useWindowDimensions();
   return (
     <VirtualizedList
       testID="cart-list"
+      ListEmptyComponent={
+        <Image
+          source={require("@assets/Shopping_Cart.png")}
+          style={{ width, height: 400 }}
+        />
+      }
       showsVerticalScrollIndicator={false}
       getItem={getItem}
       initialNumToRender={3}

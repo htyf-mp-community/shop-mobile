@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ProductTypeProps } from "@modules/Product/Product";
+import { ProductTypeProps } from "modules/Product";
 
 interface Cart extends ProductTypeProps {
   cart_id: number;

@@ -1,6 +1,6 @@
 import React from "react";
 import { Dimensions, FlatList, View } from "react-native";
-import { ProductTypeProps } from "@modules/Product/Product";
+import { ProductTypeProps } from "modules/Product";
 import { useIsFocused } from "@react-navigation/native";
 import Purchase from "@modules/Purchase/Purchase";
 import useFetch from "@utils/hooks/useFetch";

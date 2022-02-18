@@ -3,15 +3,14 @@ import {
   Text,
   View,
   StyleSheet,
-  TouchableOpacity,
   ViewStyle,
   StyleProp,
   TextStyle,
-  TouchableOpacityProps,
 } from "react-native";
 import { Colors, radius } from "@constants/styles";
+import Ripple, { RippleProps } from "react-native-material-ripple";
 
-interface ButtonProps extends TouchableOpacityProps {
+interface ButtonProps extends RippleProps {
   text?: string;
   callback?: () => void;
   icon?: React.ReactNode;
@@ -50,9 +49,8 @@ export default function Button({
   ...rest
 }: ButtonProps) {
   return (
-    <TouchableOpacity
+    <Ripple
       onPress={callback}
-      activeOpacity={0.8}
       style={[{ backgroundColor: VARIANTS[variant] }, styles.button, style]}
       {...rest}
     >
@@ -60,7 +58,7 @@ export default function Button({
         <Text style={[styles.text, { color: "#fff" }, fontStyle]}>{text}</Text>
       )}
       <View style={iconStyle}>{icon}</View>
-    </TouchableOpacity>
+    </Ripple>
   );
 }
 

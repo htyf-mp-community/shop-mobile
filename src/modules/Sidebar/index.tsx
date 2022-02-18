@@ -24,6 +24,8 @@ export default function Sidebar({
 
   const { theme } = useColorTheme();
 
+  console.log("render");
+
   return (
     <View style={[styles.container, { backgroundColor: theme.primary }]}>
       <Animated.View style={[styles.navigation, animatedButtons]}>

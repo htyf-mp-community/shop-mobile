@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, Image, useWindowDimensions } from "react-native";
 import { SharedElement } from "react-navigation-shared-element";
 import useFetch from "../../utils/hooks/useFetch";
-import { ProductTypeProps } from "../Product/Product";
+import { ProductTypeProps } from "../Product";
 import dailyStyle from "./styles";
 import { API } from "../../constants/routes";
 import { TouchableOpacity } from "react-native-gesture-handler";
