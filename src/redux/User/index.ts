@@ -15,6 +15,8 @@ const User = createSlice({
     name: "",
     user_id: -1,
 
+    isLoading: true,
+
     credentials: {
       name: "",
       surname: "",
@@ -25,6 +27,22 @@ const User = createSlice({
   reducers: {
     setLoggedIn(state) {
       state.isLoggedIn = true;
+      state.isLoading = false;
+    },
+
+    setUser(state, { payload }) {
+      state.isLoggedIn = true;
+      state.token = payload.token;
+      state.name = payload.name;
+      state.user_id = payload.user_id;
+      state.isLoading = false;
+    },
+
+    removeUser(state) {
+      state.isLoggedIn = false;
+      state.user_id = -1;
+      state.token = "";
+      state.name = "";
     },
 
     setCredentials(state, { payload }) {
