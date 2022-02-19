@@ -38,6 +38,7 @@ export default function Dots({ arr, x }: DotsProps) {
               backgroundColor: backgroundColor,
               borderRadius: 100,
               margin: 4,
+              zIndex: 50,
               transform: [{ scale }],
             }}
           />

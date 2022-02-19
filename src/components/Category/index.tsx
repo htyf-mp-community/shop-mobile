@@ -6,6 +6,7 @@ import { useNavigationProps } from "../../@types/types";
 import { API } from "../../constants/routes";
 import { Colors } from "../../constants/styles";
 import { useUser } from "@utils/context/UserContext";
+import Ripple from "react-native-material-ripple";
 
 type CategoryProps = {
   category: string;
@@ -32,10 +33,9 @@ export default function Category({ category, ...rest }: CategoryProps) {
       });
     } catch (error) {}
   }
-
   return (
-    <TouchableOpacity
-      testID="CATEGORY.ELEMENT"
+    <Ripple
+      rippleColor="white"
       onPress={GetProductsByCategory}
       style={{
         backgroundColor: Colors.primary100,
@@ -49,6 +49,6 @@ export default function Category({ category, ...rest }: CategoryProps) {
       {...rest}
     >
       <Text style={{ color: "#fff" }}>{category}</Text>
-    </TouchableOpacity>
+    </Ripple>
   );
 }

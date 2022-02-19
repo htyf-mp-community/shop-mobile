@@ -2,8 +2,8 @@ import React from "react";
 import {
   VirtualizedList,
   View,
-  Image,
   useWindowDimensions,
+  Image,
 } from "react-native";
 import Product, { ProductTypeProps } from "../Product";
 import { Text } from "react-native";
