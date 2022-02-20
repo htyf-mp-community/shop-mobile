@@ -7,7 +7,7 @@ import {
   Header,
   Button,
 } from "@components/index";
-import { VirtualizedList, useWindowDimensions, Text } from "react-native";
+import { VirtualizedList, useWindowDimensions } from "react-native";
 import { useNavigationProps } from "/@types/types";
 import { Colors } from "constants/styles";
 import useSearch from "@utils/hooks/useSearch";
@@ -74,7 +74,7 @@ export default function SearchScreen() {
         placeholder="Search..."
         placeholderTextColor={"#fff"}
         style={{
-          width: width - 20,
+          width,
           margin: 0,
         }}
       />

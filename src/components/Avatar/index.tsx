@@ -1,4 +1,4 @@
-import { ImageSourcePropType, Image, Text } from "react-native";
+import { ImageSourcePropType, Image } from "react-native";
 import Animated from "react-native-reanimated";
 
 interface AvatarProps {

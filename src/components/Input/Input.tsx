@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import styles from "./styles";
 import React from "react";
+import { Colors } from "constants/styles";
 
 interface InputProps extends TextInputProps {
   name?: string;
@@ -21,6 +22,7 @@ interface InputProps extends TextInputProps {
   inputRef?: any;
   helperText?: string;
   helperStyle?: StyleProp<TextStyle>;
+  error?: boolean;
 }
 
 export default function Input({
@@ -34,19 +36,38 @@ export default function Input({
   inputRef,
   helperText,
   helperStyle,
+  error,
   ...rest
 }: InputProps) {
   return (
     <View style={styles.container}>
       {typeof name !== "undefined" && (
-        <Text style={[styles.label, labelStyle]}>{name}</Text>
+        <Text
+          style={[
+            styles.label,
+            labelStyle,
+            {
+              color: error ? "#ff3030" : "#e0e0e0",
+            },
+          ]}
+        >
+          {name}
+        </Text>
       )}
       <TextInput
         value={value}
         onChangeText={setValue}
         placeholder={placeholder}
         placeholderTextColor={placeholderColor}
-        style={[styles.input, style]}
+        style={[
+          styles.input,
+          style,
+          {
+            borderWidth: 1,
+            borderColor: error ? "#ff3030" : Colors.primary,
+            color: error ? "#ff3030" : "white",
+          },
+        ]}
         ref={inputRef}
         {...rest}
       />
@@ -55,7 +76,7 @@ export default function Input({
           style={[
             styles.label,
             {
-              color: "#e0e0e0",
+              color: error ? "#ff3030" : "#e0e0e0",
               fontSize: 15,
               fontWeight: "400",
               marginLeft: 10,

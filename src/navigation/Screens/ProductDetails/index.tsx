@@ -20,6 +20,8 @@ import styles from "./styles";
 import Animated, { ZoomIn } from "react-native-reanimated";
 import useColorTheme from "@utils/context/ThemeContext";
 import { SkeletonPlaceholder } from "@components/index";
+import ProductSuggestion from "./components/Suggestions/ProductSuggestion";
+import BottomTab from "./components/BottomTab/BottomTab";
 
 function ProductDetails({ route }: Required<ScreenNavigationProps<"Details">>) {
   const { prod_id, image, sharedID } = route.params;
@@ -86,27 +88,11 @@ function ProductDetails({ route }: Required<ScreenNavigationProps<"Details">>) {
               reviews={result.rating_id}
               name={result.title}
             />
+            <ProductSuggestion text={result.title} />
           </>
         )}
       </ScrollView>
-      <Animated.View
-        style={[styles.buttonContainer, { backgroundColor: theme.primary }]}
-        entering={ZoomIn.duration(200)}
-      >
-        <AddToCart
-          disabled={result.quantity === 0}
-          relative
-          prod_id={result.prod_id}
-          text="ADD TO CART"
-          style={[
-            styles.button,
-            {
-              backgroundColor:
-                result.quantity === 0 ? theme.primary : "#1e3a8a",
-            },
-          ]}
-        />
-      </Animated.View>
+      <BottomTab prod_id={result?.prod_id} quantity={result?.quantity} />
     </View>
   );
 }

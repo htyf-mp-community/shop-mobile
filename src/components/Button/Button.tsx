@@ -10,6 +10,14 @@ import {
 import { Colors, radius } from "@constants/styles";
 import Ripple, { RippleProps } from "react-native-material-ripple";
 
+const VARIANTS = {
+  primary: "#FF0056",
+  secondary: Colors.primary,
+  ternary: Colors.secondary,
+  disabled: "#131d33",
+  text: "transparent",
+};
+
 interface ButtonProps extends RippleProps {
   text?: string;
   callback?: () => void;
@@ -17,15 +25,8 @@ interface ButtonProps extends RippleProps {
   style?: StyleProp<ViewStyle>;
   fontStyle?: StyleProp<TextStyle>;
   iconStyle?: StyleProp<ViewStyle>;
-  variant?: "primary" | "secondary" | "ternary" | "disabled";
+  variant?: keyof typeof VARIANTS;
 }
-
-const VARIANTS = {
-  primary: "#FF0056",
-  secondary: Colors.primary,
-  ternary: Colors.secondary,
-  disabled: "#131d33",
-};
 
 /**
  * Custom button Component with touch animation
@@ -45,7 +46,7 @@ export default function Button({
   style,
   fontStyle,
   iconStyle,
-  variant = "primary",
+  variant = "text",
   ...rest
 }: ButtonProps) {
   return (

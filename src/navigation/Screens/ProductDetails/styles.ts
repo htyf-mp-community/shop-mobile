@@ -10,16 +10,26 @@ const styles = StyleSheet.create({
   buttonContainer: {
     width,
     padding: 10,
-    height: height * 0.1,
+    height: 80,
+    flexDirection: "row",
   },
+
+  favButton: {
+    padding: 5,
+    paddingHorizontal: 15,
+    marginRight: 10,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+
   button: {
     flexDirection: "row-reverse",
     alignItems: "center",
     padding: 15,
-    width: "100%",
     height: "100%",
     borderRadius: 10,
     backgroundColor: "#1e3a8a",
+    flex: 2,
   },
 });
 
