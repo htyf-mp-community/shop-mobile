@@ -58,7 +58,7 @@ export default function Input({
         value={value}
         onChangeText={setValue}
         placeholder={placeholder}
-        placeholderTextColor={placeholderColor}
+        placeholderTextColor={error ? "#ff3030" : "white"}
         style={[
           styles.input,
           style,

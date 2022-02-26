@@ -70,6 +70,7 @@ export default function MainNavigator() {
                 name="User"
                 options={() => Option.userScreenOptions(name)}
               />
+              <Stack.Screen component={Screen.Watchlist} name="Watchlist" />
               <Stack.Screen
                 component={Screen.ProductDetails}
                 name="Details"

@@ -4,7 +4,7 @@ import Animated, { ZoomIn } from "react-native-reanimated";
 import styles from "../../styles";
 import { Button } from "components";
 import { AntDesign } from "@expo/vector-icons";
-import useWatchlist from "../../hooks/useWatchlist";
+import useWatchlist from "@utils/hooks/useWatchlist";
 
 interface BottomTabProps {
   prod_id: number;
@@ -24,10 +24,9 @@ export default function BottomTab({ prod_id, quantity }: BottomTabProps) {
       ]}
       entering={ZoomIn.duration(200)}
     >
-      {state !== "IN" && (
+      {state !== "IN" && state !== "ADDED" && (
         <Button
           onPress={appendWatchlist}
-          disabled={state === "ADDED"}
           variant="primary"
           style={[styles.favButton]}
           icon={<AntDesign name="hearto" size={26} color="white" />}

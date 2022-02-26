@@ -65,6 +65,20 @@ export default function Sidebar({
           text={"User"}
           onPress={() => navigation.navigate("User")}
         />
+        <Button
+          icon={
+            <AntDesign
+              name={"heart"}
+              style={{ marginRight: 10 }}
+              size={25}
+              color={"red"}
+            />
+          }
+          style={[styles.button]}
+          fontStyle={{ color: theme.text }}
+          text={"Watchlist"}
+          onPress={() => navigation.navigate("Watchlist")}
+        />
       </Animated.View>
 
       <Animated.View

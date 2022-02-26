@@ -29,6 +29,7 @@ export default function AuthForm({ onSubmit, header }: AuthFormProps) {
           errors,
           isValid,
           dirty,
+          touched,
         }) => (
           <>
             <Input
@@ -37,21 +38,31 @@ export default function AuthForm({ onSubmit, header }: AuthFormProps) {
               onChangeText={handleChange("email")}
               placeholder="Email*"
               style={styles.input}
-              error={!!errors.email}
-              placeholderTextColor={errors.email ? "#FF3030" : "#fff"}
+              error={!!errors.email && touched.email}
+              autoCompleteType="email"
+              autoCorrect={false}
               keyboardType="email-address"
-              helperText={errors.email || "6-60 characters*"}
+              returnKeyType="next"
+              helperText={
+                !!errors.email && touched.email
+                  ? errors.email
+                  : "6-60 characters*"
+              }
               onBlur={handleBlur("email")}
               clearButtonMode={"always"}
             />
             <Input
               value={values.password}
+              autoCorrect={false}
               onChangeText={handleChange("password")}
               placeholder="Password*"
               style={styles.input}
-              error={!!errors.password}
-              placeholderTextColor={errors.password ? "#FF3030" : "#fff"}
-              helperText={errors.password || "6-60 characters*"}
+              error={!!errors.password && touched.password}
+              helperText={
+                !!errors.password && touched.password
+                  ? errors.password
+                  : "6-60 characters*"
+              }
               onBlur={handleBlur("password")}
               secureTextEntry
             />

@@ -25,7 +25,7 @@ export type ProductTypeProps = Types.Product & {
   deleteFn?: () => void;
   sharedID?: string;
   hide?: boolean;
-  ammount: number;
+  ammount?: number;
   RefetchCart?: (id: number) => void;
   style?: StyleProp<ViewStyle>;
   fullSize?: boolean;

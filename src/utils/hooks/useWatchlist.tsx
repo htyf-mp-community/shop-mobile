@@ -1,7 +1,7 @@
 import axios from "axios";
 import { API } from "constants/routes";
 import { useEffect, useState } from "react";
-import { useUser } from "utils/context/UserContext";
+import { useUser } from "@utils/context/UserContext";
 
 interface OptionProps {
   withCheck?: boolean;
@@ -53,5 +53,13 @@ export default function useWatchlist(
     }
   }
 
-  return { appendWatchlist, state };
+  async function remove(prod_id: number) {
+    return axios.delete(`${API}/watchlist/${prod_id}`, {
+      headers: {
+        token: user.token,
+      },
+    });
+  }
+
+  return { appendWatchlist, state, remove };
 }

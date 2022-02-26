@@ -67,5 +67,5 @@ export default function useFetch<T>(
     };
   }, deps);
 
-  return state;
+  return { ...state, setState };
 }

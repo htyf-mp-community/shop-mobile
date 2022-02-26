@@ -12,3 +12,4 @@ export { default as ProductDetails } from "./ProductDetails/index";
 export { default as Auth } from "./Auth/index";
 export { default as ProductReviews } from "./Reviews/Screens/ProductReviews";
 export { default as SearchResults } from "./SearchResults/index";
+export { default as Watchlist } from "./Watchlist/Watchlist";

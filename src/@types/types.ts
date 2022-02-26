@@ -19,24 +19,31 @@ export interface ProductRatingProps {
   description: string;
 }
 
+export interface ProductMinified {
+  prod_id: number;
+  price: string;
+  title: string;
+  img_id: ProductImageProps[];
+}
+
 export interface Product {
   prod_id: number;
   price: number;
-  discount_price: number | null | undefined;
+  discount_price?: number | null | undefined;
   title: string;
-  expiration_date: string;
-  description: string;
-  category: string;
+  expiration_date?: string;
+  description?: string;
+  category?: string;
   img_id: ProductImageProps[];
-  rating_id: ProductRatingProps[];
-  manufacturer: string;
-  vendor: {
+  rating_id?: ProductRatingProps[];
+  manufacturer?: string;
+  vendor?: {
     id?: number;
     email?: string;
     name?: string;
     surname?: string;
   };
-  quantity: number;
+  quantity?: number;
 }
 
 export type UserType = {
@@ -66,6 +73,7 @@ export type RootStackParams = {
   Landing: undefined;
   Register?: undefined;
   Login?: undefined;
+  Watchlist?: undefined;
   MyReviews: undefined;
   AccountSettings: undefined;
   SearchResults: { result: any[]; length: number };

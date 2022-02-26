@@ -28,6 +28,7 @@ export default function Landing({ navigation }: any) {
 
       <View style={[styles.block, { width }]}>
         <Button
+          variant="primary"
           fontStyle={{ fontSize: 20 }}
           style={styles.button}
           text="Create an account"

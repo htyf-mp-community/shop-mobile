@@ -6,7 +6,6 @@ import useCheckout from "utils/hooks/useCheckout";
 import { CardField, initStripe } from "@stripe/stripe-react-native";
 import { Formik } from "formik";
 import checkoutSchema from "./checkoutSchema";
-import { Colors } from "@constants/styles";
 import { AntDesign } from "@expo/vector-icons";
 import styles, { cardFieldStyles } from "./styles";
 import Modal from "./Modal";
@@ -45,56 +44,44 @@ export default function Checkout({
             values,
             errors,
             dirty,
+            touched,
           }) => (
             <>
               <Input
                 value={values.name}
                 onChangeText={handleChange("name")}
-                name={errors.name || "Name"}
+                name={!!errors.name && touched.name ? errors.name : "Name"}
                 placeholder="Name"
-                style={{
-                  ...styles.input,
-                  borderWidth: 1,
-                  borderColor: errors.name ? "#FF3030" : Colors.primary100,
-                }}
-                labelStyle={{
-                  color: errors.name ? "#FF3030" : "#fff",
-                }}
-                placeholderTextColor={errors.name ? "#FF3030" : "#fff"}
+                style={styles.input}
                 onBlur={handleBlur("name")}
+                error={!!errors.name && touched.name}
               />
 
               <Input
                 value={values.surname}
                 onChangeText={handleChange("surname")}
-                name={errors.surname || "Surname"}
+                name={
+                  !!errors.surname && touched.surname
+                    ? errors.surname
+                    : "Surname"
+                }
                 placeholder="Surname"
-                style={{
-                  ...styles.input,
-                  borderWidth: 1,
-                  borderColor: errors.surname ? "#FF3030" : Colors.primary100,
-                }}
-                labelStyle={{
-                  color: errors.surname ? "#FF3030" : "#fff",
-                }}
-                placeholderTextColor={errors.surname ? "#FF3030" : "#fff"}
+                style={styles.input}
+                error={!!errors.surname && touched.surname}
                 onBlur={handleBlur("surname")}
               />
 
               <Input
                 value={values.address}
                 onChangeText={handleChange("address")}
-                name={errors.name || "Address"}
+                name={
+                  !!errors.address && touched.address
+                    ? errors.address
+                    : "Address"
+                }
                 placeholder="2780 Quincy Mountain Suite 162"
-                style={{
-                  ...styles.input,
-                  borderWidth: 1,
-                  borderColor: errors.address ? "#FF3030" : Colors.primary100,
-                }}
-                labelStyle={{
-                  color: errors.address ? "#FF3030" : "#fff",
-                }}
-                placeholderTextColor={errors.address ? "#FF3030" : "#e3e3e3"}
+                style={styles.input}
+                error={!!errors.address && touched.address}
                 onBlur={handleBlur("address")}
               />
 
@@ -118,7 +105,10 @@ export default function Checkout({
                     style={{ marginRight: 10 }}
                   />
                 }
-                style={[styles.button]}
+                style={[
+                  styles.button,
+                  { paddingVertical: 20, borderRadius: 20, marginTop: 15 },
+                ]}
                 callback={handleSubmit}
               />
             </>

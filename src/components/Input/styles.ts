@@ -5,8 +5,8 @@ const { width: WIDTH } = Dimensions.get("screen");
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
-    alignItems: "center",
+    alignItems: "flex-start",
+    marginBottom: 10,
     justifyContent: "center",
   },
   input: {
@@ -19,10 +19,10 @@ const styles = StyleSheet.create({
     color: "#fff",
   },
   label: {
-    width: WIDTH * 0.9,
     fontSize: 21,
     fontWeight: "bold",
     color: "black",
+    marginLeft: 5,
   },
 });
 
