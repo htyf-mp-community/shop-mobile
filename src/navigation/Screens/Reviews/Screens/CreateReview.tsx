@@ -47,8 +47,6 @@ export default function CreateReview({
       });
   }
 
-  const { theme } = useColorTheme();
-
   return (
     <View style={styles.container}>
       {status === variants.closed && (
@@ -81,6 +79,7 @@ export default function CreateReview({
             isValid,
             values,
             dirty,
+            touched,
           }) => (
             <>
               <StarsTouch setRating={setRating} />
@@ -91,20 +90,8 @@ export default function CreateReview({
                 placeholder="Title"
                 name={"Title"}
                 helperText={errors.title || "Atleast 6 characters*"}
-                labelStyle={{
-                  color: errors.title ? "red" : "#e0e0e0",
-                }}
-                helperStyle={{
-                  color: errors.description ? "red" : "#e0e0e0",
-                }}
-                style={[
-                  styles.input,
-                  {
-                    borderColor: errors.title ? "red" : theme.primary,
-                    borderWidth: 2,
-                  },
-                ]}
-                placeholderColor={errors.title ? "red" : "white"}
+                error={!!errors.title && touched.title}
+                style={styles.input}
               />
               <Input
                 value={values.description}
@@ -113,20 +100,8 @@ export default function CreateReview({
                 placeholder="Description"
                 name={"Description"}
                 helperText={errors.description || "Atleast 6 characters*"}
-                helperStyle={{
-                  color: errors.description ? "red" : "#e0e0e0",
-                }}
-                labelStyle={{
-                  color: errors.description ? "red" : "#e0e0e0",
-                }}
-                style={[
-                  styles.input,
-                  {
-                    borderColor: errors.description ? "red" : theme.primary,
-                    borderWidth: 2,
-                  },
-                ]}
-                placeholderColor={errors.description ? "red" : "#fff"}
+                style={styles.input}
+                error={!!errors.description && touched.description}
                 scrollEnabled
                 multiline
                 textAlignVertical="top"

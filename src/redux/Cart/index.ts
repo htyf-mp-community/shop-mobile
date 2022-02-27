@@ -3,6 +3,7 @@ import { ProductTypeProps } from "modules/Product";
 
 interface Cart extends ProductTypeProps {
   cart_id: number;
+  ammount: number;
 }
 
 const cartSlice = createSlice({

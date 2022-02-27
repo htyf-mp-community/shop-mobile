@@ -12,6 +12,7 @@ import { SuggestionType, useNavigationProps } from "../../@types/types";
 import { API } from "../../constants/routes";
 import styles from "./Suggestion.styles";
 import { AntDesign } from "@expo/vector-icons";
+import Ripple from "react-native-material-ripple";
 
 interface SuggestionProps extends SuggestionType {
   navigation: useNavigationProps;
@@ -42,15 +43,18 @@ function Suggestion({
   const { pushToCart, result } = useCart(prod_id);
 
   return (
-    <Pressable style={styles.container} onPress={navigateToProduct}>
-      <SharedElement id={`prod_id.${prod_id}Search`}>
-        <Image
-          resizeMode="cover"
-          height={300}
-          source={{ uri: thumbnail }}
-          style={styles.image}
-        />
-      </SharedElement>
+    <View style={styles.container}>
+      <Ripple onPress={navigateToProduct}>
+        <SharedElement id={`prod_id.${prod_id}Search`}>
+          <Image
+            resizeMode="cover"
+            height={300}
+            source={{ uri: thumbnail }}
+            style={styles.image}
+          />
+        </SharedElement>
+      </Ripple>
+
       <View style={styles.textContainer}>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <Text style={styles.price}>${price}</Text>
@@ -79,7 +83,7 @@ function Suggestion({
         </View>
         <Text style={styles.title}>{title}</Text>
       </View>
-    </Pressable>
+    </View>
   );
 }
 

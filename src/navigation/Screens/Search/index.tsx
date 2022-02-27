@@ -14,6 +14,7 @@ import useSearch from "@utils/hooks/useSearch";
 import BottomSheet, { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
 import Filters from "./components/Filters";
 import type { SuggestionType } from "/@types/types";
+import HeaderActions from "./components/HeaderActions";
 
 export interface Params {
   category?: string;
@@ -59,15 +60,7 @@ export default function SearchScreen() {
 
   return (
     <Container centerVertical>
-      <Header>
-        <Button
-          onPress={onSheetOpen}
-          text="Filters"
-          style={{ backgroundColor: Colors.primary, padding: 5 }}
-          fontStyle={{ color: "#00D85D" }}
-        />
-      </Header>
-
+      <HeaderActions onSheetOpen={onSheetOpen} />
       <Input
         value={query}
         setValue={setQuery}

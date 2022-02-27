@@ -1,17 +1,17 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { View, Text, useWindowDimensions } from "react-native";
+import { View, Text } from "react-native";
 import { Product, useNavigationProps } from "../../@types/types";
 import Button from "../../components/Button/Button";
 import useColorTheme from "@utils/context/ThemeContext";
 import { CalcTotalCartPrice } from "../../functions/CalcTotalCartPrice";
+import styles from "./Purchases.styles";
 
-interface IPurchaseProps {
+interface PurchaseProps {
   cart: Product[];
 }
 
-export default function Purchase({ cart }: IPurchaseProps) {
-  const { width } = useWindowDimensions();
+export default function Purchase({ cart }: PurchaseProps) {
   const navigation = useNavigation<useNavigationProps>();
   const totalPrice = CalcTotalCartPrice(cart);
 
@@ -24,52 +24,21 @@ export default function Purchase({ cart }: IPurchaseProps) {
   const { theme } = useColorTheme();
 
   return (
-    <View
-      style={{
-        width,
-        alignItems: "center",
-        padding: 10,
-        borderTopWidth: 1,
-        borderTopColor: theme.primary100,
-      }}
-    >
-      <View
-        style={{
-          width: width * 0.9,
-          paddingBottom: 10,
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
-      >
-        <Text
-          style={{
-            color: theme.text,
-            fontSize: 20,
-            fontFamily: "PoppinsRegular",
-          }}
-        >
-          Total:
-        </Text>
-        <Text
-          style={{
-            color: theme.text,
-            fontSize: 20,
-            fontFamily: "PoppinsRegular",
-          }}
-        >
-          ${totalPrice}
-        </Text>
+    <View style={[styles.container, { borderTopColor: theme.primary100 }]}>
+      <View style={styles.content}>
+        <Text style={[styles.text, { color: theme.text }]}>Total:</Text>
+        <Text style={[styles.text, { color: theme.text }]}>${totalPrice}</Text>
       </View>
       <Button
         disabled={disabled}
         text={`Continue with $${totalPrice} `}
         callback={PurchaseProduct}
-        style={{
-          backgroundColor: !disabled ? theme.secondary : theme.primary100,
-          width: width * 0.9,
-          justifyContent: "center",
-          padding: 15,
-        }}
+        style={[
+          {
+            backgroundColor: !disabled ? theme.secondary : theme.primary100,
+          },
+          styles.button,
+        ]}
       />
     </View>
   );

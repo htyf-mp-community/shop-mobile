@@ -1,3 +1,4 @@
+import { ProductRatingProps } from "/@types/types";
 import React from "react";
 import {
   View,
@@ -7,13 +8,6 @@ import {
   Image,
   FlatList,
 } from "react-native";
-
-interface RatingProps {
-  rating_id: number;
-  rating: number;
-  title: string;
-  description: string;
-}
 
 import { API } from "../../constants/routes";
 import { Colors } from "../../constants/styles";
@@ -26,7 +20,7 @@ export default function Ratings({
   rating,
   title,
   description,
-}: RatingProps) {
+}: ProductRatingProps) {
   return (
     <View key={rating_id} style={styles.container}>
       <View style={styles.header}>
