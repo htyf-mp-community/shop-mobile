@@ -21,10 +21,7 @@ export default function Sidebar({
   animatedButtons,
 }: SidebarProps) {
   const navigation = useNavigation<useNavigationProps>();
-
   const { theme } = useColorTheme();
-
-  console.log("render");
 
   return (
     <View style={[styles.container, { backgroundColor: theme.primary }]}>
@@ -34,6 +31,21 @@ export default function Sidebar({
           avatarStyles={{
             backgroundColor: "#131d33",
           }}
+        />
+
+        <Button
+          icon={
+            <AntDesign
+              name={"heart"}
+              style={{ marginRight: 10 }}
+              size={25}
+              color={"red"}
+            />
+          }
+          style={[styles.button]}
+          fontStyle={{ color: theme.text }}
+          text={"Watchlist"}
+          onPress={() => navigation.navigate("Watchlist")}
         />
 
         <Button
@@ -64,20 +76,6 @@ export default function Sidebar({
           fontStyle={{ color: theme.text }}
           text={"User"}
           onPress={() => navigation.navigate("User")}
-        />
-        <Button
-          icon={
-            <AntDesign
-              name={"heart"}
-              style={{ marginRight: 10 }}
-              size={25}
-              color={"red"}
-            />
-          }
-          style={[styles.button]}
-          fontStyle={{ color: theme.text }}
-          text={"Watchlist"}
-          onPress={() => navigation.navigate("Watchlist")}
         />
       </Animated.View>
 

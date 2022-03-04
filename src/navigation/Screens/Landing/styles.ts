@@ -12,6 +12,8 @@ const styles = StyleSheet.create({
     position: "relative",
     alignItems: "center",
     padding: 10,
+    flex: 1,
+    marginTop: 15,
   },
   text: {
     color: Colors.text,

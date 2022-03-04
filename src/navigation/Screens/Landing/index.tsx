@@ -23,7 +23,7 @@ export default function Landing({ navigation }: any) {
     <SafeAreaView style={styles.container}>
       <Image
         source={require("@assets/Online_shopping_PNG.png")}
-        style={{ width, height: 400, marginBottom: 50 }}
+        style={{ width, flex: 2 }}
       />
 
       <View style={[styles.block, { width }]}>

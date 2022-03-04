@@ -5,7 +5,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 import { useNavigationProps } from "../../@types/types";
 import useColorTheme from "@utils/context/ThemeContext";
-import { PulseButton } from "components";
+import { PulseButton, Button } from "components";
 
 interface SearchBarProps {
   toggleSidebar: () => void;
@@ -14,22 +14,19 @@ interface SearchBarProps {
 export default function Header({ toggleSidebar }: SearchBarProps) {
   const navigation = useNavigation<useNavigationProps>();
   const { theme } = useColorTheme();
-  const pulseColor = "rgba(255,255,255,0.1)";
 
   return (
     <View style={[styles.container, { backgroundColor: theme.primary }]}>
-      <PulseButton
+      <Button
         onPress={toggleSidebar}
         icon={<EvilIcons name="navicon" size={30} color={theme.text} />}
-        styles={{ marginLeft: 10 }}
-        pulseColor={pulseColor}
+        style={{ marginLeft: 10, padding: 5 }}
       />
 
-      <PulseButton
+      <Button
         icon={<MaterialIcons name="search" size={25} color={theme.text} />}
         onPress={() => navigation.navigate("Search")}
-        styles={{ marginRight: 10 }}
-        pulseColor={pulseColor}
+        style={{ marginRight: 10, padding: 5 }}
       />
     </View>
   );
@@ -40,8 +37,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     zIndex: 10,
+    padding: 10,
     justifyContent: "space-between",
-    paddingBottom: 10,
-    paddingTop: 10,
   },
 });
