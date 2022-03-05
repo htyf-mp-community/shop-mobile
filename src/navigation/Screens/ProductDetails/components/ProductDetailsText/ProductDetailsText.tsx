@@ -13,6 +13,7 @@ export default function ProductDetailsText({
   price,
 }: Product) {
   const { theme } = useColorTheme();
+
   return (
     <>
       <Text
@@ -27,7 +28,7 @@ export default function ProductDetailsText({
 
       <View style={[styles.container]}>
         <Avatar url={require("@assets/notfound.png")} />
-        <Available quantity={quantity} styles={{ margin: 5 }} />
+        <Available quantity={quantity as number} styles={{ margin: 5 }} />
         <Delivery />
 
         <Text style={styles.price}>${price}</Text>

@@ -90,7 +90,10 @@ function ProductDetails({ route }: Required<ScreenNavigationProps<"Details">>) {
           </>
         )}
       </ScrollView>
-      <BottomTab prod_id={result?.prod_id} quantity={result?.quantity} />
+      <BottomTab
+        prod_id={result?.prod_id}
+        quantity={(result?.quantity as number) || 0}
+      />
     </View>
   );
 }

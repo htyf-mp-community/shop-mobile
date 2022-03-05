@@ -6,6 +6,7 @@ import {
   Dimensions,
   ViewStyle,
   StyleProp,
+  Image,
 } from "react-native";
 import { Colors } from "../../../constants/styles";
 import { useUser } from "@utils/context/UserContext";
@@ -27,9 +28,12 @@ export default function Avatar({
   return (
     <View style={[styles.container, style]}>
       <View style={[styles.avatar, avatarStyles]}>
-        <Text style={{ fontSize: 50, color: "#fff" }}>
-          {user?.name[0]?.toUpperCase() || ""}
-        </Text>
+        <Image
+          style={{ width: 100, height: 100 }}
+          source={{
+            uri: "http://icons.iconarchive.com/icons/paomedia/small-n-flat/512/user-male-icon.png",
+          }}
+        />
       </View>
       {!hide && (
         <>

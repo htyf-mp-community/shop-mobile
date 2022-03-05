@@ -13,7 +13,6 @@ interface BottomTabProps {
 
 export default function BottomTab({ prod_id, quantity }: BottomTabProps) {
   const { theme } = useColorTheme();
-
   const { appendWatchlist, state } = useWatchlist(prod_id, { withCheck: true });
 
   return (

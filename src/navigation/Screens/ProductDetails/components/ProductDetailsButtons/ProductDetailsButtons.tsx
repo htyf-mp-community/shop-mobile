@@ -12,7 +12,7 @@ interface DetailsButtonsProps {
   thumbnail: string;
   sharedID: string;
   prod_id: number;
-  reviews: ProductRatingProps[];
+  reviews?: ProductRatingProps[];
 }
 
 const buttonStyle: StyleProp<ViewStyle> = {
@@ -59,7 +59,7 @@ export default function ProductDetailsButtons({
           navigation.navigate("ProductReviews", {
             prod_id,
             prod_name: name,
-            reviews,
+            reviews: reviews || [],
             sharedID,
           })
         }
