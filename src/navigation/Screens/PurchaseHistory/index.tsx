@@ -1,13 +1,13 @@
 import { useIsFocused } from "@react-navigation/native";
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { View, Text, FlatList, useWindowDimensions } from "react-native";
 import { Colors } from "../../../constants/styles";
 import { HistoryResponse } from "../../../@types/types";
 import useFetch from "../../../utils/hooks/useFetch";
 import Product from "../../../modules/Product";
 import { structureOutput } from "./structure";
-import Placeholder from "../../../components/Placeholder";
 import { SkeletonPlaceholder } from "../../../components";
+import History from "./components/History";
 
 export default function PurchaseHistory() {
   const isFocused = useIsFocused();
@@ -43,34 +43,8 @@ export default function PurchaseHistory() {
       <FlatList
         data={result}
         keyExtractor={(_, i) => i.toString()}
-        initialNumToRender={3}
-        renderItem={({ item }) => (
-          <View style={{ marginBottom: 10, marginTop: 10 }}>
-            <Text
-              style={{
-                color: "#fff",
-                fontSize: 26,
-                fontFamily: "PoppinsBold",
-                marginLeft: 10,
-              }}
-            >
-              {item[0].details.date}
-            </Text>
-
-            <FlatList
-              data={item}
-              keyExtractor={({ details }) => details.purchase_id.toString()}
-              renderItem={({ item }) => (
-                <Product
-                  ammount={0}
-                  sharedID={"HISTORY" + item.details.purchase_id}
-                  fullSize
-                  {...item.product}
-                />
-              )}
-            />
-          </View>
-        )}
+        initialNumToRender={6}
+        renderItem={({ item }) => <History products={item} />}
       />
     </View>
   );

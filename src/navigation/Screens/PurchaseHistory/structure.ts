@@ -1,6 +1,6 @@
 import { HistoryResponse, Product } from "../../../@types/types";
 
-interface OutputProps {
+export interface OutputProps {
   details: {
     purchase_id: number;
     date: string;

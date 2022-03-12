@@ -1,10 +1,9 @@
 import { useNavigation } from "@react-navigation/core";
 import axios from "axios";
 import React from "react";
-import { Text, TouchableOpacity } from "react-native";
+import { Text } from "react-native";
 import { useNavigationProps } from "../../@types/types";
 import { API } from "../../constants/routes";
-import { Colors } from "../../constants/styles";
 import { useUser } from "@utils/context/UserContext";
 import Ripple from "react-native-material-ripple";
 
@@ -38,7 +37,7 @@ export default function Category({ category, ...rest }: CategoryProps) {
       rippleColor="white"
       onPress={GetProductsByCategory}
       style={{
-        backgroundColor: Colors.primary100,
+        backgroundColor: "#131d33",
         padding: 10,
         paddingLeft: 20,
         paddingRight: 20,

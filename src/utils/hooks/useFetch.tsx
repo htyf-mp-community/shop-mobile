@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { API } from "@constants/routes";
 import { useUser } from "@utils/context/UserContext";
 import { notUndefined } from "@functions/typecheckers";
+import Cache from "@functions/Cache";
 
 interface StateProps<T> {
   data: T;
@@ -30,7 +31,10 @@ export default function useFetch<T>(
     const cancelToken = axios.CancelToken.source();
 
     (async () => {
-      setState((p) => ({ ...p, loading: true }));
+      setState((p) => ({
+        ...p,
+        loading: true,
+      }));
       try {
         if (mounted.current === false) return;
         const { data } = await axios.get(API + path, {
