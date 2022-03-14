@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, StyleSheet, Dimensions } from "react-native";
+import { View, StyleSheet } from "react-native";
 import MaskedView from "@react-native-masked-view/masked-view";
 import { LinearGradient } from "expo-linear-gradient";
 import Reanimated, {
@@ -78,31 +78,25 @@ const Skeleton = ({
   );
 };
 
-Skeleton.Item = ({
-  width,
-  height,
-  margin,
-}: {
+interface ItemProps {
   width: number;
   height: number;
   margin?: number;
-}) => (
-  <View
-    style={{
-      width,
-      height,
-      margin,
-      marginTop: 10,
-      backgroundColor: "lightgrey",
-      borderRadius: 5,
-    }}
-  />
+}
+
+Skeleton.Item = ({ width, height, margin }: ItemProps) => (
+  <View style={[styles.item, { width, height, margin }]} />
 );
 
 const styles = StyleSheet.create({
   background: {
     flexGrow: 1,
     overflow: "hidden",
+  },
+  item: {
+    marginTop: 10,
+    backgroundColor: "lightgrey",
+    borderRadius: 5,
   },
 });
 

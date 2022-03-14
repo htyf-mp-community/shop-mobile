@@ -61,7 +61,7 @@ export default function History({ products }: PurchaseProps) {
               />
               <View style={{ flexDirection: "column", padding: 5 }}>
                 <Text style={{ color: "#fff" }}>{item.product.title}</Text>
-                <Text style={{ color: "#fff" }}>Amount: {2}</Text>
+                <Text style={{ color: "#fff" }}>Amount: {1}</Text>
                 <Text style={{ color: "#fff" }}>
                   Price: ${item.product.price}
                 </Text>

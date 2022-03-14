@@ -12,11 +12,16 @@ import AddToCart from "../AddToCart/AddToCart";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import { SkeletonPlaceholder } from "../../components";
 import { notUndefined } from "../../functions/typecheckers";
+import EmptyList from "modules/ProductsCarusel/Info";
 
 interface DailySaleProps {}
 
 export default function DailySale({}: DailySaleProps) {
-  const { data, loading } = useFetch<ProductTypeProps>("/sales/daily", [], {});
+  const { data, loading, error } = useFetch<ProductTypeProps>(
+    "/sales/daily",
+    [],
+    {}
+  );
 
   const navigation = useNavigation<useNavigationProps>();
 
@@ -71,6 +76,9 @@ export default function DailySale({}: DailySaleProps) {
           )}
         </View>
       )}
+
+      {!!error && <EmptyList variant="error" error={error} />}
+
       {loading && !notUndefined(data.prod_id) && (
         <SkeletonPlaceholder
           backgroundColor={"#1f2b3d"}

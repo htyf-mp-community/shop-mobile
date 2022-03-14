@@ -17,8 +17,10 @@ const caruselStyles = StyleSheet.create({
     color: Colors.text,
   },
   errorContainer: {
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    borderRadius: 10,
   },
   title: {
     fontWeight: "bold",

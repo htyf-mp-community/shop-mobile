@@ -1,49 +1,13 @@
-import axios from "axios";
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React from "react";
 import { View, Text, StyleSheet, Switch } from "react-native";
-import { API, ENDPOINTS } from "../../../constants/routes";
 import { Colors } from "../../../constants/styles";
 import useColorTheme from "@utils/context/ThemeContext";
-import { useUser } from "@utils/context/UserContext";
 import SignOut from "../../Signout/Signout";
+import useSettings from "./useSettings";
 
 export default function Settings() {
-  const [isEnabled, setIsEnabled] = useState(false);
-  const { user } = useUser();
-
-  const toggleSwitch = async () => {
-    setIsEnabled((previousState) => !previousState);
-
-    try {
-      await axios.post(
-        ENDPOINTS.notificationsSettings,
-        {
-          enable: !isEnabled,
-        },
-        { headers: { token: user.token } }
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const { data } = await axios.get(`${API}/notifications/status`, {
-          headers: {
-            token: user.token,
-          },
-        });
-        setIsEnabled(data.enabled);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, []);
-
   const { current, onThemeChange, theme } = useColorTheme();
+  const { isEnabled, toggleSwitch } = useSettings();
 
   return (
     <View style={styles.container}>
@@ -53,7 +17,7 @@ export default function Settings() {
           { fontSize: 25, color: theme.text, marginBottom: 35 },
         ]}
       >
-        Settings
+        App Settings
       </Text>
 
       <View style={styles.settings}>

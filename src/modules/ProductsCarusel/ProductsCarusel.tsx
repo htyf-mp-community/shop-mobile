@@ -68,27 +68,24 @@ function ProductsCarusel({
 
       {!!error && <EmptyList variant="error" error={error} />}
 
-      {!error && data && (
-        <VirtualizedList
-          ListEmptyComponent={EmptyList}
-          data={data}
-          onEndReached={onSkip}
-          horizontal
-          initialNumToRender={2}
-          onEndReachedThreshold={0.5}
-          getItem={getItem}
-          getItemCount={(data) => data.length}
-          keyExtractor={(item: ProductTypeProps) => `home.${item.prod_id}}`}
-          renderItem={({ item, index }) => (
-            <Product
-              key={`${item.prod_id}.${index}`}
-              {...item}
-              sharedID={sharedID}
-              fullSize={center}
-            />
-          )}
-        />
-      )}
+      <VirtualizedList
+        data={data}
+        onEndReached={onSkip}
+        horizontal
+        initialNumToRender={2}
+        onEndReachedThreshold={0.5}
+        getItem={getItem}
+        getItemCount={(data) => data.length}
+        keyExtractor={(item: ProductTypeProps) => `home.${item.prod_id}}`}
+        renderItem={({ item, index }) => (
+          <Product
+            key={`${item.prod_id}.${index}`}
+            {...item}
+            sharedID={sharedID}
+            fullSize={center}
+          />
+        )}
+      />
     </View>
   );
 }
