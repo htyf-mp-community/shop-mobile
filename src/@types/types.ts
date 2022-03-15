@@ -76,7 +76,7 @@ export type RootStackParams = {
   Watchlist?: undefined;
   MyReviews: undefined;
   AccountSettings: undefined;
-  SearchResults: { result: any[]; length: number };
+  SearchResults: { category: string };
   Details: {
     prod_id: number;
     sharedID: string;

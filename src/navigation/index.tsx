@@ -100,7 +100,7 @@ export default function MainNavigator() {
                 name="SearchResults"
                 component={Screen.SearchResults}
                 options={({ route }) => ({
-                  title: `Search Results: ${route.params.length}`,
+                  title: `Looking for: ${route.params.category}`,
                 })}
               />
               <Stack.Screen

@@ -15,17 +15,17 @@ export default function useInfiniteScrolling<T>(path: `/${string}`) {
     hasMore: false,
   });
 
-  const [skip, setSkip] = useState(5);
+  const [skip, setSkip] = useState(0);
 
   const onSkip = useCallback(async () => {
     if (state.hasMore) {
       setSkip(skip + 5);
-      await fetchData();
     }
   }, [skip, state.hasMore]);
 
-  const fetchData = async (callback?: () => void) => {
+  const fetchData = async () => {
     let cancelToken = axios.CancelToken.source();
+
     try {
       setState((prev) => ({ ...prev, loading: true }));
 
@@ -60,7 +60,7 @@ export default function useInfiniteScrolling<T>(path: `/${string}`) {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [skip]);
 
   return {
     ...state,

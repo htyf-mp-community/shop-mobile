@@ -1,20 +1,33 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+const TTL = 10; // 10 seconds
+
+function checkTime(time: number) {
+  return (Date.now() - time) / 1000 > TTL;
+}
+
 const Cache = {
-  getItem: async <T>(key: string): Promise<T> => {
-    const value = await AsyncStorage.getItem(key);
+  read: async (key: string) => {
+    const data = await AsyncStorage.getItem(key);
 
-    if (value === null) throw new Error("Cache empty");
+    if (data === null) return null;
 
-    return JSON.parse(value);
+    const parsed = JSON.parse(data);
+
+    const hasPassed = checkTime(parsed.time as number);
+
+    if (hasPassed) return null;
+
+    return parsed.data;
   },
-
-  setItem: <T>(key: string, value: T extends {} ? any : any) => {
-    AsyncStorage.setItem(key, JSON.stringify(value));
-  },
-
-  removeItem: async (key: string) => {
-    AsyncStorage.removeItem(key);
+  set: (key: string, value: any) => {
+    return AsyncStorage.setItem(
+      key,
+      JSON.stringify({
+        time: Date.now(),
+        data: value,
+      })
+    );
   },
 };
 

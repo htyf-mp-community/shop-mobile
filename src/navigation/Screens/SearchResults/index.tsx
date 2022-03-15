@@ -1,38 +1,31 @@
+import InfiniteScroll from "modules/InfiniteScroll";
 import React from "react";
-import { View, StyleSheet, Text, FlatList } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 import { ScreenNavigationProps } from "../../../@types/types";
 import { Colors, h3 } from "../../../constants/styles";
-import Product, { ProductTypeProps } from "../../../modules/Product";
+import Product from "../../../modules/Product";
 
 export default function SearchResults({
   route,
 }: ScreenNavigationProps<"SearchResults">) {
-  const { result } = route.params;
+  const { category } = route.params;
 
   return (
     <View style={styles.container}>
-      <Text
-        style={[
-          h3,
-          { fontFamily: "PoppinsBold", padding: 10, paddingBottom: 15 },
-        ]}
-      >
-        Matching Products
-      </Text>
-
-      <FlatList
-        keyExtractor={(id) => id.prod_id.toString()}
-        data={result || []}
-        renderItem={({ item: prod }: { item: ProductTypeProps }) => {
-          return (
-            <Product
-              key={prod.prod_id}
-              sharedID="SearchResult"
-              fullSize={true}
-              {...prod}
-            />
-          );
-        }}
+      <InfiniteScroll
+        getItemCount={(c) => c.length}
+        keyExtractor={({ prod_id }) => prod_id.toString()}
+        path={`/products/category?q=${category}`}
+        orientation="vertical"
+        getItem={(item, key) => item[key]}
+        renderItem={({ item }: { item: any }) => (
+          <Product
+            key={item.prod_id}
+            sharedID="SearchResult"
+            fullSize={true}
+            {...item}
+          />
+        )}
       />
     </View>
   );

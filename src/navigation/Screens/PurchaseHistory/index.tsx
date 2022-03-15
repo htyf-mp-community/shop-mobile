@@ -1,10 +1,9 @@
 import { useIsFocused } from "@react-navigation/native";
 import React, { useMemo } from "react";
-import { View, Text, FlatList, useWindowDimensions } from "react-native";
+import { View, FlatList, useWindowDimensions } from "react-native";
 import { Colors } from "../../../constants/styles";
 import { HistoryResponse } from "../../../@types/types";
 import useFetch from "../../../utils/hooks/useFetch";
-import Product from "../../../modules/Product";
 import { structureOutput } from "./structure";
 import { SkeletonPlaceholder } from "../../../components";
 import History from "./components/History";
@@ -14,7 +13,7 @@ export default function PurchaseHistory() {
 
   const { data, loading } = useFetch<HistoryResponse>(
     `/payments/history?skip=0`,
-    [isFocused],
+    [], // Why there was isFocued?
     {}
   );
 

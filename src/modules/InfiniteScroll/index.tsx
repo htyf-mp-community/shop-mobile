@@ -1,4 +1,11 @@
-import { VirtualizedList, ListRenderItem } from "react-native";
+import { SkeletonPlaceholder } from "components";
+import {
+  VirtualizedList,
+  ListRenderItem,
+  View,
+  Text,
+  useWindowDimensions,
+} from "react-native";
 import useInfiniteScrolling from "./useInfiniteScrolling";
 
 interface InfiniteScrollProps {
@@ -7,7 +14,8 @@ interface InfiniteScrollProps {
   getItemCount: ((data: any) => number) | undefined;
   getItem: ((data: any, index: number) => unknown) | undefined;
   path: `/${string}`;
-  keyExtractor: ((item: unknown, index: number) => string) | undefined;
+  keyExtractor: ((item: any, index: number) => string) | undefined;
+  heading?: string;
 }
 
 export default function InfiniteScroll({
@@ -17,18 +25,40 @@ export default function InfiniteScroll({
   getItem,
   getItemCount,
   path,
+  heading,
 }: InfiniteScrollProps) {
-  const { data, onSkip } = useInfiniteScrolling(path);
+  const { data, onSkip, loading } = useInfiniteScrolling(path);
+
+  const { width } = useWindowDimensions();
+
   return (
-    <VirtualizedList
-      onEndReachedThreshold={0.5}
-      onEndReached={onSkip}
-      horizontal={orientation === "horizontal"}
-      getItem={getItem}
-      getItemCount={getItemCount}
-      data={data}
-      renderItem={renderItem}
-      keyExtractor={keyExtractor}
-    />
+    <View>
+      {!!heading && (
+        <Text style={{ fontSize: 25, color: "white" }}>{heading}</Text>
+      )}
+
+      {loading && data.length === 0 && (
+        <SkeletonPlaceholder
+          backgroundColor={"#1f2b3d"}
+          highlightColor={"#2a3a52"}
+          size={{ width, height: 250 }}
+        >
+          <View style={{ width, height: 250, alignItems: "center" }}>
+            <SkeletonPlaceholder.Item height={250} width={width - 20} />
+          </View>
+        </SkeletonPlaceholder>
+      )}
+
+      <VirtualizedList
+        onEndReachedThreshold={0.5}
+        onEndReached={onSkip}
+        horizontal={orientation === "horizontal"}
+        getItem={getItem}
+        getItemCount={getItemCount}
+        data={data}
+        renderItem={renderItem}
+        keyExtractor={keyExtractor}
+      />
+    </View>
   );
 }

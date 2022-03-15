@@ -31,6 +31,14 @@ export default function useFetch<T>(
     const cancelToken = axios.CancelToken.source();
 
     (async () => {
+      /// check performance later
+      /*  const isCached = await Cache.read(path);
+
+      if (isCached !== null) {
+        return setState(isCached);
+      } */
+      ///
+
       setState((p) => ({
         ...p,
         loading: true,
@@ -43,6 +51,9 @@ export default function useFetch<T>(
           },
           cancelToken: cancelToken.token,
         });
+
+        // Cache.set(path, { error: "", loading: false, data });
+
         if (notUndefined(setter) && mounted.current) {
           setter?.(data);
         } else {

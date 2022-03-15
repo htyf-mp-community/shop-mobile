@@ -1,6 +1,5 @@
 import { useNavigation } from "@react-navigation/core";
 import React from "react";
-import { View } from "react-native";
 import { Button } from "@components/index";
 import { AntDesign } from "@expo/vector-icons";
 import Avatar from "@modules/User/Avatar/Avatar";
@@ -8,6 +7,8 @@ import { useNavigationProps } from "../../@types/types";
 import Animated from "react-native-reanimated";
 import styles from "./Sidebar.styles";
 import useColorTheme from "@utils/context/ThemeContext";
+
+import { SafeAreaView } from "react-native";
 
 interface SidebarProps {
   children: React.ReactNode;
@@ -24,7 +25,9 @@ export default function Sidebar({
   const { theme } = useColorTheme();
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.primary }]}>
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: theme.primary, flex: 1 }]}
+    >
       <Animated.View style={[styles.navigation, animatedButtons]}>
         <Avatar
           hide
@@ -88,6 +91,6 @@ export default function Sidebar({
       >
         {children}
       </Animated.View>
-    </View>
+    </SafeAreaView>
   );
 }

@@ -17,20 +17,9 @@ type CategoryProps = {
 
 export default function Category({ category, ...rest }: CategoryProps) {
   const navigation = useNavigation<useNavigationProps>();
-  const { user } = useUser();
 
   async function GetProductsByCategory() {
-    try {
-      const { data } = await axios.get(`${API}/products/category/${category}`, {
-        headers: {
-          token: user.token,
-        },
-      });
-      navigation.navigate("SearchResults", {
-        result: data,
-        length: data.length,
-      });
-    } catch (error) {}
+    navigation.navigate("SearchResults", { category });
   }
   return (
     <Ripple

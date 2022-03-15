@@ -1,4 +1,4 @@
-import { Dimensions, FlatList, SafeAreaView } from "react-native";
+import { Dimensions, FlatList } from "react-native";
 import React, { useMemo } from "react";
 import Sidebar from "@modules/Sidebar";
 import {
@@ -8,8 +8,6 @@ import {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
-
-import useColorTheme from "@utils/context/ThemeContext";
 import { homeElements } from "./data";
 
 const { width: WIDTH } = Dimensions.get("window");
@@ -53,25 +51,21 @@ export default function Home() {
     }
   }
 
-  const { theme } = useColorTheme();
-
   const data = useMemo(() => homeElements(toggle), []);
 
   return (
-    <SafeAreaView style={{ backgroundColor: theme.primary, flex: 1 }}>
-      <Sidebar animatedStyle={animatedStyle} animatedButtons={animatedButtons}>
-        <FlatList
-          initialNumToRender={5}
-          stickyHeaderIndices={[0]}
-          bounces
-          showsVerticalScrollIndicator={false}
-          data={data}
-          keyExtractor={({ id }) => id.toString()}
-          renderItem={({ item: { Component, props } }) => {
-            return <Component {...props} />;
-          }}
-        />
-      </Sidebar>
-    </SafeAreaView>
+    <Sidebar animatedStyle={animatedStyle} animatedButtons={animatedButtons}>
+      <FlatList
+        initialNumToRender={5}
+        stickyHeaderIndices={[0]}
+        bounces
+        showsVerticalScrollIndicator={false}
+        data={data}
+        keyExtractor={({ id }) => id.toString()}
+        renderItem={({ item: { Component, props } }) => {
+          return <Component {...props} />;
+        }}
+      />
+    </Sidebar>
   );
 }
