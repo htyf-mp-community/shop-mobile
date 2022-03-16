@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from "react";
 import { API } from "@constants/routes";
 import { useUser } from "@utils/context/UserContext";
 import { notUndefined } from "@functions/typecheckers";
-import Cache from "@functions/Cache";
 
 interface StateProps<T> {
   data: T;
@@ -26,55 +25,47 @@ export default function useFetch<T>(
 
   const { user } = useUser();
 
+  async function query(cancelToken?: any) {
+    setState((p) => ({
+      ...p,
+      loading: true,
+    }));
+    try {
+      if (mounted.current === false) return;
+      const { data } = await axios.get(API + path, {
+        headers: {
+          token: user.token,
+        },
+        cancelToken: cancelToken.token,
+      });
+
+      if (notUndefined(setter) && mounted.current) {
+        setter?.(data);
+      } else {
+        if (mounted.current) {
+          setState({
+            loading: false,
+            data: data,
+            error: "",
+          });
+        }
+      }
+    } catch (error: any) {
+      if (!axios.isCancel(error) && mounted.current) {
+        setState((p) => ({
+          ...p,
+          error: error?.response?.data?.message || error.message,
+          loading: false,
+        }));
+      }
+    }
+  }
+
   useEffect(() => {
     mounted.current = true;
     const cancelToken = axios.CancelToken.source();
 
-    (async () => {
-      /// check performance later
-      /*  const isCached = await Cache.read(path);
-
-      if (isCached !== null) {
-        return setState(isCached);
-      } */
-      ///
-
-      setState((p) => ({
-        ...p,
-        loading: true,
-      }));
-      try {
-        if (mounted.current === false) return;
-        const { data } = await axios.get(API + path, {
-          headers: {
-            token: user.token,
-          },
-          cancelToken: cancelToken.token,
-        });
-
-        // Cache.set(path, { error: "", loading: false, data });
-
-        if (notUndefined(setter) && mounted.current) {
-          setter?.(data);
-        } else {
-          if (mounted.current) {
-            setState({
-              loading: false,
-              data: data,
-              error: "",
-            });
-          }
-        }
-      } catch (error: any) {
-        if (!axios.isCancel(error) && mounted.current) {
-          setState((p) => ({
-            ...p,
-            error: error?.response?.data?.message || error.message,
-            loading: false,
-          }));
-        }
-      }
-    })();
+    query(cancelToken);
 
     return () => {
       mounted.current = false;
@@ -82,5 +73,5 @@ export default function useFetch<T>(
     };
   }, deps);
 
-  return { ...state, setState };
+  return { ...state, setState, refetch: query };
 }

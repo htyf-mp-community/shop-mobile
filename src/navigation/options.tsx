@@ -63,14 +63,12 @@ export const checkOutScreenOptions: StackNavigationOptions = {
 export const userScreenOptions = (name: string): StackNavigationOptions => ({
   headerTitleAlign: "center",
   headerTitle: name.split("@")[0],
-  presentation: "modal",
+  // presentation: "modal",
 });
 
 export const homeScreenOptions: StackNavigationOptions = { headerShown: false };
 
-export const cartScreenOptions: StackNavigationOptions = {
-  // ...horizontalAnimation,
-};
+export const cartScreenOptions: StackNavigationOptions = {};
 
 export const createReviewOptions = ({
   route: { params },
