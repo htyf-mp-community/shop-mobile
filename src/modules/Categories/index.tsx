@@ -6,6 +6,10 @@ import useFetch from "../../utils/hooks/useFetch";
 export default function Categories() {
   const { data } = useFetch<readonly string[]>("/products/categories");
 
+  function renderItem({ item }: { item: string }) {
+    return <Category category={item} />;
+  }
+
   return (
     <FlatList
       testID="categories-list"
@@ -13,8 +17,8 @@ export default function Categories() {
       style={{ height: 60 }}
       showsHorizontalScrollIndicator={false}
       data={data}
-      keyExtractor={(_, i) => i.toString()}
-      renderItem={({ item }) => <Category category={item} />}
+      keyExtractor={(category) => category}
+      renderItem={renderItem}
     />
   );
 }

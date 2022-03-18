@@ -7,7 +7,7 @@ import { notEmpty } from "../../functions/typecheckers";
 import EmptyList from "./Info";
 import useFetchProducts from "./useFetchProducts";
 import axios from "axios";
-import { SkeletonPlaceholder } from "../../components";
+import ProductSkeleton from "modules/ProductSkeleton";
 
 interface MostRecentProps {
   path: string;
@@ -31,9 +31,6 @@ function ProductsCarusel({
   const { loading, data, error, hasMore, FetchAllProducts } = useFetchProducts<
     ProductTypeProps[]
   >(`${path}?skip=0`, [refresh]);
-
-  const { width } = useWindowDimensions();
-
   const [skip, setSkip] = useState(5);
 
   const onSkip = useCallback(async () => {
@@ -44,27 +41,11 @@ function ProductsCarusel({
     }
   }, [skip, hasMore]);
 
-  if (!notEmpty(data) && loading) {
-    return (
-      <View style={caruselStyles.container}>
-        <Text style={[caruselStyles.title]}>{title}</Text>
-
-        <SkeletonPlaceholder
-          backgroundColor={"#1f2b3d"}
-          highlightColor={"#2a3a52"}
-          size={{ width, height: 250 }}
-        >
-          <View style={{ width, height: 250, alignItems: "center" }}>
-            <SkeletonPlaceholder.Item height={250} width={width - 20} />
-          </View>
-        </SkeletonPlaceholder>
-      </View>
-    );
-  }
-
   return (
     <View style={caruselStyles.container}>
       <Text style={[caruselStyles.title]}>{title}</Text>
+
+      {!notEmpty(data) && loading && <ProductSkeleton />}
 
       {!!error && <EmptyList variant="error" error={error} />}
 

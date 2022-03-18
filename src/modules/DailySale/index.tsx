@@ -6,7 +6,7 @@ import { ProductTypeProps } from "../Product";
 import dailyStyle from "./styles";
 import { API } from "../../constants/routes";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { useIsFocused, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { useNavigationProps } from "../../@types/types";
 import AddToCart from "../AddToCart/AddToCart";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
@@ -36,8 +36,6 @@ export default function DailySale({}: DailySaleProps) {
     }
   }
 
-  const isFocused = useIsFocused();
-
   const { width } = useWindowDimensions();
 
   return (
@@ -49,7 +47,7 @@ export default function DailySale({}: DailySaleProps) {
           <TouchableOpacity activeOpacity={0.9} onPress={toProduct}>
             <SharedElement id={`prod_id.${data?.prod_id}DAILY`}>
               <Image
-                style={dailyStyle.image}
+                style={[dailyStyle.image]}
                 resizeMode="cover"
                 source={{
                   uri: `${API}/upload/images=${data?.img_id[0]?.name}`,
@@ -57,23 +55,22 @@ export default function DailySale({}: DailySaleProps) {
               />
             </SharedElement>
           </TouchableOpacity>
-          {isFocused && (
-            <Animated.View
-              style={[dailyStyle.buttonsContainer]}
-              entering={FadeIn.delay(500).duration(100)}
-              exiting={FadeOut}
-            >
-              <Text style={[dailyStyle.price]}>${data?.price}</Text>
-              <AddToCart
-                iconStyle={{ color: "#000" }}
-                prod_id={data.prod_id}
-                relative
-                text="Add"
-                fontStyle={{ color: "#000" }}
-                style={[dailyStyle.button, { backgroundColor: "#fff" }]}
-              />
-            </Animated.View>
-          )}
+
+          <Animated.View
+            style={[dailyStyle.buttonsContainer]}
+            entering={FadeIn.delay(500).duration(100)}
+            exiting={FadeOut}
+          >
+            <Text style={[dailyStyle.price]}>${data?.price}</Text>
+            <AddToCart
+              iconStyle={{ color: "#000" }}
+              prod_id={data.prod_id}
+              relative
+              text="Add"
+              fontStyle={{ color: "#000" }}
+              style={[dailyStyle.button, { backgroundColor: "#fff" }]}
+            />
+          </Animated.View>
         </View>
       )}
 

@@ -5,20 +5,20 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 import { useNavigationProps } from "../../@types/types";
 import useColorTheme from "@utils/context/ThemeContext";
-import { PulseButton, Button } from "components";
+import { Button } from "components";
 
 interface SearchBarProps {
   toggleSidebar: () => void;
 }
 
-export default function Header({ toggleSidebar }: SearchBarProps) {
+export default function Header({ toggleSidebar: onToggle }: SearchBarProps) {
   const navigation = useNavigation<useNavigationProps>();
   const { theme } = useColorTheme();
 
   return (
     <View style={[styles.container, { backgroundColor: theme.primary }]}>
       <Button
-        onPress={toggleSidebar}
+        onPress={onToggle}
         icon={<EvilIcons name="navicon" size={30} color={theme.text} />}
         style={{ marginLeft: 10, padding: 5 }}
       />

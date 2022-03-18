@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import { useUser } from "@utils/context/UserContext";
 import axios from "axios";
 import { ENDPOINTS } from "../../constants/routes";
+import useDelay from "utils/hooks/useDelay";
 
 export default function useCart(
   prod_id: number,
@@ -37,13 +38,13 @@ export default function useCart(
     }
   }
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
+  useDelay(
+    () => {
       setResult("");
-    }, 3000);
-
-    return () => clearTimeout(timeout);
-  }, [PushToCart]);
+    },
+    3000,
+    [PushToCart]
+  );
 
   return { pushToCart: PushToCart, loading, error, result };
 }

@@ -12,7 +12,7 @@ export default function useCartDelete() {
 
   async function RemoveCartProduct(cart_id: number) {
     try {
-      const { data } = await axios.delete(`${API}/cart`, {
+      const { data, status } = await axios.delete(`${API}/cart`, {
         headers: {
           token: user.token,
         },
@@ -21,7 +21,7 @@ export default function useCartDelete() {
         },
       });
 
-      if (data.status === "Deleted") {
+      if (data.message === "Deleted" || status === 200) {
         dispatch(cartActions.removeById(cart_id));
       }
     } catch (error) {

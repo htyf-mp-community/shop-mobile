@@ -1,0 +1,19 @@
+import { SkeletonPlaceholder } from "components";
+import { useWindowDimensions, View } from "react-native";
+
+interface SkeletonProps {}
+
+export default function ProductSkeleton({}: SkeletonProps) {
+  const { width } = useWindowDimensions();
+  return (
+    <SkeletonPlaceholder
+      backgroundColor={"#1f2b3d"}
+      highlightColor={"#2a3a52"}
+      size={{ width, height: 250 }}
+    >
+      <View style={{ width, height: 250, alignItems: "center" }}>
+        <SkeletonPlaceholder.Item height={250} width={width - 20} />
+      </View>
+    </SkeletonPlaceholder>
+  );
+}

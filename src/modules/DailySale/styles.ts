@@ -17,7 +17,6 @@ const dailyStyle = StyleSheet.create({
   image: {
     width: WIDTH - 20,
     height: 250,
-    borderRadius: 5,
   },
   button: {
     width: 130,
