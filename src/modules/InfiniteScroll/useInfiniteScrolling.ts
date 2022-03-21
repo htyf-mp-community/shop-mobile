@@ -43,7 +43,7 @@ export default function useInfiniteScrolling<T>(path: `/${string}`) {
         setState((prev) => ({
           ...prev,
           hasMore: data.hasMore,
-          data: RemoveProductsRepetition([...prev.data, ...data.results]),
+          data: RemoveProductsRepetition([...prev.data, ...data.results], "id"),
           loading: false,
         }));
       }

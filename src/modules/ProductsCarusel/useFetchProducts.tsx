@@ -45,7 +45,10 @@ export default function useFetchProducts<T>(path: string, deps: any[] = []) {
           setState((prev) => ({
             ...prev,
             hasMore: data.hasMore,
-            data: RemoveProductsRepetition([...prev.data, ...data.results]),
+            data: RemoveProductsRepetition(
+              [...prev.data, ...data.results],
+              "prod_id"
+            ),
             loading: false,
           }));
         }

@@ -1,11 +1,5 @@
-import React, { useRef, useState } from "react";
-import {
-  Animated,
-  Dimensions,
-  FlatList,
-  View,
-  useWindowDimensions,
-} from "react-native";
+import React, { useRef } from "react";
+import { Animated, Dimensions, FlatList, View } from "react-native";
 import { ProductImageProps } from "/@types/types";
 import { API } from "@constants/routes";
 import Dots from "@components/Dots/Dots";
@@ -28,17 +22,6 @@ export default function ImagesCarusel({
 }: ImagesCaruselProps) {
   const scrollX = useRef(new Animated.Value(0)).current;
 
-  const [popup, setPopup] = useState({
-    image: "",
-    open: false,
-  });
-
-  function openAndChooseImage(image: string) {
-    setPopup({ open: true, image });
-  }
-
-  //const { width, height } = useWindowDimensions();
-
   return (
     <>
       <FlatList
@@ -57,7 +40,6 @@ export default function ImagesCarusel({
           if (item.id === 0) {
             return (
               <CaruselItem
-                onPress={openAndChooseImage}
                 source={image}
                 key={item.id}
                 prod_id={prod_id}
@@ -67,7 +49,6 @@ export default function ImagesCarusel({
           } else {
             return (
               <CaruselItem
-                onPress={openAndChooseImage}
                 key={item.id}
                 source={`${API}/upload/images=${item.name}`}
               />

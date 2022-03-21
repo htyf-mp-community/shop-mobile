@@ -3,8 +3,11 @@
  * @returns {Array} Same type array without repetiton based on prod_id key
  **/
 
-export default function RemoveProductsRepetition(arr: any[]): any[] {
-  return Array.from(new Set(arr.map((a) => a.prod_id))).map((id) => {
-    return arr.find((a) => a.prod_id === id);
+export default function RemoveProductsRepetition(
+  arr: any[],
+  key_id: string
+): any[] {
+  return Array.from(new Set(arr.map((a) => a[key_id]))).map((id) => {
+    return arr.find((a) => a[key_id] === id);
   });
 }

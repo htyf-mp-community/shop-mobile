@@ -5,16 +5,13 @@ import {
   View,
   Text,
   useWindowDimensions,
+  VirtualizedListProps,
 } from "react-native";
 import useInfiniteScrolling from "./useInfiniteScrolling";
 
-interface InfiniteScrollProps {
+interface InfiniteScrollProps<T> extends VirtualizedListProps<T> {
   orientation: "vertical" | "horizontal";
-  renderItem: ListRenderItem<unknown> | null | undefined;
-  getItemCount: ((data: any) => number) | undefined;
-  getItem: ((data: any, index: number) => unknown) | undefined;
   path: `/${string}`;
-  keyExtractor: ((item: any, index: number) => string) | undefined;
   heading?: string;
 }
 
@@ -26,9 +23,9 @@ export default function InfiniteScroll({
   getItemCount,
   path,
   heading,
-}: InfiniteScrollProps) {
+  ...rest
+}: InfiniteScrollProps<any>) {
   const { data, onSkip, loading } = useInfiniteScrolling(path);
-
   const { width } = useWindowDimensions();
 
   return (
@@ -58,6 +55,7 @@ export default function InfiniteScroll({
         data={data}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
+        {...rest}
       />
     </View>
   );

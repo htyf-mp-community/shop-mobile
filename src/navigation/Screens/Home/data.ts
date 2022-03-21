@@ -3,6 +3,7 @@ import DailySale from "@modules/DailySale";
 import Categories from "@modules/Categories";
 import { ENDPOINTS } from "@constants/routes";
 import ProductsCarusel from "@modules/ProductsCarusel/ProductsCarusel";
+import Promotions from "modules/Promotions";
 
 interface HomeProps {
   id: number;
@@ -10,52 +11,51 @@ interface HomeProps {
   props: any;
 }
 
-export const homeElements = (toggle: () => void): HomeProps[] => [
-  {
-    id: 1,
-    Component: Header,
-    props: {
-      toggleSidebar: toggle,
+export const homeElements = (toggle: () => void): readonly HomeProps[] =>
+  [
+    {
+      Component: Header,
+      props: {
+        toggleSidebar: toggle,
+      },
     },
-  },
-  {
-    id: 2,
-    Component: Categories,
-    props: {},
-  },
-  {
-    id: 3,
-    Component: DailySale,
-    props: {},
-  },
-  {
-    id: 4,
-    Component: ProductsCarusel,
-    props: {
-      title: "Best Rated",
-      sharedID: "MostSearched",
-      path: ENDPOINTS.goodRatedProducts,
-      refresh: false,
+    {
+      Component: Categories,
+      props: {},
     },
-  },
-  {
-    id: 5,
-    Component: ProductsCarusel,
-    props: {
-      title: "Your searches",
-      sharedID: "WatchedByYou",
-      path: ENDPOINTS.searchedProducts,
-      refresh: false,
+    {
+      Component: Promotions,
+      props: {},
     },
-  },
-  {
-    id: 6,
-    Component: ProductsCarusel,
-    props: {
-      title: "All products",
-      sharedID: "All",
-      path: ENDPOINTS.productsAll,
-      refresh: false,
+    {
+      Component: DailySale,
+      props: {},
     },
-  },
-];
+    {
+      Component: ProductsCarusel,
+      props: {
+        title: "Best Rated",
+        sharedID: "MostSearched",
+        path: ENDPOINTS.goodRatedProducts,
+        refresh: false,
+      },
+    },
+    {
+      Component: ProductsCarusel,
+      props: {
+        title: "Your searches",
+        sharedID: "WatchedByYou",
+        path: ENDPOINTS.searchedProducts,
+        refresh: false,
+      },
+    },
+    {
+      Component: ProductsCarusel,
+      props: {
+        title: "All products",
+        sharedID: "All",
+        path: ENDPOINTS.productsAll,
+        refresh: false,
+      },
+    },
+  ].map((props, index) => ({ ...props, id: index }));

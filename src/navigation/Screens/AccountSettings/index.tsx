@@ -11,13 +11,6 @@ import { useAppSelector } from "utils/hooks/hooks";
 
 type CurrentOptionType = "NAME" | "ADDRESS" | "PHONE_NUMBER" | "SURNAME" | "";
 
-interface Response {
-  name: string;
-  surname: string;
-  address: string;
-  phone_number: string;
-}
-
 export default function AccountSettings() {
   const { theme } = useColorTheme();
   const [option, setOption] = useState<CurrentOptionType>("");
