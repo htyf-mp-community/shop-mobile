@@ -13,12 +13,14 @@ const cartSlice = createSlice({
     loading: false,
     error: "",
     empty: false,
+    amount: 0,
   },
   reducers: {
     setCart(state, { payload }: { payload: any[] }) {
       state.loading = false;
       state.cart = payload;
       state.error = "";
+      state.amount = payload.length;
       if (state.cart.length > 0) state.empty = false;
     },
     setError(state, { payload }) {
@@ -28,6 +30,10 @@ const cartSlice = createSlice({
 
     startLoading(state) {
       state.loading = true;
+    },
+
+    increment(state) {
+      state.amount += 1;
     },
 
     incrementAmmount(state, { payload }: { payload: number }) {

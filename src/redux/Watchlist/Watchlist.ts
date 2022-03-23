@@ -8,16 +8,22 @@ const watchlistSlice = createSlice({
     error: "",
     data: [] as ProductMinified[],
     hasMore: false,
+    amount: 0,
   },
   reducers: {
+    increment(state) {
+      state.amount += 1;
+    },
     setWatchlist(state, { payload }) {
       state.loading = false;
       state.data = payload.results;
       state.error = "";
       state.hasMore = payload.hasMore;
+      state.amount = payload.results.length;
     },
     removeElement(state, { payload }) {
       state.data = state.data.filter(({ prod_id }) => prod_id !== payload);
+      state.amount = state.data.length;
     },
   },
 });

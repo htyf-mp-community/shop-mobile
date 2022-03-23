@@ -51,8 +51,8 @@ export default function Button({
 }: ButtonProps) {
   return (
     <Ripple
-      rippleCentered
       rippleColor="#fff"
+      rippleCentered
       onPress={callback}
       style={[{ backgroundColor: VARIANTS[variant] }, styles.button, style]}
       {...rest}

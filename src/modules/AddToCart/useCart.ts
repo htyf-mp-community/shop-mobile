@@ -3,6 +3,8 @@ import { useUser } from "@utils/context/UserContext";
 import axios from "axios";
 import { ENDPOINTS } from "../../constants/routes";
 import useDelay from "utils/hooks/useDelay";
+import { useDispatch } from "react-redux";
+import { cartActions } from "redux/Cart";
 
 export default function useCart(
   prod_id: number,
@@ -13,6 +15,7 @@ export default function useCart(
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState();
   const [result, setResult] = useState("");
+  const dispatch = useDispatch();
 
   async function PushToCart() {
     try {
@@ -31,6 +34,7 @@ export default function useCart(
         setResult(data.status);
         setLoading(false);
         refetch();
+        dispatch(cartActions.increment());
       }
     } catch (error: any) {
       setLoading(false);

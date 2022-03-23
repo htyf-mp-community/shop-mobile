@@ -49,7 +49,7 @@ export default function ProductSuggestion({
         renderItem={({ item, index }) => (
           <Ripple
             onPress={() =>
-              navigation.push("Details", {
+              navigation.replace("Details", {
                 image: `${API}/upload/images=${item.image}`,
                 title: item.title,
                 prod_id: item.prod_id,

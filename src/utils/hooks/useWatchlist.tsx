@@ -2,6 +2,8 @@ import axios from "axios";
 import { API } from "constants/routes";
 import { useEffect, useState } from "react";
 import { useUser } from "@utils/context/UserContext";
+import { useDispatch } from "react-redux";
+import { watchlistActions } from "redux/Watchlist/Watchlist";
 
 interface OptionProps {
   withCheck?: boolean;
@@ -34,6 +36,8 @@ export default function useWatchlist(
     }
   }, [prod_id]);
 
+  const dispatch = useDispatch();
+
   async function appendWatchlist() {
     try {
       await axios.post(
@@ -47,6 +51,7 @@ export default function useWatchlist(
       );
 
       setState("ADDED");
+      dispatch(watchlistActions.increment());
     } catch (error) {
       setState("IN");
       console.log(error);

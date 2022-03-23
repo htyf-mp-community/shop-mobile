@@ -7,8 +7,9 @@ import { useNavigationProps } from "../../@types/types";
 import Animated from "react-native-reanimated";
 import styles from "./Sidebar.styles";
 import useColorTheme from "@utils/context/ThemeContext";
-
-import { SafeAreaView } from "react-native";
+import { useAppSelector } from "utils/hooks/hooks";
+import { SafeAreaView, View } from "react-native";
+import Badge from "components/Badge";
 
 interface SidebarProps {
   children: React.ReactNode;
@@ -24,6 +25,8 @@ export default function Sidebar({
   const navigation = useNavigation<useNavigationProps>();
   const { theme } = useColorTheme();
 
+  const { cart, watchlist } = useAppSelector((state) => state);
+
   return (
     <SafeAreaView
       style={[styles.container, { backgroundColor: theme.primary, flex: 1 }]}
@@ -36,35 +39,41 @@ export default function Sidebar({
           }}
         />
 
-        <Button
-          icon={
-            <AntDesign
-              name={"heart"}
-              style={{ marginRight: 10 }}
-              size={25}
-              color={"red"}
-            />
-          }
-          style={[styles.button]}
-          fontStyle={{ color: theme.text }}
-          text={"Watchlist"}
-          onPress={() => navigation.navigate("Watchlist")}
-        />
+        <View style={{ position: "relative" }}>
+          {watchlist.amount > 0 && <Badge amount={watchlist.amount} />}
+          <Button
+            icon={
+              <AntDesign
+                name={"heart"}
+                style={{ marginRight: 10 }}
+                size={25}
+                color={"red"}
+              />
+            }
+            style={[styles.button]}
+            fontStyle={{ color: theme.text }}
+            text={"Watchlist"}
+            onPress={() => navigation.navigate("Watchlist")}
+          />
+        </View>
 
-        <Button
-          icon={
-            <AntDesign
-              name={"shoppingcart"}
-              style={{ marginRight: 10 }}
-              size={30}
-              color={theme.text}
-            />
-          }
-          style={[styles.button]}
-          fontStyle={{ color: theme.text }}
-          text={"Cart"}
-          onPress={() => navigation.navigate("Cart")}
-        />
+        <View style={{ position: "relative" }}>
+          {cart.amount > 0 && <Badge amount={cart.amount} />}
+          <Button
+            icon={
+              <AntDesign
+                name={"shoppingcart"}
+                style={{ marginRight: 10 }}
+                size={30}
+                color={theme.text}
+              />
+            }
+            style={[styles.button]}
+            fontStyle={{ color: theme.text }}
+            text={"Cart"}
+            onPress={() => navigation.navigate("Cart")}
+          />
+        </View>
 
         <Button
           icon={
