@@ -9,7 +9,7 @@ interface OptionProps {
   withCheck?: boolean;
 }
 
-type States = "ADDED" | "IN" | "NOT" | "";
+type States = "IN" | "NOT" | "";
 
 export default function useWatchlist(
   prod_id: number,
@@ -50,7 +50,7 @@ export default function useWatchlist(
         }
       );
 
-      setState("ADDED");
+      setState("IN");
       dispatch(watchlistActions.increment());
     } catch (error) {
       setState("IN");
@@ -59,11 +59,13 @@ export default function useWatchlist(
   }
 
   async function remove(prod_id: number) {
-    return axios.delete(`${API}/watchlist/${prod_id}`, {
+    await axios.delete(`${API}/watchlist/${prod_id}`, {
       headers: {
         token: user.token,
       },
     });
+    dispatch(watchlistActions.removeElement(prod_id));
+    setState("NOT");
   }
 
   return { appendWatchlist, state, remove };

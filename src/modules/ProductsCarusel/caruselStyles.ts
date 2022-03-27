@@ -30,6 +30,7 @@ const caruselStyles = StyleSheet.create({
   },
   container: {
     width: WIDTH,
+    marginTop: 20,
   },
 });
 

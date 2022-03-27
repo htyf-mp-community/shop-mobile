@@ -61,6 +61,11 @@ export default function MainNavigator() {
                 options={Option.homeScreenOptions}
               />
               <Stack.Screen
+                name="Auction"
+                component={Screen.Auction}
+                options={Option.auctionOptions}
+              />
+              <Stack.Screen
                 name="Cart"
                 component={Screen.Cart}
                 options={Option.cartScreenOptions}

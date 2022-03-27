@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
 
   favButton: {
     padding: 5,
-    paddingHorizontal: 15,
+    paddingHorizontal: 20,
     marginRight: 10,
     borderRadius: 10,
     alignItems: "center",

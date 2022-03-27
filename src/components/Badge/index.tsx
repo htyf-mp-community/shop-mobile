@@ -1,5 +1,6 @@
 import { Colors } from "constants/styles";
-import { Text, View } from "react-native";
+import { Text } from "react-native";
+import Animated, { ZoomIn, ZoomOut } from "react-native-reanimated";
 
 export default function Badge({
   amount,
@@ -9,7 +10,9 @@ export default function Badge({
   left?: boolean;
 }) {
   return (
-    <View
+    <Animated.View
+      entering={ZoomIn}
+      exiting={ZoomOut}
       style={{
         position: "absolute",
         ...(left ? { left: -5 } : { right: -5 }),
@@ -33,6 +36,6 @@ export default function Badge({
       >
         {amount}
       </Text>
-    </View>
+    </Animated.View>
   );
 }

@@ -66,6 +66,7 @@ export type RootStackParams = {
   initialRouteName: Object | undefined;
   Search: undefined;
   Home: undefined;
+  Auction: { auction_id: string };
   PurchaseHistory: undefined;
   Cart: undefined;
   User: undefined;

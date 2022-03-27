@@ -33,6 +33,8 @@ export const defaultStackOptions: StackNavigationOptions = {
   headerShown: HEADER[Platform.OS],
 };
 
+export const auctionOptions: StackNavigationOptions = {};
+
 export const detailsScreenOptions = ({
   route,
   navigation,

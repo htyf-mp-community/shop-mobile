@@ -39,11 +39,9 @@ export default function DailySale() {
             <Text style={styles.title}>Promotion</Text>
             <Clock />
           </View>
-          <Ripple onPress={toProduct}>
-            <SharedElement
-              id={`prod_id.${data?.prod_id}DAILY`}
-              style={styles.image_container}
-            >
+          <Ripple onPress={toProduct} style={styles.image_container}>
+            <Text style={styles.off}>20% Off</Text>
+            <SharedElement id={`prod_id.${data?.prod_id}DAILY`}>
               <Image
                 style={[styles.image]}
                 resizeMode="cover"
@@ -54,25 +52,28 @@ export default function DailySale() {
             </SharedElement>
           </Ripple>
           <View style={[styles.details]}>
-            <Text style={{ color: "#fff", fontSize: 20, marginBottom: 5 }}>
-              {data?.title}
-            </Text>
-            <View
-              style={[
-                styles.row,
-                { width: "100%", justifyContent: "space-between" },
-              ]}
-            >
-              <View style={styles.row}>
-                <Text style={styles.price}>${data?.price}</Text>
-                <Text style={styles.discounted}>
-                  ${Math.ceil(data?.price * 1.25)}
-                </Text>
+            <Text style={{ color: "#fff", fontSize: 20 }}>{data?.title}</Text>
+            <View style={styles.bottom_tab}>
+              <View
+                style={[
+                  styles.row,
+                  { width: "100%", justifyContent: "space-between" },
+                ]}
+              >
+                <View style={[styles.row, { width: "50%" }]}>
+                  <Text style={styles.price}>${data?.price}</Text>
+                  <Text style={styles.discounted}>
+                    ${Math.ceil(data?.price * 1.25)}
+                  </Text>
+                </View>
+                <Text style={{ color: "#fff" }}>12 Left</Text>
               </View>
+
               <Button
-                onPress={() => pushToCart()}
+                style={styles.button}
+                onPress={pushToCart}
                 text={!!result ? "Added" : "Add to cart"}
-                variant="ternary"
+                variant={!!result ? "primary" : "ternary"}
               />
             </View>
           </View>

@@ -67,8 +67,7 @@ export default function SearchScreen() {
         placeholder="Search..."
         placeholderTextColor={"#fff"}
         style={{
-          width,
-          margin: 0,
+          width: width - 20,
         }}
       />
 

@@ -5,6 +5,7 @@ import styles from "../../styles";
 import { Button } from "components";
 import { AntDesign } from "@expo/vector-icons";
 import useWatchlist from "@utils/hooks/useWatchlist";
+import Icon from "./Icon";
 
 interface BottomTabProps {
   prod_id: number;
@@ -13,7 +14,9 @@ interface BottomTabProps {
 
 export default function BottomTab({ prod_id, quantity }: BottomTabProps) {
   const { theme } = useColorTheme();
-  const { appendWatchlist, state } = useWatchlist(prod_id, { withCheck: true });
+  const { appendWatchlist, state, remove } = useWatchlist(prod_id, {
+    withCheck: true,
+  });
 
   return (
     <Animated.View
@@ -23,14 +26,12 @@ export default function BottomTab({ prod_id, quantity }: BottomTabProps) {
       ]}
       entering={ZoomIn.duration(200)}
     >
-      {state !== "IN" && state !== "ADDED" && (
-        <Button
-          onPress={appendWatchlist}
-          variant="primary"
-          style={[styles.favButton]}
-          icon={<AntDesign name="hearto" size={26} color="white" />}
-        />
-      )}
+      <Button
+        onPress={() => (state === "IN" ? remove(prod_id) : appendWatchlist())}
+        variant="primary"
+        style={[styles.favButton]}
+        icon={<Icon state={state} />}
+      />
 
       <AddToCart
         disabled={quantity === 0}

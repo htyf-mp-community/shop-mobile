@@ -3,7 +3,8 @@ import DailySale from "@modules/DailySale";
 import Categories from "@modules/Categories";
 import { ENDPOINTS } from "@constants/routes";
 import ProductsCarusel from "@modules/ProductsCarusel/ProductsCarusel";
-import Promotions from "modules/Promotions";
+/* import Promotions from "modules/Promotions";
+import AuctionList from "../Auction/components/AuctionList"; */
 
 interface HomeProps {
   id: number;
@@ -23,10 +24,14 @@ export const homeElements = (toggle: () => void): readonly HomeProps[] =>
       Component: Categories,
       props: {},
     },
-    {
+    /*  {
       Component: Promotions,
       props: {},
     },
+    {
+      Component: AuctionList,
+      props: {},
+    }, */
     {
       Component: DailySale,
       props: {},
