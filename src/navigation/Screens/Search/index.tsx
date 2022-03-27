@@ -15,6 +15,7 @@ import BottomSheet, { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
 import Filters from "./components/Filters";
 import type { SuggestionType } from "/@types/types";
 import HeaderActions from "./components/HeaderActions";
+import RecentSearches from "./components/RecentSearches";
 
 export interface Params {
   category?: string;
@@ -70,6 +71,8 @@ export default function SearchScreen() {
           width: width - 20,
         }}
       />
+
+      <RecentSearches query={query} data={suggestion} />
 
       <VirtualizedList
         data={suggestion}

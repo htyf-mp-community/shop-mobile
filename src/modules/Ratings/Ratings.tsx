@@ -16,13 +16,12 @@ import { Stars } from "../Stars/Stars";
 const { width } = Dimensions.get("screen");
 
 export default function Ratings({
-  rating_id,
   rating,
   title,
   description,
 }: ProductRatingProps) {
   return (
-    <View key={rating_id} style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.header}>
         <Image
           source={{

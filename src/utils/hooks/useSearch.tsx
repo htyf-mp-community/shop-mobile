@@ -21,7 +21,6 @@ export default function useSearch(params: {
 
     const delay = setTimeout(async () => {
       if (query.trim() !== "") {
-        console.log("query");
         try {
           const { data } = await axios({
             method: "GET",

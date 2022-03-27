@@ -1,47 +1,37 @@
-import { useState, useCallback, memo } from "react";
-import {
-  ScrollView,
-  RefreshControl,
-  View,
-  useWindowDimensions,
-} from "react-native";
+import { memo } from "react";
+import { ScrollView, View } from "react-native";
 import ImagesCarusel from "@modules/ImagesCarusel/ImagesCarusel";
 import ProductDetailsText from "./components/ProductDetailsText/ProductDetailsText";
 import ProductDetailsButtons from "./components/ProductDetailsButtons/ProductDetailsButtons";
-import useFetch from "@utils/hooks/useFetch";
-import {
-  Product,
-  ProductImageProps,
-  ScreenNavigationProps,
-} from "/@types/types";
-import { wait } from "@functions/wait";
+import { ProductImageProps, ScreenNavigationProps } from "/@types/types";
 import styles from "./styles";
 import useColorTheme from "@utils/context/ThemeContext";
-import { SkeletonPlaceholder } from "@components/index";
 import ProductSuggestion from "./components/Suggestions/ProductSuggestion";
 import BottomTab from "./components/BottomTab/BottomTab";
+import { useQuery } from "@apollo/client";
+import { useUser } from "utils/context/UserContext";
+import { GET_PRODUCT } from "./schema";
+import DetailsLoader from "./components/Loader";
 
 function ProductDetails({ route }: Required<ScreenNavigationProps<"Details">>) {
   const { prod_id, image, sharedID } = route.params;
-  const [refreshing, setRefreshing] = useState(false);
 
-  const onRefresh = useCallback(() => {
-    setRefreshing(true);
-    wait(1000).then(() => setRefreshing(false));
-  }, []);
+  const { user } = useUser();
+  const { data, loading } = useQuery(GET_PRODUCT, {
+    variables: {
+      prod_id,
+    },
+    context: {
+      headers: {
+        token: user.token,
+      },
+    },
+  });
 
-  const { data: result, loading } = useFetch<Product>(
-    `/products/${prod_id}`,
-    [refreshing, prod_id],
-    {}
-  );
-
+  const result = data?.product || {};
   const imgList = result?.img_id as ProductImageProps[];
   const images = imgList?.length > 1 ? imgList.splice(1, imgList.length) : [];
-
   const { theme } = useColorTheme();
-
-  const { width } = useWindowDimensions();
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.primary }}>
@@ -51,9 +41,6 @@ function ProductDetails({ route }: Required<ScreenNavigationProps<"Details">>) {
         scrollEventThrottle={16}
         showsVerticalScrollIndicator={false}
         bounces
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
       >
         <ImagesCarusel
           sharedID={sharedID}
@@ -62,19 +49,7 @@ function ProductDetails({ route }: Required<ScreenNavigationProps<"Details">>) {
           images={images}
         />
 
-        {loading && typeof result.prod_id === "undefined" && (
-          <SkeletonPlaceholder
-            size={{ width, height: 420 }}
-            backgroundColor={"#1f2b3d"}
-            highlightColor={"#2a3a52"}
-          >
-            <View style={{ width, alignItems: "center" }}>
-              <SkeletonPlaceholder.Item height={60} width={width - 20} />
-              <SkeletonPlaceholder.Item height={60} width={width - 20} />
-              <SkeletonPlaceholder.Item height={260} width={width - 20} />
-            </View>
-          </SkeletonPlaceholder>
-        )}
+        <DetailsLoader loading={loading} />
 
         {!loading && result && (
           <>
@@ -91,7 +66,7 @@ function ProductDetails({ route }: Required<ScreenNavigationProps<"Details">>) {
         )}
       </ScrollView>
       <BottomTab
-        prod_id={result?.prod_id}
+        prod_id={prod_id}
         quantity={(result?.quantity as number) || 0}
       />
     </View>

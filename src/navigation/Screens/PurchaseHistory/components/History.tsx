@@ -32,6 +32,8 @@ function getTotal(products: OutputProps[]): number {
 }
 
 export default function History({ products }: PurchaseProps) {
+  console.log(products);
+
   const navigation = useNavigation<useNavigationProps>();
   return (
     <View style={styles.container}>

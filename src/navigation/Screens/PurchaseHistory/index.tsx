@@ -1,29 +1,54 @@
-import { useIsFocused } from "@react-navigation/native";
 import React, { useMemo } from "react";
 import { View, FlatList, useWindowDimensions } from "react-native";
 import { Colors } from "../../../constants/styles";
-import { HistoryResponse } from "../../../@types/types";
-import useFetch from "../../../utils/hooks/useFetch";
 import { structureOutput } from "./structure";
 import { SkeletonPlaceholder } from "../../../components";
 import History from "./components/History";
+import { gql, useQuery } from "@apollo/client";
+import { useUser } from "utils/context/UserContext";
+
+const GET_HISTORY = gql`
+  query {
+    history {
+      product {
+        prod_id
+        price
+        title
+        img_id {
+          name
+          id
+        }
+      }
+
+      details {
+        date
+        status
+        purchase_id
+      }
+    }
+  }
+`;
 
 export default function PurchaseHistory() {
-  const isFocused = useIsFocused();
+  const { user } = useUser();
+  const { data, loading } = useQuery(GET_HISTORY, {
+    context: {
+      headers: {
+        token: user.token,
+      },
+    },
+  });
 
-  const { data, loading } = useFetch<HistoryResponse>(
-    `/payments/history?skip=0`,
-    [], // Why there was isFocued?
-    {}
+  const result = useMemo(
+    () => structureOutput({ results: data?.history } as any),
+    [data?.history]
   );
-
-  const result = useMemo(() => structureOutput(data), [data]);
 
   const { width, height } = useWindowDimensions();
 
   return (
     <View style={{ flex: 1, backgroundColor: Colors.primary }}>
-      {loading && typeof data.results === "undefined" && (
+      {loading && typeof data?.history === "undefined" && (
         <SkeletonPlaceholder
           backgroundColor={"#1f2b3d"}
           highlightColor={"#2a3a52"}

@@ -1,13 +1,31 @@
 import React from "react";
 import { View, FlatList, useWindowDimensions } from "react-native";
-import { ProductRatingProps } from "../../../@types/types";
 import { SkeletonPlaceholder } from "../../../components";
 import { Colors } from "../../../constants/styles";
-import useFetch from "../../../utils/hooks/useFetch";
 import Ratings from "../../../modules/Ratings/Ratings";
+import { useUser } from "utils/context/UserContext";
+import { gql, useQuery } from "@apollo/client";
+
+const GET_RATINGS = gql`
+  query {
+    ratings {
+      rating_id
+      title
+      description
+      rating
+    }
+  }
+`;
 
 export default function MyReviews() {
-  const { data, loading } = useFetch<ProductRatingProps[]>("/ratings/my");
+  const { user } = useUser();
+  const { data, loading } = useQuery(GET_RATINGS, {
+    context: {
+      headers: {
+        token: user.token,
+      },
+    },
+  });
 
   const { width, height } = useWindowDimensions();
 
@@ -40,7 +58,7 @@ export default function MyReviews() {
 
       <FlatList
         initialNumToRender={2}
-        data={data}
+        data={data?.ratings || []}
         keyExtractor={({ rating_id }) => rating_id.toString()}
         renderItem={({ item }) => <Ratings {...item} />}
       />
