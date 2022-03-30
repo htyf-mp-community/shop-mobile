@@ -1,15 +1,6 @@
 import { ProductRatingProps } from "/@types/types";
 import React from "react";
-import {
-  View,
-  StyleSheet,
-  Text,
-  Dimensions,
-  Image,
-  FlatList,
-} from "react-native";
-
-import { API } from "../../constants/routes";
+import { View, StyleSheet, Text, Dimensions, Image } from "react-native";
 import { Colors } from "../../constants/styles";
 import { Stars } from "../Stars/Stars";
 
@@ -42,23 +33,6 @@ export default function Ratings({
 
         <Text style={styles.text}>{description}</Text>
       </View>
-
-      <FlatList
-        horizontal
-        pagingEnabled
-        showsHorizontalScrollIndicator={false}
-        data={[
-          { id: 1, name: "0d406e307aa1bf36489bf9f5b3eeac16" },
-          { id: 2, name: "1e1f59ed6d99acb2223c2fd4e567541e" },
-        ]}
-        keyExtractor={({ id }) => id.toString()}
-        renderItem={({ item }) => (
-          <Image
-            source={{ uri: `${API}/upload/images=${item.name}` }}
-            style={styles.slider}
-          />
-        )}
-      />
 
       <Stars
         rating={rating}

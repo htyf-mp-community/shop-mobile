@@ -1,10 +1,10 @@
-import { SuggestionType } from "/@types/types";
-import useFetch from "utils/hooks/useFetch";
-import { FlatList, useWindowDimensions, Image, Text, View } from "react-native";
+import { FlatList, useWindowDimensions, Image, Text } from "react-native";
 import Ripple from "react-native-material-ripple";
 import { API } from "@constants/routes";
 import { useNavigation } from "@react-navigation/native";
 import type { useNavigationProps } from "/@types/types";
+import { gql, useQuery } from "@apollo/client";
+import { useUser } from "utils/context/UserContext";
 
 interface ProductSuggestionProps {
   text: string;
@@ -16,20 +16,46 @@ function extractFrazes(input: string) {
   return `${one} ${two ?? ""}`;
 }
 
+const GET_SUGGESTIONS = gql`
+  query Suggestions($name: String!) {
+    suggestions(name: $name) {
+      prod_id
+      title
+      price
+      img_id(take: 1) {
+        name
+      }
+    }
+  }
+`;
+
 export default function ProductSuggestion({
   text = "",
 }: ProductSuggestionProps) {
-  const { data } = useFetch<SuggestionType[]>(
-    `/products/suggestions?q=${extractFrazes(text)}`
-  );
+  const { user } = useUser();
+  const { data } = useQuery(GET_SUGGESTIONS, {
+    variables: {
+      name: extractFrazes(text),
+    },
+    context: {
+      headers: {
+        token: user.token,
+      },
+    },
+  });
+
   const { width } = useWindowDimensions();
   const navigation = useNavigation<useNavigationProps>();
 
   // if it searches for element with simmilar title there always should be current element we dont want to display
-  if (typeof data === "undefined" || data.length === 1) return null;
+  if (
+    typeof data?.suggestions === "undefined" ||
+    data?.suggestions.length === 1
+  )
+    return null;
 
   return (
-    <View>
+    <>
       <Text
         style={{
           color: "#fff",
@@ -41,7 +67,7 @@ export default function ProductSuggestion({
         Check these out
       </Text>
       <FlatList
-        data={data.filter(({ title }) => title !== text)}
+        data={data?.suggestions.filter(({ title }: any) => title !== text)}
         horizontal
         showsHorizontalScrollIndicator={false}
         style={{ width, padding: 5, marginBottom: 10 }}
@@ -50,7 +76,7 @@ export default function ProductSuggestion({
           <Ripple
             onPress={() =>
               navigation.replace("Details", {
-                image: `${API}/upload/images=${item.image}`,
+                image: `${API}/upload/images=${item.img_id?.[0].name}`,
                 title: item.title,
                 prod_id: item.prod_id,
                 sharedID: "",
@@ -64,11 +90,11 @@ export default function ProductSuggestion({
                 height: 100,
                 borderRadius: 3,
               }}
-              source={{ uri: `${API}/upload/images=${item.image}` }}
+              source={{ uri: `${API}/upload/images=${item.img_id?.[0].name}` }}
             />
           </Ripple>
         )}
       />
-    </View>
+    </>
   );
 }

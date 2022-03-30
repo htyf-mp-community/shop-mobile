@@ -40,9 +40,10 @@ export default function useCheckToken(): UserType {
             Alert.alert("Session Expired", "Please login again", [
               {
                 text: "Log in",
-                onPress: async () => {
-                  await AsyncStorage.removeItem(USER_PREFIX);
-                  setUser((p: UserType) => ({ ...p, isLoggedIn: false }));
+                onPress: () => {
+                  AsyncStorage.removeItem(USER_PREFIX).then(() => {
+                    setUser((p: UserType) => ({ ...p, isLoggedIn: false }));
+                  });
                 },
               },
             ]);

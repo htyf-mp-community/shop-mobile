@@ -14,6 +14,7 @@ export const GET_PRODUCT = gql`
         title
         rating_id
         description
+        rating
       }
     }
   }

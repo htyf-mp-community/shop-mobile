@@ -53,6 +53,7 @@ export default function DailySale() {
           </Ripple>
           <View style={[styles.details]}>
             <Text style={{ color: "#fff", fontSize: 20 }}>{data?.title}</Text>
+
             <View style={styles.bottom_tab}>
               <View
                 style={[
