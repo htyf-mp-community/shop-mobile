@@ -1,14 +1,17 @@
-import { View, Text, StyleProp, TextStyle, Pressable } from "react-native";
+import { View, Text, StyleProp, TextStyle } from "react-native";
 import useFetch from "@utils/hooks/useFetch";
-import { Colors } from "constants/styles";
+import { Colors, Padding } from "constants/styles";
 import { memo } from "react";
 import { Button } from "components";
 import { Params } from "..";
+import { BottomSheetFlatList } from "@gorhom/bottom-sheet";
+import Ripple from "react-native-material-ripple";
 
 const text: StyleProp<TextStyle> = {
   color: "#00D85D",
   fontFamily: "PoppinsMedium",
   fontSize: 30,
+  marginLeft: 10,
 };
 
 interface FiltersProps {
@@ -21,39 +24,47 @@ interface FiltersProps {
 }
 
 const Filters = ({ onSetParams, params }: FiltersProps) => {
-  const { data } = useFetch<readonly string[]>("/products/categories", [], []);
+  const { data = [] } = useFetch<readonly string[]>("/products/categories");
 
   return (
-    <View style={{ padding: 15 }}>
-      <View style={{ marginBottom: 15 }}>
-        <Text style={text}>Category</Text>
-        <View style={{ flexWrap: "wrap", flexDirection: "row" }}>
-          {data.map((text) => (
-            <Pressable
-              key={text}
-              onPress={() => onSetParams("category", text)}
+    <>
+      <Text style={text}>Category</Text>
+      <View style={{ width: "100%", height: 80 }}>
+        <BottomSheetFlatList
+          data={data}
+          keyExtractor={(key) => key}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{
+            padding: Padding.medium,
+            height: 60 + Padding.medium,
+          }}
+          renderItem={({ item }) => (
+            <Ripple
+              rippleCentered
+              onPress={() => onSetParams("category", item)}
               style={{
                 marginRight: 10,
-                marginTop: 10,
-                padding: 10,
-                borderRadius: 10,
+                borderRadius: 5,
+                padding: Padding.medium,
                 backgroundColor:
-                  params.category === text ? "#00D85D" : Colors.primary,
+                  params.category === item ? "#00D85D" : Colors.primary,
               }}
             >
-              <Text style={{ fontSize: 20, color: "white" }}>{text}</Text>
-            </Pressable>
-          ))}
-        </View>
+              <Text style={{ fontSize: 20, color: "white" }}>{item}</Text>
+            </Ripple>
+          )}
+        />
       </View>
-      <View style={{ marginBottom: 15 }}>
+
+      <View style={{ marginBottom: 10 }}>
         <Text style={text}>Name A-Z</Text>
         <View style={{ flexDirection: "row" }}>
           <Button
             onPress={() => onSetParams("title", "ASC")}
             text="Sort A-Z"
             style={{
-              marginRight: 10,
+              marginLeft: 10,
               backgroundColor:
                 params.title === "ASC" ? "#00D85D" : Colors.primary,
             }}
@@ -62,7 +73,7 @@ const Filters = ({ onSetParams, params }: FiltersProps) => {
             onPress={() => onSetParams("title", "DESC")}
             text="Sort Z-A"
             style={{
-              marginRight: 10,
+              marginLeft: 10,
               backgroundColor:
                 params.title === "DESC" ? "#00D85D" : Colors.primary,
             }}
@@ -76,7 +87,7 @@ const Filters = ({ onSetParams, params }: FiltersProps) => {
             onPress={() => onSetParams("price", "DESC")}
             text="High-Low"
             style={{
-              marginRight: 10,
+              marginLeft: 10,
               backgroundColor:
                 params.price === "DESC" ? "#00D85D" : Colors.primary,
             }}
@@ -85,14 +96,19 @@ const Filters = ({ onSetParams, params }: FiltersProps) => {
             onPress={() => onSetParams("price", "ASC")}
             text="Low-High"
             style={{
-              marginRight: 10,
+              marginLeft: 10,
               backgroundColor:
                 params.price === "ASC" ? "#00D85D" : Colors.primary,
             }}
           />
         </View>
       </View>
-    </View>
+      <Button
+        text="Clear All"
+        variant="ternary"
+        style={{ justifyContent: "center", margin: 10 }}
+      />
+    </>
   );
 };
 

@@ -72,10 +72,13 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   button: {
-    width: "100%",
+    flex: 1,
     padding: 15,
     justifyContent: "center",
-    marginTop: 10,
+  },
+  favourite: {
+    padding: 15,
+    marginRight: 10,
   },
   discounted: {
     fontSize: 18,

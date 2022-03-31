@@ -1,11 +1,19 @@
 import { Formik } from "formik";
-import React from "react";
-import { KeyboardAvoidingView } from "react-native";
+import React, { useState } from "react";
+import {
+  KeyboardAvoidingView,
+  TouchableOpacity,
+  Text,
+  View,
+  useWindowDimensions,
+} from "react-native";
 import Button from "@components/Button/Button";
 import Input from "@components/Input/Input";
 import styles from "./styles";
 import schema from "./schema";
 import type { UserInputProps } from "utils/hooks/useAuth";
+import { useNavigation } from "@react-navigation/native";
+import PasswordToggle from "./components/PasswordToggle";
 
 interface AuthFormProps {
   onSubmit: ({ email, password }: UserInputProps) => void;
@@ -13,6 +21,10 @@ interface AuthFormProps {
 }
 
 export default function AuthForm({ onSubmit, header }: AuthFormProps) {
+  const navigation = useNavigation<any>();
+  const [vissible, setVissible] = useState(false);
+  const { width } = useWindowDimensions();
+
   return (
     <KeyboardAvoidingView style={[styles.form]}>
       <Formik
@@ -37,7 +49,7 @@ export default function AuthForm({ onSubmit, header }: AuthFormProps) {
               value={values.email}
               onChangeText={handleChange("email")}
               placeholder="Email*"
-              style={styles.input}
+              style={[styles.input, { width: width - 40 }]}
               error={!!errors.email && touched.email}
               autoCompleteType="email"
               autoCorrect={false}
@@ -51,21 +63,24 @@ export default function AuthForm({ onSubmit, header }: AuthFormProps) {
               onBlur={handleBlur("email")}
               clearButtonMode={"always"}
             />
-            <Input
-              value={values.password}
-              autoCorrect={false}
-              onChangeText={handleChange("password")}
-              placeholder="Password*"
-              style={styles.input}
-              error={!!errors.password && touched.password}
-              helperText={
-                !!errors.password && touched.password
-                  ? errors.password
-                  : "6-60 characters*"
-              }
-              onBlur={handleBlur("password")}
-              secureTextEntry
-            />
+            <View style={{ flexDirection: "row", position: "relative" }}>
+              <Input
+                value={values.password}
+                autoCorrect={false}
+                onChangeText={handleChange("password")}
+                placeholder="Password*"
+                style={[styles.input]}
+                error={!!errors.password && touched.password}
+                helperText={
+                  !!errors.password && touched.password
+                    ? errors.password
+                    : "6-60 characters*"
+                }
+                onBlur={handleBlur("password")}
+                secureTextEntry={!vissible}
+              />
+              <PasswordToggle setVissible={setVissible} vissible={vissible} />
+            </View>
             <Button
               text={header.toUpperCase()}
               callback={handleSubmit}
@@ -75,6 +90,20 @@ export default function AuthForm({ onSubmit, header }: AuthFormProps) {
               fontStyle={{ fontWeight: "bold" }}
               testID="SUBMIT_BUTTON"
             />
+            <TouchableOpacity
+              onPress={() =>
+                navigation.replace("Auth", {
+                  screen: header === "Login" ? "Register" : "Login",
+                })
+              }
+              style={{ marginTop: 5 }}
+            >
+              <Text style={{ color: "gray" }}>
+                {header === "Login"
+                  ? "Don't have account?"
+                  : "Have an account?"}
+              </Text>
+            </TouchableOpacity>
           </>
         )}
       </Formik>

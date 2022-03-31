@@ -13,6 +13,9 @@ import Ripple from "react-native-material-ripple";
 import Loader from "./Loader";
 import useFetch from "utils/hooks/useFetch";
 
+import Icon from "navigation/Screens/ProductDetails/components/BottomTab/Icon";
+import useWatchlist from "utils/hooks/useWatchlist";
+
 export default function DailySale() {
   const { data, loading } = useFetch<ProductTypeProps>("/sales/daily", []);
 
@@ -30,6 +33,10 @@ export default function DailySale() {
   }
 
   const { pushToCart, result } = useCart(data?.prod_id);
+
+  const { appendWatchlist, state, remove } = useWatchlist(data?.prod_id, {
+    withCheck: true,
+  });
 
   return (
     <View style={styles.container}>
@@ -70,12 +77,22 @@ export default function DailySale() {
                 <Text style={{ color: "#fff" }}>12 Left</Text>
               </View>
 
-              <Button
-                style={styles.button}
-                onPress={pushToCart}
-                text={!!result ? "Added" : "Add to cart"}
-                variant={!!result ? "primary" : "ternary"}
-              />
+              <View style={[styles.row, { marginTop: 10 }]}>
+                <Button
+                  style={styles.favourite}
+                  onPress={() =>
+                    state === "IN" ? remove(data?.prod_id) : appendWatchlist()
+                  }
+                  variant="primary"
+                  icon={<Icon state={state} />}
+                />
+                <Button
+                  style={styles.button}
+                  onPress={pushToCart}
+                  text={!!result ? "Added" : "Add to cart"}
+                  variant={!!result ? "primary" : "ternary"}
+                />
+              </View>
             </View>
           </View>
         </>

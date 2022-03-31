@@ -6,6 +6,19 @@ export const radius = {
   large: 15,
 };
 
+export const IconSize = {
+  small: 20,
+  medium: 22,
+  large: 25,
+};
+
+export const Padding = {
+  small: 5,
+  medium: 10,
+  large: 15,
+  extraLarge: 20,
+};
+
 export const fontSize = {
   h1: 56,
   h2: 40,

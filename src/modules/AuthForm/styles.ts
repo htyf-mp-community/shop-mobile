@@ -1,5 +1,5 @@
 import { Dimensions, StyleSheet } from "react-native";
-import { Colors, radius } from "@constants/styles";
+import { Colors, radius, Padding } from "@constants/styles";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
@@ -21,6 +21,17 @@ const styles = StyleSheet.create({
     color: Colors.text,
     justifyContent: "center",
     borderRadius: radius.small,
+  },
+  toggle: {
+    position: "absolute",
+    right: 2,
+    top: 2,
+    backgroundColor: Colors.primary100,
+    height: 55,
+    padding: Padding.small,
+    marginTop: 5,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
 

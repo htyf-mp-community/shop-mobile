@@ -46,7 +46,7 @@ export default function MainNavigator() {
       <StatusBar backgroundColor={theme.primary} />
       <NavigationContainer theme={current === "dark" ? DarkTheme : undefined}>
         <Stack.Navigator
-          initialRouteName={isLoggedIn ? "Home" : "Landing"}
+          initialRouteName={"Landing"}
           screenOptions={{
             ...Option.defaultStackOptions,
             headerStyle: { backgroundColor: theme.primary },

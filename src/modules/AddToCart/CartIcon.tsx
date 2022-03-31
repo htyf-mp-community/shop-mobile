@@ -6,8 +6,9 @@ import {
   TextStyle,
   ViewStyle,
 } from "react-native";
-import { Colors } from "../../constants/styles";
+import { IconSize } from "../../constants/styles";
 import { Feather } from "@expo/vector-icons";
+import useColorTheme from "utils/context/ThemeContext";
 
 interface IconProps {
   loading: boolean;
@@ -18,11 +19,12 @@ interface IconProps {
 }
 
 const CartIcon = ({ loading, success, error, style }: IconProps) => {
+  const { theme } = useColorTheme();
   if (loading) {
     return (
       <ActivityIndicator
         size="small"
-        color={Colors.text}
+        color={theme.text}
         style={{ padding: 2 }}
       />
     );
@@ -31,8 +33,8 @@ const CartIcon = ({ loading, success, error, style }: IconProps) => {
     return (
       <Ionicons
         name="close-outline"
-        size={22}
-        color={Colors.text}
+        size={IconSize.small}
+        color={theme.text}
         style={style}
       />
     );
@@ -41,14 +43,19 @@ const CartIcon = ({ loading, success, error, style }: IconProps) => {
     return (
       <Ionicons
         name="checkmark-done"
-        size={22}
-        color={Colors.text}
+        size={IconSize.small}
+        color={theme.text}
         style={style}
       />
     );
   }
   return (
-    <Feather name="shopping-bag" size={24} color={Colors.text} style={style} />
+    <Feather
+      name="shopping-bag"
+      size={IconSize.large}
+      color={theme.text}
+      style={style}
+    />
   );
 };
 
