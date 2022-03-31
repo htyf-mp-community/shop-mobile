@@ -10,6 +10,12 @@ export const GET_PRODUCT = gql`
       category
       manufacturer
       quantity
+
+      img_id(take: 10) {
+        id
+        name
+      }
+
       rating_id {
         title
         rating_id

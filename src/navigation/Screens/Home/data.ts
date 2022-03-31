@@ -3,13 +3,16 @@ import DailySale from "@modules/DailySale";
 import Categories from "@modules/Categories";
 import { ENDPOINTS } from "@constants/routes";
 import ProductsCarusel from "@modules/ProductsCarusel/ProductsCarusel";
+import AuctionsNavigator from "modules/AuctionsNavigator";
 /* import Promotions from "modules/Promotions";
 import AuctionList from "../Auction/components/AuctionList"; */
 
 interface HomeProps {
   id: number;
-  Component: any;
-  props: any;
+  Component: React.ElementType;
+  props: {
+    [key: string]: string | boolean | (() => void) | number | undefined;
+  };
 }
 
 export const homeElements = (toggle: () => void): readonly HomeProps[] =>
@@ -34,6 +37,10 @@ export const homeElements = (toggle: () => void): readonly HomeProps[] =>
     }, */
     {
       Component: DailySale,
+      props: {},
+    },
+    {
+      Component: AuctionsNavigator,
       props: {},
     },
     {

@@ -24,7 +24,6 @@ export default function Sidebar({
 }: SidebarProps) {
   const navigation = useNavigation<useNavigationProps>();
   const { theme } = useColorTheme();
-
   const { cart, watchlist } = useAppSelector((state) => state);
 
   return (
@@ -51,7 +50,7 @@ export default function Sidebar({
               />
             }
             style={[styles.button]}
-            fontStyle={{ color: theme.text }}
+            fontStyle={{ color: "#fff" }}
             text={"Watchlist"}
             onPress={() => navigation.navigate("Watchlist")}
           />
@@ -65,11 +64,11 @@ export default function Sidebar({
                 name={"shoppingcart"}
                 style={{ marginRight: 10 }}
                 size={30}
-                color={theme.text}
+                color={"#fff"}
               />
             }
             style={[styles.button]}
-            fontStyle={{ color: theme.text }}
+            fontStyle={{ color: "#fff" }}
             text={"Cart"}
             onPress={() => navigation.navigate("Cart")}
           />
@@ -81,11 +80,11 @@ export default function Sidebar({
               name={"user"}
               style={{ marginRight: 10 }}
               size={30}
-              color={theme.text}
+              color={"#fff"}
             />
           }
           style={[styles.button]}
-          fontStyle={{ color: theme.text }}
+          fontStyle={{ color: "#fff" }}
           text={"User"}
           onPress={() => navigation.navigate("User")}
         />

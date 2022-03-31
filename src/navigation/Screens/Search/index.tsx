@@ -67,6 +67,7 @@ export default function SearchScreen() {
         setValue={setQuery}
         placeholder="Search..."
         placeholderTextColor={"#fff"}
+        autoFocus
         style={{
           width: width - 20,
         }}

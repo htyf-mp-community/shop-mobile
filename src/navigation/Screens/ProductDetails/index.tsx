@@ -30,7 +30,8 @@ function ProductDetails({ route }: Required<ScreenNavigationProps<"Details">>) {
 
   const result = data?.product || {};
   const imgList = result?.img_id as ProductImageProps[];
-  const images = imgList?.length > 1 ? imgList.splice(1, imgList.length) : [];
+  const images =
+    imgList?.length > 1 ? [...imgList].splice(1, imgList.length) : [];
   const { theme } = useColorTheme();
 
   return (

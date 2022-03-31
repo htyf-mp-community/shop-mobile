@@ -90,7 +90,7 @@ export default function DailySale() {
                   style={styles.button}
                   onPress={pushToCart}
                   text={!!result ? "Added" : "Add to cart"}
-                  variant={!!result ? "primary" : "ternary"}
+                  variant={!!result ? "ternary" : "primary"}
                 />
               </View>
             </View>
