@@ -83,7 +83,7 @@ export default function AuthForm({ onSubmit, header }: AuthFormProps) {
             </View>
             <Button
               text={header.toUpperCase()}
-              callback={handleSubmit}
+              onPress={() => handleSubmit()}
               style={[styles.btn]}
               variant={isValid && dirty ? "primary" : "disabled"}
               disabled={!(isValid && dirty)}

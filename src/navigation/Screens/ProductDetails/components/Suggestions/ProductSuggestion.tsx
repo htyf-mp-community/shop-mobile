@@ -3,8 +3,10 @@ import Ripple from "react-native-material-ripple";
 import { API } from "@constants/routes";
 import { useNavigation } from "@react-navigation/native";
 import type { useNavigationProps } from "/@types/types";
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { useUser } from "utils/context/UserContext";
+import { image } from "functions/image";
+import { GET_SUGGESTIONS } from "../../schema";
 
 interface ProductSuggestionProps {
   text: string;
@@ -15,19 +17,6 @@ function extractFrazes(input: string) {
 
   return `${one} ${two ?? ""}`;
 }
-
-const GET_SUGGESTIONS = gql`
-  query Suggestions($name: String!) {
-    suggestions(name: $name) {
-      prod_id
-      title
-      price
-      img_id(take: 1) {
-        name
-      }
-    }
-  }
-`;
 
 export default function ProductSuggestion({
   text = "",
@@ -47,7 +36,15 @@ export default function ProductSuggestion({
   const { width } = useWindowDimensions();
   const navigation = useNavigation<useNavigationProps>();
 
-  // if it searches for element with simmilar title there always should be current element we dont want to display
+  function onReplaceScreen(item: any) {
+    navigation.replace("Details", {
+      image: `${API}/upload/images=${item.img_id?.[0].name}`,
+      title: item.title,
+      prod_id: item.prod_id,
+      sharedID: "",
+    });
+  }
+
   if (
     typeof data?.suggestions === "undefined" ||
     data?.suggestions.length === 1
@@ -74,14 +71,7 @@ export default function ProductSuggestion({
         keyExtractor={({ prod_id }) => prod_id.toString()}
         renderItem={({ item, index }) => (
           <Ripple
-            onPress={() =>
-              navigation.replace("Details", {
-                image: `${API}/upload/images=${item.img_id?.[0].name}`,
-                title: item.title,
-                prod_id: item.prod_id,
-                sharedID: "",
-              })
-            }
+            onPress={() => onReplaceScreen(item)}
             style={{ marginRight: 10, marginLeft: index === 0 ? 8 : 0 }}
           >
             <Image
@@ -90,7 +80,7 @@ export default function ProductSuggestion({
                 height: 100,
                 borderRadius: 3,
               }}
-              source={{ uri: `${API}/upload/images=${item.img_id?.[0].name}` }}
+              source={image(item.img_id)}
             />
           </Ripple>
         )}

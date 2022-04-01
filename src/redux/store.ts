@@ -1,5 +1,4 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { cacheReducers } from "./Cache/cache";
 import { cartReducer } from "./Cart";
 import { checkoutReducer } from "./Checkout";
 import { userReducers } from "./User";
@@ -11,7 +10,6 @@ const store = configureStore({
     cart: cartReducer,
     user: userReducers,
     watchlist: watchlistReducers,
-    cache: cacheReducers,
   },
 });
 

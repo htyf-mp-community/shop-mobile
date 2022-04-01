@@ -1,6 +1,6 @@
-import { memo } from "react";
-import { ScrollView, View } from "react-native";
-import ImagesCarusel from "@modules/ImagesCarusel/ImagesCarusel";
+import { memo, useState, useCallback } from "react";
+import { ScrollView, View, RefreshControl } from "react-native";
+import ImagesCarusel from "./components/ImagesCarusel/ImagesCarusel";
 import ProductDetailsText from "./components/ProductDetailsText/ProductDetailsText";
 import ProductDetailsButtons from "./components/ProductDetailsButtons/ProductDetailsButtons";
 import { ProductImageProps, ScreenNavigationProps } from "/@types/types";
@@ -12,12 +12,13 @@ import { useQuery } from "@apollo/client";
 import { useUser } from "utils/context/UserContext";
 import { GET_PRODUCT } from "./schema";
 import DetailsLoader from "./components/Loader";
+import { wait } from "functions/wait";
 
 function ProductDetails({ route }: Required<ScreenNavigationProps<"Details">>) {
   const { prod_id, image, sharedID } = route.params;
 
   const { user } = useUser();
-  const { data, loading } = useQuery(GET_PRODUCT, {
+  const { data, loading, refetch } = useQuery(GET_PRODUCT, {
     variables: {
       prod_id,
     },
@@ -34,6 +35,14 @@ function ProductDetails({ route }: Required<ScreenNavigationProps<"Details">>) {
     imgList?.length > 1 ? [...imgList].splice(1, imgList.length) : [];
   const { theme } = useColorTheme();
 
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    refetch({ prod_id });
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
+
   return (
     <View style={{ flex: 1, backgroundColor: theme.primary }}>
       <ScrollView
@@ -42,6 +51,9 @@ function ProductDetails({ route }: Required<ScreenNavigationProps<"Details">>) {
         scrollEventThrottle={16}
         showsVerticalScrollIndicator={false}
         bounces
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
       >
         <ImagesCarusel
           sharedID={sharedID}

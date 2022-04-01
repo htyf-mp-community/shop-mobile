@@ -3,7 +3,6 @@ import useColorTheme from "utils/context/ThemeContext";
 import Animated, { ZoomIn } from "react-native-reanimated";
 import styles from "../../styles";
 import { Button } from "components";
-import { AntDesign } from "@expo/vector-icons";
 import useWatchlist from "@utils/hooks/useWatchlist";
 import Icon from "./Icon";
 

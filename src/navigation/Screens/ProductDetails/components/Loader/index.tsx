@@ -11,8 +11,8 @@ export default function DetailsLoader({ loading }: { loading: boolean }) {
       highlightColor={"#2a3a52"}
     >
       <View style={{ width, alignItems: "center" }}>
-        <SkeletonPlaceholder.Item height={60} width={width - 20} />
-        <SkeletonPlaceholder.Item height={60} width={width - 20} />
+        <SkeletonPlaceholder.Item height={80} width={width - 20} />
+        <SkeletonPlaceholder.Item height={80} width={width - 20} />
         <SkeletonPlaceholder.Item height={260} width={width - 20} />
       </View>
     </SkeletonPlaceholder>
