@@ -1,5 +1,6 @@
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RouteProp } from "@react-navigation/native";
+import { ProductTypeProps } from "modules/Product";
 
 export type UserContextProviderType = {
   children: React.ReactNode;
@@ -123,4 +124,17 @@ export interface HistoryResponse {
       status: string;
     };
   }[];
+}
+
+export interface AuctionBid {
+  readonly date_add: Date;
+  readonly bid_id: string;
+  readonly amount: number;
+}
+
+export interface Auction {
+  readonly auction_id?: string;
+  product?: ProductTypeProps;
+
+  bids: AuctionBid[];
 }
