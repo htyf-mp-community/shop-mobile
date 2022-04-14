@@ -1,10 +1,7 @@
 import { useNavigation } from "@react-navigation/core";
-import axios from "axios";
 import React from "react";
 import { Text } from "react-native";
 import { useNavigationProps } from "../../@types/types";
-import { API } from "../../constants/routes";
-import { useUser } from "@utils/context/UserContext";
 import Ripple from "react-native-material-ripple";
 
 type CategoryProps = {
@@ -15,7 +12,7 @@ type CategoryProps = {
  * @param {String} category text displayed inside component
  **/
 
-export default function Category({ category, ...rest }: CategoryProps) {
+export default function Category({ category }: CategoryProps) {
   const navigation = useNavigation<useNavigationProps>();
 
   async function GetProductsByCategory() {
@@ -27,6 +24,7 @@ export default function Category({ category, ...rest }: CategoryProps) {
       onPress={GetProductsByCategory}
       style={{
         backgroundColor: "#131d33",
+
         padding: 10,
         paddingLeft: 20,
         paddingRight: 20,
@@ -34,7 +32,6 @@ export default function Category({ category, ...rest }: CategoryProps) {
         marginRight: 0,
         borderRadius: 5,
       }}
-      {...rest}
     >
       <Text style={{ color: "#fff" }}>{category}</Text>
     </Ripple>

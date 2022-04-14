@@ -1,21 +1,25 @@
 import { SkeletonPlaceholder } from "components";
+import { Padding } from "constants/styles";
+import { useState } from "react";
 import {
   VirtualizedList,
-  ListRenderItem,
   View,
   Text,
   useWindowDimensions,
   VirtualizedListProps,
+  ActivityIndicator,
 } from "react-native";
+import useColorTheme from "utils/context/ThemeContext";
 import useInfiniteScrolling from "./useInfiniteScrolling";
 
-interface InfiniteScrollProps<T> extends VirtualizedListProps<T> {
+interface InfiniteScrollProps<T> extends Omit<VirtualizedListProps<T>, "data"> {
   orientation: "vertical" | "horizontal";
   path: `/${string}`;
   heading?: string;
+  showLoadMoreSpinner?: boolean;
 }
 
-export default function InfiniteScroll({
+export default function InfiniteScroll<T>({
   orientation,
   renderItem,
   keyExtractor,
@@ -23,13 +27,21 @@ export default function InfiniteScroll({
   getItemCount,
   path,
   heading,
+  showLoadMoreSpinner = true,
   ...rest
-}: InfiniteScrollProps<any>) {
-  const { data, onSkip, loading } = useInfiniteScrolling(path);
+}: InfiniteScrollProps<T>) {
+  const [options, setOptions] = useState({});
+
+  const { data, onSkip, loading } = useInfiniteScrolling<T, typeof options>(
+    path,
+    options
+  );
   const { width } = useWindowDimensions();
 
+  const { theme } = useColorTheme();
+
   return (
-    <View>
+    <View style={{ flex: 1, backgroundColor: theme.primary }}>
       {!!heading && (
         <Text style={{ fontSize: 25, color: "white" }}>{heading}</Text>
       )}
@@ -57,6 +69,13 @@ export default function InfiniteScroll({
         keyExtractor={keyExtractor}
         {...rest}
       />
+      {showLoadMoreSpinner && loading && (
+        <View
+          style={{ width, padding: Padding.medium, justifyContent: "center" }}
+        >
+          <ActivityIndicator size={"large"} color="#fff" />
+        </View>
+      )}
     </View>
   );
 }

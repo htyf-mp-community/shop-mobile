@@ -3,11 +3,10 @@
  * @returns {Number} total sum of cart
  **/
 
-export function CalcTotalCartPrice(cart: any[]): number {
-  const PriceAndAmmountList = cart.map(({ ammount, price }) => ammount * price);
-  let total = 0;
-  for (let i = 0; i < PriceAndAmmountList.length; i++) {
-    total += PriceAndAmmountList[i];
-  }
-  return total;
+export function CalcTotalCartPrice<
+  T extends { ammount: number; price: number }
+>(cart: T[]): number {
+  const mapped = cart.map(({ ammount, price }) => ammount * price);
+
+  return mapped.reduce((prev, curr) => prev + curr, 0);
 }

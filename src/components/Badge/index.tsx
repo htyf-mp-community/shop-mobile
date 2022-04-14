@@ -6,7 +6,7 @@ export default function Badge({
   amount,
   left = false,
 }: {
-  amount: number;
+  amount: number | string;
   left?: boolean;
 }) {
   return (
@@ -16,7 +16,7 @@ export default function Badge({
       style={{
         position: "absolute",
         ...(left ? { left: -5 } : { right: -5 }),
-        top: 5,
+        top: 0,
         width: 30,
         height: 30,
         zIndex: 20,

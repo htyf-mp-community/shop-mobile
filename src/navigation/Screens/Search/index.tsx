@@ -1,12 +1,6 @@
 import React, { useCallback, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import {
-  Container,
-  Suggestion,
-  Input,
-  Header,
-  Button,
-} from "@components/index";
+import { Container, Suggestion, Input } from "@components/index";
 import { VirtualizedList, useWindowDimensions } from "react-native";
 import { useNavigationProps } from "/@types/types";
 import { Colors } from "constants/styles";
@@ -81,8 +75,8 @@ export default function SearchScreen() {
         getItemCount={(data) => data.length}
         getItem={getItem}
         initialNumToRender={2}
-        renderItem={({ item }) => (
-          <Suggestion navigation={navigation} {...item} />
+        renderItem={({ item, index }) => (
+          <Suggestion index={index} navigation={navigation} {...item} />
         )}
       />
 

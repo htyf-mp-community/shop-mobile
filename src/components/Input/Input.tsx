@@ -63,7 +63,7 @@ export default function Input({
           styles.input,
           style,
           {
-            borderWidth: 1,
+            borderWidth: 2,
             borderColor: error ? "#ff3030" : Colors.primary,
             color: error ? "#ff3030" : "white",
           },

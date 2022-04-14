@@ -2,7 +2,7 @@ import React, { useLayoutEffect, useRef, useState } from "react";
 import { View, Text } from "react-native";
 import useColorTheme from "@utils/context/ThemeContext";
 import styles from "./AccountSettings.styles";
-import { Avatar, Container, Header } from "@components/index";
+import { Container, Header } from "@components/index";
 import BottomSheet from "@gorhom/bottom-sheet";
 import useListenKeyboard from "utils/hooks/useListenKeyboard";
 import Block from "./components/Block";
@@ -43,7 +43,6 @@ export default function AccountSettings() {
       <View style={{ padding: 20 }}>
         <View style={styles.header}>
           <Text style={[styles.heading, { color: theme.text }]}>Settings</Text>
-          <Avatar url={require("@assets/notfound.png")} />
         </View>
 
         <Block text={name} label="Name" onPress={() => onSheetOpen("NAME")} />

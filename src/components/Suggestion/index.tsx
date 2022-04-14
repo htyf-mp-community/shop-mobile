@@ -1,21 +1,17 @@
 import useCart from "modules/AddToCart/useCart";
 import React from "react";
-import {
-  View,
-  Image,
-  Text,
-  TouchableNativeFeedback,
-  Pressable,
-} from "react-native";
+import { View, Image, Text } from "react-native";
 import { SharedElement } from "react-navigation-shared-element";
 import { SuggestionType, useNavigationProps } from "../../@types/types";
 import { API } from "../../constants/routes";
 import styles from "./Suggestion.styles";
 import { AntDesign } from "@expo/vector-icons";
 import Ripple from "react-native-material-ripple";
+import Animated, { FadeIn } from "react-native-reanimated";
 
 interface SuggestionProps extends SuggestionType {
   navigation: useNavigationProps;
+  index: number;
 }
 
 const notFound =
@@ -27,6 +23,7 @@ function Suggestion({
   prod_id,
   title,
   price,
+  index,
 }: SuggestionProps) {
   const thumbnail =
     typeof image !== "undefined" ? `${API}/upload/images=${image}` : notFound;
@@ -40,10 +37,13 @@ function Suggestion({
     });
   }
 
-  const { pushToCart, result } = useCart(prod_id);
+  const { pushToCart: onPress, result } = useCart(prod_id);
 
   return (
-    <View style={styles.container}>
+    <Animated.View
+      entering={FadeIn.delay(index * 100)}
+      style={styles.container}
+    >
       <Ripple onPress={navigateToProduct}>
         <SharedElement id={`prod_id.${prod_id}Search`}>
           <Image
@@ -58,32 +58,20 @@ function Suggestion({
       <View style={styles.textContainer}>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <Text style={styles.price}>${price}</Text>
-          <TouchableNativeFeedback
-            onPress={pushToCart}
-            style={{ zIndex: 10 }}
-            background={TouchableNativeFeedback.Ripple(
-              "rgba(255,255,255,0.1)",
-              false
-            )}
+          <Ripple
+            onPress={onPress}
+            style={{ padding: 10, flexDirection: "row" }}
+            rippleColor="#fff"
           >
-            <View
-              style={{
-                width: 120,
-                padding: 10,
-                alignItems: "center",
-                flexDirection: "row",
-              }}
-            >
-              {result === "Added" && (
-                <AntDesign name="check" size={20} color="white" />
-              )}
-              <Text style={{ color: "#DADDE2" }}>ADD TO CART</Text>
-            </View>
-          </TouchableNativeFeedback>
+            {result === "Added" && (
+              <AntDesign name="check" size={20} color="white" />
+            )}
+            <Text style={{ color: "#DADDE2" }}>ADD TO CART</Text>
+          </Ripple>
         </View>
         <Text style={styles.title}>{title}</Text>
       </View>
-    </View>
+    </Animated.View>
   );
 }
 

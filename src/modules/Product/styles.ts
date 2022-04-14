@@ -1,19 +1,23 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet } from "react-native";
 import { Colors, radius } from "../../constants/styles";
-
-const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("screen");
+import {
+  PRODUCT_CONTAINER_SIZE_X,
+  PRODUCT_CONTAINER_SIZE_Y,
+  PRODUCT_HEIGHT,
+  PRODUCT_WIDTH,
+} from "./assets";
 
 const styles = StyleSheet.create({
   container: {
-    width: SCREEN_WIDTH * 0.95,
-    height: SCREEN_HEIGHT / 3.5,
+    width: PRODUCT_CONTAINER_SIZE_X,
+    height: PRODUCT_CONTAINER_SIZE_Y,
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 10,
   },
   product: {
-    width: SCREEN_WIDTH * 0.9,
-    height: SCREEN_HEIGHT / 3.5,
+    width: PRODUCT_WIDTH,
+    height: PRODUCT_HEIGHT,
     position: "relative",
   },
   img: {
@@ -42,6 +46,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     padding: 10,
     borderRadius: radius.small,
+  },
+  remove_button: {
+    backgroundColor: "red",
+    padding: 12,
+    justifyContent: "center",
   },
 });
 

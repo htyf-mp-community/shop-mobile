@@ -10,9 +10,9 @@ const styles = StyleSheet.create({
   navigation: {
     position: "absolute",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-between",
     width: WIDTH * 0.6,
-    height: HEIGHT * 0.8,
+    height: HEIGHT,
   },
   head: {
     color: Colors.text,

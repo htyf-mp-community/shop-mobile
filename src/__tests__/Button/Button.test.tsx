@@ -5,13 +5,15 @@ import Button from "../../components/Button/Button";
 
 describe("Button Component", () => {
   test("It render correctly", () => {
-    const { queryByText } = render(<Button text="Button" />);
+    const { getByText } = render(<Button text="Button" />);
 
-    queryByText(/Button/);
+    getByText(/Button/);
   });
 
   test("Button with variants", () => {
-    const { getByTestId } = render(<Button text="Button" testID="BUTTON" />);
+    const { getByTestId } = render(
+      <Button variant="primary" text="Button" testID="BUTTON" />
+    );
 
     expect(getByTestId("BUTTON")).toHaveStyle({
       backgroundColor: "#FF0056",

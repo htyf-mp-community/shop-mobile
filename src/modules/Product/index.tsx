@@ -17,6 +17,7 @@ import { Ionicons } from "@expo/vector-icons";
 import styles from "./styles";
 import { Colors } from "../../constants/styles";
 import * as Types from "../../@types/types";
+import { PRODUCT_WIDTH, PRODUCT_WIDTH_FULLSIZE } from "./assets";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
@@ -63,7 +64,7 @@ function Product({
     });
   }
 
-  const ElementWidth = fullSize ? SCREEN_WIDTH * 0.95 : SCREEN_WIDTH * 0.9;
+  const ElementWidth = fullSize ? PRODUCT_WIDTH_FULLSIZE : PRODUCT_WIDTH;
 
   return (
     <TouchableOpacity
@@ -72,7 +73,7 @@ function Product({
       style={[
         styles.container,
         style,
-        { width: fullSize ? SCREEN_WIDTH : SCREEN_WIDTH * 0.95 },
+        { width: fullSize ? SCREEN_WIDTH : PRODUCT_WIDTH_FULLSIZE },
       ]}
     >
       <View style={[styles.product, { width: ElementWidth }]}>
@@ -92,7 +93,7 @@ function Product({
             {route === "Cart" && (
               <Button
                 callback={deleteFn}
-                style={[styles.button, { backgroundColor: "red" }]}
+                style={[styles.button, styles.remove_button]}
                 icon={<Ionicons name="close" size={22} color={Colors.text} />}
               />
             )}

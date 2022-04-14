@@ -57,7 +57,7 @@ export default function MyReviews() {
       )}
 
       <FlatList
-        initialNumToRender={2}
+        initialNumToRender={4}
         data={data?.ratings || []}
         keyExtractor={({ rating_id }) => rating_id.toString()}
         renderItem={({ item }) => <Ratings {...item} />}

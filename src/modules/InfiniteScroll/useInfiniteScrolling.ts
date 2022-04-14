@@ -5,7 +5,10 @@ import { useUser } from "utils/context/UserContext";
 
 import RemoveProductsRepetition from "functions/RemoveRepetition";
 
-export default function useInfiniteScrolling<T>(path: `/${string}`) {
+export default function useInfiniteScrolling<T, K extends {}>(
+  path: `/${string}`,
+  options?: K
+) {
   const { user } = useUser();
 
   const [state, setState] = useState({
@@ -35,6 +38,7 @@ export default function useInfiniteScrolling<T>(path: `/${string}`) {
         },
         params: {
           skip,
+          ...options,
         },
         cancelToken: cancelToken.token,
       });

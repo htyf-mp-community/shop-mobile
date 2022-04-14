@@ -1,29 +1,27 @@
-import { TouchableNativeFeedback, View, Text } from "react-native";
+import { View, Text } from "react-native";
+import Ripple from "react-native-material-ripple";
 
 export default function Edit({ onPress }: { onPress: () => void }) {
   return (
-    <TouchableNativeFeedback
-      background={TouchableNativeFeedback.Ripple(
-        "rgba(255,255,255,0.1)",
-        false
-      )}
-      onPress={onPress}
+    <Ripple
+      rippleCentered
+      rippleColor="#fff"
       style={{
-        borderRadius: 10,
+        borderRadius: 5,
+        padding: 5,
       }}
+      onPress={onPress}
     >
-      <View style={{ padding: 5, width: 60, justifyContent: "center" }}>
-        <Text
-          style={{
-            color: "#00D85D",
-            fontFamily: "PoppinsRegular",
-            fontSize: 20,
-            textAlign: "center",
-          }}
-        >
-          Edit
-        </Text>
-      </View>
-    </TouchableNativeFeedback>
+      <Text
+        style={{
+          color: "#00D85D",
+          fontFamily: "PoppinsRegular",
+          fontSize: 20,
+          textAlign: "center",
+        }}
+      >
+        Edit
+      </Text>
+    </Ripple>
   );
 }

@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { Colors, radius } from "@constants/styles";
 import Ripple, { RippleProps } from "react-native-material-ripple";
+import Badge from "components/Badge";
 
 const VARIANTS = {
   primary: "#FF0056",
@@ -16,6 +17,21 @@ const VARIANTS = {
   ternary: Colors.secondary,
   disabled: "#131d33",
   text: "transparent",
+};
+
+const BUTTON_SIZE = {
+  xs: {
+    padding: 2.5,
+  },
+  sm: {
+    padding: 5,
+  },
+  md: {
+    padding: 10,
+  },
+  xl: {
+    padding: 15,
+  },
 };
 
 interface ButtonProps extends RippleProps {
@@ -26,6 +42,8 @@ interface ButtonProps extends RippleProps {
   fontStyle?: StyleProp<TextStyle>;
   iconStyle?: StyleProp<ViewStyle>;
   variant?: keyof typeof VARIANTS;
+  badge?: string | number;
+  size?: keyof typeof BUTTON_SIZE;
 }
 
 /**
@@ -47,6 +65,8 @@ export default function Button({
   fontStyle,
   iconStyle,
   variant = "text",
+  badge,
+  size = "md",
   ...rest
 }: ButtonProps) {
   return (
@@ -54,9 +74,17 @@ export default function Button({
       rippleColor="#fff"
       rippleCentered
       onPress={callback}
-      style={[{ backgroundColor: VARIANTS[variant] }, styles.button, style]}
+      style={[
+        {
+          backgroundColor: VARIANTS[variant],
+          ...BUTTON_SIZE[size],
+        },
+        styles.button,
+        style,
+      ]}
       {...rest}
     >
+      {!!badge && <Badge amount={badge} left />}
       {typeof text !== "undefined" && (
         <Text style={[styles.text, { color: "#fff" }, fontStyle]}>{text}</Text>
       )}
@@ -69,7 +97,7 @@ const styles = StyleSheet.create({
   button: {
     flexDirection: "row",
     borderRadius: radius.small,
-    padding: 12,
+    position: "relative",
   },
   text: {
     fontSize: 20,
