@@ -1,50 +1,28 @@
 import React from "react";
-import { View, Text, StyleSheet, Switch } from "react-native";
-import { Colors } from "../../../constants/styles";
+import { View, Text, StyleSheet } from "react-native";
 import useColorTheme from "@utils/context/ThemeContext";
-import SignOut from "../../Signout/Signout";
 import useSettings from "./useSettings";
+import SettingButton from "./components/SettingButton";
+import SignOut from "modules/Signout/Signout";
+import ThemeSheet from "./components/ThemeSheet";
 
 export default function Settings() {
-  const { current, onThemeChange, theme } = useColorTheme();
   const { isEnabled, toggleSwitch } = useSettings();
+  const { theme } = useColorTheme();
 
   return (
     <View style={styles.container}>
-      <Text
-        style={[
-          styles.headings,
-          { fontSize: 25, color: theme.text, marginBottom: 35 },
-        ]}
-      >
+      <Text style={[styles.headings, { fontSize: 25, color: theme.text }]}>
         App Settings
       </Text>
 
-      <View style={styles.settings}>
-        <Text style={[styles.headings, { fontSize: 15, color: theme.text }]}>
-          Notifications
-        </Text>
-        <Switch
-          trackColor={{ false: Colors.text, true: Colors.text }}
-          thumbColor={isEnabled ? Colors.secondary100 : "#f4f3f4"}
-          value={isEnabled}
-          ios_backgroundColor="#3e3e3e"
-          onValueChange={toggleSwitch}
-        />
-      </View>
-
-      <View style={styles.settings}>
-        <Text style={[styles.headings, { fontSize: 15, color: theme.text }]}>
-          Theme
-        </Text>
-        <Switch
-          value={current !== "light"}
-          trackColor={{ false: Colors.text, true: Colors.text }}
-          thumbColor={isEnabled ? Colors.secondary100 : "#f4f3f4"}
-          ios_backgroundColor="#3e3e3e"
-          onValueChange={onThemeChange}
-        />
-      </View>
+      <ThemeSheet />
+      <SettingButton
+        onPress={() => {}}
+        fadedText={isEnabled ? "enabled" : "disabled"}
+        iconExpanded={false}
+        primaryText="Notifications"
+      />
 
       <SignOut />
     </View>
@@ -53,7 +31,6 @@ export default function Settings() {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 50,
     padding: 10,
     flexDirection: "column",
   },

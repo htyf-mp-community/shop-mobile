@@ -1,17 +1,32 @@
 import React from "react";
-import { ScrollView } from "react-native";
 import Avatar from "../../../modules/User/Avatar/Avatar";
 import Settings from "../../../modules/User/Settings/Settings";
 import Button from "../../../components/Button/Button";
 import { ScreenNavigationProps } from "../../../@types/types";
 import useColorTheme from "@utils/context/ThemeContext";
+import Animated, {
+  useAnimatedScrollHandler,
+  useSharedValue,
+} from "react-native-reanimated";
 
 export default function User({
   navigation,
 }: Required<ScreenNavigationProps<"User">>) {
   const { theme } = useColorTheme();
+
+  const scrollY = useSharedValue(0);
+
+  const onScroll = useAnimatedScrollHandler({
+    onScroll: (event) => {
+      scrollY.value = event.contentOffset.y;
+    },
+  });
+
   return (
-    <ScrollView style={{ flex: 1, backgroundColor: theme.primary }}>
+    <Animated.ScrollView
+      onScroll={onScroll}
+      style={{ flex: 1, backgroundColor: theme.primary }}
+    >
       <Avatar />
 
       <Button
@@ -42,6 +57,6 @@ export default function User({
         }}
       />
       <Settings />
-    </ScrollView>
+    </Animated.ScrollView>
   );
 }

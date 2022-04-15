@@ -10,12 +10,14 @@ interface ThemeContextType {
   theme: typeof Colors;
   current: Variant;
   onThemeChange: () => void;
+  onSwitchTheme:(theme: "light" | "dark")=> void
 }
 
 const ThemeContext = createContext<ThemeContextType>({
   theme: Colors,
   current: "dark",
   onThemeChange: () => {},
+  onSwitchTheme:()=>{}
 });
 
 const THEMES = {
@@ -62,6 +64,14 @@ export const ThemeContextProvider: React.FC = ({ children }) => {
     } catch (error) {}
   }
 
+  function onSwitchTheme(theme: "light" | "dark") {
+    setTheme(() => {
+      onSaveTheme(theme);
+
+      return { current: theme, theme: THEMES[theme] };
+    });
+  }
+
   function onThemeChange() {
     setTheme(({ current }) => {
       if (current === "dark") {
@@ -75,7 +85,9 @@ export const ThemeContextProvider: React.FC = ({ children }) => {
   }
 
   return (
-    <ThemeContext.Provider value={{ theme, current, onThemeChange }}>
+    <ThemeContext.Provider
+      value={{ theme, current, onThemeChange, onSwitchTheme }}
+    >
       {children}
     </ThemeContext.Provider>
   );

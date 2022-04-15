@@ -3,6 +3,7 @@ import { ReactNode } from "react";
 
 import { Modal as RNModal, Pressable, View } from "react-native";
 import Button from "components/Button/Button";
+import Animated, { SlideInDown } from "react-native-reanimated";
 
 interface ModalProps {
   children: ReactNode;
@@ -13,26 +14,40 @@ interface ModalProps {
   onAccept: () => void;
 }
 
-export default function Modal({ children, onDismiss, vissible }: ModalProps) {
+export default function Modal({
+  children,
+  onDismiss,
+  vissible,
+  onAccept,
+  onCancel,
+}: ModalProps) {
   return (
     <RNModal animationType="fade" transparent visible={vissible}>
       <Pressable style={styles.container} onPress={onDismiss}>
-        <View style={styles.inner}>
-          <View>{children}</View>
-          <View style={styles.buttons}>
-            <Button
-              text="Cancel"
-              style={{ backgroundColor: "rgba(255,0,0,0.2)", marginRight: 5 }}
-            />
-            <Button
-              text="Ok"
-              style={{
-                backgroundColor: "rgba(0,255,0,0.2)",
-                paddingHorizontal: 15,
-              }}
-            />
-          </View>
-        </View>
+        {/* Disables previus pressable */}
+        <Animated.View entering={SlideInDown} exiting={SlideInDown}>
+          <Pressable style={styles.inner}>
+            <View style={{ marginBottom: 20 }}>{children}</View>
+            <View style={styles.buttons}>
+              <Button
+                onPress={onCancel}
+                text="Cancel"
+                style={{
+                  backgroundColor: "rgba(255,0,0,0.2)",
+                  marginRight: 10,
+                }}
+              />
+              <Button
+                onPress={onAccept}
+                text="Yes"
+                style={{
+                  backgroundColor: "rgba(0,255,0,0.2)",
+                  paddingHorizontal: 15,
+                }}
+              />
+            </View>
+          </Pressable>
+        </Animated.View>
       </Pressable>
     </RNModal>
   );

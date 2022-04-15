@@ -11,22 +11,26 @@ import {
 import { Colors } from "../../../constants/styles";
 import { useUser } from "@utils/context/UserContext";
 
+import Animated from "react-native-reanimated";
+
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("screen");
 
 interface IAvatarProps {
   hide?: boolean;
   style?: StyleProp<ViewStyle>;
   avatarStyles?: any;
+  animatedStyle?: any;
 }
 
 export default function Avatar({
   hide = false,
   style,
   avatarStyles,
+  animatedStyle,
 }: IAvatarProps) {
   const { user } = useUser();
   return (
-    <View style={[styles.container, style]}>
+    <Animated.View style={[styles.container, style, animatedStyle]}>
       <View style={[styles.avatar, avatarStyles]}>
         <Image
           style={{ width: 100, height: 100 }}
@@ -48,7 +52,7 @@ export default function Avatar({
           </Text>
         </>
       )}
-    </View>
+    </Animated.View>
   );
 }
 
