@@ -68,6 +68,7 @@ function Product({
 
   return (
     <TouchableOpacity
+      testID={"product." + prod_id}
       onPress={ShowMore}
       activeOpacity={0.9}
       style={[

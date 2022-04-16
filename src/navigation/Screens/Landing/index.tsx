@@ -1,10 +1,9 @@
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { View, Text, useWindowDimensions, Image } from "react-native";
+import { View, useWindowDimensions, Image } from "react-native";
 import { Colors } from "../../../constants/styles";
 import Button from "../../../components/Button/Button";
 import styles from "./styles";
-import { FontAwesome } from "@expo/vector-icons";
 
 export default function Landing({ navigation }: any) {
   function onNavigateLogin() {
@@ -27,6 +26,20 @@ export default function Landing({ navigation }: any) {
       />
 
       <View style={[styles.block, { width }]}>
+        {/*  <View style={{ flexDirection: "row", justifyContent: "center" }}>
+          <Button
+            style={styles.social}
+            icon={<FontAwesome name="facebook" size={24} color="white" />}
+          />
+          <Button
+            style={[styles.social]}
+            icon={<FontAwesome name="google" size={24} color="white" />}
+          />
+          <Button
+            style={styles.social}
+            icon={<FontAwesome name="apple" size={24} color="white" />}
+          />
+        </View> */}
         <Button
           variant="primary"
           fontStyle={{ fontSize: 20 }}
@@ -40,20 +53,6 @@ export default function Landing({ navigation }: any) {
           text="Log in"
           callback={onNavigateLogin}
         />
-        <View style={{ flexDirection: "row", justifyContent: "center" }}>
-          <Button
-            style={styles.social}
-            icon={<FontAwesome name="facebook" size={24} color="white" />}
-          />
-          <Button
-            style={[styles.social]}
-            icon={<FontAwesome name="google" size={24} color="white" />}
-          />
-          <Button
-            style={styles.social}
-            icon={<FontAwesome name="apple" size={24} color="white" />}
-          />
-        </View>
       </View>
     </SafeAreaView>
   );

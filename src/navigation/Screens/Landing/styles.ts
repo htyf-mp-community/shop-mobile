@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
     padding: 10,
     flex: 1,
     marginTop: 15,
+    justifyContent: "flex-end",
   },
   text: {
     color: Colors.text,
@@ -24,7 +25,7 @@ const styles = StyleSheet.create({
   button: {
     marginBottom: 15,
     justifyContent: "center",
-    borderRadius: 15,
+    // borderRadius: 15,
     padding: 20,
     width: "100%",
     shadowColor: "#000",
@@ -44,6 +45,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     justifyContent: "center",
     margin: 5,
+    alignItems: "center",
   },
 });
 

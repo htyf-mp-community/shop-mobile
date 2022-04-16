@@ -17,6 +17,7 @@ export default function ProductDetailsText({
   return (
     <>
       <Text
+        selectable
         style={[
           styles.text,
           styles.title,

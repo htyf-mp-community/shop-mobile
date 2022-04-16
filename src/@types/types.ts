@@ -76,6 +76,7 @@ export type RootStackParams = {
   Register?: undefined;
   Login?: undefined;
   Watchlist?: undefined;
+  Upload: undefined;
   MyReviews: undefined;
   AccountSettings: undefined;
   SearchResults: { category: string };

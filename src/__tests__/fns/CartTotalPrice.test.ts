@@ -1,4 +1,4 @@
-import { CalcTotalCartPrice } from "../functions/CalcTotalCartPrice";
+import { CalcTotalCartPrice } from "../../functions/CalcTotalCartPrice";
 
 test("Calculate total price of item in the cart based on price and ammount", () => {
   const first = [

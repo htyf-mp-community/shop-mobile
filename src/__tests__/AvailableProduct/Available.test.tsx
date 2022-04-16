@@ -9,9 +9,9 @@ jest.mock("@react-native-async-storage/async-storage", () => ({
 
 describe("Available Component", () => {
   test("It has green color AND text if product is in stock", async () => {
-    const { queryByText, getByTestId } = render(<Available quantity={10} />);
+    const { getByTestId, getByText } = render(<Available quantity={10} />);
 
-    queryByText(/Available/i);
+    getByText(/Available/i);
     expect(getByTestId("STATUS.INDICATOR")).toHaveStyle({
       backgroundColor: "green",
     });
@@ -21,9 +21,9 @@ describe("Available Component", () => {
     });
   });
   test("It has red color AND text if product is OUT of stock", () => {
-    const { queryByText, getByTestId } = render(<Available quantity={0} />);
+    const { getByTestId, getByText } = render(<Available quantity={0} />);
 
-    queryByText(/Not Available/i);
+    getByText(/Not Available/i);
     expect(getByTestId("STATUS.INDICATOR")).toHaveStyle({
       backgroundColor: "red",
     });

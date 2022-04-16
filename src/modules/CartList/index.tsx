@@ -56,7 +56,9 @@ export default function CartList({ updateCartState, data }: CartListProps) {
             fullSize
             {...item}
           />
-          <Text style={text}>{item.ammount}</Text>
+          <Text style={text} testID={`CART.ELEMENT.${item.prod_id}`}>
+            {item.ammount}
+          </Text>
         </View>
       )}
     />

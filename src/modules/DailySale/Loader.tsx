@@ -7,7 +7,7 @@ export default function Loader() {
     <SkeletonPlaceholder
       backgroundColor={"#1f2b3d"}
       highlightColor={"#2a3a52"}
-      size={{ width, height: 400 }}
+      size={{ width, height: 430 }}
     >
       <View style={{ width, alignItems: "center" }}>
         <View
@@ -19,12 +19,12 @@ export default function Loader() {
             paddingRight: 10,
           }}
         >
-          <SkeletonPlaceholder.Item height={35} width={width / 2 - 20} />
-          <SkeletonPlaceholder.Item height={35} width={width / 2 - 20} />
+          <SkeletonPlaceholder.Item height={40} width={width / 2 - 20} />
+          <SkeletonPlaceholder.Item height={40} width={100} />
         </View>
         <SkeletonPlaceholder.Item height={250} width={width - 20} />
 
-        <SkeletonPlaceholder.Item margin={5} height={25} width={width - 20} />
+        <SkeletonPlaceholder.Item margin={5} height={40} width={width - 20} />
 
         <View
           style={{
@@ -35,8 +35,8 @@ export default function Loader() {
             paddingRight: 10,
           }}
         >
-          <SkeletonPlaceholder.Item height={35} width={width / 2 - 20} />
-          <SkeletonPlaceholder.Item height={35} width={width / 2 - 20} />
+          <SkeletonPlaceholder.Item height={45} width={width / 2 - 20} />
+          <SkeletonPlaceholder.Item height={45} width={width / 2 - 20} />
         </View>
       </View>
     </SkeletonPlaceholder>

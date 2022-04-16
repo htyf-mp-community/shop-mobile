@@ -17,7 +17,7 @@ import Icon from "navigation/Screens/ProductDetails/components/BottomTab/Icon";
 import useWatchlist from "utils/hooks/useWatchlist";
 
 export default function DailySale() {
-  const { data, loading } = useFetch<ProductTypeProps>("/sales/daily", []);
+  const { loading, data } = useFetch<ProductTypeProps>("/sales/daily", []);
 
   const navigation = useNavigation<useNavigationProps>();
 
@@ -98,7 +98,7 @@ export default function DailySale() {
         </>
       )}
 
-      {loading && !data && <Loader />}
+      {loading && data?.prod_id === undefined && <Loader />}
     </View>
   );
 }

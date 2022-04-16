@@ -13,7 +13,7 @@ export default function Promotions() {
     <InfiniteScroll
       getItem={(item, key) => item[key]}
       getItemCount={(c) => c.length}
-      keyExtractor={({ id }) => id.toString()}
+      keyExtractor={({ id }: any) => id.toString()}
       orientation={"horizontal"}
       path="/sales"
       showsHorizontalScrollIndicator={false}

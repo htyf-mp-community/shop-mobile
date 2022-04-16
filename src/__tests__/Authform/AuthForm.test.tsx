@@ -1,6 +1,6 @@
 import "@testing-library/jest-native/extend-expect";
 import { act, fireEvent, render, waitFor } from "@testing-library/react-native";
-import AuthForm from "../modules/AuthForm/AuthForm";
+import AuthForm from "../../modules/AuthForm/AuthForm";
 import React from "react";
 import "react-native-gesture-handler/jestSetup";
 
@@ -19,7 +19,23 @@ jest.mock("@react-navigation/native", () => ({
 describe("It validates Form", () => {
   test("it renders correctly", () => {
     const onSubmit = jest.fn();
-    render(<AuthForm header="Login" onSubmit={onSubmit} />);
+    const { getByTestId, getByPlaceholderText } = render(
+      <AuthForm header="Login" onSubmit={onSubmit} />
+    );
+
+    act(() => {
+      fireEvent.changeText(
+        getByPlaceholderText(/Email/),
+        "validemail@gmal.com"
+      );
+      fireEvent.changeText(getByPlaceholderText(/Password/), "longpassword");
+
+      fireEvent.press(getByTestId("SUBMIT_BUTTON"));
+    });
+
+    expect(getByTestId("SUBMIT_BUTTON")).not.toHaveStyle({
+      backgroundColor: "#131d33",
+    });
   });
 
   test("shows invalid message if values are incorrect", async () => {

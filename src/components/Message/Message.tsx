@@ -6,13 +6,14 @@ import { useEffect } from "react";
 import { useRef } from "react";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { Entypo } from "@expo/vector-icons";
+import { useNavigationProps } from "/@types/types";
 
 const { width, height } = Dimensions.get("screen");
 
 export default function Message({ status }: { status: string }) {
   const isFocused = useIsFocused();
   const scale = useRef(new Animated.Value(0)).current;
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation<useNavigationProps>();
 
   useEffect(() => {
     Animated.timing(scale, {

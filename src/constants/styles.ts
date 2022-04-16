@@ -31,10 +31,11 @@ export const fontSize = {
 
 export const Colors = {
   text: "#fff",
+  textFaded: "#b8b8b8",
   primary: "#0f172a",
-  primary100: "#27334d",
-  primary200: "#262626",
-  primary300: "#1c1c1c",
+  primary100: "#212a40",
+  primary200: "#26314a",
+  primary300: "#1d273d",
   primary400: "#0d0d0d",
   secondary: "#009950",
   secondary100: "#008a48",

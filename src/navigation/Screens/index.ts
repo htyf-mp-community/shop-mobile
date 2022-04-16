@@ -14,3 +14,4 @@ export { default as ProductReviews } from "./Reviews/Screens/ProductReviews";
 export { default as SearchResults } from "./SearchResults/index";
 export { default as Watchlist } from "./Watchlist/Watchlist";
 export { default as Auction } from "./Auction/index";
+export { default as Upload } from "./UploadScreen/index";
