@@ -85,7 +85,7 @@ export default function AuthForm({ onSubmit, header }: AuthFormProps) {
               text={header.toUpperCase()}
               onPress={() => handleSubmit()}
               style={[styles.btn]}
-              variant={isValid && dirty ? "primary" : "disabled"}
+              variant={"primary"}
               disabled={!(isValid && dirty)}
               fontStyle={{ fontWeight: "bold" }}
               testID="SUBMIT_BUTTON"

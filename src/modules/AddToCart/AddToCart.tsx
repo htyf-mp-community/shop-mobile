@@ -32,7 +32,7 @@ export default function AddToCart({
 
   return (
     <Button
-      disabled={disabled}
+      disabled={disabled && !loading}
       text={text}
       callback={pushToCart}
       fontStyle={[

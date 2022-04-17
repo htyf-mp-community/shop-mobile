@@ -11,6 +11,8 @@ import { Colors, radius } from "@constants/styles";
 import Ripple, { RippleProps } from "react-native-material-ripple";
 import Badge from "components/Badge";
 
+import Color from "color";
+
 const VARIANTS = {
   primary: "#FF0056",
   secondary: Colors.primary,
@@ -44,6 +46,8 @@ interface ButtonProps extends RippleProps {
   variant?: keyof typeof VARIANTS;
   badge?: string | number;
   size?: keyof typeof BUTTON_SIZE;
+
+  disabled?: boolean;
 }
 
 /**
@@ -67,6 +71,7 @@ export default function Button({
   variant = "text",
   badge,
   size = "md",
+  disabled,
   ...rest
 }: ButtonProps) {
   return (
@@ -74,9 +79,12 @@ export default function Button({
       rippleColor="#fff"
       rippleCentered
       onPress={callback}
+      disabled={disabled}
       style={[
         {
-          backgroundColor: VARIANTS[variant],
+          backgroundColor: !disabled
+            ? VARIANTS[variant]
+            : Color(VARIANTS[variant]).alpha(0.15).string(),
           ...BUTTON_SIZE[size],
         },
         styles.button,
@@ -86,7 +94,19 @@ export default function Button({
     >
       {!!badge && <Badge amount={badge} left />}
       {typeof text !== "undefined" && (
-        <Text style={[styles.text, { color: "#fff" }, fontStyle]}>{text}</Text>
+        <Text
+          style={[
+            styles.text,
+            {
+              color: Color("#fff")
+                .alpha(disabled ? 0.5 : 1)
+                .string(),
+            },
+            fontStyle,
+          ]}
+        >
+          {text}
+        </Text>
       )}
       <View style={iconStyle}>{icon}</View>
     </Ripple>

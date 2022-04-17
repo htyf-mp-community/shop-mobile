@@ -7,7 +7,6 @@ import { SharedElement } from "react-navigation-shared-element";
 import { ScreenNavigationProps } from "/@types/types";
 import { Button, Input, Message } from "@components/index";
 import { API } from "@constants/routes";
-import useColorTheme from "@utils/context/ThemeContext";
 import { useUser } from "@utils/context/UserContext";
 import useListenKeyboard from "utils/hooks/useListenKeyboard";
 import StarsTouch from "@modules/Stars/Stars";
@@ -109,7 +108,7 @@ export default function CreateReview({
               />
 
               <Button
-                variant={isValid && dirty ? "primary" : "disabled"}
+                variant="primary"
                 disabled={!(isValid && dirty)}
                 text="Add review"
                 callback={handleSubmit}
