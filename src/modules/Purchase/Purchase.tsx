@@ -7,8 +7,12 @@ import useColorTheme from "@utils/context/ThemeContext";
 import { CalcTotalCartPrice } from "../../functions/CalcTotalCartPrice";
 import styles from "./Purchases.styles";
 
+interface CartProduct extends Product {
+  ammount: number;
+}
+
 interface PurchaseProps {
-  cart: Product[];
+  cart: CartProduct[];
 }
 
 export default function Purchase({ cart }: PurchaseProps) {
@@ -30,8 +34,9 @@ export default function Purchase({ cart }: PurchaseProps) {
         <Text style={[styles.text, { color: theme.text }]}>${totalPrice}</Text>
       </View>
       <Button
+        testID={"PURCHASE.BUTTON"}
         disabled={disabled}
-        text={`Continue with $${totalPrice} `}
+        text={`Continue with $${totalPrice}`}
         callback={PurchaseProduct}
         style={[
           {

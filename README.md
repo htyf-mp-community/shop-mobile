@@ -1,6 +1,6 @@
 # Mobile Shop
 
-Mobile shop app created with React-Native,Typescript.
+Mobile shop app created using Expo React-native.
 
 ## Used Technologies:
 
@@ -11,6 +11,8 @@ Mobile shop app created with React-Native,Typescript.
 - **React-Native-Reanimated** for animations
 - **Formik** with **yup** for form validation
 - **React-Native Stripe** [Card payment only for now]
+- **Apollo client** graphQL queries
+- **@reduxjs/toolkit** for state managment
 
 ## Application Screens:
 

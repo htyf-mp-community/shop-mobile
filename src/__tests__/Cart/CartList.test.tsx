@@ -1,7 +1,7 @@
 import React from "react";
 import "@testing-library/jest-native/extend-expect";
 import { fireEvent, render } from "@testing-library/react-native";
-import CartList from "../../../modules/CartList";
+import CartList from "../../modules/CartList";
 
 jest.mock("@react-native-async-storage/async-storage", () => ({
   AsyncStorageLib: jest.fn(),
