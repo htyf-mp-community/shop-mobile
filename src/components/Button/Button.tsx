@@ -118,6 +118,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     borderRadius: radius.small,
     position: "relative",
+    alignItems: "center",
+    justifyContent: "center",
   },
   text: {
     fontSize: 20,

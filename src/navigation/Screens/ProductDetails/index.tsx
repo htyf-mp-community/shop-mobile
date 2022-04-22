@@ -1,8 +1,6 @@
 import { memo, useState, useCallback } from "react";
 import { ScrollView, View, RefreshControl } from "react-native";
 import ImagesCarusel from "./components/ImagesCarusel/ImagesCarusel";
-import ProductDetailsText from "./components/ProductDetailsText/ProductDetailsText";
-import ProductDetailsButtons from "./components/ProductDetailsButtons/ProductDetailsButtons";
 import { ProductImageProps, ScreenNavigationProps } from "/@types/types";
 import styles from "./styles";
 import useColorTheme from "@utils/context/ThemeContext";
@@ -13,6 +11,7 @@ import { useUser } from "utils/context/UserContext";
 import { GET_PRODUCT } from "./schema";
 import DetailsLoader from "./components/Loader";
 import { wait } from "functions/wait";
+import Details from "./components/Details/Details";
 
 function ProductDetails({ route }: Required<ScreenNavigationProps<"Details">>) {
   const { prod_id, image, sharedID } = route.params;
@@ -66,14 +65,8 @@ function ProductDetails({ route }: Required<ScreenNavigationProps<"Details">>) {
 
         {!loading && result && (
           <>
-            <ProductDetailsText {...result} />
-            <ProductDetailsButtons
-              thumbnail={image}
-              prod_id={prod_id}
-              sharedID={sharedID}
-              reviews={result.rating_id}
-              name={result.title}
-            />
+            <Details image={image} sharedID={sharedID} {...result} />
+
             <ProductSuggestion text={result.title} />
           </>
         )}

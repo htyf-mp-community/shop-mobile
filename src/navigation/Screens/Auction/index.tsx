@@ -1,5 +1,5 @@
 import { ScreenNavigationProps } from "/@types/types";
-import { Image, ScrollView, useWindowDimensions, Text } from "react-native";
+import { Image, ScrollView, useWindowDimensions } from "react-native";
 import { Colors } from "constants/styles";
 import { image } from "functions/image";
 import useGetAuction from "./useGetAuction";
@@ -7,7 +7,6 @@ import Bid from "./components/Bids/Bid";
 import BidList from "./components/Bids/Bid_list";
 import useBoolean from "utils/hooks/useBoolean";
 import Addbid from "./components/Bids/Add_bid";
-import { Button, Modal } from "components";
 
 export default function AuctionScreen({
   route,
@@ -26,10 +25,13 @@ export default function AuctionScreen({
       />
       {data?.auction?.bids && (
         <>
-          <Bid bid={data?.auction?.bids[0]} onOpenModal={toggle} />
+          <Bid
+            bid={data?.auction?.bids[0] ?? { amount: 0 }}
+            onOpenModal={toggle}
+          />
           <BidList bids={data?.auction.bids} isPresent={state} />
           <Addbid
-            highest={data?.auction.bids[0].amount}
+            highest={data?.auction.bids?.[0]?.amount}
             auction_id={route.params.auction_id}
             onBid={(am, id) => {}}
           />

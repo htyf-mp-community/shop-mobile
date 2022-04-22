@@ -61,7 +61,7 @@ export default function Bid({ bid, onOpenModal, width: bidWidth }: BidsProps) {
           { width: bidWidth, marginTop: bidWidth ? 0 : 15 },
         ]}
       >
-        <Text style={styles.text}>${bid.amount}</Text>
+        <Text style={styles.text}>${bid?.amount ?? 0}</Text>
         <Text style={styles.text}>
           At: {new Date(+bid.date_add).toLocaleDateString()}
         </Text>

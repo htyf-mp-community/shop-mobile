@@ -1,43 +1,24 @@
-import { FlatList, useWindowDimensions, Image, Text } from "react-native";
+import { FlatList, Image, Text } from "react-native";
 import Ripple from "react-native-material-ripple";
 import { API } from "@constants/routes";
 import { useNavigation } from "@react-navigation/native";
 import type { useNavigationProps } from "/@types/types";
-import { useQuery } from "@apollo/client";
-import { useUser } from "utils/context/UserContext";
 import { image } from "functions/image";
-import { GET_SUGGESTIONS } from "../../schema";
+import useQuerySuggestions from "./useQuerySuggestions";
 
 interface ProductSuggestionProps {
   text: string;
 }
 
-function extractFrazes(input: string) {
-  const [one, two] = input.split(" ");
-
-  return `${one} ${two ?? ""}`;
-}
-
 export default function ProductSuggestion({
   text = "",
 }: ProductSuggestionProps) {
-  const { user } = useUser();
-  const { data } = useQuery(GET_SUGGESTIONS, {
-    variables: {
-      name: extractFrazes(text),
-    },
-    context: {
-      headers: {
-        token: user.token,
-      },
-    },
-  });
+  const { data } = useQuerySuggestions(text);
 
-  const { width } = useWindowDimensions();
   const navigation = useNavigation<useNavigationProps>();
 
   function onReplaceScreen(item: any) {
-    navigation.replace("Details", {
+    navigation.push("Details", {
       image: `${API}/upload/images=${item.img_id?.[0].name}`,
       title: item.title,
       prod_id: item.prod_id,
@@ -67,7 +48,7 @@ export default function ProductSuggestion({
         data={data?.suggestions.filter(({ title }: any) => title !== text)}
         horizontal
         showsHorizontalScrollIndicator={false}
-        style={{ width, padding: 5, marginBottom: 10 }}
+        style={{ padding: 5, marginBottom: 10 }}
         keyExtractor={({ prod_id }) => prod_id.toString()}
         renderItem={({ item, index }) => (
           <Ripple

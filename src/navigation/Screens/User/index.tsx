@@ -8,6 +8,7 @@ import Animated, {
   useAnimatedScrollHandler,
   useSharedValue,
 } from "react-native-reanimated";
+import { StyleProp, ViewStyle } from "react-native";
 
 export default function User({
   navigation,
@@ -22,6 +23,13 @@ export default function User({
     },
   });
 
+  const buttonStyle: StyleProp<ViewStyle> = {
+    margin: 10,
+    backgroundColor: theme.primary100,
+    padding: 15,
+    justifyContent: "flex-start",
+  };
+
   return (
     <Animated.ScrollView
       onScroll={onScroll}
@@ -31,12 +39,7 @@ export default function User({
 
       <Button
         text="Purchase history"
-        style={{
-          margin: 10,
-          backgroundColor: theme.primary100,
-          padding: 15,
-          marginTop: 20,
-        }}
+        style={[buttonStyle, { marginTop: 20 }]}
         callback={() => {
           navigation.navigate("PurchaseHistory");
         }}
@@ -44,14 +47,14 @@ export default function User({
 
       <Button
         text="My reviews"
-        style={{ margin: 10, backgroundColor: theme.primary100, padding: 15 }}
+        style={buttonStyle}
         callback={() => {
           navigation.navigate("MyReviews");
         }}
       />
       <Button
         text="Account settings"
-        style={{ margin: 10, backgroundColor: theme.primary100, padding: 15 }}
+        style={buttonStyle}
         callback={() => {
           navigation.navigate("AccountSettings");
         }}
