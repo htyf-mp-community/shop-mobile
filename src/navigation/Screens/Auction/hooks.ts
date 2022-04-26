@@ -1,6 +1,15 @@
-import { useQuery, gql } from "@apollo/client";
+import { useQuery, gql, useMutation } from "@apollo/client";
 import { Auction } from "/@types/types";
 import { useUser } from "utils/context/UserContext";
+
+const ADD_BID = gql`
+  mutation AddBid($auction_id: ID!, $amount: Int!) {
+    createBid(bid: { auction_id: $auction_id, amount: $amount }) {
+      amount
+      bid_id
+    }
+  }
+`;
 
 const GET_AUCTION = gql`
   query Auction($auction_id: ID!) {
@@ -24,11 +33,25 @@ const GET_AUCTION = gql`
   }
 `;
 
+export function useAddBid() {
+  const { user } = useUser();
+
+  return useMutation(ADD_BID, {
+    context: {
+      headers: {
+        token: user.token,
+      },
+    },
+    errorPolicy: "ignore",
+    refetchQueries: ["Auction"],
+  });
+}
+
 interface Response {
   auction?: Auction;
 }
 
-export default function useGetAuction(auction_id: string) {
+export function useGetAuction(auction_id: string) {
   const { user } = useUser();
   return useQuery<Response>(GET_AUCTION, {
     variables: {

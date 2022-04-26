@@ -60,6 +60,7 @@ export default function Addbid({ highest, onBid, auction_id }: AddBidProps) {
         error={+value < highest && touched}
       />
       <Button
+        disabled={+value <= highest || !touched}
         icon={
           <Ionicons
             name="ios-cash-outline"

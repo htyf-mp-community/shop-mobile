@@ -20,9 +20,13 @@ export default function Ratings({
           }}
           style={styles.image}
         />
-        <View style={{ flexDirection: "column", marginLeft: 20 }}>
+        <View
+          style={{ flexDirection: "row", alignItems: "center", marginLeft: 20 }}
+        >
           <Text style={styles.text}>Jan Kowalski</Text>
-          <Text style={[{ fontSize: 18, color: "#b5b5b5" }]}>13 days ago</Text>
+          <Text style={[{ fontSize: 18, color: "#b5b5b5", marginLeft: 10 }]}>
+            13 days ago
+          </Text>
         </View>
       </View>
 
@@ -36,7 +40,7 @@ export default function Ratings({
 
       <Stars
         rating={rating}
-        starStyle={{ transform: [{ scale: 0.5 }], padding: 0 }}
+        starStyle={{ transform: [{ scale: 0.5 }], padding: 0, width: 100 }}
       />
     </View>
   );
@@ -46,11 +50,12 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.primary100,
     padding: 10,
-    marginTop: 20,
+    margin: 10,
+    borderRadius: 5,
   },
   image: {
-    width: 60,
-    height: 60,
+    width: 30,
+    height: 30,
     borderRadius: 10,
   },
   header: {

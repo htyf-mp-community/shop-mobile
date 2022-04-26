@@ -22,28 +22,23 @@ export default function CreateReview({
 
   const { status, variants } = useListenKeyboard();
 
-  const [response, setResponse] = useState("");
+  const [response, setResponse] = useState<"Success" | "Failed" | "">("");
 
   async function PostReview({ description, title }: any) {
-    axios
-      .post(
+    try {
+      await axios.post(
         `${API}/ratings`,
         { prod_id, description, title, rating },
         {
           headers: {
             token: user.token,
-            "Content-Type": "application/json",
           },
         }
-      )
-      .then((res) => {
-        console.log(res);
-        setResponse("Success");
-      })
-      .catch((err) => {
-        console.log(err?.response?.body);
-        setResponse("Failed");
-      });
+      );
+      setResponse("Success");
+    } catch (error) {
+      setResponse("Failed");
+    }
   }
 
   return (
@@ -86,7 +81,7 @@ export default function CreateReview({
                 value={values.title}
                 setValue={handleChange("title")}
                 onBlur={handleBlur("title")}
-                placeholder="Title"
+                placeholder="What other's should know"
                 name={"Title"}
                 helperText={errors.title || "Atleast 6 characters*"}
                 error={!!errors.title && touched.title}
@@ -96,7 +91,7 @@ export default function CreateReview({
                 value={values.description}
                 setValue={handleChange("description")}
                 onBlur={handleBlur("description")}
-                placeholder="Description"
+                placeholder="Say something more about your expirience"
                 name={"Description"}
                 helperText={errors.description || "Atleast 6 characters*"}
                 style={styles.input}

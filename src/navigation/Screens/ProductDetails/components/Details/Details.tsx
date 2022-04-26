@@ -8,17 +8,15 @@ import { Available } from "components";
 import Banner from "../Banner";
 import Color from "color";
 import ReviewButtons from "../Buttons/ReviewButtons";
-import { ProductRatingProps } from "/@types/types";
+import { ProductMinified, ProductRatingProps } from "/@types/types";
 
-interface DetailsProps {
+interface DetailsProps extends Omit<ProductMinified, "img_id"> {
   image: string;
-  prod_id: number;
   sharedID: string;
-  title: string;
   rating_id: ProductRatingProps[];
   description: string;
-  price: number;
   quantity: number;
+  category: string;
 }
 
 export default function Details(props: DetailsProps) {
@@ -54,7 +52,7 @@ export default function Details(props: DetailsProps) {
           backgroundColor={Color("red").alpha(0.15).string()}
         />
         <Banner
-          text="Smartphone"
+          text={props.category}
           color="white"
           backgroundColor={Color("gray").alpha(0.1).string()}
         />
