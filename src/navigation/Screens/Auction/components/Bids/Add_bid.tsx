@@ -30,14 +30,29 @@ interface AddBidProps {
   highest: number;
   auction_id: string;
   onBid: (amount: number, auction_id: string) => void;
+  isLoading?: boolean;
 }
 
-export default function Addbid({ highest, onBid, auction_id }: AddBidProps) {
+export default function Addbid({
+  highest,
+  onBid,
+  auction_id,
+  isLoading = false,
+}: AddBidProps) {
   const [value, setValue] = useState("");
   const [touched, setTouched] = useState(false);
+
+  function handleBidSubmit() {
+    onBid(+value, auction_id);
+
+    setValue("");
+    setTouched(false);
+  }
+
   return (
     <View style={styles.container}>
       <Button
+        disabled={isLoading}
         variant="ternary"
         style={[
           styles.button,
@@ -56,11 +71,12 @@ export default function Addbid({ highest, onBid, auction_id }: AddBidProps) {
         placeholder="custom $"
         style={styles.input}
         keyboardType="number-pad"
+        clearButtonMode="while-editing"
         onBlur={() => setTouched(true)}
         error={+value < highest && touched}
       />
       <Button
-        disabled={+value <= highest || !touched}
+        disabled={+value <= highest || !touched || isLoading}
         icon={
           <Ionicons
             name="ios-cash-outline"
@@ -69,7 +85,7 @@ export default function Addbid({ highest, onBid, auction_id }: AddBidProps) {
             color="#fff"
           />
         }
-        onPress={() => onBid(+value, auction_id)}
+        onPress={handleBidSubmit}
         text="Bid"
         variant="primary"
         style={styles.button}

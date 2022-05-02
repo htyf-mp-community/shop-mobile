@@ -38,6 +38,10 @@ export default function Loader() {
           <SkeletonPlaceholder.Item height={45} width={width / 2 - 20} />
           <SkeletonPlaceholder.Item height={45} width={width / 2 - 20} />
         </View>
+        <View style={{ paddingHorizontal: 10, flexDirection: "row" }}>
+          <SkeletonPlaceholder.Item height={45} width={width / 5} />
+          <SkeletonPlaceholder.Item height={45} width={width - width / 5} />
+        </View>
       </View>
     </SkeletonPlaceholder>
   );

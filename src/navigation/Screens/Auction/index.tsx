@@ -12,10 +12,19 @@ export default function AuctionScreen({
   route,
 }: Required<ScreenNavigationProps<"Auction">>) {
   const { data } = useGetAuction(route.params.auction_id);
-  const [addBid] = useAddBid();
+  const [addBid, { loading: isBidLoading }] = useAddBid();
 
   const { width } = useWindowDimensions();
   const { state, toggle } = useBoolean();
+
+  function onBid(amount: number, auction_id: string) {
+    addBid({
+      variables: {
+        auction_id,
+        amount,
+      },
+    });
+  }
 
   return (
     <ScrollView
@@ -33,16 +42,10 @@ export default function AuctionScreen({
           />
           <BidList bids={data?.auction.bids} isPresent={state} />
           <Addbid
+            isLoading={isBidLoading}
             highest={data?.auction.bids?.[0]?.amount}
             auction_id={route.params.auction_id}
-            onBid={(amount, auction_id) =>
-              addBid({
-                variables: {
-                  auction_id,
-                  amount,
-                },
-              })
-            }
+            onBid={onBid}
           />
         </>
       )}
