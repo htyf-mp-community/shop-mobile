@@ -17,6 +17,8 @@ interface DetailsProps extends Omit<ProductMinified, "img_id"> {
   description: string;
   quantity: number;
   category: string;
+
+  rating: number;
 }
 
 export default function Details(props: DetailsProps) {
@@ -26,7 +28,7 @@ export default function Details(props: DetailsProps) {
         <Text style={styles.text}>{props.title}</Text>
       </View>
       <View style={[styles.row, styles.between, { paddingBottom: 5 }]}>
-        <Stars rating={4} starStyle={styles.stars} />
+        <Stars rating={props.rating} starStyle={styles.stars} />
         <Ripple rippleColor="#fff" style={styles.button}>
           <Text style={{ color: "rgba(255,255,255,0.8)" }}>See more</Text>
         </Ripple>

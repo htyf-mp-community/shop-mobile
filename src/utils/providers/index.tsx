@@ -15,7 +15,7 @@ interface AppProvidersProps {
   children: ReactNode;
   onSplashScreen: () => void;
 }
-const client = new ApolloClient({
+export const client = new ApolloClient({
   uri: API + "/graphql",
   cache: new InMemoryCache(),
 });

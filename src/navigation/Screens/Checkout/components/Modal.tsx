@@ -7,15 +7,15 @@ import {
 } from "react-native";
 
 import Animated, { SlideInDown } from "react-native-reanimated";
-import { useAppDispatch, useAppSelector } from "../../../utils/hooks/hooks";
-import styles from "./styles";
+import { useAppDispatch, useAppSelector } from "../../../../utils/hooks/hooks";
+import styles from "../styles";
 import { Ionicons } from "@expo/vector-icons";
-import { Button } from "../../../components";
+import { Button } from "../../../../components";
 import { useNavigation } from "@react-navigation/native";
-import { useNavigationProps } from "../../../@types/types";
+import { useNavigationProps } from "../../../../@types/types";
 import { Entypo } from "@expo/vector-icons";
 import { useEffect } from "react";
-import { checkoutActions } from "../../../redux/Checkout";
+import { checkoutActions } from "../../../../redux/Checkout";
 const { width } = Dimensions.get("screen");
 
 export default function Modal() {

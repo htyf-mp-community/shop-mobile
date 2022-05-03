@@ -1,6 +1,6 @@
 import { View, Text, FlatList, Pressable } from "react-native";
 import Animated, { useSharedValue } from "react-native-reanimated";
-import { Colors } from "../../../constants/styles";
+import { Colors } from "../../../../constants/styles";
 
 const AVAILABLE_METHODS = [
   "Visa",

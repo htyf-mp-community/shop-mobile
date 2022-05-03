@@ -1,6 +1,13 @@
 import { ProductRatingProps } from "/@types/types";
 import React from "react";
-import { View, StyleSheet, Text, Dimensions, Image } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  Dimensions,
+  Image,
+  useWindowDimensions,
+} from "react-native";
 import { Colors } from "../../constants/styles";
 import { Stars } from "../Stars/Stars";
 
@@ -11,8 +18,9 @@ export default function Ratings({
   title,
   description,
 }: ProductRatingProps) {
+  const { width } = useWindowDimensions();
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { width: width - 20 }]}>
       <View style={styles.header}>
         <Image
           source={{
@@ -52,6 +60,7 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 10,
     borderRadius: 5,
+    width: "100%",
   },
   image: {
     width: 30,

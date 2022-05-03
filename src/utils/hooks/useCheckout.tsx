@@ -1,14 +1,10 @@
 import { useUser } from "@utils/context/UserContext";
 import { useEffect } from "react";
 import axios from "axios";
-import { ProductTypeProps } from "modules/Product";
 import { API } from "@constants/routes";
 import { useStripe } from "@stripe/stripe-react-native";
 import { checkoutActions } from "@redux/Checkout";
 import { useAppDispatch, useAppSelector } from "./hooks";
-import { useNavigation } from "@react-navigation/native";
-import { useNavigationProps } from "../../@types/types";
-import { notUndefined } from "@functions/typecheckers";
 
 interface useCheckoutProps {
   route: any;
@@ -34,28 +30,30 @@ export default function useCheckout({
     useAppSelector((state) => state.checkout);
 
   async function getClientSecret() {
-    axios
-      .post(
+    try {
+      const { data } = await axios.post(
         `${API}/payments/create-payment-intent`,
-        { prod_id: cart },
+        {
+          prod_id: cart.map(({ prod_id }: any) => prod_id),
+          user_id: user.user_id,
+        },
         {
           headers: {
             token: user.token,
           },
         }
-      )
-      .then(({ data }) => {
-        dispatch(checkoutActions.setSecret(data.clientSecret));
-      })
+      );
+      dispatch(checkoutActions.setSecret(data.clientSecret));
 
-      .catch((err) => console.warn(err.message));
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   useEffect(() => {
     getClientSecret();
   }, []);
-
-  const navigation = useNavigation<useNavigationProps>();
 
   async function Purchase({ address, name, surname }: PurchaseProps) {
     dispatch(checkoutActions.startTransaction());
@@ -78,24 +76,7 @@ export default function useCheckout({
         dispatch(checkoutActions.setCharged(paymentIntent?.amount));
 
         if (!error) {
-          dispatch(checkoutActions.updateTransactionStatus());
-          const response = await axios.post(
-            `${API}/payments/purchase`,
-            {
-              prod_id: cart.map(({ prod_id }: ProductTypeProps) => prod_id),
-            },
-            {
-              headers: {
-                token: user.token,
-              },
-            }
-          );
-          if (response.data !== null && notUndefined(response.data)) {
-            dispatch(checkoutActions.updateTransactionStatus());
-            if (redirect) {
-              navigation.navigate("Home");
-            }
-          }
+          dispatch(checkoutActions.finishTransaction());
         } else {
           console.warn(error);
           dispatch(checkoutActions.failTransaction(error));
@@ -103,7 +84,7 @@ export default function useCheckout({
       }
     } catch (error) {
       console.warn(error);
-      dispatch(checkoutActions.failTransaction(error));
+      dispatch(checkoutActions.failTransaction("Transaction failed"));
     }
   }
 

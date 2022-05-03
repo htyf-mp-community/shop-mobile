@@ -11,6 +11,8 @@ export const GET_PRODUCT = gql`
       manufacturer
       quantity
 
+      rating
+
       img_id(take: 10) {
         id
         name

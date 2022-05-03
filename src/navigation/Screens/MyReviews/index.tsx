@@ -7,7 +7,7 @@ import { useUser } from "utils/context/UserContext";
 import { gql, useQuery } from "@apollo/client";
 
 const GET_RATINGS = gql`
-  query {
+  query GetRatings {
     ratings {
       rating_id
       title

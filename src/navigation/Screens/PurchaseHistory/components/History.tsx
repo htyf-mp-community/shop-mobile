@@ -33,6 +33,7 @@ function getTotal(products: OutputProps[]): number {
 
 export default function History({ products }: PurchaseProps) {
   const navigation = useNavigation<useNavigationProps>();
+
   return (
     <View style={styles.container}>
       <FlatList
@@ -79,7 +80,7 @@ export default function History({ products }: PurchaseProps) {
             fontSize: 20,
           }}
         >
-          {products[0].details.date}
+          {new Date(+products[0].details.date).toDateString()}
         </Text>
         <Text
           style={{

@@ -18,6 +18,14 @@ const checkoutSlice = createSlice({
       state.paymentIntentClientSecret = payload;
     },
 
+    finishTransaction(state) {
+      state.status = "FINISHED";
+
+      state.paymentError = "";
+      state.paymentLoading = false;
+      state.paymentResult = "finished";
+    },
+
     updateTransactionStatus(state) {
       if (state.status === "PREPARING") {
         state.status = "PENDING";

@@ -10,6 +10,7 @@ export default function SearchResults({
 
   return (
     <InfiniteScroll
+      initialNumToRender={4}
       getItemCount={(c) => c.length}
       keyExtractor={({ prod_id }) => prod_id.toString()}
       path={`/products/category?q=${category}`}
