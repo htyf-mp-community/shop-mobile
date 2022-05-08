@@ -11,12 +11,7 @@ import { useDispatch } from "react-redux";
 import { useAppSelector } from "utils/hooks/hooks";
 import { watchlistActions } from "redux/Watchlist/Watchlist";
 
-import Animated, {
-  SlideInDown,
-  Layout,
-  FadeIn,
-  FadeOut,
-} from "react-native-reanimated";
+import Animated, { Layout, FadeIn, FadeOut } from "react-native-reanimated";
 
 const init = {
   hasMore: false,
@@ -32,6 +27,7 @@ export default function Watchlist() {
   const { theme } = useColorTheme();
   const dispatch = useDispatch();
   const { data } = useAppSelector((state) => state.watchlist);
+
   useFetch<FetchProps>("/watchlist", [], init, (data) => {
     dispatch(watchlistActions.setWatchlist(data));
   });
@@ -47,7 +43,7 @@ export default function Watchlist() {
     }
   }
 
-  /* return (
+  return (
     <VirtualizedList
       style={{ flex: 1, backgroundColor: theme.primary }}
       data={data}
@@ -57,10 +53,7 @@ export default function Watchlist() {
       getItemCount={(d) => d.length}
       renderItem={({ item, index }) => {
         return (
-          <Animated.View
-            entering={SlideInDown.delay(index * 100)}
-            style={{ marginBottom: 20, position: "relative" }}
-          >
+          <Animated.View style={{ marginBottom: 20, position: "relative" }}>
             <Product
               {...item}
               sharedID="Favs"
@@ -87,42 +80,5 @@ export default function Watchlist() {
         );
       }}
     />
-  ); */
-  return (
-    <Animated.ScrollView
-      layout={Layout}
-      style={{ flex: 1, backgroundColor: theme.primary }}
-    >
-      {data.map((item) => (
-        <Animated.View
-          key={item.prod_id}
-          style={{ position: "relative" }}
-          layout={Layout.delay(100)}
-          entering={FadeIn}
-          exiting={FadeOut}
-        >
-          <Product
-            {...item}
-            sharedID="Favs"
-            fullSize
-            hide
-            price={+item.price}
-          />
-          <Button
-            rippleColor="white"
-            icon={<FontAwesome5 name="heart-broken" size={24} color="white" />}
-            onPress={() => onRemove(item.prod_id)}
-            variant="primary"
-            style={{
-              justifyContent: "center",
-              position: "absolute",
-              right: 15,
-              bottom: 15,
-              borderRadius: 100,
-            }}
-          />
-        </Animated.View>
-      ))}
-    </Animated.ScrollView>
   );
 }

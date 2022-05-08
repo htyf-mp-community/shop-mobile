@@ -2,9 +2,7 @@ import AddToCart from "modules/AddToCart/AddToCart";
 import useColorTheme from "utils/context/ThemeContext";
 import Animated, { ZoomIn } from "react-native-reanimated";
 import styles from "../../styles";
-import { Button } from "components";
-import useWatchlist from "@utils/hooks/useWatchlist";
-import Icon from "./Icon";
+import AddWatchlist from "modules/AddWatchlist";
 
 interface BottomTabProps {
   prod_id: number;
@@ -13,9 +11,6 @@ interface BottomTabProps {
 
 export default function BottomTab({ prod_id, quantity }: BottomTabProps) {
   const { theme } = useColorTheme();
-  const { appendWatchlist, state, remove } = useWatchlist(prod_id, {
-    withCheck: true,
-  });
 
   return (
     <Animated.View
@@ -25,12 +20,7 @@ export default function BottomTab({ prod_id, quantity }: BottomTabProps) {
       ]}
       entering={ZoomIn.duration(200)}
     >
-      <Button
-        onPress={() => (state === "IN" ? remove(prod_id) : appendWatchlist())}
-        variant="primary"
-        style={[styles.favButton]}
-        icon={<Icon state={state} />}
-      />
+      <AddWatchlist prod_id={prod_id} paddingHorizontal={20} />
 
       <AddToCart
         disabled={quantity === 0}

@@ -10,11 +10,14 @@ import { AntDesign } from "@expo/vector-icons";
 import styles, { cardFieldStyles } from "./styles";
 import Modal from "./components/Modal";
 import PaymentMethods from "./components/PaymentMethods";
+import { useAppSelector } from "utils/hooks/hooks";
 
 export default function Checkout({
   route,
 }: Required<ScreenNavigationProps<"Checkout">>) {
   const { purchase, total } = useCheckout({ route });
+
+  const { credentials } = useAppSelector((st) => st.user);
 
   useEffect(() => {
     initStripe({
@@ -28,13 +31,15 @@ export default function Checkout({
       <ScrollView style={[styles.container]}>
         <PaymentMethods />
         <Formik
+          enableReinitialize
           initialValues={{
-            name: "",
-            surname: "",
-            address: "",
+            name: credentials.name,
+            surname: credentials.surname,
+            address: credentials.address,
           }}
           onSubmit={purchase}
           validationSchema={checkoutSchema}
+          validateOnChange
         >
           {({
             handleChange,
@@ -108,7 +113,7 @@ export default function Checkout({
                   }
                   style={[
                     styles.button,
-                    { paddingVertical: 20, borderRadius: 20, marginTop: 15 },
+                    { paddingVertical: 20, borderRadius: 10, marginTop: 15 },
                   ]}
                   onPress={() => handleSubmit()}
                 />

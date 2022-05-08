@@ -5,27 +5,36 @@ import { useUser } from "@utils/context/UserContext";
 import { notUndefined } from "@functions/typecheckers";
 
 interface StateProps<T> {
-  data: T;
+  data: T | undefined;
   loading: boolean;
   error: string;
 }
 
+interface SettingsProps<T> {
+  invalidate?: any[];
+  onSuccess?: (
+    data: T,
+    setState: React.Dispatch<React.SetStateAction<StateProps<T>>>
+  ) => void;
+  onError?: (error: unknown) => void;
+}
+
 export default function useFetch<T>(
   path: string,
-  deps: any[] = [],
-  defaultValue?: any,
-  setter?: (arg: T) => void
+  options: SettingsProps<T> = {
+    invalidate: [],
+  }
 ) {
   const mounted = useRef(false);
   const [state, setState] = useState<StateProps<T>>({
-    data: defaultValue,
+    data: undefined,
     loading: false,
     error: "",
   });
 
   const { user } = useUser();
 
-  async function query(cancelToken?: any) {
+  async function query(cancelToken?: any, searchOptions?: Object) {
     setState((p) => ({
       ...p,
       loading: true,
@@ -36,27 +45,34 @@ export default function useFetch<T>(
         headers: {
           token: user.token,
         },
+        params: {
+          ...searchOptions,
+        },
         cancelToken: cancelToken.token,
       });
 
-      if (notUndefined(setter) && mounted.current) {
-        setter?.(data);
-      } else {
-        if (mounted.current) {
-          setState({
-            loading: false,
-            data: data,
-            error: "",
-          });
-        }
+      if (notUndefined(options.onSuccess) && mounted.current) {
+        options?.onSuccess?.(data, setState);
+      } else if (mounted.current) {
+        setState({
+          loading: false,
+          data: data,
+          error: "",
+        });
       }
     } catch (error: any) {
-      if (!axios.isCancel(error) && mounted.current) {
-        setState((p) => ({
-          ...p,
-          error: error?.response?.data?.message || error.message,
-          loading: false,
-        }));
+      if (error) {
+        if (!!options.onError) {
+          options.onError(error);
+        }
+
+        if (!axios.isCancel(error) && mounted.current) {
+          setState((p) => ({
+            ...p,
+            error: error?.response?.data?.message || error.message,
+            loading: false,
+          }));
+        }
       }
     }
   }
@@ -71,7 +87,7 @@ export default function useFetch<T>(
       mounted.current = false;
       cancelToken.cancel();
     };
-  }, deps);
+  }, options.invalidate);
 
   return { ...state, setState, refetch: query };
 }

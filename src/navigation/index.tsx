@@ -33,8 +33,13 @@ export default function MainNavigator() {
   }, [expoPushToken]);
   const dispatch = useDispatch();
 
-  useFetch<Response>("/auth/credentials", [isLoggedIn], {}, (data) => {
+  /*   useFetch<Response>("/auth/credentials", [isLoggedIn], {}, (data) => {
     dispatch(userActions.setCredentials(data));
+  }); */
+
+  useFetch("/auth/credentials", {
+    invalidate: [isLoggedIn],
+    onSuccess: (data: Response) => dispatch(userActions.setCredentials(data)),
   });
 
   const { theme, current } = useColorTheme();
