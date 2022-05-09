@@ -4,7 +4,7 @@ import { ImageSourcePropType } from "react-native";
 
 export function image(
   input: ProductImageProps[] | string | undefined
-): ImageSourcePropType {
+): ImageSourcePropType | { uri: string } {
   if (typeof input === "string") {
     return { uri: `${API}/upload/images=${input}` };
   }

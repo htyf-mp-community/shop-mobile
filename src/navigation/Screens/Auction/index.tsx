@@ -7,11 +7,13 @@ import Bid from "./components/Bids/Bid";
 import BidList from "./components/Bids/Bid_list";
 import useBoolean from "utils/hooks/useBoolean";
 import Addbid from "./components/Bids/Add_bid";
+import Details from "../ProductDetails/components/Details/Details";
+import { API } from "constants/routes";
 
 export default function AuctionScreen({
   route,
 }: Required<ScreenNavigationProps<"Auction">>) {
-  const { data } = useGetAuction(route.params.auction_id);
+  const { data, error } = useGetAuction(route.params.auction_id);
   const [addBid, { loading: isBidLoading }] = useAddBid();
 
   const { width } = useWindowDimensions();
@@ -49,6 +51,11 @@ export default function AuctionScreen({
           />
         </>
       )}
+
+      <Details
+        image={`${API}/upload/image=${data?.auction?.product?.img_id[0]?.name}`}
+        {...(data?.auction?.product as any)}
+      />
     </ScrollView>
   );
 }

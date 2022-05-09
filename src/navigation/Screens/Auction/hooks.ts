@@ -18,10 +18,21 @@ const GET_AUCTION = gql`
       product {
         prod_id
         title
+        price
+        rating
+        quantity
+        category
         description
         img_id {
           id
           name
+        }
+
+        rating_id {
+          rating_id
+          rating
+          title
+          description
         }
       }
       bids {

@@ -6,7 +6,7 @@
 export function CalcTotalCartPrice<
   T extends { ammount: number; price: number }
 >(cart: T[]): number {
-  const mapped = cart.map(({ ammount, price }) => ammount * price);
-
-  return mapped.reduce((prev, curr) => prev + curr, 0);
+  return cart
+    .map(({ ammount, price }) => ammount * price)
+    .reduce((prev, curr) => prev + curr, 0);
 }
