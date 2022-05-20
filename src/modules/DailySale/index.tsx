@@ -13,6 +13,7 @@ import Ripple from "react-native-material-ripple";
 import Loader from "./Loader";
 import useFetch from "utils/hooks/useFetch";
 import AddWatchlist from "modules/AddWatchlist";
+import useColorTheme from "utils/context/ThemeContext";
 
 export default function DailySale() {
   const { loading, data = {} as ProductTypeProps } = useFetch("/sales/daily");
@@ -31,6 +32,8 @@ export default function DailySale() {
   }
 
   const { pushToCart, result } = useCart(data?.prod_id);
+
+  const { theme } = useColorTheme();
 
   return (
     <View style={styles.container}>
@@ -53,7 +56,9 @@ export default function DailySale() {
             </SharedElement>
           </Ripple>
           <View style={[styles.details]}>
-            <Text style={{ color: "#fff", fontSize: 20 }}>{data?.title}</Text>
+            <Text style={{ color: theme.text, fontSize: 20 }}>
+              {data?.title}
+            </Text>
 
             <View style={styles.bottom_tab}>
               <View
@@ -63,12 +68,14 @@ export default function DailySale() {
                 ]}
               >
                 <View style={[styles.row, { width: "50%" }]}>
-                  <Text style={styles.price}>${data?.price}</Text>
+                  <Text style={[styles.price, { color: theme.text }]}>
+                    ${data?.price}
+                  </Text>
                   <Text style={styles.discounted}>
                     ${Math.ceil(data?.price * 1.25)}
                   </Text>
                 </View>
-                <Text style={{ color: "#fff" }}>12 Left</Text>
+                <Text style={{ color: theme.text }}>12 Left</Text>
               </View>
 
               <View style={[styles.row, { marginTop: 10 }]}>

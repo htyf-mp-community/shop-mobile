@@ -3,6 +3,7 @@ import { useUser } from "@utils/context/UserContext";
 import axios from "axios";
 import { SuggestionType } from "/@types/types";
 import { API } from "constants/routes";
+import useRecent from "navigation/Screens/Search/hooks/useRecent";
 
 export default function useSearch(params: {
   title?: string;
@@ -16,12 +17,15 @@ export default function useSearch(params: {
     user: { token },
   } = useUser();
 
+  const { recent, appendRecent } = useRecent();
+
   useEffect(() => {
     const cancelToken = axios.CancelToken.source();
 
     const delay = setTimeout(async () => {
       if (query.trim() !== "") {
         try {
+          appendRecent(query);
           const { data } = await axios({
             method: "GET",
             headers: {
@@ -46,5 +50,5 @@ export default function useSearch(params: {
     };
   }, [query, params]);
 
-  return { setQuery, query, suggestion };
+  return { setQuery, query, suggestion, recent };
 }

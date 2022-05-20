@@ -13,7 +13,7 @@ import { API } from "constants/routes";
 export default function AuctionScreen({
   route,
 }: Required<ScreenNavigationProps<"Auction">>) {
-  const { data, error } = useGetAuction(route.params.auction_id);
+  const { data } = useGetAuction(route.params.auction_id);
   const [addBid, { loading: isBidLoading }] = useAddBid();
 
   const { width } = useWindowDimensions();

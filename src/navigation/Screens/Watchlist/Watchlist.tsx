@@ -11,7 +11,7 @@ import { useDispatch } from "react-redux";
 import { useAppSelector } from "utils/hooks/hooks";
 import { watchlistActions } from "redux/Watchlist/Watchlist";
 
-import Animated from "react-native-reanimated";
+import Animated, { FadeInDown } from "react-native-reanimated";
 import { useIsFocused } from "@react-navigation/native";
 
 const init = {
@@ -33,11 +33,9 @@ export default function Watchlist() {
 
   useFetch<FetchProps>("/watchlist", {
     invalidate: [isFocused],
+    fetchOnMount: true,
     onSuccess: (data = init) => {
       dispatch(watchlistActions.setWatchlist(data));
-    },
-    onError: (err) => {
-      console.warn(err);
     },
   });
 
@@ -60,7 +58,10 @@ export default function Watchlist() {
         getItemCount={(d) => d.length}
         renderItem={({ item, index }) => {
           return (
-            <Animated.View style={{ marginBottom: 20, position: "relative" }}>
+            <Animated.View
+              entering={FadeInDown.delay(index * 100)}
+              style={{ marginBottom: 10, position: "relative" }}
+            >
               <Product
                 {...item}
                 sharedID="Favs"

@@ -8,6 +8,7 @@ import EmptyList from "./Info";
 import useFetchProducts from "./useFetchProducts";
 import axios from "axios";
 import ProductSkeleton from "modules/ProductSkeleton";
+import useColorTheme from "utils/context/ThemeContext";
 
 interface MostRecentProps {
   path: string;
@@ -41,9 +42,11 @@ function ProductsCarusel({
     }
   }, [skip, hasMore]);
 
+  const { theme } = useColorTheme();
+
   return (
     <View style={caruselStyles.container}>
-      <Text style={[caruselStyles.title]}>{title}</Text>
+      <Text style={[caruselStyles.title, { color: theme.text }]}>{title}</Text>
 
       {!notEmpty(data) && loading && <ProductSkeleton />}
 
@@ -54,6 +57,7 @@ function ProductsCarusel({
         onEndReached={onSkip}
         horizontal
         initialNumToRender={2}
+        showsHorizontalScrollIndicator={false}
         onEndReachedThreshold={0.5}
         getItem={getItem}
         getItemCount={(data) => data.length}

@@ -1,39 +1,12 @@
-import { gql, useQuery } from "@apollo/client";
 import { useWindowDimensions, View, Text, FlatList } from "react-native";
-import { useUser } from "utils/context/UserContext";
 import Auction from "navigation/Screens/Auction/components/Auction";
 import { TouchableOpacity } from "react-native-gesture-handler";
-
-const GET_AUCTIONS = gql`
-  query Auctions {
-    auctions {
-      auction_id
-      product {
-        title
-        img_id {
-          name
-        }
-      }
-      date_end
-      bids {
-        amount
-      }
-    }
-  }
-`;
+import useAuctions from "./useAuctions";
 
 export default function AuctionsNavigator() {
   const { width } = useWindowDimensions();
 
-  const { user } = useUser();
-
-  const { data } = useQuery(GET_AUCTIONS, {
-    context: {
-      headers: {
-        token: user.token,
-      },
-    },
-  });
+  const { data } = useAuctions();
 
   return (
     <View style={{ width, padding: 10 }}>

@@ -44,14 +44,16 @@ export default function CreateReview({
   return (
     <View style={styles.container}>
       {status === variants.closed && (
-        <SharedElement id={`prod_id.${prod_id}${sharedID}`}>
-          <Image
-            source={{ uri: thumbnail }}
-            style={styles.img}
-            resizeMode="cover"
-            resizeMethod="scale"
-          />
-        </SharedElement>
+        <View style={{ alignItems: "center" }}>
+          <SharedElement id={`prod_id.${prod_id}${sharedID}`}>
+            <Image
+              source={{ uri: thumbnail }}
+              style={styles.img}
+              resizeMode="cover"
+              resizeMethod="scale"
+            />
+          </SharedElement>
+        </View>
       )}
 
       {!!response && <Message status={response} />}

@@ -10,23 +10,26 @@ interface ThemeContextType {
   theme: typeof Colors;
   current: Variant;
   onThemeChange: () => void;
-  onSwitchTheme:(theme: "light" | "dark")=> void
+  onSwitchTheme: (theme: "light" | "dark") => void;
 }
 
 const ThemeContext = createContext<ThemeContextType>({
   theme: Colors,
   current: "dark",
   onThemeChange: () => {},
-  onSwitchTheme:()=>{}
+  onSwitchTheme: () => {},
 });
 
 const THEMES = {
   dark: Colors,
   light: {
     ...Colors,
-    text: "#000",
+    text: "#3B3B3B",
     primary: "#fff",
-    primary100: "#B1BDC5",
+    primary100: "#DADDE2",
+    primary200: "#B1BDC5",
+    primary300: "#889FA5",
+    secondary: "#8685EF",
   },
 };
 

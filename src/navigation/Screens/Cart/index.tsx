@@ -18,15 +18,6 @@ export default function Cart() {
   const dispatch = useAppDispatch();
   const { cart } = useAppSelector((state) => state.cart);
 
-  /*  const { loading, data } = useFetch<ProductTypeProps[]>(
-    "/cart",
-    [isFocused],
-    [],
-    (state) => {
-      dispatch(cartActions.setCart(state));
-    }
-  ); */
-
   const { data = [], loading } = useFetch<ProductTypeProps[]>("/cart", {
     invalidate: [isFocused],
     onSuccess: (data) => {

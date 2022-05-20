@@ -12,6 +12,7 @@ interface StateProps<T> {
 
 interface SettingsProps<T> {
   invalidate?: any[];
+  fetchOnMount?: boolean;
   onSuccess?: (
     data: T,
     setState: React.Dispatch<React.SetStateAction<StateProps<T>>>
@@ -19,11 +20,14 @@ interface SettingsProps<T> {
   onError?: (error: unknown) => void;
 }
 
+const DEFAULT_OPTIONS = {
+  invalidate: [],
+  fetchOnMount: true,
+};
+
 export default function useFetch<T>(
   path: string,
-  options: SettingsProps<T> = {
-    invalidate: [],
-  }
+  options: SettingsProps<T> = DEFAULT_OPTIONS
 ) {
   const mounted = useRef(false);
   const [state, setState] = useState<StateProps<T>>({
@@ -51,7 +55,7 @@ export default function useFetch<T>(
         cancelToken: cancelToken.token,
       });
 
-      if (notUndefined(options.onSuccess) && mounted.current) {
+      if (!!options.onSuccess && mounted.current) {
         options?.onSuccess?.(data, setState);
       } else if (mounted.current) {
         setState({
@@ -61,23 +65,23 @@ export default function useFetch<T>(
         });
       }
     } catch (error: any) {
-      if (error) {
-        if (!!options.onError) {
-          options.onError(error);
-        }
+      if (!!options.onError) {
+        options.onError(error);
+      }
 
-        if (!axios.isCancel(error) && mounted.current) {
-          setState((p) => ({
-            ...p,
-            error: error?.response?.data?.message || error.message,
-            loading: false,
-          }));
-        }
+      if (!axios.isCancel(error) && mounted.current) {
+        setState((p) => ({
+          ...p,
+          error: error?.response?.data?.message || error.message,
+          loading: false,
+        }));
       }
     }
   }
 
   useEffect(() => {
+    if (!options.fetchOnMount) return;
+
     mounted.current = true;
     const cancelToken = axios.CancelToken.source();
 

@@ -5,38 +5,42 @@ interface Cart extends ProductTypeProps {
   cart_id: number;
   ammount: number;
 }
+const initialState = {
+  cart: [] as Cart[],
+  loading: false,
+  error: "",
+  empty: false,
+  amount: 0,
+};
+
+type State = typeof initialState;
 
 const cartSlice = createSlice({
   name: "cart",
-  initialState: {
-    cart: [] as Cart[],
-    loading: false,
-    error: "",
-    empty: false,
-    amount: 0,
-  },
+  initialState,
   reducers: {
-    setCart(state, { payload }: { payload: any[] }) {
+    setCart(state: State, { payload }: { payload: any[] }) {
       state.loading = false;
       state.cart = payload;
       state.error = "";
+
       state.amount = payload.length;
       if (state.cart.length > 0) state.empty = false;
     },
-    setError(state, { payload }) {
+    setError(state: State, { payload }: { payload: string }) {
       state.loading = false;
       state.error = payload;
     },
 
-    startLoading(state) {
+    startLoading(state: State) {
       state.loading = true;
     },
 
-    increment(state) {
+    increment(state: State) {
       state.amount += 1;
     },
 
-    incrementAmmount(state, { payload }: { payload: number }) {
+    incrementAmmount(state: State, { payload }: { payload: number }) {
       state.cart = state.cart.map((prod) => {
         if (prod.prod_id === payload) {
           return { ...prod, ammount: prod.ammount + 1 };
@@ -45,7 +49,7 @@ const cartSlice = createSlice({
       });
     },
 
-    removeById(state, { payload }: { payload: number }) {
+    removeById(state: State, { payload }: { payload: number }) {
       const cart = [];
 
       for (const product of state.cart) {

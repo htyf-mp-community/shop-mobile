@@ -10,8 +10,9 @@ export const createStyles = StyleSheet.create({
     backgroundColor: Colors.primary,
   },
   img: {
-    width,
-    height: 200,
+    width: width - 30,
+    height: 220,
+    borderRadius: 5,
   },
   input: {
     color: "white",

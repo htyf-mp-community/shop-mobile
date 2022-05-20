@@ -4,8 +4,7 @@ import Categories from "@modules/Categories";
 import { ENDPOINTS } from "@constants/routes";
 import ProductsCarusel from "@modules/ProductsCarusel/ProductsCarusel";
 import AuctionsNavigator from "modules/AuctionsNavigator";
-/* import Promotions from "modules/Promotions";
-import AuctionList from "../Auction/components/AuctionList"; */
+import Promotions from "modules/Promotions";
 
 interface HomeProps {
   id: number;
@@ -27,14 +26,11 @@ export const homeElements = (toggle: () => void): readonly HomeProps[] =>
       Component: Categories,
       props: {},
     },
-    /*  {
+    {
       Component: Promotions,
       props: {},
     },
-    {
-      Component: AuctionList,
-      props: {},
-    }, */
+
     {
       Component: DailySale,
       props: {},
@@ -55,7 +51,7 @@ export const homeElements = (toggle: () => void): readonly HomeProps[] =>
     {
       Component: ProductsCarusel,
       props: {
-        title: "Your searches",
+        title: "Recently searched",
         sharedID: "WatchedByYou",
         path: ENDPOINTS.searchedProducts,
         refresh: false,
@@ -64,7 +60,7 @@ export const homeElements = (toggle: () => void): readonly HomeProps[] =>
     {
       Component: ProductsCarusel,
       props: {
-        title: "All products",
+        title: "Products",
         sharedID: "All",
         path: ENDPOINTS.productsAll,
         refresh: false,
