@@ -20,10 +20,13 @@ export default function Cart() {
 
   const { data = [], loading } = useFetch<ProductTypeProps[]>("/cart", {
     invalidate: [isFocused],
+    fetchOnMount: true,
     onSuccess: (data) => {
       dispatch(cartActions.setCart(data));
     },
   });
+
+  console.log(data.length);
 
   function updateCartState(id: number) {
     dispatch(cartActions.incrementAmmount(id));

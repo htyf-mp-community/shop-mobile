@@ -4,13 +4,14 @@ import { ReactNode } from "react";
 import { Modal as RNModal, Pressable, View } from "react-native";
 import Button from "components/Button/Button";
 import Animated, { SlideInDown } from "react-native-reanimated";
+import Color from "color";
 
 interface ModalProps {
   children: ReactNode;
   onDismiss: () => void;
   vissible: boolean;
 
-  onCancel: () => void;
+  onCancel?: () => void;
   onAccept: () => void;
 }
 
@@ -29,19 +30,23 @@ export default function Modal({
           <Pressable style={styles.inner}>
             <View style={{ marginBottom: 20 }}>{children}</View>
             <View style={styles.buttons}>
-              <Button
-                onPress={onCancel}
-                text="Cancel"
-                style={{
-                  backgroundColor: "rgba(255,0,0,0.2)",
-                  marginRight: 10,
-                }}
-              />
+              {!!onCancel && (
+                <Button
+                  onPress={onCancel}
+                  text="Cancel"
+                  fontStyle={{ color: "red" }}
+                  style={{
+                    backgroundColor: Color("red").alpha(0.2).string(),
+                    marginRight: 10,
+                  }}
+                />
+              )}
               <Button
                 onPress={onAccept}
                 text="Yes"
+                fontStyle={{ color: "lightgreen" }}
                 style={{
-                  backgroundColor: "rgba(0,255,0,0.2)",
+                  backgroundColor: Color("green").alpha(0.3).string(),
                   paddingHorizontal: 15,
                 }}
               />
