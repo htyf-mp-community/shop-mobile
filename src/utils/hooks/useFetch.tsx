@@ -2,7 +2,6 @@ import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { API } from "@constants/routes";
 import { useUser } from "@utils/context/UserContext";
-import { notUndefined } from "@functions/typecheckers";
 
 interface StateProps<T> {
   data: T | undefined;
@@ -16,8 +15,8 @@ interface SettingsProps<T> {
   onSuccess?: (
     data: T,
     setState: React.Dispatch<React.SetStateAction<StateProps<T>>>
-  ) => void;
-  onError?: (error: unknown) => void;
+  ) => any;
+  onError?: (error: unknown) => any;
 }
 
 const DEFAULT_OPTIONS = {

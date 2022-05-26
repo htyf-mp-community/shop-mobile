@@ -19,6 +19,15 @@ export const Padding = {
   extraLarge: 20,
 };
 
+export const Fonts = {
+  PoppinsBold: "PoppinsBold",
+  PoppinsThin: "PoppinsThin",
+  PoppinsMedium: "PoppinsMedium",
+  PoppinsRegular: "PoppinsRegular",
+  PoppinsLight: "PoppinsLight",
+  PoppinsBlack: "PoppinsBlack",
+};
+
 export const fontSize = {
   h1: 56,
   h2: 40,

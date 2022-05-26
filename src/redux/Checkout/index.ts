@@ -2,23 +2,27 @@ import { createSlice } from "@reduxjs/toolkit";
 
 type TransactionStatus = "PREPARING" | "PENDING" | "FINISHED" | "FAILED";
 
+const initialState = {
+  paymentResult: "",
+  paymentError: "",
+  paymentLoading: false,
+  paymentIntentClientSecret: "",
+
+  status: "PREPARING" as TransactionStatus,
+  ammountCharged: 0,
+};
+
+type State = typeof initialState;
+
 const checkoutSlice = createSlice({
   name: "checkout",
-  initialState: {
-    paymentResult: "",
-    paymentError: "",
-    paymentLoading: false,
-    paymentIntentClientSecret: "",
-
-    status: "PREPARING" as TransactionStatus,
-    ammountCharged: 0,
-  },
+  initialState,
   reducers: {
-    setSecret(state, { payload }: { payload: string }) {
+    setSecret(state: State, { payload }: { payload: string }) {
       state.paymentIntentClientSecret = payload;
     },
 
-    finishTransaction(state) {
+    finishTransaction(state: State) {
       state.status = "FINISHED";
 
       state.paymentError = "";
@@ -26,7 +30,7 @@ const checkoutSlice = createSlice({
       state.paymentResult = "finished";
     },
 
-    updateTransactionStatus(state) {
+    updateTransactionStatus(state: State) {
       if (state.status === "PREPARING") {
         state.status = "PENDING";
       } else if (state.status === "PENDING") {
@@ -34,26 +38,21 @@ const checkoutSlice = createSlice({
       }
     },
 
-    setCharged(state, { payload }) {
+    setCharged(state: State, { payload }: { payload: number }) {
       state.ammountCharged = payload;
     },
 
-    startTransaction(state) {
+    startTransaction(state: State) {
       state.paymentLoading = true;
     },
-    failTransaction(state, { payload }) {
+    failTransaction(state: State, { payload }: { payload: string }) {
       state.paymentLoading = false;
       state.paymentError = payload;
       state.status = "FAILED";
     },
 
-    destroySession(state) {
-      state.ammountCharged = 0;
-      state.paymentLoading = false;
-      state.status = "PREPARING";
-      state.paymentError = "";
-      state.paymentIntentClientSecret = "";
-      state.paymentResult = "";
+    destroySession(state: State) {
+      state = initialState;
     },
   },
 });

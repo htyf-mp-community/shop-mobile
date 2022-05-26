@@ -3,7 +3,7 @@ import useWatchlist from "utils/hooks/useWatchlist";
 import Icon from "./Icon";
 
 interface AddWatchlistProps {
-  readonly prod_id: number;
+  prod_id: number;
   paddingHorizontal?: number;
 }
 
@@ -15,6 +15,9 @@ export default function AddWatchlist({
     withCheck: true,
   });
 
+  const handleWatchlistClick = () =>
+    state === "IN" ? remove(prod_id) : appendWatchlist();
+
   return (
     <Button
       style={{
@@ -22,7 +25,7 @@ export default function AddWatchlist({
         marginRight: 10,
         paddingHorizontal,
       }}
-      onPress={() => (state === "IN" ? remove(prod_id) : appendWatchlist())}
+      onPress={handleWatchlistClick}
       variant="primary"
       icon={<Icon state={state} />}
     />

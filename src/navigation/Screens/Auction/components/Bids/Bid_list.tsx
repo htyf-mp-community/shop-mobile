@@ -15,24 +15,18 @@ export default function BidList({ isPresent, bids }: BidListProps) {
   const CONTAINER_WIDTH = width;
   const INNER_BID_WIDTH = CONTAINER_WIDTH - Padding.medium * 2;
 
-  return (
-    <>
-      {isPresent && (
-        <View style={{ width: CONTAINER_WIDTH }}>
-          {bids
-            .slice(1, bids.length)
-            .map(({ amount, bid_id, date_add }, index) => (
-              <Animated.View key={bid_id} entering={FadeIn.delay(index * 100)}>
-                <Bid
-                  key={bid_id}
-                  bid={{ amount, bid_id, date_add }}
-                  onOpenModal={() => {}}
-                  width={INNER_BID_WIDTH}
-                />
-              </Animated.View>
-            ))}
-        </View>
-      )}
-    </>
-  );
+  return isPresent ? (
+    <View style={{ width: CONTAINER_WIDTH }}>
+      {bids.slice(1, bids.length).map(({ amount, bid_id, date_add }, index) => (
+        <Animated.View key={bid_id} entering={FadeIn.delay(index * 100)}>
+          <Bid
+            key={bid_id}
+            bid={{ amount, bid_id, date_add }}
+            onOpenModal={() => {}}
+            width={INNER_BID_WIDTH}
+          />
+        </Animated.View>
+      ))}
+    </View>
+  ) : null;
 }

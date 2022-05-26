@@ -20,7 +20,7 @@ export default function AuctionScreen({
   const { state, toggle } = useBoolean();
 
   function onBid(amount: number, auction_id: string) {
-    addBid({
+    return addBid({
       variables: {
         auction_id,
         amount,

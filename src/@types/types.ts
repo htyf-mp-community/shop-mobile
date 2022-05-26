@@ -79,7 +79,7 @@ export type RootStackParams = {
   Upload: undefined;
   MyReviews: undefined;
   AccountSettings: undefined;
-  SearchResults: { category: string };
+  SearchResults: { category: string; options: Object };
   Details: {
     prod_id: number;
     sharedID: string;
