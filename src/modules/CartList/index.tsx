@@ -5,31 +5,35 @@ import {
   useWindowDimensions,
   Image,
 } from "react-native";
-import Product, { ProductTypeProps } from "../Product";
+import Product from "../Product";
 import { Text } from "react-native";
 import useCartDelete from "./useCartDelete";
 import text from "./styles";
+import { ProductMinified } from "/@types/types";
 
-interface CartProps extends ProductTypeProps {
+interface CartProps extends ProductMinified {
   cart_id: number;
+  ammount: number;
 }
 
 interface CartListProps {
-  updateCartState: (id: number) => void;
   data: CartProps[];
+  onEndReached: () => void;
 }
 
 const getItem = (data: CartProps[], key: number) => {
   return data[key];
 };
 
-export default function CartList({ updateCartState, data }: CartListProps) {
-  const removeCartProduct = useCartDelete();
-
+export default function CartList({ data, onEndReached }: CartListProps) {
   const { width } = useWindowDimensions();
+
+  const onRemoveCartProduct = useCartDelete();
+
   return (
     <VirtualizedList
       testID="cart-list"
+      onEndReached={onEndReached}
       ListEmptyComponent={
         <Image
           source={require("@assets/Shopping_Cart.png")}
@@ -49,10 +53,9 @@ export default function CartList({ updateCartState, data }: CartListProps) {
           accessibilityLabel="Item"
         >
           <Product
+            onRemoveCartProduct={() => onRemoveCartProduct(item.cart_id)}
             route="Cart"
-            deleteFn={() => removeCartProduct(item.cart_id)}
             sharedID="CartItems"
-            RefetchCart={updateCartState}
             fullSize
             {...item}
           />

@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ProductTypeProps } from "modules/Product";
+import { ProductMinified } from "/@types/types";
 
-interface Cart extends ProductTypeProps {
+interface Cart extends ProductMinified {
   cart_id: number;
   ammount: number;
 }
@@ -30,6 +30,26 @@ const cartSlice = createSlice({
     setError(state: State, { payload }: { payload: string }) {
       state.loading = false;
       state.error = payload;
+    },
+
+    appendCart(state: State, { payload }: { payload: Cart }) {
+      const index = state.cart.findIndex(
+        (element) => element.prod_id === payload.prod_id
+      );
+
+      const copy = [...state.cart];
+
+      if (index !== -1) {
+        copy[index] = payload;
+
+        state.cart = copy;
+      } else {
+        copy.push(payload);
+
+        state.cart = copy;
+      }
+
+      state.amount = copy.length;
     },
 
     startLoading(state: State) {
@@ -63,6 +83,7 @@ const cartSlice = createSlice({
       }
 
       state.cart = cart;
+      state.amount = cart.length;
     },
   },
 });

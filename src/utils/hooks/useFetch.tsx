@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { CancelTokenSource } from "axios";
 import { useEffect, useRef, useState } from "react";
 import { API } from "@constants/routes";
 import { useUser } from "@utils/context/UserContext";
@@ -37,7 +37,10 @@ export default function useFetch<T>(
 
   const { user } = useUser();
 
-  async function query(cancelToken?: any, searchOptions?: Object) {
+  async function query(
+    cancelToken?: CancelTokenSource,
+    searchOptions?: Object
+  ) {
     setState((p) => ({
       ...p,
       loading: true,
@@ -51,7 +54,7 @@ export default function useFetch<T>(
         params: {
           ...searchOptions,
         },
-        cancelToken: cancelToken.token,
+        cancelToken: cancelToken?.token,
       });
 
       if (!!options.onSuccess && mounted.current) {

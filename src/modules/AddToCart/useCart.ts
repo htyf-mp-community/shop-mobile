@@ -8,7 +8,7 @@ import { cartActions } from "redux/Cart";
 
 type ResultType = "Added" | "";
 
-export default function useCart(prod_id: number, refetch?: () => void) {
+export default function useCart(prod_id: number) {
   const { user } = useUser();
 
   const [loading, setLoading] = useState(false);
@@ -29,11 +29,12 @@ export default function useCart(prod_id: number, refetch?: () => void) {
           },
         }
       );
+
       if (data !== null && status === 201) {
+        dispatch(cartActions.appendCart(data.product));
+
         setResult("Added");
         setLoading(false);
-        refetch?.();
-        dispatch(cartActions.increment());
       }
     } catch (error: any) {
       setLoading(false);

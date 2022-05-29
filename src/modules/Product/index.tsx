@@ -23,11 +23,10 @@ const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
 export type ProductTypeProps = Types.Product & {
   route?: string;
-  deleteFn?: () => void;
+  onRemoveCartProduct: () => void | Promise<void>;
   sharedID?: string;
   hide?: boolean;
   ammount?: number;
-  RefetchCart?: (id: number) => void;
   style?: StyleProp<ViewStyle>;
   fullSize?: boolean;
   discounted_price?: null | undefined | number;
@@ -44,8 +43,7 @@ function Product({
   title,
   hide = false,
   sharedID = "Key",
-  deleteFn = () => {},
-  RefetchCart,
+  onRemoveCartProduct,
   style,
   fullSize,
 }: ProductTypeProps) {
@@ -93,14 +91,13 @@ function Product({
           <>
             {route === "Cart" && (
               <Button
-                callback={deleteFn}
+                callback={onRemoveCartProduct}
                 style={[styles.button, styles.remove_button]}
                 icon={<Ionicons name="close" size={22} color={Colors.text} />}
               />
             )}
 
             <AddToCart
-              refetch={() => RefetchCart?.(prod_id!)}
               prod_id={prod_id}
               style={{ right: route === "Cart" ? 70 : 10 }}
             />

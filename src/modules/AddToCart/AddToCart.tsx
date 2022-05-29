@@ -9,7 +9,6 @@ import { notUndefined } from "@functions/typecheckers";
 interface AddtoCartProps {
   prod_id: number;
   style?: StyleProp<ViewStyle>;
-  refetch?: () => void;
   relative?: boolean;
   text?: string;
   iconStyle?: StyleProp<ViewStyle & TextStyle>;
@@ -20,15 +19,13 @@ interface AddtoCartProps {
 export default function AddToCart({
   prod_id,
   style,
-  refetch = () => {},
   relative = false,
   text,
   iconStyle,
   fontStyle,
-
   disabled,
 }: AddtoCartProps) {
-  const { pushToCart, loading, error, result } = useCart(prod_id, refetch);
+  const { pushToCart, loading, error, result } = useCart(prod_id);
 
   return (
     <Button
