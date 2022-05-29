@@ -1,6 +1,8 @@
 # What to do next?
 
-- product's price discounting
+- Infinite scrolling in cart screen
+- Infinite scrolling in watchlist screen
+- product's price discounting [DONE]
 - notification's history
 - follow category to get notified when something changes
 - internet Connection check

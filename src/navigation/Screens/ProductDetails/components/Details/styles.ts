@@ -1,7 +1,7 @@
 import { Dimensions, StyleSheet } from "react-native";
-import { Colors, Padding } from "@constants/styles";
+import { Padding } from "@constants/styles";
 
-const { width, height } = Dimensions.get("screen");
+const { width } = Dimensions.get("screen");
 
 const styles = StyleSheet.create({
   container: {
@@ -12,8 +12,6 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     justifyContent: "flex-start",
-    borderBottomWidth: 0.5,
-    borderBottomColor: Colors.primary200,
     marginBottom: 5,
     alignItems: "center",
     paddingVertical: 5,

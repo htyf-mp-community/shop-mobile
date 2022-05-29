@@ -139,3 +139,8 @@ export interface Auction {
 
   bids: AuctionBid[];
 }
+
+export interface Paging<T> {
+  hasMore: boolean;
+  results: T[];
+}

@@ -1,27 +1,34 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ProductMinified } from "/@types/types";
+import { Paging, ProductMinified } from "/@types/types";
+
+const initialState = {
+  loading: true,
+  error: "",
+  data: [] as ProductMinified[],
+  hasMore: false,
+  amount: 0,
+};
+
+type State = typeof initialState;
 
 const watchlistSlice = createSlice({
   name: "watchlist",
-  initialState: {
-    loading: true,
-    error: "",
-    data: [] as ProductMinified[],
-    hasMore: false,
-    amount: 0,
-  },
+  initialState,
   reducers: {
-    increment(state) {
+    increment(state: State) {
       state.amount += 1;
     },
-    setWatchlist(state, { payload }) {
+    setWatchlist(
+      state: State,
+      { payload }: { payload: Paging<ProductMinified> }
+    ) {
       state.loading = false;
       state.data = payload.results;
       state.error = "";
       state.hasMore = payload.hasMore;
-      state.amount = payload.results.length;
+      state.amount = state.data.length;
     },
-    removeElement(state, { payload }) {
+    removeElement(state: State, { payload }: { payload: number }) {
       state.data = state.data.filter(({ prod_id }) => prod_id !== payload);
       state.amount = state.data.length;
     },

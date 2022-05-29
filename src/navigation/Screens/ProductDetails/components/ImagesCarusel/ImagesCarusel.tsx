@@ -23,7 +23,7 @@ export default function ImagesCarusel({
   const scrollX = useRef(new Animated.Value(0)).current;
 
   return (
-    <>
+    <View style={{ padding: 10 }}>
       <FlatList
         horizontal
         pagingEnabled
@@ -59,7 +59,7 @@ export default function ImagesCarusel({
       <View
         style={{
           position: "absolute",
-          top: 210,
+          top: 240,
           zIndex: 11,
           flexDirection: "row",
           padding: 10,
@@ -69,6 +69,6 @@ export default function ImagesCarusel({
       >
         <Dots arr={[...images, 1]} x={scrollX} />
       </View>
-    </>
+    </View>
   );
 }

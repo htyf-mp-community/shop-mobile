@@ -63,30 +63,4 @@ export default function CartList({ updateCartState, data }: CartListProps) {
       )}
     />
   );
-
-  // Nice looking layout animation
-
-  /* return (
-    <Animated.ScrollView layout={Layout}>
-      {data.map((item) => (
-        <Animated.View
-          key={item.cart_id}
-          style={{ position: "relative" }}
-          layout={Layout.delay(200)}
-          entering={FadeIn}
-          exiting={FadeOut}
-        >
-          <Product
-            route="Cart"
-            deleteFn={() => removeCartProduct(item.cart_id)}
-            sharedID="CartItems"
-            RefetchCart={RefreshCart}
-            fullSize
-            {...item}
-          />
-          <Text style={text}>{item.ammount}</Text>
-        </Animated.View>
-      ))}
-    </Animated.ScrollView>
-  ); */
 }

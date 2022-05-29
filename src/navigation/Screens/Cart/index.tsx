@@ -1,6 +1,5 @@
 import React from "react";
-import { Dimensions, FlatList, View } from "react-native";
-import { ProductTypeProps } from "modules/Product";
+import { View } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
 import Purchase from "@modules/Purchase/Purchase";
 import useFetch from "@utils/hooks/useFetch";
@@ -8,25 +7,22 @@ import CartList from "@modules/CartList";
 import { useAppDispatch, useAppSelector } from "@utils/hooks/hooks";
 import { cartActions } from "@redux/Cart";
 import useColorTheme from "@utils/context/ThemeContext";
-import { SkeletonPlaceholder } from "@components/index";
 import { notEmpty } from "@functions/typecheckers";
-
-const { width, height } = Dimensions.get("screen");
+import Loader from "./components/Loader";
+import { ProductMinified } from "/@types/types";
 
 export default function Cart() {
   const isFocused = useIsFocused();
   const dispatch = useAppDispatch();
   const { cart } = useAppSelector((state) => state.cart);
 
-  const { data = [], loading } = useFetch<ProductTypeProps[]>("/cart", {
+  const { data = [], loading } = useFetch<ProductMinified[]>("/cart", {
     invalidate: [isFocused],
     fetchOnMount: true,
     onSuccess: (data) => {
       dispatch(cartActions.setCart(data));
     },
   });
-
-  console.log(data.length);
 
   function updateCartState(id: number) {
     dispatch(cartActions.incrementAmmount(id));
@@ -36,22 +32,7 @@ export default function Cart() {
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.primary }}>
-      {loading && notEmpty(data) && (
-        <SkeletonPlaceholder
-          backgroundColor={"#1f2b3d"}
-          highlightColor={"#2a3a52"}
-          size={{ width, height }}
-        >
-          <FlatList
-            contentContainerStyle={{ alignItems: "center" }}
-            data={new Array(3).fill({})}
-            keyExtractor={(_, i) => i.toString()}
-            renderItem={() => (
-              <SkeletonPlaceholder.Item height={240} width={width - 20} />
-            )}
-          />
-        </SkeletonPlaceholder>
-      )}
+      {loading && notEmpty(data) && <Loader />}
 
       <CartList updateCartState={updateCartState} data={cart} />
 

@@ -1,12 +1,12 @@
 import { StyleSheet, Dimensions } from "react-native";
-import { Colors } from "../../constants/styles";
+import { Colors, Fonts } from "../../constants/styles";
 
 const { width: WIDTH } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 10,
+    marginVertical: 20,
     marginBottom: 10,
     position: "relative",
   },
@@ -18,8 +18,9 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     color: "#fff",
-    fontFamily: "PoppinsBold",
+    fontFamily: Fonts.PoppinsBold,
     marginLeft: 5,
+    overflow: "hidden",
   },
   image_container: {
     width: WIDTH,

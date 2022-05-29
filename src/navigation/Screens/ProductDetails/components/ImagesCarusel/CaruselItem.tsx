@@ -12,8 +12,9 @@ const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
 const styles = StyleSheet.create({
   img: {
-    width: SCREEN_WIDTH,
+    width: SCREEN_WIDTH - 20,
     height: 260,
+    borderRadius: 5,
   },
 });
 
