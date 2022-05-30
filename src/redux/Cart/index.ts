@@ -15,6 +15,9 @@ const initialState = {
 
 type State = typeof initialState;
 
+const amount = (list: Cart[]): number =>
+  list.reduce((prev, { ammount }) => prev + ammount, 0);
+
 const cartSlice = createSlice({
   name: "cart",
   initialState,
@@ -24,7 +27,7 @@ const cartSlice = createSlice({
       state.cart = payload;
       state.error = "";
 
-      state.amount = payload.length;
+      state.amount = amount(payload);
       if (state.cart.length > 0) state.empty = false;
     },
     setError(state: State, { payload }: { payload: string }) {
@@ -49,7 +52,7 @@ const cartSlice = createSlice({
         state.cart = copy;
       }
 
-      state.amount = copy.length;
+      state.amount = amount(copy);
     },
 
     startLoading(state: State) {
@@ -83,7 +86,7 @@ const cartSlice = createSlice({
       }
 
       state.cart = cart;
-      state.amount = cart.length;
+      state.amount = amount(cart);
     },
   },
 });

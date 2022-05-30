@@ -50,8 +50,8 @@ const CartIcon = ({ loading, success, error, style }: IconProps) => {
     );
   }
   return (
-    <Feather
-      name="shopping-bag"
+    <Ionicons
+      name="cart"
       size={IconSize.large}
       color={theme.text}
       style={style}

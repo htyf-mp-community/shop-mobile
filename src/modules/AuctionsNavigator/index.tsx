@@ -7,9 +7,7 @@ import { Fonts } from "constants/styles";
 
 export default function AuctionsNavigator() {
   const { width } = useWindowDimensions();
-
   const { data } = useAuctions();
-
   const { theme } = useColorTheme();
 
   return (
@@ -21,7 +19,7 @@ export default function AuctionsNavigator() {
         keyExtractor={({ auction_id }) => auction_id}
         renderItem={({ item, index }) => (
           <Auction
-            img_id={item.product.img_id}
+            images={item.product.img_id}
             isLast={index === data?.auction?.length}
             {...item}
           />

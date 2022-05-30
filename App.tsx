@@ -7,6 +7,8 @@ import * as Font from "expo-font";
 import * as Notification from "expo-notifications";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { EvilIcons } from "@expo/vector-icons";
+
 Notification.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
@@ -29,6 +31,7 @@ export default function App() {
           PoppinsRegular: require("./assets/fonts/Poppins-Regular.ttf"),
           PoppinsLight: require("./assets/fonts/Poppins-Light.ttf"),
           PoppinsBlack: require("./assets/fonts/Poppins-Black.ttf"),
+          ...EvilIcons.font,
         });
       } catch (error) {
         console.warn(error);

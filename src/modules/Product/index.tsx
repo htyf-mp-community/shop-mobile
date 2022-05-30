@@ -21,7 +21,7 @@ import { PRODUCT_WIDTH, PRODUCT_WIDTH_FULLSIZE } from "./assets";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
-export type ProductTypeProps = Types.Product & {
+export type ProductTypeProps = Types.ProductMinified & {
   route?: string;
   onRemoveCartProduct: () => void | Promise<void>;
   sharedID?: string;

@@ -4,7 +4,6 @@ import { Button } from "@components/index";
 import { Colors } from "@constants/styles";
 import CartIcon from "./CartIcon";
 import useCart from "./useCart";
-import { notUndefined } from "@functions/typecheckers";
 
 interface AddtoCartProps {
   prod_id: number;
@@ -27,6 +26,9 @@ export default function AddToCart({
 }: AddtoCartProps) {
   const { pushToCart, loading, error, result } = useCart(prod_id);
 
+  const backgroundColor =
+    result === "Added" ? Colors.ternary : Colors.secondary;
+
   return (
     <Button
       disabled={disabled && !loading}
@@ -34,7 +36,7 @@ export default function AddToCart({
       callback={pushToCart}
       fontStyle={[
         {
-          marginLeft: notUndefined(text) ? 10 : 0,
+          marginLeft: !!text ? 10 : 0,
         },
         fontStyle,
       ]}
@@ -43,8 +45,7 @@ export default function AddToCart({
           width: 50,
           height: 50,
           justifyContent: "center",
-          backgroundColor:
-            result === "Added" ? Colors.ternary : Colors.secondary,
+          backgroundColor,
         },
         !relative && { position: "absolute", bottom: 10, right: 10 },
         style,

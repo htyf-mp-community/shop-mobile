@@ -24,7 +24,7 @@ export default function Header({ toggleSidebar: onToggle }: SearchBarProps) {
       />
 
       <Button
-        icon={<MaterialIcons name="search" size={25} color={theme.text} />}
+        icon={<EvilIcons name="search" size={25} color={theme.text} />}
         onPress={() => navigation.navigate("Search")}
         style={{ marginRight: 10, padding: 5 }}
       />

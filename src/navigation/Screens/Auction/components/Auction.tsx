@@ -23,12 +23,12 @@ const styles = StyleSheet.create({
 });
 
 interface AuctionProps {
-  img_id: ProductImageProps[];
+  images: ProductImageProps[];
   readonly auction_id: string;
   isLast?: boolean;
 }
 
-export default function Auction({ img_id, auction_id, isLast }: AuctionProps) {
+export default function Auction({ images, auction_id, isLast }: AuctionProps) {
   const navigation = useNavigation<useNavigationProps>();
   return (
     <Ripple
@@ -38,7 +38,7 @@ export default function Auction({ img_id, auction_id, isLast }: AuctionProps) {
       <Image
         resizeMode="cover"
         style={styles.image}
-        source={image(img_id[0].name)}
+        source={image(images[0].name)}
       />
     </Ripple>
   );

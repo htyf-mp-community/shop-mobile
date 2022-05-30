@@ -10,6 +10,7 @@ import { notEmpty } from "@functions/typecheckers";
 import Loader from "./components/Loader";
 import { ProductMinified } from "/@types/types";
 import axios from "axios";
+import RemoveProductsRepetition from "functions/RemoveRepetition";
 
 export default function Cart() {
   const dispatch = useAppDispatch();
@@ -19,7 +20,11 @@ export default function Cart() {
 
   const onSuccess = useCallback(
     (data) => {
-      dispatch(cartActions.setCart([...cart, ...data]));
+      dispatch(
+        cartActions.setCart(
+          RemoveProductsRepetition([...cart, ...data], "cart_id")
+        )
+      );
     },
     [cart]
   );
@@ -30,7 +35,7 @@ export default function Cart() {
     refetch,
   } = useFetch<ProductMinified[]>("/cart", {
     invalidate: [],
-    fetchOnMount: true,
+    fetchOnMount: cart.length === 0,
     onSuccess,
   });
 
