@@ -4,7 +4,7 @@ import { Container, Suggestion, Input } from "@components/index";
 import { VirtualizedList, useWindowDimensions } from "react-native";
 import { useNavigationProps } from "/@types/types";
 import { Colors } from "constants/styles";
-import useSearch from "@utils/hooks/useSearch";
+import useSearch from "./hooks/useSearch";
 import BottomSheet, { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
 import Filters from "./components/Filters";
 import type { SuggestionType } from "/@types/types";
@@ -36,7 +36,7 @@ export default function SearchScreen() {
       [key]: value,
     }));
   }
-  const { query, setQuery, suggestion } = useSearch(params);
+  const { query, setQuery, suggestion, onEndReached } = useSearch(params);
 
   function onSheetOpen() {
     sheetRef.current?.snapToIndex(0);
@@ -67,10 +67,11 @@ export default function SearchScreen() {
         }}
       />
 
-      <RecentSearches query={query} data={suggestion} />
+      <RecentSearches query={query} data={suggestion.results} />
 
       <VirtualizedList
-        data={suggestion}
+        data={suggestion.results}
+        onEndReached={onEndReached}
         keyExtractor={({ prod_id }) => prod_id.toString()}
         getItemCount={(data) => data.length}
         getItem={getItem}
