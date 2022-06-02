@@ -1,6 +1,6 @@
 import { useUser } from "utils/context/UserContext";
 import { useQuery } from "@apollo/client";
-import { GET_SUGGESTIONS } from "../../schema";
+import { GET_SUGGESTIONS } from "../../hooks/schema";
 
 function extractFrazes(input: string) {
   const [one, two] = input.split(" ");

@@ -6,27 +6,14 @@ import styles from "./styles";
 import useColorTheme from "@utils/context/ThemeContext";
 import ProductSuggestion from "./components/Suggestions/ProductSuggestion";
 import BottomTab from "./components/BottomTab/BottomTab";
-import { useQuery } from "@apollo/client";
-import { useUser } from "utils/context/UserContext";
-import { GET_PRODUCT } from "./schema";
 import DetailsLoader from "./components/Loader";
 import { wait } from "functions/wait";
 import Details from "./components/Details/Details";
+import useProduct from "./hooks/useProduct";
 
 function ProductDetails({ route }: Required<ScreenNavigationProps<"Details">>) {
   const { prod_id, image, sharedID } = route.params;
-
-  const { user } = useUser();
-  const { data, loading, refetch } = useQuery(GET_PRODUCT, {
-    variables: {
-      prod_id,
-    },
-    context: {
-      headers: {
-        token: user.token,
-      },
-    },
-  });
+  const { data, loading, refetch } = useProduct(prod_id);
 
   const result = data?.product || {};
   const imgList = result?.img_id as ProductImageProps[];
