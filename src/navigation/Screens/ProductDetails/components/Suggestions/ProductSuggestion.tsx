@@ -2,22 +2,23 @@ import { FlatList, Image, Text } from "react-native";
 import Ripple from "react-native-material-ripple";
 import { API } from "@constants/routes";
 import { useNavigation } from "@react-navigation/native";
-import type { useNavigationProps } from "/@types/types";
+import type { ProductMinified, useNavigationProps } from "/@types/types";
 import { image } from "functions/image";
 import useQuerySuggestions from "./useQuerySuggestions";
+import { Fonts } from "constants/styles";
 
-interface ProductSuggestionProps {
+interface SuggestionProps {
   text: string;
 }
 
 export default function ProductSuggestion({
-  text = "",
-}: ProductSuggestionProps) {
-  const { data } = useQuerySuggestions(text);
+  text: productTitle = "",
+}: SuggestionProps) {
+  const { data } = useQuerySuggestions(productTitle);
 
   const navigation = useNavigation<useNavigationProps>();
 
-  function onReplaceScreen(item: any) {
+  function onReplaceScreen(item: ProductMinified) {
     navigation.push("Details", {
       image: `${API}/upload/images=${item.img_id?.[0].name}`,
       title: item.title,
@@ -26,26 +27,23 @@ export default function ProductSuggestion({
     });
   }
 
-  if (
-    typeof data?.suggestions === "undefined" ||
-    data?.suggestions.length === 1
-  )
-    return null;
+  const hasMoreThanOne =
+    typeof data?.suggestions === "undefined" || data?.suggestions.length === 1;
 
-  return (
+  return !hasMoreThanOne ? (
     <>
       <Text
         style={{
           color: "#fff",
           fontSize: 20,
           paddingLeft: 10,
-          fontFamily: "PoppinsBold",
+          fontFamily: Fonts.PoppinsBold,
         }}
       >
         Check these out
       </Text>
       <FlatList
-        data={data?.suggestions.filter(({ title }: any) => title !== text)}
+        data={data?.suggestions.filter(({ title }) => title !== productTitle)}
         horizontal
         showsHorizontalScrollIndicator={false}
         style={{ padding: 5, marginBottom: 10 }}
@@ -67,5 +65,5 @@ export default function ProductSuggestion({
         )}
       />
     </>
-  );
+  ) : null;
 }

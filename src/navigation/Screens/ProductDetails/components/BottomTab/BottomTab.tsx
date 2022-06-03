@@ -12,6 +12,10 @@ interface BottomTabProps {
 export default function BottomTab({ prod_id, quantity }: BottomTabProps) {
   const { theme } = useColorTheme();
 
+  const notAvailable = quantity === 0;
+
+  const backgroundColor = notAvailable ? theme.primary : "#1e3a8a";
+
   return (
     <Animated.View
       style={[
@@ -23,14 +27,14 @@ export default function BottomTab({ prod_id, quantity }: BottomTabProps) {
       <AddWatchlist prod_id={prod_id} paddingHorizontal={20} />
 
       <AddToCart
-        disabled={quantity === 0}
+        disabled={notAvailable}
         relative
         prod_id={prod_id}
         text="ADD TO CART"
         style={[
           styles.button,
           {
-            backgroundColor: quantity === 0 ? theme.primary : "#1e3a8a",
+            backgroundColor,
           },
         ]}
       />

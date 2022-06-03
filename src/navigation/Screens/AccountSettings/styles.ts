@@ -1,3 +1,4 @@
+import { Fonts } from "constants/styles";
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
@@ -8,26 +9,33 @@ export default StyleSheet.create({
   },
   heading: {
     fontSize: 35,
-    fontFamily: "PoppinsMedium",
+    fontFamily: Fonts.PoppinsMedium,
   },
   block: {
     width: "100%",
     marginTop: 15,
   },
   blockLabel: {
-    color: "#DEDEDE",
+    color: "#c4c4c4",
     fontSize: 18,
-    fontFamily: "PoppinsMedium",
+    fontFamily: Fonts.PoppinsMedium,
   },
   blockText: {
     color: "white",
     fontSize: 20,
-    fontFamily: "PoppinsMedium",
+    fontFamily: Fonts.PoppinsMedium,
   },
   blockRow: {
     width: "100%",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+  },
+  button: {
+    margin: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    width: "60%",
+    backgroundColor: "transparent",
   },
 });

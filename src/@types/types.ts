@@ -22,12 +22,13 @@ export interface ProductRatingProps {
 
 export interface ProductMinified {
   prod_id: number;
-  price: string;
+  price: number;
   title: string;
   img_id: ProductImageProps[];
 }
 
 export interface Product {
+  rating: number;
   prod_id: number;
   price: number;
   discount_price?: number | null | undefined;
@@ -143,4 +144,14 @@ export interface Auction {
 export interface Paging<T> {
   hasMore: boolean;
   results: T[];
+}
+
+export interface DetailsProps extends Omit<ProductMinified, "img_id"> {
+  image: string;
+  sharedID: string;
+  rating_id: ProductRatingProps[];
+  description: string;
+  quantity: number;
+  category: string;
+  rating: number;
 }

@@ -1,4 +1,5 @@
-import { View, Text } from "react-native";
+import { Fonts } from "constants/styles";
+import { Text } from "react-native";
 import Ripple from "react-native-material-ripple";
 
 export default function Edit({ onPress }: { onPress: () => void }) {
@@ -15,7 +16,7 @@ export default function Edit({ onPress }: { onPress: () => void }) {
       <Text
         style={{
           color: "#00D85D",
-          fontFamily: "PoppinsRegular",
+          fontFamily: Fonts.PoppinsRegular,
           fontSize: 20,
           textAlign: "center",
         }}

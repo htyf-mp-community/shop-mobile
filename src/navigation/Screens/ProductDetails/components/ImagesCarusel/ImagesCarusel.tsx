@@ -9,7 +9,6 @@ interface ImagesCaruselProps {
   sharedID: string;
   prod_id: number;
   images: ProductImageProps[];
-  image: string;
 }
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
@@ -18,7 +17,6 @@ export default function ImagesCarusel({
   sharedID,
   prod_id,
   images,
-  image,
 }: ImagesCaruselProps) {
   const scrollX = useRef(new Animated.Value(0)).current;
 
@@ -34,14 +32,13 @@ export default function ImagesCarusel({
             useNativeDriver: false,
           }
         )}
-        data={[{ name: image, id: 0 }, ...images]}
+        data={images}
         keyExtractor={({ id }) => id.toString()}
-        renderItem={({ item }) => {
+        renderItem={({ item, index }) => {
           if (item.id === 0) {
             return (
               <CaruselItem
-                source={image}
-                key={item.id}
+                source={`${API}/upload/images=${item.name}`}
                 prod_id={prod_id}
                 sharedID={sharedID}
               />
@@ -66,7 +63,7 @@ export default function ImagesCarusel({
           justifyContent: "center",
         }}
       >
-        <Dots arr={[...images, 1]} x={scrollX} />
+        <Dots arr={new Array(images.length).fill(0)} x={scrollX} />
       </View>
     </>
   );

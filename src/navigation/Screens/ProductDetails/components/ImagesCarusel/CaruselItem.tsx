@@ -1,12 +1,5 @@
 import { Dimensions, StyleSheet, Image } from "react-native";
-
 import { SharedElement } from "react-navigation-shared-element";
-
-interface CaruselItemProps {
-  source: string;
-  prod_id?: number;
-  sharedID?: string;
-}
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
@@ -22,6 +15,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 });
+
+interface CaruselItemProps {
+  source: string;
+  prod_id?: number;
+  sharedID?: string;
+}
 
 export default function CaruselItem({
   source,

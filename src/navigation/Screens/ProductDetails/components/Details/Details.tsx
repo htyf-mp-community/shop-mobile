@@ -8,18 +8,10 @@ import { Available } from "components";
 import Banner from "../Banner";
 import Color from "color";
 import ReviewButtons from "../Buttons/ReviewButtons";
-import { ProductMinified, ProductRatingProps } from "/@types/types";
+import type { DetailsProps } from "/@types/types";
+import { Fonts } from "constants/styles";
 
-interface DetailsProps extends Omit<ProductMinified, "img_id"> {
-  image: string;
-  sharedID: string;
-  rating_id: ProductRatingProps[];
-  description: string;
-  quantity: number;
-  category: string;
-
-  rating: number;
-}
+const color = "rgba(255,255,255,0.8)";
 
 export default function Details(props: DetailsProps) {
   return (
@@ -30,18 +22,18 @@ export default function Details(props: DetailsProps) {
       <View style={[styles.row, styles.between, { paddingBottom: 5 }]}>
         <Stars rating={props.rating} starStyle={styles.stars} />
         <Ripple rippleColor="#fff" style={styles.button}>
-          <Text style={{ color: "rgba(255,255,255,0.8)" }}>See more</Text>
+          <Text style={{ color }}>See more</Text>
         </Ripple>
       </View>
       <View style={[styles.row, styles.between]}>
         <Text style={[styles.text]}>${props.price}</Text>
         <Ripple rippleColor="#fff" style={styles.button}>
-          <Text style={{ color: "rgba(255,255,255,0.8)" }}>See simmilar</Text>
+          <Text style={{ color }}>See simmilar</Text>
         </Ripple>
       </View>
       <ScrollView
-        showsHorizontalScrollIndicator={false}
         horizontal
+        showsHorizontalScrollIndicator={false}
         contentContainerStyle={[styles.row, { paddingBottom: 10 }]}
       >
         <Delivery />
@@ -70,9 +62,9 @@ export default function Details(props: DetailsProps) {
 
       <Text
         style={{
-          color: "rgba(255,255,255,0.8)",
+          color,
           fontSize: 19,
-          fontFamily: "PoppinsRegular",
+          fontFamily: Fonts.PoppinsRegular,
         }}
       >
         {props.description}

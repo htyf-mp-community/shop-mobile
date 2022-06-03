@@ -24,7 +24,7 @@ export default function Auth() {
         component={RegisterScreen}
         options={{
           headerTitleAlign: "center",
-          headerTitle: "Sign up",
+          headerTitle: "Register",
         }}
       />
       <Stack.Screen

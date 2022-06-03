@@ -1,7 +1,7 @@
 import { memo, useState, useCallback } from "react";
 import { ScrollView, View, RefreshControl } from "react-native";
 import ImagesCarusel from "./components/ImagesCarusel/ImagesCarusel";
-import { ProductImageProps, ScreenNavigationProps } from "/@types/types";
+import { ScreenNavigationProps } from "/@types/types";
 import styles from "./styles";
 import useColorTheme from "@utils/context/ThemeContext";
 import ProductSuggestion from "./components/Suggestions/ProductSuggestion";
@@ -14,11 +14,13 @@ import useProduct from "./hooks/useProduct";
 function ProductDetails({ route }: Required<ScreenNavigationProps<"Details">>) {
   const { prod_id, image, sharedID } = route.params;
   const { data, loading, refetch } = useProduct(prod_id);
+  const result = data?.product;
 
-  const result = data?.product || {};
-  const imgList = result?.img_id as ProductImageProps[];
-  const images =
-    imgList?.length > 1 ? [...imgList].splice(1, imgList.length) : [];
+  const images = [
+    { id: 0, name: image?.split("=")[1] },
+    ...(result?.img_id || []),
+  ];
+
   const { theme } = useColorTheme();
 
   const [refreshing, setRefreshing] = useState(false);
@@ -41,12 +43,7 @@ function ProductDetails({ route }: Required<ScreenNavigationProps<"Details">>) {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
-        <ImagesCarusel
-          sharedID={sharedID}
-          prod_id={prod_id}
-          image={image}
-          images={images}
-        />
+        <ImagesCarusel {...{ sharedID, prod_id, images }} />
 
         <DetailsLoader loading={loading} />
 
@@ -58,10 +55,7 @@ function ProductDetails({ route }: Required<ScreenNavigationProps<"Details">>) {
           </>
         )}
       </ScrollView>
-      <BottomTab
-        prod_id={prod_id}
-        quantity={(result?.quantity as number) || 0}
-      />
+      <BottomTab prod_id={prod_id} quantity={result?.quantity || 0} />
     </View>
   );
 }

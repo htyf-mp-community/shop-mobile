@@ -1,5 +1,4 @@
 import { ProductImageProps, useNavigationProps } from "/@types/types";
-import { API } from "constants/routes";
 import { Dimensions, StyleSheet, Image } from "react-native";
 import Ripple from "react-native-material-ripple";
 import { useNavigation } from "@react-navigation/native";

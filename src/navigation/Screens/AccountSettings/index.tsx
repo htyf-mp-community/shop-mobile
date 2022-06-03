@@ -1,12 +1,12 @@
 import React, { useLayoutEffect, useRef, useState } from "react";
 import { View, Text } from "react-native";
 import useColorTheme from "@utils/context/ThemeContext";
-import styles from "./AccountSettings.styles";
+import styles from "./styles";
 import { Container, Header } from "@components/index";
 import BottomSheet from "@gorhom/bottom-sheet";
 import useListenKeyboard from "utils/hooks/useListenKeyboard";
 import Block from "./components/Block";
-import SettingsBottomSheet from "modules/SettingsBottomSheet";
+import SettingsBottomSheet from "navigation/Screens/AccountSettings/components/SettingsSheet";
 import { useAppSelector } from "utils/hooks/hooks";
 
 type CurrentOptionType = "NAME" | "ADDRESS" | "PHONE_NUMBER" | "SURNAME" | "";
@@ -68,7 +68,7 @@ export default function AccountSettings() {
         onSheetClose={onSheetClose}
         setText={setText}
         text={text}
-        sheetRef={sheetRef}
+        ref={sheetRef}
       />
     </Container>
   );

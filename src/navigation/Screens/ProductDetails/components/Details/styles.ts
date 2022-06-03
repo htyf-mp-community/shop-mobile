@@ -1,5 +1,5 @@
 import { Dimensions, StyleSheet } from "react-native";
-import { Padding } from "@constants/styles";
+import { Fonts, Padding } from "@constants/styles";
 
 const { width } = Dimensions.get("screen");
 
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   },
 
   text: {
-    fontFamily: "PoppinsBold",
+    fontFamily: Fonts.PoppinsBold,
     fontSize: 27,
     color: "#fff",
   },
