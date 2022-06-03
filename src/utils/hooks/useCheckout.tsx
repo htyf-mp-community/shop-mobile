@@ -5,6 +5,7 @@ import { API } from "@constants/routes";
 import { useStripe } from "@stripe/stripe-react-native";
 import { checkoutActions } from "@redux/Checkout";
 import { useAppDispatch, useAppSelector } from "./hooks";
+import { cartActions } from "redux/Cart";
 
 interface useCheckoutProps {
   route: any;
@@ -43,11 +44,10 @@ export default function useCheckout({
           },
         }
       );
-      dispatch(checkoutActions.setSecret(data.clientSecret));
 
-      console.log(data);
+      dispatch(checkoutActions.setSecret(data.clientSecret));
     } catch (error) {
-      console.log(error);
+      console.warn("checkout screen");
     }
   }
 
@@ -73,13 +73,15 @@ export default function useCheckout({
           }
         );
 
-        dispatch(checkoutActions.setCharged(paymentIntent?.amount));
+        dispatch(checkoutActions.setCharged(paymentIntent!.amount));
 
         if (!error) {
           dispatch(checkoutActions.finishTransaction());
+
+          dispatch(cartActions.clearCart());
         } else {
           console.warn(error);
-          dispatch(checkoutActions.failTransaction(error));
+          dispatch(checkoutActions.failTransaction(error.message));
         }
       }
     } catch (error) {
@@ -91,7 +93,7 @@ export default function useCheckout({
   return {
     purchase: Purchase,
     result: paymentResult,
-    total,
+    total: total as number,
     loading: paymentLoading,
   };
 }

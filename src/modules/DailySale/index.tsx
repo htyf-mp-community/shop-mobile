@@ -1,7 +1,6 @@
 import React from "react";
 import { View, Text, Image } from "react-native";
 import { SharedElement } from "react-navigation-shared-element";
-import { ProductTypeProps } from "../Product";
 import styles from "./styles";
 import { API } from "../../constants/routes";
 import { useNavigation } from "@react-navigation/native";
@@ -11,12 +10,14 @@ import Clock from "@components/Clock";
 import useCart from "modules/AddToCart/useCart";
 import Ripple from "react-native-material-ripple";
 import Loader from "./Loader";
-import useFetch from "utils/hooks/useFetch";
 import AddWatchlist from "modules/AddWatchlist";
 import useColorTheme from "utils/context/ThemeContext";
+import useDailySale from "./useDailySale";
 
 export default function DailySale() {
-  const { loading, data = {} as ProductTypeProps } = useFetch("/sales/daily");
+  const { data: sale, loading } = useDailySale();
+
+  const data = sale?.sale;
 
   const navigation = useNavigation<useNavigationProps>();
 
@@ -31,7 +32,7 @@ export default function DailySale() {
     }
   }
 
-  const { pushToCart, result } = useCart(data?.prod_id);
+  const { pushToCart, result } = useCart(data?.prod_id || 0);
 
   const { theme } = useColorTheme();
 
@@ -75,7 +76,7 @@ export default function DailySale() {
                     ${Math.ceil(data?.price * 1.25)}
                   </Text>
                 </View>
-                <Text style={{ color: theme.text }}>12 Left</Text>
+                <Text style={{ color: theme.text }}>{data.quantity} Left</Text>
               </View>
 
               <View style={[styles.row, { marginTop: 10 }]}>

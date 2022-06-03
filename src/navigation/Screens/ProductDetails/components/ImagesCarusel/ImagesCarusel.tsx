@@ -23,7 +23,7 @@ export default function ImagesCarusel({
   const scrollX = useRef(new Animated.Value(0)).current;
 
   return (
-    <View style={{ padding: 10 }}>
+    <>
       <FlatList
         horizontal
         pagingEnabled
@@ -46,20 +46,19 @@ export default function ImagesCarusel({
                 sharedID={sharedID}
               />
             );
-          } else {
-            return (
-              <CaruselItem
-                key={item.id}
-                source={`${API}/upload/images=${item.name}`}
-              />
-            );
           }
+          return (
+            <CaruselItem
+              key={item.id}
+              source={`${API}/upload/images=${item.name}`}
+            />
+          );
         }}
       />
       <View
         style={{
           position: "absolute",
-          top: 240,
+          top: 220,
           zIndex: 11,
           flexDirection: "row",
           padding: 10,
@@ -69,6 +68,6 @@ export default function ImagesCarusel({
       >
         <Dots arr={[...images, 1]} x={scrollX} />
       </View>
-    </View>
+    </>
   );
 }

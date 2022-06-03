@@ -16,6 +16,11 @@ const styles = StyleSheet.create({
     height: 260,
     borderRadius: 5,
   },
+  container: {
+    width: SCREEN_WIDTH,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });
 
 export default function CaruselItem({
@@ -24,7 +29,10 @@ export default function CaruselItem({
   sharedID,
 }: CaruselItemProps) {
   return (
-    <SharedElement id={`prod_id.${prod_id}${sharedID}`}>
+    <SharedElement
+      style={styles.container}
+      id={`prod_id.${prod_id}${sharedID}`}
+    >
       <Image
         source={{ uri: source }}
         style={[styles.img]}
