@@ -1,48 +1,15 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { View, FlatList, useWindowDimensions } from "react-native";
 import { Colors } from "../../../constants/styles";
-import { structureOutput } from "./structure";
 import { SkeletonPlaceholder } from "../../../components";
 import History from "./components/History";
-import { gql, useQuery } from "@apollo/client";
-import { useUser } from "utils/context/UserContext";
 
-const GET_HISTORY = gql`
-  query {
-    history {
-      product {
-        prod_id
-        price
-        title
-        img_id {
-          name
-          id
-        }
-      }
-
-      details {
-        date
-        status
-        purchase_id
-      }
-    }
-  }
-`;
+import usePurchaseHistory from "./hooks/usePurchaseHistory";
 
 export default function PurchaseHistory() {
-  const { user } = useUser();
-  const { data, loading } = useQuery(GET_HISTORY, {
-    context: {
-      headers: {
-        token: user.token,
-      },
-    },
-  });
+  const { data, loading } = usePurchaseHistory();
 
-  const result = useMemo(
-    () => structureOutput({ results: data?.history } as any),
-    [data?.history]
-  );
+  const result = data?.history || [];
 
   const { width, height } = useWindowDimensions();
 
@@ -68,7 +35,12 @@ export default function PurchaseHistory() {
         data={result}
         keyExtractor={(_, i) => i.toString()}
         initialNumToRender={6}
-        renderItem={({ item }) => <History products={item} />}
+        renderItem={({ item, index }) => (
+          <History
+            separator={result[index]?.date !== result[index - 1]?.date}
+            {...item}
+          />
+        )}
       />
     </View>
   );

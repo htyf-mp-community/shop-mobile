@@ -25,6 +25,11 @@ export default function Modal() {
 
   const navigation = useNavigation<useNavigationProps>();
 
+  function onLeave() {
+    dispatch(checkoutActions.destroySession());
+    navigation.navigate("Home");
+  }
+
   useEffect(() => {
     return () => {
       dispatch(checkoutActions.destroySession());
@@ -53,7 +58,7 @@ export default function Modal() {
                 width: width * 0.8,
                 justifyContent: "center",
               }}
-              onPress={() => navigation.navigate("Home")}
+              onPress={onLeave}
               text="Return home"
             />
           </>
@@ -81,7 +86,7 @@ export default function Modal() {
                 width: width * 0.8,
                 justifyContent: "center",
               }}
-              onPress={() => navigation.navigate("Home")}
+              onPress={onLeave}
               text="Return home"
             />
           </>
