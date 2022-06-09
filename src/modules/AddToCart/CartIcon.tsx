@@ -7,7 +7,6 @@ import {
   ViewStyle,
 } from "react-native";
 import { IconSize } from "../../constants/styles";
-import { Feather } from "@expo/vector-icons";
 import useColorTheme from "utils/context/ThemeContext";
 
 interface IconProps {

@@ -4,11 +4,23 @@ import useAuctions from "./useAuctions";
 import Ripple from "react-native-material-ripple";
 import useColorTheme from "utils/context/ThemeContext";
 import { Fonts } from "constants/styles";
+import { useCallback } from "react";
 
 export default function AuctionsNavigator() {
   const { width } = useWindowDimensions();
   const { data } = useAuctions();
   const { theme } = useColorTheme();
+
+  const renderItem = useCallback(
+    ({ item, index }) => (
+      <Auction
+        images={item.product.img_id}
+        isLast={index === data?.auction?.length}
+        {...item}
+      />
+    ),
+    []
+  );
 
   return (
     <View style={{ width, padding: 10 }}>
@@ -17,13 +29,7 @@ export default function AuctionsNavigator() {
         showsHorizontalScrollIndicator={false}
         data={data?.auctions}
         keyExtractor={({ auction_id }) => auction_id}
-        renderItem={({ item, index }) => (
-          <Auction
-            images={item.product.img_id}
-            isLast={index === data?.auction?.length}
-            {...item}
-          />
-        )}
+        renderItem={renderItem}
       />
 
       <Ripple>

@@ -9,12 +9,7 @@ import Product from "../Product";
 import { Text } from "react-native";
 import useCartDelete from "./useCartDelete";
 import text from "./styles";
-import { ProductMinified } from "/@types/types";
-
-interface CartProps extends ProductMinified {
-  cart_id: number;
-  ammount: number;
-}
+import { CartProps } from "/@types/types";
 
 interface CartListProps {
   data: CartProps[];

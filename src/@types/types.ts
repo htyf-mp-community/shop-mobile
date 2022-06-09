@@ -12,6 +12,11 @@ export interface ProductImageProps {
   name: string;
 }
 
+export interface CartProps extends ProductMinified {
+  cart_id: number;
+  ammount: number;
+}
+
 export interface ProductRatingProps {
   rating_id: number;
   user_id: number;

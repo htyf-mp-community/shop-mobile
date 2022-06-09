@@ -41,7 +41,7 @@ function Suggestion({
 
   return (
     <Animated.View
-      entering={FadeIn.delay(index * 100)}
+      entering={FadeIn.delay((index % 10) * 100)}
       style={styles.container}
     >
       <Ripple onPress={navigateToProduct}>
@@ -59,7 +59,7 @@ function Suggestion({
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <Text style={styles.price}>${price}</Text>
           <Ripple
-            onPress={onPress}
+            onPress={() => onPress()}
             style={{ padding: 10, flexDirection: "row" }}
             rippleColor="#fff"
           >

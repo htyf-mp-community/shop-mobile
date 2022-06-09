@@ -5,10 +5,18 @@ import { ENDPOINTS } from "../../constants/routes";
 import useDelay from "utils/hooks/useDelay";
 import { useDispatch } from "react-redux";
 import { cartActions } from "redux/Cart";
+import { CartProps } from "/@types/types";
 
 type ResultType = "Added" | "";
 
-export default function useCart(prod_id: number) {
+interface CartResponse {
+  statusCode: 200 | 201 | 400 | 500;
+  message: string;
+
+  product: CartProps;
+}
+
+export default function useCart(prod_id?: number) {
   const { user } = useUser();
 
   const [loading, setLoading] = useState(false);
@@ -16,11 +24,11 @@ export default function useCart(prod_id: number) {
   const [result, setResult] = useState<ResultType>("");
   const dispatch = useDispatch();
 
-  async function PushToCart() {
+  async function addToCartAsync(_prod_id?: number) {
     try {
       setLoading(true);
 
-      const { data, status } = await axios.post(
+      const { data, status } = await axios.post<CartResponse>(
         ENDPOINTS.cartAdd,
         { prod_id },
         {
@@ -34,21 +42,19 @@ export default function useCart(prod_id: number) {
         dispatch(cartActions.appendCart(data.product));
 
         setResult("Added");
-        setLoading(false);
       }
+
+      return data;
     } catch (error: any) {
+      setError(error?.["message"]);
+
+      console.log(error.response.data);
+    } finally {
       setLoading(false);
-      setError(error.message);
     }
   }
 
-  useDelay(
-    () => {
-      setResult("");
-    },
-    3000,
-    [PushToCart]
-  );
+  useDelay(() => setResult(""), 3000, [addToCartAsync]);
 
-  return { pushToCart: PushToCart, loading, error, result };
+  return { pushToCart: addToCartAsync, loading, error, result };
 }

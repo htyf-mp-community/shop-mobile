@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Dimensions } from "react-native";
 import MaskedView from "@react-native-masked-view/masked-view";
 import { LinearGradient } from "expo-linear-gradient";
 import Reanimated, {
@@ -10,24 +10,35 @@ import Reanimated, {
   interpolate,
 } from "react-native-reanimated";
 
+type Size = {
+  width: number;
+  height: number;
+};
+
 interface SkeletonProps {
   children: React.ReactElement;
-  backgroundColor: string;
-  highlightColor: string;
+  backgroundColor?: string;
+  highlightColor?: string;
 
-  size: {
-    width: number;
-    height: number;
-  };
+  size?: ((props: Size) => Size) | Size;
 }
+
+const dims = Dimensions.get("screen");
 
 const Skeleton = ({
   children,
-  backgroundColor,
-  highlightColor,
+  backgroundColor = "#1f2b3d",
+  highlightColor = "#2a3a52",
   size,
 }: SkeletonProps) => {
   const shared = useSharedValue(0);
+
+  const { width, height } =
+    typeof size === "undefined"
+      ? dims
+      : typeof size === "function"
+      ? size(dims)
+      : size;
 
   React.useEffect(() => {
     shared.value = withRepeat(withTiming(1, { duration: 1000 }), Infinity);
@@ -39,7 +50,7 @@ const Skeleton = ({
         translateX: interpolate(
           shared.value,
           [0, 1],
-          [size ? -size.width : 0, size ? size.width : 0]
+          [size ? -width : 0, size ? width : 0]
         ),
       },
     ],
@@ -49,8 +60,8 @@ const Skeleton = ({
     <MaskedView
       maskElement={children}
       style={{
-        width: size.width,
-        height: size.height,
+        width,
+        height,
       }}
     >
       <View style={[styles.background, { backgroundColor }]} />
@@ -79,13 +90,22 @@ const Skeleton = ({
 };
 
 interface ItemProps {
-  width: number;
-  height: number;
+  width: ((width: number) => number) | number;
+  height: ((height: number) => number) | number;
   margin?: number;
 }
 
 Skeleton.Item = ({ width, height, margin }: ItemProps) => (
-  <View style={[styles.item, { width, height, margin }]} />
+  <View
+    style={[
+      styles.item,
+      {
+        margin,
+        width: typeof width === "function" ? width(dims.width) : width,
+        height: typeof height === "function" ? height(dims.height) : height,
+      },
+    ]}
+  />
 );
 
 const styles = StyleSheet.create({

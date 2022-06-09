@@ -5,7 +5,7 @@ import { ProductMinified } from "/@types/types";
 export interface IHistory {
   date: string;
 
-  payment: {
+  payment: null | {
     total_price: number;
   };
 
@@ -13,8 +13,8 @@ export interface IHistory {
 }
 
 const GET_HISTORY = gql`
-  query History {
-    history {
+  query History($skip: Int) {
+    history(skip: $skip) {
       date
 
       payment {

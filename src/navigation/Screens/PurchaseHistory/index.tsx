@@ -1,5 +1,5 @@
-import React from "react";
-import { View, FlatList, useWindowDimensions } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, FlatList } from "react-native";
 import { Colors } from "../../../constants/styles";
 import { SkeletonPlaceholder } from "../../../components";
 import History from "./components/History";
@@ -7,31 +7,45 @@ import History from "./components/History";
 import usePurchaseHistory from "./hooks/usePurchaseHistory";
 
 export default function PurchaseHistory() {
-  const { data, loading } = usePurchaseHistory();
-
+  const [skip, setSkip] = useState(0);
+  const { data, loading, fetchMore } = usePurchaseHistory();
   const result = data?.history || [];
 
-  const { width, height } = useWindowDimensions();
+  useEffect(() => {
+    fetchMore({
+      variables: { skip },
+
+      /* Depracated */
+      updateQuery: (previousQueryResult, options) => {
+        return {
+          history: [
+            ...previousQueryResult.history,
+            ...(options.fetchMoreResult?.history ?? []),
+          ],
+        };
+      },
+    });
+  }, [skip]);
 
   return (
     <View style={{ flex: 1, backgroundColor: Colors.primary }}>
       {loading && typeof data?.history === "undefined" && (
-        <SkeletonPlaceholder
-          backgroundColor={"#1f2b3d"}
-          highlightColor={"#2a3a52"}
-          size={{ width, height }}
-        >
+        <SkeletonPlaceholder>
           <FlatList
             contentContainerStyle={{ alignItems: "center" }}
             data={new Array(3).fill({})}
             keyExtractor={(_, i) => i.toString()}
             renderItem={() => (
-              <SkeletonPlaceholder.Item height={240} width={width - 20} />
+              <SkeletonPlaceholder.Item
+                height={240}
+                width={(width) => width - 20}
+              />
             )}
           />
         </SkeletonPlaceholder>
       )}
       <FlatList
+        onEndReached={() => setSkip((prev) => prev + 5)}
         data={result}
         keyExtractor={(_, i) => i.toString()}
         initialNumToRender={6}
