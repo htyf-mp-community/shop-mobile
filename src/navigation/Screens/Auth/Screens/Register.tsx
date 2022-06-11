@@ -19,7 +19,7 @@ export default function RegisterScreen({ navigation }: any) {
             Verify your email
           </Text>
           <Text style={[styles.subText, { color: theme.text }]}>
-            Confirm your account by clicking link we sent you on your email
+            Confirm your account via link sent on given @
           </Text>
           <Button
             onPress={() =>

@@ -17,7 +17,13 @@ type RegisterStatus = "PENDING" | "FINISHED";
 
 type Route = keyof typeof ROUTES;
 
-export default function useAuth(route: Route) {
+interface Callbacks {
+  onStart: () => void;
+  onSuccess: () => void;
+  onFailed: (reason: string | Object) => void;
+}
+
+export default function useAuth(route: Route, callbacks?: Partial<Callbacks>) {
   const { SaveUser } = useUser();
 
   const [loading, setLoading] = useState(false);
@@ -28,16 +34,21 @@ export default function useAuth(route: Route) {
   async function onSubmit({ email, password }: UserInputProps): Promise<any> {
     try {
       setLoading(true);
+      setError("");
+      callbacks?.onStart?.();
+
       const { data } = await axios.post(url, {
         email: email.trim(),
         password: password.trim(),
       });
 
-      setLoading(false);
+      callbacks?.onSuccess?.();
 
       return data;
     } catch (err: any) {
       setError(err?.response?.data?.message || err.message);
+      callbacks?.onFailed?.(err);
+    } finally {
       setLoading(false);
     }
   }

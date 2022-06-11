@@ -32,6 +32,7 @@ export default function Form({ onSubmit }: FormProps) {
       {(f) => (
         <>
           <Input
+            name="Title"
             value={f.values.title}
             onChangeText={f.handleChange("title")}
             onBlur={f.handleBlur("title")}
@@ -39,13 +40,12 @@ export default function Form({ onSubmit }: FormProps) {
             placeholder="Product's title"
           />
           <Input
+            name="Description"
             value={f.values.description}
             onChangeText={f.handleChange("description")}
             onBlur={f.handleBlur("description")}
             error={f.touched.description && !!f.errors.description}
             placeholder="Product's description"
-            multiline
-            numberOfLines={5}
           />
         </>
       )}
