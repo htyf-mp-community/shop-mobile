@@ -8,24 +8,8 @@ import usePurchaseHistory from "./hooks/usePurchaseHistory";
 
 export default function PurchaseHistory() {
   const [skip, setSkip] = useState(0);
-  const { data, loading, fetchMore } = usePurchaseHistory();
+  const { data, loading } = usePurchaseHistory();
   const result = data?.history || [];
-
-  useEffect(() => {
-    fetchMore({
-      variables: { skip },
-
-      /* Depracated */
-      updateQuery: (previousQueryResult, options) => {
-        return {
-          history: [
-            ...previousQueryResult.history,
-            ...(options.fetchMoreResult?.history ?? []),
-          ],
-        };
-      },
-    });
-  }, [skip]);
 
   return (
     <View style={{ flex: 1, backgroundColor: Colors.primary }}>
@@ -47,14 +31,9 @@ export default function PurchaseHistory() {
       <FlatList
         onEndReached={() => setSkip((prev) => prev + 5)}
         data={result}
-        keyExtractor={(_, i) => i.toString()}
+        keyExtractor={(arg) => arg.payment_id!}
         initialNumToRender={6}
-        renderItem={({ item, index }) => (
-          <History
-            separator={result[index]?.date !== result[index - 1]?.date}
-            {...item}
-          />
-        )}
+        renderItem={({ item, index }) => <History {...item} />}
       />
     </View>
   );

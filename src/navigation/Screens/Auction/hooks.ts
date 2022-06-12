@@ -39,6 +39,7 @@ const GET_AUCTION = gql`
         date_add
         bid_id
         amount
+        user
       }
     }
   }

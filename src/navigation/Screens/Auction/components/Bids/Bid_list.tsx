@@ -17,16 +17,18 @@ export default function BidList({ isPresent, bids }: BidListProps) {
 
   return isPresent ? (
     <View style={{ width: CONTAINER_WIDTH }}>
-      {bids.slice(1, bids.length).map(({ amount, bid_id, date_add }, index) => (
-        <Animated.View key={bid_id} entering={FadeIn.delay(index * 100)}>
-          <Bid
-            key={bid_id}
-            bid={{ amount, bid_id, date_add }}
-            onOpenModal={() => {}}
-            width={INNER_BID_WIDTH}
-          />
-        </Animated.View>
-      ))}
+      {bids
+        .slice(1, bids.length)
+        .map(({ amount, bid_id, date_add, user }, index) => (
+          <Animated.View key={bid_id} entering={FadeIn.delay(index * 100)}>
+            <Bid
+              key={bid_id}
+              bid={{ amount, bid_id, date_add, user }}
+              onOpenModal={() => {}}
+              width={INNER_BID_WIDTH}
+            />
+          </Animated.View>
+        ))}
     </View>
   ) : null;
 }

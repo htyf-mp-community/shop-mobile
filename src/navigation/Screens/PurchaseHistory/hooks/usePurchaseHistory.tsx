@@ -1,32 +1,38 @@
 import { gql, useQuery } from "@apollo/client";
 import { useUser } from "@utils/context/UserContext";
-import { ProductMinified } from "/@types/types";
+import { Product } from "/@types/types";
+
+interface Prods {
+  history_id?: number;
+  prod_id?: Product;
+}
 
 export interface IHistory {
-  date: string;
+  date?: string;
+  payment_id?: string;
+  total_price?: number;
+  status?: string;
 
-  payment: null | {
-    total_price: number;
-  };
-
-  prod_id: ProductMinified;
+  products?: Prods[];
 }
 
 const GET_HISTORY = gql`
-  query History($skip: Int) {
-    history(skip: $skip) {
+  query History {
+    history {
       date
-
-      payment {
-        total_price
-      }
-
-      prod_id {
-        prod_id
-        price
-        title
-        img_id(take: 1) {
-          name
+      payment_id
+      total_price
+      status
+      products {
+        history_id
+        prod_id {
+          prod_id
+          price
+          title
+          img_id(take: 1) {
+            id
+            name
+          }
         }
       }
     }

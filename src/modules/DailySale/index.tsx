@@ -13,6 +13,7 @@ import Loader from "./Loader";
 import AddWatchlist from "modules/AddWatchlist";
 import useColorTheme from "utils/context/ThemeContext";
 import useDailySale from "./useDailySale";
+import { image } from "functions/image";
 
 export default function DailySale() {
   const { data: sale, loading } = useDailySale();
@@ -38,7 +39,9 @@ export default function DailySale() {
 
   return (
     <View style={styles.container}>
-      {!loading && data && (
+      {loading && typeof data?.prod_id === "undefined" ? (
+        <Loader />
+      ) : (
         <>
           <View style={[styles.row, { justifyContent: "space-between" }]}>
             <Text style={styles.title}>Promotion</Text>
@@ -50,9 +53,7 @@ export default function DailySale() {
               <Image
                 style={[styles.image]}
                 resizeMode="cover"
-                source={{
-                  uri: `${API}/upload/images=${data?.img_id?.[0]?.name}`,
-                }}
+                source={image(data?.img_id?.[0]?.name)}
               />
             </SharedElement>
           </Ripple>
@@ -73,17 +74,17 @@ export default function DailySale() {
                     ${data?.price}
                   </Text>
                   <Text style={styles.discounted}>
-                    ${Math.ceil(data?.price * 1.25)}
+                    ${Math.ceil(data!.price * 1.2)}
                   </Text>
                 </View>
-                <Text style={{ color: theme.text }}>{data.quantity} Left</Text>
+                <Text style={{ color: theme.text }}>{data?.quantity} Left</Text>
               </View>
 
               <View style={[styles.row, { marginTop: 10 }]}>
-                <AddWatchlist prod_id={data?.prod_id} />
+                <AddWatchlist prod_id={data!.prod_id} />
                 <Button
                   style={styles.button}
-                  onPress={pushToCart}
+                  callback={pushToCart}
                   text={!!result ? "Added" : "Add to cart"}
                   variant={!!result ? "ternary" : "primary"}
                 />
@@ -92,8 +93,6 @@ export default function DailySale() {
           </View>
         </>
       )}
-
-      {loading && data?.prod_id === undefined && <Loader />}
     </View>
   );
 }

@@ -1,16 +1,18 @@
 import { View, StyleSheet, Text, Image } from "react-native";
 import { API } from "constants/routes";
 import { useNavigation } from "@react-navigation/native";
-import { useNavigationProps } from "/@types/types";
+import { Product, useNavigationProps } from "/@types/types";
 import { IHistory } from "../hooks/usePurchaseHistory";
 import { image } from "functions/image";
+import { h2 } from "constants/styles";
+import Ripple from "react-native-material-ripple";
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingLeft: 10,
     paddingBottom: 5,
-    flexDirection: "row",
+    flexDirection: "column",
   },
   details: {
     flexDirection: "row",
@@ -28,37 +30,47 @@ const styles = StyleSheet.create({
   },
 });
 
-interface HistoryProps extends IHistory {
-  separator: boolean;
-}
-
-export default function History({
-  prod_id: product,
-  date,
-  separator,
-}: HistoryProps) {
+export default function History({ products, date, total_price }: IHistory) {
   const navigation = useNavigation<useNavigationProps>();
 
-  function onPushRoute(item: any) {
+  function onPushRoute(product: Product) {
     navigation.push("Details", {
-      image: `${API}/upload/images=${item.product.img_id[0].name}`,
-      prod_id: item.product.prod_id,
+      image: `${API}/upload/images=${product.img_id[0].name}`,
+      prod_id: product.prod_id,
       sharedID: "",
-      title: item.product.title,
+      title: product.title,
     });
   }
 
   return (
-    <View style={[styles.container, { marginBottom: separator ? 30 : 0 }]}>
-      <Image source={image(product.img_id[0].name)} style={styles.image} />
+    <View style={[styles.container, { marginBottom: 20 }]}>
+      {products?.map((arg) => {
+        const product = arg.prod_id as Product;
+        return (
+          <Ripple
+            onPress={() => onPushRoute(product)}
+            key={arg.history_id}
+            style={{ flexDirection: "row", marginBottom: 10 }}
+          >
+            <Image
+              source={image(product.img_id[0].name)}
+              style={styles.image}
+            />
 
-      <View style={{ paddingLeft: 10 }}>
-        <Text style={{ color: "#fff" }}>{product.title}</Text>
-        <Text style={{ color: "#fff" }}>${product.price}</Text>
-        <Text style={{ color: "#fff" }}>
-          {new Date(+date).toLocaleDateString()}
-        </Text>
-      </View>
+            <View style={{ paddingLeft: 10 }}>
+              <Text style={{ color: "#fff" }}>{product.title}</Text>
+              <Text style={{ color: "#fff" }}>${product.price}</Text>
+              <Text style={{ color: "#fff" }}>
+                {new Date(+date!).toLocaleDateString()}
+              </Text>
+            </View>
+          </Ripple>
+        );
+      })}
+
+      <Text style={[h2, { fontSize: 20, lineHeight: 30 }]}>
+        Total: ${total_price}
+      </Text>
     </View>
   );
 }

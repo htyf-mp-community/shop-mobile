@@ -2,6 +2,8 @@ import { AuctionBid } from "/@types/types";
 import { Dimensions, View, StyleSheet, Text } from "react-native";
 import { Padding } from "constants/styles";
 import Ripple from "react-native-material-ripple";
+import { useUser } from "utils/context/UserContext";
+import Color from "color";
 
 interface BidsProps {
   onOpenModal: () => void;
@@ -45,6 +47,7 @@ const styles = StyleSheet.create({
 });
 
 export default function Bid({ bid, onOpenModal, width: bidWidth }: BidsProps) {
+  const { user } = useUser();
   return (
     <View style={styles.container}>
       {!bidWidth && (
@@ -62,6 +65,7 @@ export default function Bid({ bid, onOpenModal, width: bidWidth }: BidsProps) {
         ]}
       >
         <Text style={styles.text}>${bid?.amount ?? 0}</Text>
+        {user.user_id === bid.user && <Text style={[styles.text]}>You</Text>}
         <Text style={styles.text}>
           At: {new Date(+bid.date_add).toLocaleDateString()}
         </Text>

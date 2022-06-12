@@ -137,6 +137,7 @@ export interface AuctionBid {
   readonly date_add: Date;
   readonly bid_id: string;
   readonly amount: number;
+  user?: number;
 }
 
 export interface Auction {

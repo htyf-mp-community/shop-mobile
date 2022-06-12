@@ -52,7 +52,7 @@ const checkoutSlice = createSlice({
     },
 
     destroySession(state: State) {
-      state = initialState;
+      state = { ...state, ...initialState };
     },
   },
 });
