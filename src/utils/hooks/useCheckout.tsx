@@ -22,7 +22,7 @@ export default function useCheckout({
   route,
   redirect = false,
 }: useCheckoutProps) {
-  const { cart, total } = route.params;
+  const { total } = route.params;
   const { user } = useUser();
   const { confirmPayment } = useStripe();
 
@@ -34,10 +34,7 @@ export default function useCheckout({
     try {
       const { data } = await axios.post(
         `${API}/payments/create-payment-intent`,
-        {
-          prod_id: cart.map(({ prod_id }: any) => prod_id),
-          user_id: user.user_id,
-        },
+        {},
         {
           headers: {
             token: user.token,

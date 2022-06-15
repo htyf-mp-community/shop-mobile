@@ -11,6 +11,7 @@ const initialState = {
   error: "",
   empty: false,
   amount: 0,
+  isSynced: false,
 };
 
 type State = typeof initialState;
@@ -32,7 +33,7 @@ const cartSlice = createSlice({
       state.loading = false;
       state.cart = payload;
       state.error = "";
-
+      state.isSynced = true;
       state.amount = amount(payload);
       if (state.cart.length > 0) state.empty = false;
     },

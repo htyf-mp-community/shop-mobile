@@ -14,7 +14,7 @@ import RemoveProductsRepetition from "functions/RemoveRepetition";
 
 export default function Cart() {
   const dispatch = useAppDispatch();
-  const { cart } = useAppSelector((state) => state.cart);
+  const { cart, isSynced } = useAppSelector((state) => state.cart);
 
   const [skip, setSkip] = useState(0);
 
@@ -35,7 +35,7 @@ export default function Cart() {
     refetch,
   } = useFetch<ProductMinified[]>("/cart", {
     invalidate: [],
-    fetchOnMount: cart.length === 0,
+    fetchOnMount: cart.length === 0 || !isSynced,
     onSuccess,
   });
 
