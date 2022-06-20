@@ -38,7 +38,7 @@ export default function LoginScreen() {
         index={-1}
         backgroundStyle={{ backgroundColor: "#131d33" }}
         handleIndicatorStyle={{ backgroundColor: "white" }}
-        snapPoints={["50%", "51%"]}
+        snapPoints={[250, 251]}
         backdropComponent={renderBackdrop}
       >
         <View
@@ -64,11 +64,16 @@ export default function LoginScreen() {
                 style={{
                   width: "100%",
                   height: 100,
-                  justifyContent: "center",
                   alignItems: "center",
+                  flexDirection: "row",
                 }}
               >
                 <ActivityIndicator size={40} color="white" />
+                <Text
+                  style={{ color: theme.text, fontSize: 20, marginLeft: 10 }}
+                >
+                  Loading...
+                </Text>
               </View>
             ) : (
               <Text

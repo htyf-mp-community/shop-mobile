@@ -1,32 +1,75 @@
-import React, { useEffect } from "react";
-import { ScrollView } from "react-native";
-import { ScreenNavigationProps } from "/@types/types";
+import React from "react";
+import { ActivityIndicator, View, Text } from "react-native";
 import useCheckout from "utils/hooks/useCheckout";
-import { initStripe } from "@stripe/stripe-react-native";
 import styles from "./styles";
-import Modal from "./components/Modal";
-import PaymentMethods from "./components/PaymentMethods";
+import { Button, Header } from "components";
 import Form from "./components/Form";
 
-export default function Checkout({
-  route,
-}: Required<ScreenNavigationProps<"Checkout">>) {
-  const { purchase, total } = useCheckout({ route });
+import BottomSheet, { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
+import { CardForm } from "@stripe/stripe-react-native";
+import { Colors } from "constants/styles";
+import { useAppSelector } from "utils/hooks/hooks";
 
-  useEffect(() => {
-    initStripe({
-      publishableKey:
-        "pk_test_51KHt5OJFFDDymwGwp9gsCogqhxvzYvyo2wJsIAwSrPflIZjFZn2OtUhBbQAwt9SNek6Ol2e7QZUSh86NJyNByl2m00scfwXXjW",
-    });
-  }, []);
+export default function Checkout() {
+  const { purchase } = useCheckout();
+
+  const { status } = useAppSelector((st) => st.checkout);
+
+  const sheetRef = React.useRef<BottomSheet | null>(null);
+
+  const renderBackdrop = React.useCallback(
+    (props) => (
+      <BottomSheetBackdrop
+        disappearsOnIndex={-1}
+        appearsOnIndex={0.75}
+        {...props}
+      />
+    ),
+    []
+  );
+
+  function onSubmit() {
+    sheetRef.current?.snapToIndex(1);
+  }
 
   return (
-    <>
-      <ScrollView style={[styles.container]}>
-        <PaymentMethods />
-        <Form onSubmit={purchase} total={total} />
-      </ScrollView>
-      <Modal />
-    </>
+    <View style={styles.container}>
+      <Header />
+
+      <Form onSubmit={onSubmit} />
+
+      <BottomSheet
+        backgroundStyle={{ backgroundColor: "#131d33" }}
+        handleIndicatorStyle={{ backgroundColor: "white" }}
+        backdropComponent={renderBackdrop}
+        ref={sheetRef}
+        snapPoints={[300, 301]}
+        index={-1}
+      >
+        {status === "PREPARING" ? (
+          <>
+            <CardForm
+              style={{ height: 200 }}
+              cardStyle={{ backgroundColor: Colors.primary }}
+            />
+            <Button
+              variant="primary"
+              size="xl"
+              style={{ margin: 10 }}
+              text="Purchase"
+              callback={() => purchase()}
+            />
+          </>
+        ) : (
+          <View
+            style={{
+              padding: 10,
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+          ></View>
+        )}
+      </BottomSheet>
+    </View>
   );
 }

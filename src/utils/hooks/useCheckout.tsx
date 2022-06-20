@@ -6,29 +6,34 @@ import { useStripe } from "@stripe/stripe-react-native";
 import { checkoutActions } from "@redux/Checkout";
 import { useAppDispatch, useAppSelector } from "./hooks";
 import { cartActions } from "redux/Cart";
+import { initStripe } from "@stripe/stripe-react-native";
 
-interface useCheckoutProps {
-  route: any;
-  redirect?: boolean;
-}
+const publishableKey =
+  "pk_test_51KHt5OJFFDDymwGwp9gsCogqhxvzYvyo2wJsIAwSrPflIZjFZn2OtUhBbQAwt9SNek6Ol2e7QZUSh86NJyNByl2m00scfwXXjW";
 
-interface PurchaseProps {
-  name: string;
-  surname: string;
-  address: string;
-}
-
-export default function useCheckout({
-  route,
-  redirect = false,
-}: useCheckoutProps) {
-  const { total } = route.params;
+export default function useCheckout(init = true) {
   const { user } = useUser();
   const { confirmPayment } = useStripe();
 
   const dispatch = useAppDispatch();
-  const { paymentIntentClientSecret, paymentResult, paymentLoading } =
-    useAppSelector((state) => state.checkout);
+  const {
+    paymentIntentClientSecret,
+    paymentResult,
+    paymentLoading,
+    credentials,
+  } = useAppSelector((state) => state.checkout);
+
+  useEffect(() => {
+    if (init) {
+      initStripe({ publishableKey });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (init) {
+      getClientSecret();
+    }
+  }, []);
 
   async function getClientSecret() {
     try {
@@ -48,11 +53,7 @@ export default function useCheckout({
     }
   }
 
-  useEffect(() => {
-    getClientSecret();
-  }, []);
-
-  async function Purchase({ address, name, surname }: PurchaseProps) {
+  async function Purchase() {
     dispatch(checkoutActions.startTransaction());
     dispatch(checkoutActions.updateTransactionStatus());
     try {
@@ -64,8 +65,9 @@ export default function useCheckout({
 
             billingDetails: {
               email: user.name,
-              name: `${name} ${surname}`,
-              addressCity: address,
+              name: `${credentials.name} ${credentials.surname}`,
+              addressCity: credentials.city,
+              phone: credentials.phone,
             },
           }
         );
@@ -90,7 +92,6 @@ export default function useCheckout({
   return {
     purchase: Purchase,
     result: paymentResult,
-    total: total as number,
     loading: paymentLoading,
   };
 }

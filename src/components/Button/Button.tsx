@@ -21,6 +21,14 @@ const VARIANTS = {
   text: "transparent",
 };
 
+const BUTTON_BORDER_RADIUS = {
+  no: 0,
+  sm: 5,
+  md: 8,
+  lg: 10,
+  full: 100,
+};
+
 const BUTTON_SIZE = {
   xs: {
     padding: 2.5,
@@ -46,7 +54,7 @@ interface ButtonProps extends RippleProps {
   variant?: keyof typeof VARIANTS;
   badge?: string | number;
   size?: keyof typeof BUTTON_SIZE;
-
+  borderRadius?: keyof typeof BUTTON_BORDER_RADIUS;
   disabled?: boolean;
 }
 
@@ -72,6 +80,7 @@ export default function Button({
   badge,
   size = "md",
   disabled,
+  borderRadius = "sm",
   ...rest
 }: ButtonProps) {
   return (
@@ -88,6 +97,7 @@ export default function Button({
           ...BUTTON_SIZE[size],
         },
         styles.button,
+        { borderRadius: BUTTON_BORDER_RADIUS[borderRadius] as any },
         style,
       ]}
       {...rest}

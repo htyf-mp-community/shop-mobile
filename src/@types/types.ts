@@ -104,7 +104,11 @@ export type RootStackParams = {
     prod_id: number;
     sharedID: string;
   };
+  ///
   Checkout: { cart: any[]; total: number };
+
+  Checkout_details: undefined;
+  Checkout_payment: undefined;
 };
 
 export type useNavigationProps = StackNavigationProp<RootStackParams>;

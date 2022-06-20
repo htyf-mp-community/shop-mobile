@@ -2,6 +2,15 @@ import { createSlice } from "@reduxjs/toolkit";
 
 type TransactionStatus = "PREPARING" | "PENDING" | "FINISHED" | "FAILED";
 
+const credentials = {
+  name: "",
+  surname: "",
+  street: "",
+  apartment_number: "",
+  city: "",
+  phone: "",
+};
+
 const initialState = {
   paymentResult: "",
   paymentError: "",
@@ -10,6 +19,8 @@ const initialState = {
 
   status: "PREPARING" as TransactionStatus,
   ammountCharged: 0,
+
+  credentials,
 };
 
 type State = typeof initialState;
@@ -40,6 +51,10 @@ const checkoutSlice = createSlice({
 
     setCharged(state: State, { payload }: { payload: number }) {
       state.ammountCharged = payload;
+    },
+
+    setCredentials(state: State, { payload }: { payload: typeof credentials }) {
+      state.credentials = payload;
     },
 
     startTransaction(state: State) {

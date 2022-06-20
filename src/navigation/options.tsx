@@ -60,6 +60,7 @@ export const detailsScreenOptions = ({
 export const checkOutScreenOptions: StackNavigationOptions = {
   presentation: "modal",
   headerTitleAlign: "center",
+  headerShown: false,
 };
 
 export const userScreenOptions = (name: string): StackNavigationOptions => ({
