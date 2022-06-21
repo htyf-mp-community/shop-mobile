@@ -1,59 +1,43 @@
-import styles from "./Modal.styles";
 import { ReactNode } from "react";
 
-import { Modal as RNModal, Pressable, View } from "react-native";
-import Button from "components/Button/Button";
-import Animated, { SlideInDown } from "react-native-reanimated";
-import Color from "color";
+import RNModal, { ModalProps } from "react-native-modal";
+import { StyleSheet, useWindowDimensions, View } from "react-native";
+import useColorTheme from "utils/context/ThemeContext";
+import { radius } from "constants/styles";
 
-interface ModalProps {
+interface IModalProps extends Partial<ModalProps> {
   children: ReactNode;
-  onDismiss: () => void;
-  vissible: boolean;
-
-  onCancel?: () => void;
-  onAccept: () => void;
 }
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 10,
+    borderRadius: radius.small,
+  },
+});
 
 export default function Modal({
   children,
-  onDismiss,
-  vissible,
-  onAccept,
-  onCancel,
-}: ModalProps) {
+  isVisible,
+  style,
+  ...rest
+}: IModalProps) {
+  const { theme } = useColorTheme();
+  const { width } = useWindowDimensions();
+
+  const backgroundColor = theme.primary;
+
   return (
-    <RNModal animationType="fade" transparent visible={vissible}>
-      <Pressable style={styles.container} onPress={onDismiss}>
-        {/* Disables previus pressable */}
-        <Animated.View entering={SlideInDown} exiting={SlideInDown}>
-          <Pressable style={styles.inner}>
-            <View style={{ marginBottom: 20 }}>{children}</View>
-            <View style={styles.buttons}>
-              {!!onCancel && (
-                <Button
-                  onPress={onCancel}
-                  text="Cancel"
-                  fontStyle={{ color: "red" }}
-                  style={{
-                    backgroundColor: Color("red").alpha(0.2).string(),
-                    marginRight: 10,
-                  }}
-                />
-              )}
-              <Button
-                onPress={onAccept}
-                text="Yes"
-                fontStyle={{ color: "lightgreen" }}
-                style={{
-                  backgroundColor: Color("green").alpha(0.3).string(),
-                  paddingHorizontal: 15,
-                }}
-              />
-            </View>
-          </Pressable>
-        </Animated.View>
-      </Pressable>
+    <RNModal isVisible={isVisible} {...rest}>
+      <View
+        style={[
+          styles.container,
+          { backgroundColor, width: width - 40 },
+          style,
+        ]}
+      >
+        {children}
+      </View>
     </RNModal>
   );
 }

@@ -4,7 +4,7 @@ import axios from "axios";
 import { API } from "@constants/routes";
 import { useStripe } from "@stripe/stripe-react-native";
 import { checkoutActions } from "@redux/Checkout";
-import { useAppDispatch, useAppSelector } from "./hooks";
+import { useAppDispatch, useAppSelector } from "utils/hooks/hooks";
 import { cartActions } from "redux/Cart";
 import { initStripe } from "@stripe/stripe-react-native";
 
@@ -21,6 +21,7 @@ export default function useCheckout(init = true) {
     paymentResult,
     paymentLoading,
     credentials,
+    total,
   } = useAppSelector((state) => state.checkout);
 
   useEffect(() => {
@@ -48,6 +49,7 @@ export default function useCheckout(init = true) {
       );
 
       dispatch(checkoutActions.setSecret(data.clientSecret));
+      dispatch(checkoutActions.setTotal(data.total));
     } catch (error) {
       console.warn("checkout screen");
     }
@@ -93,5 +95,6 @@ export default function useCheckout(init = true) {
     purchase: Purchase,
     result: paymentResult,
     loading: paymentLoading,
+    total,
   };
 }

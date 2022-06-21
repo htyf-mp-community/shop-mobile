@@ -16,7 +16,7 @@ const initialState = {
   paymentError: "",
   paymentLoading: false,
   paymentIntentClientSecret: "",
-
+  total: 0,
   status: "PREPARING" as TransactionStatus,
   ammountCharged: 0,
 
@@ -31,6 +31,10 @@ const checkoutSlice = createSlice({
   reducers: {
     setSecret(state: State, { payload }: { payload: string }) {
       state.paymentIntentClientSecret = payload;
+    },
+
+    setTotal(state: State, { payload }: { payload: number }) {
+      state.total = payload;
     },
 
     finishTransaction(state: State) {

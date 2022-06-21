@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from "react-native";
 import useColorTheme from "@utils/context/ThemeContext";
 import useSettings from "./useSettings";
 import SettingButton from "./components/SettingButton";
-import SignOut from "modules/Signout/Signout";
+import SignOut from "modules/Signout";
 import ThemeSheet from "./components/ThemeSheet";
 
 export default function Settings() {

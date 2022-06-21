@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
     color: Colors.text,
     justifyContent: "center",
     borderRadius: radius.small,
+    flexDirection: "row-reverse",
   },
   toggle: {
     position: "absolute",

@@ -6,6 +6,7 @@ import {
   Text,
   View,
   useWindowDimensions,
+  ActivityIndicator,
 } from "react-native";
 import Button from "@components/Button/Button";
 import Input from "@components/Input/Input";
@@ -18,9 +19,16 @@ import PasswordToggle from "./components/PasswordToggle";
 interface AuthFormProps {
   onSubmit: ({ email, password }: UserInputProps) => void;
   header: "Login" | "Register";
+  error: string;
+  loading: boolean;
 }
 
-export default function AuthForm({ onSubmit, header }: AuthFormProps) {
+export default function AuthForm({
+  onSubmit,
+  header,
+  error,
+  loading,
+}: AuthFormProps) {
   const navigation = useNavigation<any>();
   const [vissible, setVissible] = useState(false);
   const { width } = useWindowDimensions();
@@ -81,22 +89,35 @@ export default function AuthForm({ onSubmit, header }: AuthFormProps) {
               />
               <PasswordToggle setVissible={setVissible} vissible={vissible} />
             </View>
+
             <Button
               text={header.toUpperCase()}
               onPress={() => handleSubmit()}
               style={[styles.btn]}
+              icon={
+                loading ? (
+                  <ActivityIndicator
+                    size={"small"}
+                    color="white"
+                    style={{ marginRight: 10 }}
+                  />
+                ) : null
+              }
               variant={"primary"}
-              disabled={!(isValid && dirty)}
+              disabled={!(isValid && dirty && !loading && !error)}
               fontStyle={{ fontWeight: "bold" }}
               testID="SUBMIT_BUTTON"
             />
+
             <TouchableOpacity
               onPress={() =>
-                navigation.replace("Auth", {
+                navigation.navigate("Auth", {
                   screen: header === "Login" ? "Register" : "Login",
                 })
               }
-              style={{ marginTop: 5 }}
+              style={{
+                marginTop: 10,
+              }}
             >
               <Text style={{ color: "gray" }}>
                 {header === "Login"

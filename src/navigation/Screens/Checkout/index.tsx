@@ -1,6 +1,6 @@
 import React from "react";
-import { ActivityIndicator, View, Text } from "react-native";
-import useCheckout from "utils/hooks/useCheckout";
+import { Text, View } from "react-native";
+import useCheckout from "./hooks/useCheckout";
 import styles from "./styles";
 import { Button, Header } from "components";
 import Form from "./components/Form";
@@ -11,7 +11,7 @@ import { Colors } from "constants/styles";
 import { useAppSelector } from "utils/hooks/hooks";
 
 export default function Checkout() {
-  const { purchase } = useCheckout();
+  const { purchase, total } = useCheckout(true);
 
   const { status } = useAppSelector((st) => st.checkout);
 
@@ -34,7 +34,11 @@ export default function Checkout() {
 
   return (
     <View style={styles.container}>
-      <Header />
+      <Header>
+        <Text style={{ color: "#fff", fontSize: 20, padding: 10 }}>
+          Total ${total}
+        </Text>
+      </Header>
 
       <Form onSubmit={onSubmit} />
 
