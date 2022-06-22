@@ -1,45 +1,25 @@
-import axios from "axios";
 import { Formik } from "formik";
 import React from "react";
 import { useState } from "react";
 import { View, Image, KeyboardAvoidingView } from "react-native";
 import { SharedElement } from "react-navigation-shared-element";
 import { ScreenNavigationProps } from "/@types/types";
-import { Button, Input, Message } from "@components/index";
-import { API } from "@constants/routes";
-import { useUser } from "@utils/context/UserContext";
+import { Button, Input } from "@components/index";
 import useListenKeyboard from "utils/hooks/useListenKeyboard";
 import StarsTouch from "@modules/Stars/Stars";
 import schema from "../schema";
 import { createStyles as styles } from "../Reviews.styles";
+import ResponseModal from "../components/ResponseModal";
+import useUploadReview from "../hooks/useUploadReview";
 
 export default function CreateReview({
   route,
+  navigation,
 }: ScreenNavigationProps<"CreateReview">) {
   const { prod_id, thumbnail, sharedID } = route.params;
-  const { user } = useUser();
   const [rating, setRating] = useState(0);
-
   const { status, variants } = useListenKeyboard();
-
-  const [response, setResponse] = useState<"Success" | "Failed" | "">("");
-
-  async function PostReview({ description, title }: any) {
-    try {
-      await axios.post(
-        `${API}/ratings`,
-        { prod_id, description, title, rating },
-        {
-          headers: {
-            token: user.token,
-          },
-        }
-      );
-      setResponse("Success");
-    } catch (error) {
-      setResponse("Failed");
-    }
-  }
+  const { response, upload, setResponse } = useUploadReview();
 
   return (
     <View style={styles.container}>
@@ -56,7 +36,12 @@ export default function CreateReview({
         </View>
       )}
 
-      {!!response && <Message status={response} />}
+      <ResponseModal
+        state={response}
+        onCloseModal={() => setResponse({})}
+        onSuccess={() => navigation?.navigate("Home")}
+        isVisible={response.hasFinished || false}
+      />
 
       <KeyboardAvoidingView style={{ alignItems: "center" }}>
         <Formik
@@ -65,7 +50,7 @@ export default function CreateReview({
             title: "",
           }}
           validationSchema={schema}
-          onSubmit={PostReview}
+          onSubmit={(data) => upload({ ...data, prod_id, rating })}
         >
           {({
             handleBlur,
@@ -106,7 +91,7 @@ export default function CreateReview({
 
               <Button
                 variant="primary"
-                disabled={!(isValid && dirty)}
+                disabled={!(isValid && dirty && rating)}
                 text="Add review"
                 callback={handleSubmit}
                 style={[styles.button]}

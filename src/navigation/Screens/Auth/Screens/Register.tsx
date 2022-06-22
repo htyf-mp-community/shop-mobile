@@ -1,53 +1,32 @@
 import React from "react";
 import AuthForm from "@modules/AuthForm/AuthForm";
 import useAuth from "@utils/hooks/useAuth";
-import { Text } from "react-native";
-import useColorTheme from "@utils/context/ThemeContext";
-import styles from "../Auth.styles";
-import AuthModal from "../components/Modal";
-import { Container, Button } from "@components/index";
+import { Container } from "@components/index";
+import RegisterModal from "../components/Modal";
 
-export default function RegisterScreen({ navigation }: any) {
-  const { onRegister, error, status, onClear } = useAuth("register");
-  const { theme } = useColorTheme();
+export default function RegisterScreen() {
+  const [isVisible, setIsVisible] = React.useState(false);
+
+  const { onRegister, error, onClear, loading } = useAuth("register", {
+    onStart: () => setIsVisible(true),
+  });
 
   return (
     <Container centerVertical>
-      {!status.activated && status.status === "FINISHED" && (
-        <AuthModal>
-          <Text style={[styles.text, { color: theme.text }]}>
-            Verify your email
-          </Text>
-          <Text style={[styles.subText, { color: theme.text }]}>
-            Confirm your account via link sent on given @
-          </Text>
-          <Button
-            onPress={() =>
-              navigation.navigate("Auth", {
-                screen: "Login",
-              })
-            }
-            text="Log in"
-            style={{ justifyContent: "center", margin: 15 }}
-          />
-        </AuthModal>
-      )}
-
-      {error !== null && (
-        <AuthModal>
-          <Text style={[styles.text, { color: theme.text, fontSize: 45 }]}>
-            Oops...
-          </Text>
-          <Text style={[styles.subText, { color: theme.text }]}>{error}</Text>
-          <Button
-            onPress={onClear}
-            text="Try again"
-            style={{ justifyContent: "center", margin: 15 }}
-          />
-        </AuthModal>
-      )}
-
-      <AuthForm header="Register" onSubmit={onRegister} />
+      <AuthForm
+        loading={loading}
+        error={error || ""}
+        header="Register"
+        onSubmit={onRegister}
+      />
+      <RegisterModal
+        error={error}
+        isVisible={isVisible}
+        onCloseModal={() => {
+          setIsVisible(false);
+          onClear();
+        }}
+      />
     </Container>
   );
 }

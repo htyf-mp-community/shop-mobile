@@ -1,20 +1,65 @@
-interface AuthModalProps {
-  children: ReactNode;
+import { useNavigation } from "@react-navigation/native";
+import { Button, Modal } from "components";
+import { Fonts } from "constants/styles";
+import { Dimensions, Text } from "react-native";
+
+interface Props {
+  isVisible: boolean;
+  onCloseModal: () => void;
+  error: string | null;
 }
 
-import Animated, { SlideInDown } from "react-native-reanimated";
-import styles from "../Auth.styles";
-import useColorTheme from "@utils/context/ThemeContext";
-import { ReactNode } from "react";
+const { height, width } = Dimensions.get("screen");
 
-export default function AuthModal({ children }: AuthModalProps) {
-  const { theme } = useColorTheme();
+export default function RegisterModal({
+  isVisible,
+  onCloseModal,
+  error,
+}: Props) {
+  const navigation = useNavigation<any>();
+
+  function next() {
+    onCloseModal();
+    navigation.navigate("Auth", {
+      screen: "Login",
+    });
+  }
+
   return (
-    <Animated.View
-      entering={SlideInDown}
-      style={[styles.modal, { backgroundColor: theme.primary100 }]}
+    <Modal
+      isVisible={isVisible}
+      onBackdropPress={onCloseModal}
+      animationIn="zoomIn"
+      animationOut="zoomOutUp"
+      deviceHeight={height}
+      onBackButtonPress={onCloseModal}
+      statusBarTranslucent
+      useNativeDriverForBackdrop
+      style={{ alignItems: "center", paddingVertical: 20 }}
     >
-      {children}
-    </Animated.View>
+      <Text
+        style={{ color: "#fff", fontFamily: Fonts.PoppinsBold, fontSize: 25 }}
+      >
+        {error || "Activate your account"}
+      </Text>
+
+      <Text
+        style={{
+          color: "#fff",
+          fontFamily: Fonts.PoppinsRegular,
+          fontSize: 18,
+          marginTop: 10,
+        }}
+      >
+        {error || "Please check your email and activate your account"}
+      </Text>
+
+      <Button
+        style={{ width: width - 100, marginTop: 20 }}
+        variant="primary"
+        text="SIGN IN"
+        callback={next}
+      />
+    </Modal>
   );
 }
