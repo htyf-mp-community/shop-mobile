@@ -67,9 +67,9 @@ export default function useCheckout(init = true) {
 
             billingDetails: {
               email: user.name,
-              name: `${credentials.name} ${credentials.surname}`,
-              addressCity: credentials.city,
-              phone: credentials.phone,
+              name: `${credentials?.name} ${credentials?.surname}`,
+              addressCity: credentials?.city,
+              phone: credentials?.phone,
             },
           }
         );
