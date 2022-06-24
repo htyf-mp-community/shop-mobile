@@ -1,3 +1,4 @@
+import { PRODUCT_CONTAINER_SIZE_Y } from "modules/Product/assets";
 import { StyleSheet, Dimensions } from "react-native";
 import { Colors } from "../../constants/styles";
 
@@ -30,6 +31,7 @@ const caruselStyles = StyleSheet.create({
   },
   container: {
     width: WIDTH,
+    height: PRODUCT_CONTAINER_SIZE_Y + 60,
     marginTop: 20,
   },
 });

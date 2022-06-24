@@ -10,13 +10,16 @@
       "resizeMode": "contain",
       "backgroundColor": "#0f172a"
     },
-    "plugins": ["expo-notifications"],
+    "plugins": [
+      "expo-notifications"
+    ],
     "userInterfaceStyle": "automatic",
-
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": false,
       "userInterfaceStyle": "automatic"
@@ -26,7 +29,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#111111"
-      }
+      },
+      "package": "com.dmq.mobile"
     },
     "web": {
       "favicon": "./assets/favicon.png"

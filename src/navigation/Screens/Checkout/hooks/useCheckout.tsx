@@ -51,7 +51,7 @@ export default function useCheckout(init = true) {
       dispatch(checkoutActions.setSecret(data.clientSecret));
       dispatch(checkoutActions.setTotal(data.total));
     } catch (error) {
-      console.warn("checkout screen");
+      console.warn(error);
     }
   }
 

@@ -1,11 +1,5 @@
 import InfiniteScroll from "modules/InfiniteScroll";
-import {
-  ImageBackground,
-  useWindowDimensions,
-  View,
-  StyleSheet,
-  Text,
-} from "react-native";
+import { ImageBackground, useWindowDimensions } from "react-native";
 
 export default function Promotions() {
   const { width } = useWindowDimensions();
@@ -16,9 +10,10 @@ export default function Promotions() {
       keyExtractor={({ id }: any) => id.toString()}
       orientation={"horizontal"}
       path="/sales"
+      showLoadMoreSpinner={false}
       showsHorizontalScrollIndicator={false}
-      renderItem={({ item, index }) => (
-        <View
+      renderItem={() => (
+        <ImageBackground
           style={{
             width: width - 40,
             height: 200,
@@ -26,43 +21,10 @@ export default function Promotions() {
             position: "relative",
             marginTop: 10,
           }}
-        >
-          <ImageBackground
-            style={StyleSheet.absoluteFillObject}
-            source={{
-              uri: "https://www.crushpixel.com/big-static18/preview4/super-sale-banner-template-design-2766425.jpg",
-            }}
-          />
-          {/*  <View
-            style={{
-              position: "absolute",
-              padding: 5,
-              bottom: 5,
-              left: 5,
-            }}
-          >
-            <Text
-              style={{
-                color: "#fff",
-                fontSize: 20,
-                fontFamily: "PoppinsBold",
-                lineHeight: 25,
-              }}
-            >
-              Super sale
-            </Text>
-            <Text
-              style={{
-                color: "#fff",
-                fontSize: 20,
-                fontFamily: "PoppinsBold",
-                lineHeight: 25,
-              }}
-            >
-              Check it out before end
-            </Text>
-          </View> */}
-        </View>
+          source={{
+            uri: "https://www.crushpixel.com/big-static18/preview4/super-sale-banner-template-design-2766425.jpg",
+          }}
+        />
       )}
     />
   );

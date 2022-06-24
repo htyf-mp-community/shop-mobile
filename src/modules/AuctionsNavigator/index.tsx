@@ -5,10 +5,12 @@ import Ripple from "react-native-material-ripple";
 import useColorTheme from "utils/context/ThemeContext";
 import { Fonts } from "constants/styles";
 import { useCallback } from "react";
+import Loader from "./Loader";
 
 export default function AuctionsNavigator() {
   const { width } = useWindowDimensions();
-  const { data } = useAuctions();
+  const { data, loading } = useAuctions();
+
   const { theme } = useColorTheme();
 
   const renderItem = useCallback(
@@ -24,13 +26,27 @@ export default function AuctionsNavigator() {
 
   return (
     <View style={{ width, padding: 10 }}>
-      <FlatList
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        data={data?.auctions}
-        keyExtractor={({ auction_id }) => auction_id}
-        renderItem={renderItem}
-      />
+      <Text
+        style={{
+          fontSize: 30,
+          color: theme.text,
+          paddingTop: 5,
+          fontFamily: Fonts.PoppinsBold,
+        }}
+      >
+        Auctions
+      </Text>
+      {loading ? (
+        <Loader />
+      ) : (
+        <FlatList
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          data={data?.auctions}
+          keyExtractor={({ auction_id }) => auction_id}
+          renderItem={renderItem}
+        />
+      )}
 
       <Ripple>
         <Text

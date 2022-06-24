@@ -57,12 +57,12 @@ export default function Form({ onSubmit }: FormProps) {
     <Formik
       enableReinitialize
       initialValues={{
-        name: credentials.name,
-        surname: credentials.surname,
+        name: credentials?.name || "",
+        surname: credentials?.surname || "",
         street: "",
         apartment_number: "",
         city: "",
-        phone: credentials.phone_number,
+        phone: credentials?.phone_number || "",
       }}
       onSubmit={handleSubmit}
       validationSchema={checkoutSchema}
@@ -162,7 +162,11 @@ export default function Form({ onSubmit }: FormProps) {
               borderRadius="full"
               disabled={!(isValid && dirty)}
               text="Proceed to confirm"
-              style={{ paddingVertical: 20, marginTop: 15, width: width - 20 }}
+              style={{
+                paddingVertical: 20,
+                marginVertical: 15,
+                width: width - 20,
+              }}
               onPress={() => handleSubmit()}
             />
           </ScrollView>

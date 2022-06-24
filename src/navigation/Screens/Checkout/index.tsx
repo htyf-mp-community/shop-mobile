@@ -6,8 +6,8 @@ import { Button, Header } from "components";
 import Form from "./components/Form";
 
 import BottomSheet, { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
-import { CardForm } from "@stripe/stripe-react-native";
-import { Colors } from "constants/styles";
+import { CardField, CardForm } from "@stripe/stripe-react-native";
+import { Colors, Fonts } from "constants/styles";
 import { useAppSelector } from "utils/hooks/hooks";
 
 export default function Checkout() {
@@ -36,7 +36,7 @@ export default function Checkout() {
     <View style={styles.container}>
       <Header>
         <Text style={{ color: "#fff", fontSize: 20, padding: 10 }}>
-          Total ${total}
+          Total ${total === 0 ? "Loading..." : total.toFixed(2)}
         </Text>
       </Header>
 
@@ -52,9 +52,19 @@ export default function Checkout() {
       >
         {status === "PREPARING" ? (
           <>
-            <CardForm
-              style={{ height: 200 }}
-              cardStyle={{ backgroundColor: Colors.primary }}
+            <CardField
+              style={{
+                margin: 10,
+                height: 60,
+                alignItems: "center",
+              }}
+              cardStyle={{
+                textColor: "white",
+                backgroundColor: Colors.primary,
+                fontFamily: Fonts.PoppinsRegular,
+                placeholderColor: "#e3e3e3",
+              }}
+              postalCodeEnabled
             />
             <Button
               variant="primary"

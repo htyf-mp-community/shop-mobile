@@ -8,6 +8,8 @@ import Reanimated, {
   withRepeat,
   withTiming,
   interpolate,
+  FadeIn,
+  FadeOut,
 } from "react-native-reanimated";
 
 type Size = {
@@ -58,6 +60,7 @@ const Skeleton = ({
 
   return (
     <MaskedView
+      androidRenderingMode="software"
       maskElement={children}
       style={{
         width,
@@ -77,7 +80,9 @@ const Skeleton = ({
             />
           }
         >
-          <View
+          <Reanimated.View
+            entering={FadeIn}
+            exiting={FadeOut}
             style={[
               StyleSheet.absoluteFill,
               { backgroundColor: highlightColor },
@@ -93,9 +98,10 @@ interface ItemProps {
   width: ((width: number) => number) | number;
   height: ((height: number) => number) | number;
   margin?: number;
+  marginRight?: number;
 }
 
-Skeleton.Item = ({ width, height, margin }: ItemProps) => (
+Skeleton.Item = ({ width, height, margin, marginRight }: ItemProps) => (
   <View
     style={[
       styles.item,
@@ -103,6 +109,7 @@ Skeleton.Item = ({ width, height, margin }: ItemProps) => (
         margin,
         width: typeof width === "function" ? width(dims.width) : width,
         height: typeof height === "function" ? height(dims.height) : height,
+        marginRight,
       },
     ]}
   />

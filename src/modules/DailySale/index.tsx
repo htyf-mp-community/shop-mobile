@@ -37,16 +37,16 @@ export default function DailySale() {
 
   const { theme } = useColorTheme();
 
+  const isLoaderPresent = loading || !data;
+
   return (
     <View style={styles.container}>
-      {loading && typeof data?.prod_id === "undefined" ? (
-        <Loader />
-      ) : (
+      <View style={[styles.row, { justifyContent: "space-between" }]}>
+        <Text style={styles.title}>Promotion</Text>
+        <Clock />
+      </View>
+      {!isLoaderPresent ? (
         <>
-          <View style={[styles.row, { justifyContent: "space-between" }]}>
-            <Text style={styles.title}>Promotion</Text>
-            <Clock />
-          </View>
           <Ripple onPress={toProduct} style={styles.image_container}>
             <Text style={styles.off}>20% Off</Text>
             <SharedElement id={`prod_id.${data?.prod_id}DAILY`}>
@@ -74,7 +74,7 @@ export default function DailySale() {
                     ${data?.price}
                   </Text>
                   <Text style={styles.discounted}>
-                    ${Math.ceil(data!.price * 1.2)}
+                    ${Math.ceil((data?.price || 0) * 1.2)}
                   </Text>
                 </View>
                 <Text style={{ color: theme.text }}>{data?.quantity} Left</Text>
@@ -92,6 +92,8 @@ export default function DailySale() {
             </View>
           </View>
         </>
+      ) : (
+        <Loader />
       )}
     </View>
   );

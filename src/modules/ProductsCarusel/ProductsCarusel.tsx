@@ -44,33 +44,39 @@ function ProductsCarusel({
 
   const { theme } = useColorTheme();
 
+  const isError = !!error && !loading && data.length === 0;
+
+  const isLoading = !notEmpty(data) && loading;
+
   return (
     <View style={caruselStyles.container}>
       <Text style={[caruselStyles.title, { color: theme.text }]}>{title}</Text>
 
-      {!notEmpty(data) && loading && <ProductSkeleton />}
+      {isLoading && <ProductSkeleton />}
 
-      {!!error && <EmptyList variant="error" error={error} />}
+      {isError && <EmptyList variant="error" error={error} />}
 
-      <VirtualizedList
-        data={data}
-        onEndReached={onSkip}
-        horizontal
-        initialNumToRender={2}
-        showsHorizontalScrollIndicator={false}
-        onEndReachedThreshold={0.5}
-        getItem={getItem}
-        getItemCount={(data) => data.length}
-        keyExtractor={(item: ProductTypeProps) => `home.${item.prod_id}}`}
-        renderItem={({ item, index }) => (
-          <Product
-            key={`${item.prod_id}.${index}`}
-            {...item}
-            sharedID={sharedID}
-            fullSize={center}
-          />
-        )}
-      />
+      {!isLoading && !isError && (
+        <VirtualizedList
+          data={data}
+          onEndReached={onSkip}
+          horizontal
+          initialNumToRender={2}
+          showsHorizontalScrollIndicator={false}
+          onEndReachedThreshold={0.5}
+          getItem={getItem}
+          getItemCount={(data) => data.length}
+          keyExtractor={(item: ProductTypeProps) => `home.${item.prod_id}}`}
+          renderItem={({ item, index }) => (
+            <Product
+              key={`${item.prod_id}.${index}`}
+              {...item}
+              sharedID={sharedID}
+              fullSize={center}
+            />
+          )}
+        />
+      )}
     </View>
   );
 }
