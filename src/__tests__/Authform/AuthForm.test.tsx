@@ -20,7 +20,7 @@ describe("It validates Form", () => {
   test("it renders correctly", () => {
     const onSubmit = jest.fn();
     const { getByTestId, getByPlaceholderText } = render(
-      <AuthForm header="Login" onSubmit={onSubmit} />
+      <AuthForm error="" loading={false} header="Login" onSubmit={onSubmit} />
     );
 
     act(() => {
@@ -41,7 +41,7 @@ describe("It validates Form", () => {
   test("shows invalid message if values are incorrect", async () => {
     const onSubmit = jest.fn();
     const { getByPlaceholderText, queryByText, queryByTestId } = render(
-      <AuthForm header="Login" onSubmit={onSubmit} />
+      <AuthForm error="" loading={false} header="Login" onSubmit={onSubmit} />
     );
 
     act(() => {
@@ -59,7 +59,7 @@ describe("It validates Form", () => {
   test("it handles validation successfully then changes screen", async () => {
     const onSubmit = jest.fn();
     const { getByPlaceholderText, getByText, getAllByText } = render(
-      <AuthForm header="Login" onSubmit={onSubmit} />
+      <AuthForm error="" loading={false} header="Login" onSubmit={onSubmit} />
     );
 
     act(() => {

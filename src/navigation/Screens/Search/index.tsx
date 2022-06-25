@@ -36,6 +36,10 @@ export default function SearchScreen() {
       [key]: value,
     }));
   }
+
+  function onClearParams() {
+    setParams({});
+  }
   const { query, setQuery, suggestion, onEndReached } = useSearch(params);
 
   function onSheetOpen() {
@@ -94,7 +98,11 @@ export default function SearchScreen() {
           backgroundColor: "#00D85D",
         }}
       >
-        <Filters onSetParams={onSetParams} params={params} />
+        <Filters
+          onClearParams={onClearParams}
+          onSetParams={onSetParams}
+          params={params}
+        />
       </BottomSheet>
     </Container>
   );

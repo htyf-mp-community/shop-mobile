@@ -58,6 +58,8 @@ export default function useAuth(route: Route, callbacks?: Partial<Callbacks>) {
 
   // for future updates
 
+  const { setUser } = useUser();
+
   async function onLogin({ email, password }: UserInputProps) {
     try {
       const data = await onSubmit({ email, password });
@@ -67,6 +69,7 @@ export default function useAuth(route: Route, callbacks?: Partial<Callbacks>) {
         token: data.token,
         name: email,
         isLoggedIn: true,
+        isLoading: false,
       });
     } catch (error) {}
   }

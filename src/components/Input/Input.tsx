@@ -13,7 +13,6 @@ import { Colors } from "constants/styles";
 
 interface InputProps extends TextInputProps {
   name?: string;
-  placeholder: string;
   value: string;
   setValue?: (text: string) => void;
   style?: StyleProp<ViewStyle & TextStyle>;
@@ -27,7 +26,6 @@ interface InputProps extends TextInputProps {
 
 export default function Input({
   name,
-  placeholder,
   value = "",
   setValue,
   style,
@@ -57,7 +55,6 @@ export default function Input({
       <TextInput
         value={value}
         onChangeText={setValue}
-        placeholder={placeholder}
         placeholderTextColor={error ? "#ff3030" : "white"}
         style={[
           styles.input,

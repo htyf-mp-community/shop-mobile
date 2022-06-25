@@ -9,11 +9,9 @@ export default function ProductSkeleton({}: SkeletonProps) {
     <SkeletonPlaceholder
       backgroundColor={"#1f2b3d"}
       highlightColor={"#2a3a52"}
-      size={{ width, height: 250 }}
+      size={{ width, height: 260 }}
     >
-      <View
-        style={{ width, height: 250, marginTop: -10, alignItems: "center" }}
-      >
+      <View style={{ width, height: 260, marginTop: 0, alignItems: "center" }}>
         <SkeletonPlaceholder.Item height={250} width={width - 20} />
       </View>
     </SkeletonPlaceholder>

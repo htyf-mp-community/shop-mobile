@@ -4,9 +4,9 @@ import { Text } from "react-native";
 import { useNavigationProps } from "../../@types/types";
 import Ripple from "react-native-material-ripple";
 
-type CategoryProps = {
+interface CategoryProps {
   category: string;
-};
+}
 
 /**
  * @param {String} category text displayed inside component

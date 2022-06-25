@@ -7,9 +7,10 @@ describe("watchlist reducers", () => {
 
     store.dispatch(
       watchlistActions.setWatchlist({
+        hasMore: false,
         results: [
-          { amount: 1, prod_id: 1 },
-          { amount: 1, prod_id: 2 },
+          { prod_id: 1, price: 1, title: "", img_id: [] },
+          { prod_id: 2, price: 1, title: "", img_id: [] },
         ],
       })
     );

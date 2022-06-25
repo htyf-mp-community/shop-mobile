@@ -3,9 +3,9 @@ import useFetch from "@utils/hooks/useFetch";
 import { Colors, Padding } from "constants/styles";
 import { memo } from "react";
 import { Button } from "components";
-import { Params } from "..";
 import { BottomSheetFlatList } from "@gorhom/bottom-sheet";
 import Ripple from "react-native-material-ripple";
+import type { Params } from "../index";
 
 const text: StyleProp<TextStyle> = {
   color: "#00D85D",
@@ -15,15 +15,12 @@ const text: StyleProp<TextStyle> = {
 };
 
 interface FiltersProps {
+  onClearParams: () => void;
   onSetParams: <T extends keyof Params>(key: T, value: Params[T]) => void;
-  params: {
-    title?: string;
-    price?: string;
-    category?: string;
-  };
+  params: Params;
 }
 
-const Filters = ({ onSetParams, params }: FiltersProps) => {
+const Filters = ({ onSetParams, params, onClearParams }: FiltersProps) => {
   const { data = [] } = useFetch<readonly string[]>("/products/categories");
 
   return (
@@ -104,8 +101,11 @@ const Filters = ({ onSetParams, params }: FiltersProps) => {
         </View>
       </View>
       <Button
+        onPress={() => onClearParams}
         text="Clear All"
         variant="ternary"
+        size="xl"
+        borderRadius="full"
         style={{ justifyContent: "center", margin: 10 }}
       />
     </>

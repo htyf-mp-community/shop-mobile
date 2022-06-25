@@ -22,7 +22,7 @@ const User = createContext<UserContextType>({
   ReadUser: () => {},
   RemoveUser: () => {},
   SaveUser: (props: UserType) => {},
-  setUser: () => {},
+  setUser: (prop) => {},
 });
 
 export const UserContextProvider = ({
@@ -56,9 +56,10 @@ export const UserContextProvider = ({
       }
     } catch (error) {
       setUser((p) => ({ ...p, isLoading: false }));
+    } finally {
+      onSplashScreen();
+      setUser((p) => ({ ...p, isLoading: false }));
     }
-    onSplashScreen();
-    setUser((p) => ({ ...p, isLoading: false }));
   }
 
   async function RemoveUser() {

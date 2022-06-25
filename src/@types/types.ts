@@ -63,7 +63,7 @@ export type UserType = {
 
 export type UserContextType = {
   user: UserType;
-  setUser: (prop: any) => void;
+  setUser: React.Dispatch<React.SetStateAction<UserType>>;
   SaveUser: (props: any) => void;
   ReadUser: () => void;
   RemoveUser: () => void;
@@ -85,7 +85,7 @@ export type RootStackParams = {
   Upload: undefined;
   MyReviews: undefined;
   AccountSettings: undefined;
-  SearchResults: { category: string; options: Object };
+  SearchResults: { category: string; options?: Object };
   Details: {
     prod_id: number;
     sharedID: string;

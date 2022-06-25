@@ -13,7 +13,7 @@ import useProduct from "./hooks/useProduct";
 
 function ProductDetails({ route }: Required<ScreenNavigationProps<"Details">>) {
   const { prod_id, image, sharedID } = route.params;
-  const { data, loading, refetch } = useProduct(prod_id);
+  const { data, loading = true, refetch } = useProduct(prod_id);
   const result = data?.product;
 
   const images = [

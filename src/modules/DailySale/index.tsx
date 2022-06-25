@@ -86,7 +86,7 @@ export default function DailySale() {
                   style={styles.button}
                   callback={pushToCart}
                   text={!!result ? "Added" : "Add to cart"}
-                  variant={!!result ? "ternary" : "primary"}
+                  variant="primary"
                 />
               </View>
             </View>
