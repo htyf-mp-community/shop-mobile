@@ -27,14 +27,12 @@ export default function useCheckToken(): UserType {
             }
           );
 
-          if (data) {
-            SaveUser({
-              isLoggedIn: true,
-              token: data.token,
-              name: user.name,
-              user_id: data.id,
-            });
-          }
+          SaveUser({
+            isLoggedIn: true,
+            token: data.token,
+            name: user.name,
+            user_id: data.id,
+          });
         } catch (err: any) {
           if (typeof err?.response?.data !== "undefined") {
             Alert.alert("Session Expired", "Please login again", [

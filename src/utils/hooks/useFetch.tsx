@@ -75,9 +75,10 @@ export default function useFetch<T>(
         setState((p) => ({
           ...p,
           error: error?.response?.data?.message || error.message,
-          loading: false,
         }));
       }
+    } finally {
+      setState((prev) => ({ ...prev, loading: false }));
     }
   }
 

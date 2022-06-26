@@ -21,6 +21,8 @@ export default function MainNavigator() {
   const { ReadUser } = useUser();
   const { token, isLoggedIn, name, isLoading } = useCheckToken();
   const { expoPushToken } = useNotifications();
+  const dispatch = useDispatch();
+  const { theme, current } = useColorTheme();
 
   useEffect(() => {
     ReadUser();
@@ -31,7 +33,6 @@ export default function MainNavigator() {
       UploadExpoTokenToServer(token, expoPushToken);
     }
   }, [expoPushToken]);
-  const dispatch = useDispatch();
 
   useFetch("/auth/credentials", {
     invalidate: [isLoggedIn],
@@ -40,8 +41,6 @@ export default function MainNavigator() {
       dispatch(userActions.setCredentials(data));
     },
   });
-
-  const { theme, current } = useColorTheme();
 
   if (isLoading) return null;
 

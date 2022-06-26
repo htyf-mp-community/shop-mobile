@@ -101,7 +101,7 @@ const Filters = ({ onSetParams, params, onClearParams }: FiltersProps) => {
         </View>
       </View>
       <Button
-        onPress={() => onClearParams}
+        onPress={() => onClearParams()}
         text="Clear All"
         variant="ternary"
         size="xl"

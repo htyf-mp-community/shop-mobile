@@ -93,7 +93,7 @@ export default function CreateReview({
                 variant="primary"
                 disabled={!(isValid && dirty && rating)}
                 text="Add review"
-                callback={handleSubmit}
+                callback={() => handleSubmit()}
                 style={[styles.button]}
               />
             </>

@@ -37,7 +37,7 @@ export default function useUploadReview() {
         status: status as 201 | 400,
         error: null,
         message:
-          "Your opinion has been uploaded, thank's for your contribution",
+          "Your opinion has been uploaded, thank you for your contribution",
       });
     } catch (error: any) {
       setResponse({

@@ -6,7 +6,6 @@ import CartList from "@modules/CartList";
 import { useAppDispatch, useAppSelector } from "@utils/hooks/hooks";
 import { cartActions } from "@redux/Cart";
 import useColorTheme from "@utils/context/ThemeContext";
-import { notEmpty } from "@functions/typecheckers";
 import Loader from "./components/Loader";
 import { ProductMinified } from "/@types/types";
 import axios from "axios";
@@ -19,7 +18,7 @@ export default function Cart() {
   const [skip, setSkip] = useState(0);
 
   const onSuccess = useCallback(
-    (data) => {
+    (data: ProductMinified[]) => {
       dispatch(
         cartActions.setCart(
           RemoveProductsRepetition([...cart, ...data], "cart_id")
@@ -29,13 +28,9 @@ export default function Cart() {
     [cart]
   );
 
-  const {
-    data = [],
-    loading,
-    refetch,
-  } = useFetch<ProductMinified[]>("/cart", {
+  const { loading, refetch } = useFetch("/cart", {
     invalidate: [],
-    fetchOnMount: cart.length === 0 || !isSynced,
+    fetchOnMount: !isSynced,
     onSuccess,
   });
 
@@ -50,9 +45,11 @@ export default function Cart() {
     };
   }, [skip]);
 
+  const isLoading = loading && cart.length === 0;
+
   return (
     <View style={{ flex: 1, backgroundColor: theme.primary }}>
-      {loading && notEmpty(data) && <Loader />}
+      {isLoading && <Loader />}
 
       <CartList onEndReached={() => setSkip(skip + 5)} data={cart} />
 

@@ -29,12 +29,12 @@ export default function CartList({ data, onEndReached }: CartListProps) {
     <VirtualizedList
       testID="cart-list"
       onEndReached={onEndReached}
-      ListEmptyComponent={
+      /*  ListEmptyComponent={
         <Image
           source={require("@assets/Shopping_Cart.png")}
           style={{ width, height: 400 }}
         />
-      }
+      } */
       showsVerticalScrollIndicator={false}
       getItem={getItem}
       initialNumToRender={3}

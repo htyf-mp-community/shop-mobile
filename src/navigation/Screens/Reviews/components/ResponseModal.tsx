@@ -52,7 +52,7 @@ export default function ResponseModal({
           fontFamily: Fonts.PoppinsBold,
         }}
       >
-        {!!state?.error ? "Oooops, something went wrong" : "Yaas"}
+        {!!state?.error ? "Oooops" : "Yaas"}
       </Text>
 
       <Text
@@ -66,7 +66,8 @@ export default function ResponseModal({
       </Text>
 
       <Button
-        callback={hasError ? onCloseModal : onSuccess}
+        size="xl"
+        callback={() => (hasError ? onCloseModal() : onSuccess())}
         style={{ marginTop: 20 }}
         text={hasError ? "Ooops, try again" : "OK"}
         variant="primary"
