@@ -10,10 +10,16 @@ import Carusels from "./components/Carusels";
 import useAnimate from "./hooks/useAnimate";
 
 export default function Home() {
-  const { animatedButtons, animatedStyle, toggle } = useAnimate();
+  const { animatedButtons, animatedStyle, toggle, isVissible, onClose } =
+    useAnimate();
 
   return (
-    <Sidebar animatedStyle={animatedStyle} animatedButtons={animatedButtons}>
+    <Sidebar
+      isOpen={isVissible}
+      closeSidebar={onClose}
+      animatedStyle={animatedStyle}
+      animatedButtons={animatedButtons}
+    >
       <ScrollView
         showsVerticalScrollIndicator={false}
         stickyHeaderIndices={[0]}
