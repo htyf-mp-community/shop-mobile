@@ -12,11 +12,15 @@ import {
 import useColorTheme from "utils/context/ThemeContext";
 import useInfiniteScrolling from "./useInfiniteScrolling";
 
+type Dims = { width: number; height: number };
+
 interface InfiniteScrollProps<T> extends Omit<VirtualizedListProps<T>, "data"> {
   orientation: "vertical" | "horizontal";
   path: `/${string}`;
   heading?: string;
   showLoadMoreSpinner?: boolean;
+
+  placeholderDimenssions?: Partial<Dims> | ((prop: Dims) => Dims);
 }
 
 export default function InfiniteScroll<T>({
@@ -28,6 +32,7 @@ export default function InfiniteScroll<T>({
   path,
   heading,
   showLoadMoreSpinner = true,
+  placeholderDimenssions,
   ...rest
 }: InfiniteScrollProps<T>) {
   const [options, setOptions] = useState({});
@@ -36,9 +41,14 @@ export default function InfiniteScroll<T>({
     path,
     options
   );
-  const { width } = useWindowDimensions();
+  const { width, height } = useWindowDimensions();
 
   const { theme } = useColorTheme();
+
+  const placeholderDimenssionsValue =
+    typeof placeholderDimenssions === "function"
+      ? placeholderDimenssions({ width, height })
+      : placeholderDimenssions;
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.primary }}>
@@ -50,10 +60,22 @@ export default function InfiniteScroll<T>({
         <SkeletonPlaceholder
           backgroundColor={"#1f2b3d"}
           highlightColor={"#2a3a52"}
-          size={{ width, height: 250 }}
+          size={
+            placeholderDimenssionsValue ||
+            ({ width: width - 40, height: 250 } as any)
+          }
         >
-          <View style={{ width, height: 250, alignItems: "center" }}>
-            <SkeletonPlaceholder.Item height={250} width={width - 20} />
+          <View
+            style={{
+              width,
+              height: placeholderDimenssionsValue?.height || 250,
+              alignItems: "center",
+            }}
+          >
+            <SkeletonPlaceholder.Item
+              height={placeholderDimenssionsValue?.height || 250}
+              width={placeholderDimenssionsValue?.width || width - 40}
+            />
           </View>
         </SkeletonPlaceholder>
       )}

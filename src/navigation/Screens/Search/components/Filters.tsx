@@ -103,7 +103,8 @@ const Filters = ({ onSetParams, params, onClearParams }: FiltersProps) => {
       <Button
         onPress={() => onClearParams()}
         text="Clear All"
-        variant="ternary"
+        color="ternary"
+        type="contained"
         size="xl"
         borderRadius="full"
         style={{ justifyContent: "center", margin: 10 }}

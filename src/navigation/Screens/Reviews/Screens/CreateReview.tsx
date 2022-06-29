@@ -90,9 +90,10 @@ export default function CreateReview({
               />
 
               <Button
+                type="contained"
                 variant="primary"
                 disabled={!(isValid && dirty && rating)}
-                text="Add review"
+                text="SUBMIT REVIEW"
                 callback={() => handleSubmit()}
                 style={[styles.button]}
               />

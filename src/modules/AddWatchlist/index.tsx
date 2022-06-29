@@ -25,8 +25,9 @@ export default function AddWatchlist({
         marginRight: 10,
         paddingHorizontal,
       }}
+      type="contained"
+      color="primary"
       onPress={handleWatchlistClick}
-      variant="primary"
       icon={<Icon state={state} />}
     />
   );

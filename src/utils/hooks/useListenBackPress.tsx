@@ -1,7 +1,10 @@
 import { BackHandler, Alert } from "react-native";
 import { useEffect } from "react";
 
-export default function useListenBackPress(onLeave: () => undefined) {
+export default function useListenBackPress(
+  onLeave: () => boolean | null | undefined,
+  deps: any[] = []
+) {
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
       "hardwareBackPress",
@@ -9,5 +12,5 @@ export default function useListenBackPress(onLeave: () => undefined) {
     );
 
     return () => backHandler.remove();
-  }, []);
+  }, deps);
 }

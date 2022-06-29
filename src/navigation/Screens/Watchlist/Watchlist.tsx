@@ -70,6 +70,7 @@ export default function Watchlist() {
                 price={+item.price}
               />
               <Button
+                type="contained"
                 rippleColor="white"
                 icon={
                   <FontAwesome5 name="heart-broken" size={24} color="white" />

@@ -23,7 +23,7 @@ const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
 export type ProductTypeProps = Types.ProductMinified & {
   route?: string;
-  onRemoveCartProduct: () => void | Promise<void>;
+  onRemoveCartProduct?: () => void | Promise<void>;
   sharedID?: string;
   hide?: boolean;
   ammount?: number;

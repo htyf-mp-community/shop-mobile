@@ -11,7 +11,7 @@ type JustifyContent =
 
 interface RowProps {
   children: ReactNode;
-  style: StyleProp<ViewStyle>;
+  style?: StyleProp<ViewStyle>;
   justifyContent?: JustifyContent;
 }
 

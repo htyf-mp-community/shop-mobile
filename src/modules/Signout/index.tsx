@@ -45,7 +45,8 @@ export default function SignOut() {
 
         <View style={[styles.row, { marginTop: 50 }]}>
           <Button
-            variant="primary"
+            color="primary"
+            type="contained"
             size="xl"
             borderRadius="lg"
             text="Cancel"
@@ -65,12 +66,11 @@ export default function SignOut() {
 
       <Button
         onPress={positive}
-        variant="primary"
+        color="primary"
         size="xl"
+        type="contained"
         text={"Sign out"}
         style={{
-          borderWidth: 1,
-          borderColor: "red",
           marginTop: 20,
           marginBottom: 20,
           justifyContent: "center",

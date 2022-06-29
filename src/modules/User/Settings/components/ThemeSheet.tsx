@@ -1,53 +1,35 @@
-import {
-  Image,
-  Modal,
-  Dimensions,
-  View,
-  Text,
-  StyleSheet,
-  Pressable,
-} from "react-native";
+import { Dimensions, StyleSheet, Text, View, Image } from "react-native";
 import SettingButton from "./SettingButton";
 import useColorTheme from "utils/context/ThemeContext";
 import useBoolean from "utils/hooks/useBoolean";
-import { Colors } from "constants/styles";
+import { Colors, Fonts } from "constants/styles";
 import Ripple from "react-native-material-ripple";
+import { Modal, Row } from "components";
 
 const { width, height } = Dimensions.get("screen");
 
 const styles = StyleSheet.create({
-  modal: {
-    width,
-    height,
-    backgroundColor: "rgba(0,0,0,0.3)",
-  },
   inner: {
-    position: "absolute",
-    bottom: 0,
-    width,
-    height: 500,
-    backgroundColor: Colors.primary100,
-    zIndex: 5,
-    flexDirection: "row",
-    justifyContent: "space-around",
+    flexDirection: "column",
+  },
+  heading: {
+    fontFamily: Fonts.PoppinsBold,
+    fontSize: 25,
+    marginBottom: 20,
   },
   image: {
-    marginTop: 10,
-    width: width / 2 - 10,
-    height: 400,
-    borderWidth: 3,
-    borderRadius: 10,
+    width: 150,
+    height: 300,
   },
-  text: {
-    fontSize: 25,
-    color: "#fff",
-    fontWeight: "bold",
+  tip: {
+    fontFamily: Fonts.PoppinsRegular,
+    fontSize: 20,
     textAlign: "center",
   },
 });
 
 export default function ThemeSheet() {
-  const { current, onSwitchTheme } = useColorTheme();
+  const { current, onSwitchTheme, theme } = useColorTheme();
   const { state, toggle } = useBoolean();
 
   return (
@@ -58,39 +40,40 @@ export default function ThemeSheet() {
         iconExpanded={state}
         primaryText="Theme"
       />
-      <Modal visible={state} animationType="fade" transparent>
-        <Pressable style={styles.modal} onPress={toggle}>
-          <Pressable style={styles.inner}>
+      <Modal
+        deviceHeight={height}
+        useNativeDriverForBackdrop
+        onBackButtonPress={toggle}
+        onBackdropPress={toggle}
+        hideModalContentWhileAnimating
+        isVisible={state}
+        animationIn="zoomIn"
+        animationOut={"zoomOutUp"}
+        statusBarTranslucent
+        style={{ padding: 20, paddingVertical: 25, borderRadius: 20 }}
+      >
+        <View style={styles.inner}>
+          <Text style={[styles.heading, { color: theme.text }]}>
+            Theme settings
+          </Text>
+
+          <Row justifyContent="space-between">
             <Ripple onPress={() => onSwitchTheme("dark")}>
+              <Text style={[styles.tip, { color: theme.text }]}>Dark</Text>
               <Image
-                resizeMode="cover"
-                style={[
-                  styles.image,
-                  {
-                    borderColor:
-                      current === "dark" ? Colors.secondary : undefined,
-                  },
-                ]}
+                style={styles.image}
                 source={require("../../../../../preview/home.jpg")}
               />
-              <Text style={styles.text}>Dark</Text>
             </Ripple>
             <Ripple onPress={() => onSwitchTheme("light")}>
+              <Text style={[styles.tip, { color: theme.text }]}>Light</Text>
               <Image
-                resizeMode="cover"
-                style={[
-                  styles.image,
-                  {
-                    borderColor:
-                      current === "light" ? Colors.secondary : undefined,
-                  },
-                ]}
+                style={styles.image}
                 source={require("../../../../../preview/home.jpg")}
               />
-              <Text style={styles.text}>Light</Text>
             </Ripple>
-          </Pressable>
-        </Pressable>
+          </Row>
+        </View>
       </Modal>
     </>
   );

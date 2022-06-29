@@ -1,5 +1,5 @@
 import { Modal } from "../../../../components";
-import { View, Text, Switch } from "react-native";
+import { View, Text, Switch, Dimensions } from "react-native";
 import { Fonts } from "../../../../constants/styles";
 import { EvilIcons } from "@expo/vector-icons";
 import useColorTheme from "utils/context/ThemeContext";
@@ -11,6 +11,8 @@ interface NotificationsProps {
   onToggle: () => void;
 }
 
+const { height } = Dimensions.get("screen");
+
 export default function NotificationsModal({
   isVisible,
   onHide,
@@ -20,6 +22,7 @@ export default function NotificationsModal({
   const { theme } = useColorTheme();
   return (
     <Modal
+      deviceHeight={height}
       useNativeDriverForBackdrop
       onBackButtonPress={onHide}
       onBackdropPress={onHide}
