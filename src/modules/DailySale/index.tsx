@@ -74,7 +74,7 @@ export default function DailySale() {
                     ${data?.price}
                   </Text>
                   <Text style={styles.discounted}>
-                    ${Math.ceil((data?.price || 0) * 1.2)}
+                    ${Math.ceil((data?.price || 0) * 1.25)}
                   </Text>
                 </View>
                 <Text style={{ color: theme.text }}>{data?.quantity} Left</Text>
@@ -86,7 +86,8 @@ export default function DailySale() {
                   style={styles.button}
                   callback={pushToCart}
                   text={!!result ? "Added" : "Add to cart"}
-                  variant="primary"
+                  color="primary"
+                  type="contained"
                 />
               </View>
             </View>

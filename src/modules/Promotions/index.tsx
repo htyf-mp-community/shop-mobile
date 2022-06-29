@@ -12,11 +12,15 @@ export default function Promotions() {
       path="/sales"
       showLoadMoreSpinner={false}
       showsHorizontalScrollIndicator={false}
+      placeholderDimenssions={({ width }) => ({
+        height: 150,
+        width: width - 10,
+      })}
       renderItem={() => (
         <ImageBackground
           style={{
             width: width - 40,
-            height: 200,
+            height: 150,
             marginLeft: 10,
             position: "relative",
             marginTop: 10,
