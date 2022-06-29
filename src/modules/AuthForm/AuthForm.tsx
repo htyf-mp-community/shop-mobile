@@ -103,7 +103,8 @@ export default function AuthForm({
                   />
                 ) : null
               }
-              variant={"primary"}
+              type="contained"
+              variant="primary"
               disabled={!(isValid && dirty && !loading && !error)}
               fontStyle={{ fontWeight: "bold" }}
               testID="SUBMIT_BUTTON"

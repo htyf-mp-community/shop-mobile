@@ -26,28 +26,16 @@ export default function Landing({ navigation }: any) {
       />
 
       <View style={[styles.block, { width }]}>
-        {/*  <View style={{ flexDirection: "row", justifyContent: "center" }}>
-          <Button
-            style={styles.social}
-            icon={<FontAwesome name="facebook" size={24} color="white" />}
-          />
-          <Button
-            style={[styles.social]}
-            icon={<FontAwesome name="google" size={24} color="white" />}
-          />
-          <Button
-            style={styles.social}
-            icon={<FontAwesome name="apple" size={24} color="white" />}
-          />
-        </View> */}
         <Button
           variant="primary"
+          type="contained"
           fontStyle={{ fontSize: 20 }}
           style={styles.button}
           text="Create an account"
           callback={onNavigateRegister}
         />
         <Button
+          type="contained"
           fontStyle={{ fontSize: 20 }}
           style={[styles.button, { backgroundColor: Colors.primary100 }]}
           text="Log in"
