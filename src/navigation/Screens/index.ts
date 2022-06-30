@@ -15,3 +15,5 @@ export { default as SearchResults } from "./SearchResults/index";
 export { default as Watchlist } from "./Watchlist/Watchlist";
 export { default as Auction } from "./Auction/index";
 export { default as Upload } from "./UploadScreen/index";
+export { default as Auctions } from "./Auctions/index";
+export { default as Dashboard } from "./Dashboard/index";

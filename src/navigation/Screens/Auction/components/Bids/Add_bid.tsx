@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     width: width / 2.5,
     justifyContent: "center",
     flexDirection: "row-reverse",
-    marginRight: 10, // row-reverse reverses axies
+    marginRight: 10,
     alignItems: "center",
   },
 });
@@ -53,7 +53,8 @@ export default function Addbid({
     <View style={styles.container}>
       <Button
         disabled={isLoading}
-        variant="ternary"
+        color="ternary"
+        type="contained"
         style={[
           styles.button,
           {
@@ -87,7 +88,8 @@ export default function Addbid({
         }
         onPress={handleBidSubmit}
         text="Bid"
-        variant="primary"
+        color="primary"
+        type="contained"
         style={styles.button}
       />
     </View>

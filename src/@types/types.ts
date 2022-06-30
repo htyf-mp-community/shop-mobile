@@ -74,11 +74,13 @@ export type RootStackParams = {
   Search: undefined;
   Home: undefined;
   Auction: { auction_id: string };
+  Auctions: undefined;
   PurchaseHistory: undefined;
   Cart: undefined;
   User: undefined;
   Auth?: undefined;
   Landing: undefined;
+  Dashboard: undefined;
   Register?: undefined;
   Login?: undefined;
   Watchlist?: undefined;
@@ -146,7 +148,7 @@ export interface AuctionBid {
 
 export interface Auction {
   readonly auction_id?: string;
-  product?: ProductTypeProps;
+  product?: Product;
 
   bids: AuctionBid[];
 }

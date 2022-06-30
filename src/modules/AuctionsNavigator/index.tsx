@@ -6,6 +6,8 @@ import useColorTheme from "utils/context/ThemeContext";
 import { Fonts } from "constants/styles";
 import { useCallback } from "react";
 import Loader from "./Loader";
+import { useNavigation } from "@react-navigation/native";
+import { useNavigationProps } from "/@types/types";
 
 export default function AuctionsNavigator() {
   const { width } = useWindowDimensions();
@@ -23,6 +25,8 @@ export default function AuctionsNavigator() {
     ),
     []
   );
+
+  const navigation = useNavigation<useNavigationProps>();
 
   return (
     <View style={{ width, padding: 10 }}>
@@ -48,7 +52,7 @@ export default function AuctionsNavigator() {
         />
       )}
 
-      <Ripple>
+      <Ripple onPress={() => navigation.navigate("Auctions")}>
         <Text
           style={{
             padding: 5,

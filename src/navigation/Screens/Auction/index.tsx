@@ -45,7 +45,7 @@ export default function AuctionScreen({
           <BidList bids={data?.auction.bids} isPresent={state} />
           <Addbid
             isLoading={isBidLoading}
-            highest={data?.auction.bids?.[0]?.amount}
+            highest={data?.auction.bids?.[0]?.amount || 0}
             auction_id={route.params.auction_id}
             onBid={onBid}
           />

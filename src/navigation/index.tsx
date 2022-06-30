@@ -63,6 +63,8 @@ export default function MainNavigator() {
                 component={Screen.Home}
                 options={Option.homeScreenOptions}
               />
+              <Stack.Screen name="Auctions" component={Screen.Auctions} />
+              <Stack.Screen name="Dashboard" component={Screen.Dashboard} />
               <Stack.Screen
                 name="Upload"
                 component={Screen.Upload}
