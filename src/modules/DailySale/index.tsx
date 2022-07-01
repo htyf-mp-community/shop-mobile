@@ -80,7 +80,7 @@ export default function DailySale() {
                 <Text style={{ color: theme.text }}>{data?.quantity} Left</Text>
               </View>
 
-              <View style={[styles.row, { marginTop: 10 }]}>
+              <View style={[styles.row, { marginTop: 10, zIndex: 5 }]}>
                 <AddWatchlist prod_id={data!.prod_id} />
                 <Button
                   style={styles.button}

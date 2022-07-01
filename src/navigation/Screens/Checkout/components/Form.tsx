@@ -158,7 +158,8 @@ export default function Form({ onSubmit }: FormProps) {
             />
 
             <Button
-              variant="primary"
+              type="contained"
+              color="primary"
               borderRadius="full"
               disabled={!(isValid && dirty)}
               text="Proceed to confirm"

@@ -1,10 +1,16 @@
-import React from "react";
-import { View, FlatList, useWindowDimensions } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  FlatList,
+  useWindowDimensions,
+  VirtualizedList,
+} from "react-native";
 import { SkeletonPlaceholder } from "../../../components";
 import { Colors } from "../../../constants/styles";
 import Ratings from "../../../modules/Ratings/Ratings";
 import { useUser } from "utils/context/UserContext";
 import { gql, useQuery } from "@apollo/client";
+import RemoveProductsRepetition from "functions/RemoveRepetition";
 
 const GET_RATINGS = gql`
   query GetRatings {
@@ -18,14 +24,35 @@ const GET_RATINGS = gql`
 `;
 
 export default function MyReviews() {
+  const [skip, setSkip] = useState(0);
   const { user } = useUser();
-  const { data, loading } = useQuery(GET_RATINGS, {
+  const { data, loading, client, fetchMore } = useQuery(GET_RATINGS, {
     context: {
       headers: {
         token: user.token,
       },
     },
   });
+
+  useEffect(() => {
+    fetchMore({
+      variables: { skip },
+
+      updateQuery(prev, { fetchMoreResult }): any {
+        if (!fetchMoreResult) return prev;
+
+        return {
+          auctions: RemoveProductsRepetition(
+            [...prev.history, ...fetchMoreResult.history],
+            "payment_id"
+          ),
+        };
+      },
+    });
+    return () => {
+      client.stop();
+    };
+  }, [skip]);
 
   const { width, height } = useWindowDimensions();
 
@@ -56,11 +83,14 @@ export default function MyReviews() {
         </SkeletonPlaceholder>
       )}
 
-      <FlatList
+      <VirtualizedList
+        onEndReached={() => setSkip((prev) => prev + 5)}
+        getItem={(item, index) => item[index]}
+        getItemCount={(item) => item.length}
         initialNumToRender={4}
         data={data?.ratings || []}
         keyExtractor={({ rating_id }) => rating_id.toString()}
-        renderItem={({ item }) => <Ratings {...item} />}
+        renderItem={({ item }: any) => <Ratings {...item} />}
       />
     </View>
   );

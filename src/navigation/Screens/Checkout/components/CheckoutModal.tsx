@@ -9,6 +9,7 @@ import {
   Text,
   ActivityIndicator,
   View,
+  Dimensions,
 } from "react-native";
 import { useAppSelector } from "utils/hooks/hooks";
 import styles from "../styles";
@@ -19,12 +20,13 @@ interface ModalProps {
   onCancel: () => void;
 }
 
+const { height } = Dimensions.get("screen");
+
 export default function CheckoutModal({
   isVisible,
   onCancel,
   onSubmit,
 }: ModalProps) {
-  const { height } = useWindowDimensions();
   const { status, paymentError } = useAppSelector((st) => st.checkout);
   const navigation = useNavigation<useNavigationProps>();
 
@@ -77,7 +79,8 @@ export default function CheckoutModal({
               callback={onSubmit}
               disabled={!isCardValid}
               text="Pay"
-              variant="primary"
+              type="contained"
+              color="primary"
               size="xl"
               style={{ marginTop: 10, width: "45%" }}
             />
@@ -112,8 +115,9 @@ export default function CheckoutModal({
           <Button
             style={{ width: "85%" }}
             text="Leave"
-            variant="ternary"
+            color="ternary"
             size="xl"
+            type="contained"
             onPress={() => navigation.navigate("Home")}
           />
         </View>
