@@ -85,7 +85,14 @@ export default function MainNavigator() {
                 name="User"
                 options={() => Option.userScreenOptions(name)}
               />
-              <Stack.Screen component={Screen.Watchlist} name="Watchlist" />
+              <Stack.Screen
+                component={Screen.Watchlist}
+                name="Watchlist"
+                sharedElements={(route) => {
+                  const { prod_id, sharedID } = route.params;
+                  return ["prod_id." + prod_id + sharedID];
+                }}
+              />
               <Stack.Screen
                 component={Screen.ProductDetails}
                 name="Details"
@@ -93,13 +100,8 @@ export default function MainNavigator() {
                 sharedElements={({ params }, opt) => {
                   const { prod_id, sharedID } = params;
 
-                  const valid = [
-                    "Home",
-                    "Search",
-                    "SearchResults",
-                    "PurchaseHistory",
-                    "Details",
-                  ]; // Cart causes shared image to stay
+                  //prettier-ignore
+                  const valid = ["Home","Search","SearchResults","PurchaseHistory","Details",'Watchlist' ];
 
                   if (sharedID && valid.includes(opt.name)) {
                     return ["prod_id." + prod_id + sharedID];

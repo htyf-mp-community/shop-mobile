@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleProp, TextStyle, ViewStyle } from "react-native";
 import { Button } from "@components/index";
 import { Colors } from "@constants/styles";
@@ -24,10 +24,17 @@ export default function AddToCart({
   fontStyle,
   disabled,
 }: AddtoCartProps) {
-  const { pushToCart, loading, error, result } = useCart(prod_id);
+  const { pushToCart, loading, error, result, cancelRequest } =
+    useCart(prod_id);
 
   const backgroundColor =
     result === "Added" ? Colors.ternary : Colors.secondary;
+
+  useEffect(() => {
+    return () => {
+      cancelRequest();
+    };
+  }, []);
 
   return (
     <Button

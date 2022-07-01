@@ -2,10 +2,11 @@ import { Auction, ScreenNavigationProps } from "/@types/types";
 import { Container } from "components";
 import Header from "./Header";
 import useGetPendingAuctions from "./useGetAuctions";
-import { VirtualizedList, LogBox } from "react-native";
+import { VirtualizedList, LogBox, View } from "react-native";
 import Card from "./Card";
 import { useCallback, useEffect, useRef, useState } from "react";
 import RemoveProductsRepetition from "functions/RemoveRepetition";
+import Placeholder from "./Placeholder";
 
 LogBox.ignoreAllLogs(true);
 
@@ -59,6 +60,13 @@ export default function Auctions({
           />
         )}
       />
+      {/*  {loading && !data?.auctions && (
+        <View style={{ position: "absolute", top: 100 }}>
+          {new Array(5).fill({}).map((_, index) => (
+            <Placeholder key={index} />
+          ))}
+        </View>
+      )} */}
     </Container>
   );
 }

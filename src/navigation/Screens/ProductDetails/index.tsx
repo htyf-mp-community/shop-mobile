@@ -1,4 +1,4 @@
-import { memo, useState, useCallback } from "react";
+import { memo, useState, useCallback, useEffect } from "react";
 import { ScrollView, View, RefreshControl } from "react-native";
 import ImagesCarusel from "./components/ImagesCarusel/ImagesCarusel";
 import { ScreenNavigationProps } from "/@types/types";
@@ -13,8 +13,14 @@ import useProduct from "./hooks/useProduct";
 
 function ProductDetails({ route }: Required<ScreenNavigationProps<"Details">>) {
   const { prod_id, image, sharedID } = route.params;
-  const { data, loading = true, refetch } = useProduct(prod_id);
+  const { data, loading = true, refetch, client } = useProduct(prod_id);
   const result = data?.product;
+
+  useEffect(() => {
+    return () => {
+      client.stop();
+    };
+  }, []);
 
   const images = [
     { id: 0, name: image?.split("=")[1] },

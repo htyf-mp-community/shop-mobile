@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useUser } from "@utils/context/UserContext";
-import axios from "axios";
+import axios, { CancelToken } from "axios";
 import { ENDPOINTS } from "../../constants/routes";
 import useDelay from "utils/hooks/useDelay";
 import { useDispatch } from "react-redux";
@@ -24,7 +24,13 @@ export default function useCart(prod_id?: number) {
   const [result, setResult] = useState<ResultType>("");
   const dispatch = useDispatch();
 
-  async function addToCartAsync(_prod_id?: number) {
+  const cancelToken = axios.CancelToken.source();
+
+  function cancelRequest() {
+    cancelToken.cancel();
+  }
+
+  async function addToCartAsync() {
     try {
       setLoading(true);
 
@@ -32,6 +38,7 @@ export default function useCart(prod_id?: number) {
         ENDPOINTS.cartAdd,
         { prod_id },
         {
+          cancelToken: cancelToken.token,
           headers: {
             token: user.token,
           },
@@ -56,5 +63,5 @@ export default function useCart(prod_id?: number) {
 
   useDelay(() => setResult(""), 3000, [addToCartAsync]);
 
-  return { pushToCart: addToCartAsync, loading, error, result };
+  return { pushToCart: addToCartAsync, loading, error, result, cancelRequest };
 }

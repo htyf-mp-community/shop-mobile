@@ -30,7 +30,7 @@ export default function BottomTab({ prod_id, quantity }: BottomTabProps) {
         disabled={notAvailable}
         relative
         prod_id={prod_id}
-        text="ADD TO CART"
+        text={notAvailable ? "Not Available" : "Add to Cart"}
         style={[
           styles.button,
           {
