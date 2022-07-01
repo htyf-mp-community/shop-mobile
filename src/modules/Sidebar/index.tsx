@@ -6,7 +6,7 @@ import useColorTheme from "@utils/context/ThemeContext";
 import { Alert, BackHandler, SafeAreaView } from "react-native";
 import NavigationButtons from "./navigation_buttons";
 import useListenBackPress from "utils/hooks/useListenBackPress";
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { useNavigationProps } from "/@types/types";
 
 interface SidebarProps {
@@ -27,8 +27,10 @@ export default function Sidebar({
   const navigation = useNavigation<useNavigationProps>();
   const { theme } = useColorTheme();
 
+  const isFocued = useIsFocused();
+
   useListenBackPress(() => {
-    if (isOpen) {
+    if (isOpen && isFocued) {
       closeSidebar();
     } else if (navigation.canGoBack()) {
       navigation.goBack();
@@ -43,7 +45,7 @@ export default function Sidebar({
     }
 
     return true;
-  }, [isOpen]);
+  }, [isOpen, isFocued]);
 
   return (
     <SafeAreaView
