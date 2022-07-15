@@ -43,7 +43,7 @@ export default function useSearch(params: {
     if (query.trim() !== "") {
       try {
         appendRecent(query);
-        const { data } = await axios.get(`${API}/products/suggestions`, {
+        const { data } = await axios.get(`${API}/products/search`, {
           method: "GET",
           headers: {
             token,
@@ -62,7 +62,9 @@ export default function useSearch(params: {
             ? [...prev.results, ...data.results]
             : data.results,
         }));
-      } catch (error: any) {}
+      } catch (error: any) {
+        console.warn(error.response.data);
+      }
     }
   }
 

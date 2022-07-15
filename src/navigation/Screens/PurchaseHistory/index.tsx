@@ -18,11 +18,11 @@ export default function PurchaseHistory() {
     fetchMore({
       variables: { skip },
 
-      updateQuery(prev, { fetchMoreResult }): any {
-        if (!fetchMoreResult) return prev;
+      updateQuery(prev, { fetchMoreResult }) {
+        if (!fetchMoreResult?.history) return prev;
 
         return {
-          auctions: RemoveProductsRepetition(
+          history: RemoveProductsRepetition(
             [...prev.history, ...fetchMoreResult.history],
             "payment_id"
           ),

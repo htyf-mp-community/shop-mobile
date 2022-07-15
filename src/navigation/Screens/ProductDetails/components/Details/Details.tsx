@@ -13,7 +13,11 @@ import { Fonts } from "constants/styles";
 
 const color = "rgba(255,255,255,0.8)";
 
-export default function Details(props: DetailsProps) {
+interface IDetailsProps extends DetailsProps {
+  showPrice?: boolean;
+}
+
+export default function Details({ showPrice = true, ...props }: IDetailsProps) {
   return (
     <View style={styles.container}>
       <View style={[styles.row, styles.between]}>
@@ -25,12 +29,14 @@ export default function Details(props: DetailsProps) {
           <Text style={{ color }}>See more</Text>
         </Ripple>
       </View>
-      <View style={[styles.row, styles.between]}>
-        <Text style={[styles.text]}>${props.price}</Text>
-        <Ripple rippleColor="#fff" style={styles.button}>
-          <Text style={{ color }}>See simmilar</Text>
-        </Ripple>
-      </View>
+      {showPrice && (
+        <View style={[styles.row, styles.between]}>
+          <Text style={[styles.text]}>${props.price}</Text>
+          <Ripple rippleColor="#fff" style={styles.button}>
+            <Text style={{ color }}>See simmilar</Text>
+          </Ripple>
+        </View>
+      )}
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}

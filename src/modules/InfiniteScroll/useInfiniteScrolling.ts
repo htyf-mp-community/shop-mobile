@@ -12,7 +12,7 @@ export default function useInfiniteScrolling<T, K extends {}>(
   const { user } = useUser();
 
   const [state, setState] = useState({
-    loading: false,
+    loading: true,
     error: "",
     data: [] as T[],
     hasMore: false,
@@ -30,8 +30,6 @@ export default function useInfiniteScrolling<T, K extends {}>(
     let cancelToken = axios.CancelToken.source();
 
     try {
-      setState((prev) => ({ ...prev, loading: true }));
-
       const { data } = await axios.get(`${API}${path}`, {
         headers: {
           token: user.token,
@@ -48,7 +46,7 @@ export default function useInfiniteScrolling<T, K extends {}>(
           ...prev,
           hasMore: data.hasMore,
           data: RemoveProductsRepetition(
-            [...prev.data, ...data.results],
+            [...(prev.data || []), ...(data.results || [])],
             !!data.results[0].prod_id ? "prod_id" : "id"
           ),
           loading: false,

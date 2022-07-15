@@ -18,13 +18,12 @@ export default function Cart() {
   const [skip, setSkip] = useState(0);
 
   const onSuccess = useCallback(
-    (data: ProductMinified[]) => {
+    (data) =>
       dispatch(
         cartActions.setCart(
           RemoveProductsRepetition([...cart, ...data], "cart_id")
         )
-      );
-    },
+      ),
     [cart]
   );
 
@@ -53,7 +52,7 @@ export default function Cart() {
 
       <CartList onEndReached={() => setSkip(skip + 5)} data={cart} />
 
-      <Purchase cart={cart as any} />
+      <Purchase cart={cart} />
     </View>
   );
 }

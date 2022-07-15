@@ -1,13 +1,13 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { View, Text } from "react-native";
-import { Product, useNavigationProps } from "../../@types/types";
+import { ProductMinified, useNavigationProps } from "../../@types/types";
 import Button from "../../components/Button/Button";
 import useColorTheme from "@utils/context/ThemeContext";
 import { CalcTotalCartPrice } from "../../functions/CalcTotalCartPrice";
 import styles from "./Purchases.styles";
 
-interface CartProduct extends Product {
+interface CartProduct extends ProductMinified {
   ammount: number;
 }
 

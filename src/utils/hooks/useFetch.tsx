@@ -24,10 +24,9 @@ const DEFAULT_OPTIONS = {
   fetchOnMount: true,
 };
 
-export default function useFetch<T>(
-  path: string,
-  options: SettingsProps<T> = DEFAULT_OPTIONS
-) {
+export default function useFetch<T>(path: `/${string}`, opt: SettingsProps<T>) {
+  const options = Object.freeze({ ...DEFAULT_OPTIONS, ...opt });
+
   const mounted = useRef(false);
   const [state, setState] = useState<StateProps<T>>({
     data: undefined,
@@ -66,6 +65,8 @@ export default function useFetch<T>(
           error: "",
         });
       }
+
+      return data as T;
     } catch (error: any) {
       if (!!options.onError) {
         options.onError(error);
@@ -82,6 +83,29 @@ export default function useFetch<T>(
     }
   }
 
+  type MutateMethods = "put" | "post" | "delete";
+
+  async function mutate(
+    httpMethod: MutateMethods,
+    url: `/${string}`,
+    data = {},
+    callback: (arg: [T, any]) => any
+  ) {
+    return axios({
+      baseURL: API + url,
+      method: httpMethod,
+      headers: {
+        token: user.token,
+      },
+      data,
+    }).then(({ data: response }) => {
+      setState((prev) => ({
+        ...prev,
+        data: callback([state.data!, response]),
+      }));
+    });
+  }
+
   useEffect(() => {
     if (!options.fetchOnMount) return;
 
@@ -96,5 +120,5 @@ export default function useFetch<T>(
     };
   }, options.invalidate);
 
-  return { ...state, setState, refetch: query };
+  return { ...state, setState, refetch: query, mutate };
 }

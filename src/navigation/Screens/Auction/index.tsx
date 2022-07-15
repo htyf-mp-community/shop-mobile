@@ -34,7 +34,7 @@ export default function AuctionScreen({
     >
       <Image
         source={image(data?.auction?.product?.img_id)}
-        style={{ width, height: 200 }}
+        style={{ width: width - 20, height: 250, margin: 10, borderRadius: 5 }}
       />
       {data?.auction?.bids && (
         <>
@@ -53,6 +53,7 @@ export default function AuctionScreen({
       )}
 
       <Details
+        showPrice={false}
         image={`${API}/upload/image=${data?.auction?.product?.img_id[0]?.name}`}
         {...(data?.auction?.product as any)}
       />
