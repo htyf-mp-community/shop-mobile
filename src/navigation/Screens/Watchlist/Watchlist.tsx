@@ -4,15 +4,12 @@ import useColorTheme from "utils/context/ThemeContext";
 import useFetch from "utils/hooks/useFetch";
 import Product from "modules/Product";
 import { Button } from "components";
-
 import { FontAwesome5 } from "@expo/vector-icons";
 import useWatchlist from "utils/hooks/useWatchlist";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "utils/hooks/hooks";
 import { watchlistActions } from "redux/Watchlist/Watchlist";
-
 import Animated, { FadeInDown } from "react-native-reanimated";
-import { useIsFocused } from "@react-navigation/native";
 
 const init = {
   hasMore: false,
@@ -27,26 +24,17 @@ interface FetchProps {
 export default function Watchlist() {
   const { theme } = useColorTheme();
   const dispatch = useDispatch();
-  const { data } = useAppSelector((state) => state.watchlist);
-
-  const isFocused = useIsFocused();
+  const { data, isSynced } = useAppSelector((state) => state.watchlist);
 
   useFetch<FetchProps>("/watchlist", {
-    invalidate: [isFocused],
-    fetchOnMount: true,
+    invalidate: [],
+    fetchOnMount: !isSynced,
     onSuccess: (data = init) => {
       dispatch(watchlistActions.setWatchlist(data));
     },
   });
 
   const { remove } = useWatchlist(-1, { withCheck: false });
-
-  async function onRemove(id: number) {
-    try {
-      await remove(id);
-      dispatch(watchlistActions.removeElement(id));
-    } catch (error) {}
-  }
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.primary }}>
@@ -75,7 +63,7 @@ export default function Watchlist() {
                 icon={
                   <FontAwesome5 name="heart-broken" size={24} color="white" />
                 }
-                onPress={() => onRemove(item.prod_id)}
+                onPress={() => remove(item.prod_id)}
                 variant="primary"
                 style={{
                   justifyContent: "center",

@@ -7,6 +7,8 @@ const initialState = {
   data: [] as ProductMinified[],
   hasMore: false,
   amount: 0,
+
+  isSynced: false,
 };
 
 type State = typeof initialState;
@@ -27,7 +29,15 @@ const watchlistSlice = createSlice({
       state.error = "";
       state.hasMore = payload.hasMore;
       state.amount = state.data.length;
+
+      state.isSynced = true;
     },
+
+    updateWatchlist(state: State, { payload }: any) {
+      state.data = [...state.data, payload as ProductMinified];
+      state.amount += 1;
+    },
+
     removeElement(state: State, { payload }: { payload: number }) {
       state.data = state.data.filter(({ prod_id }) => prod_id !== payload);
       state.amount = state.data.length;

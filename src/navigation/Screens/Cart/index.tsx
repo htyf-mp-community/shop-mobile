@@ -7,9 +7,8 @@ import { useAppDispatch, useAppSelector } from "@utils/hooks/hooks";
 import { cartActions } from "@redux/Cart";
 import useColorTheme from "@utils/context/ThemeContext";
 import Loader from "./components/Loader";
-import { ProductMinified } from "/@types/types";
 import axios from "axios";
-import RemoveProductsRepetition from "functions/RemoveRepetition";
+import removeRepetition from "functions/RemoveRepetition";
 
 export default function Cart() {
   const dispatch = useAppDispatch();
@@ -20,9 +19,7 @@ export default function Cart() {
   const onSuccess = useCallback(
     (data) =>
       dispatch(
-        cartActions.setCart(
-          RemoveProductsRepetition([...cart, ...data], "cart_id")
-        )
+        cartActions.setCart(removeRepetition([...cart, ...data], "cart_id"))
       ),
     [cart]
   );

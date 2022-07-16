@@ -89,7 +89,7 @@ export default function useFetch<T>(path: `/${string}`, opt: SettingsProps<T>) {
     httpMethod: MutateMethods,
     url: `/${string}`,
     data = {},
-    callback: (arg: [T, any]) => any
+    callback: (arg: [T, T]) => T
   ) {
     return axios({
       baseURL: API + url,

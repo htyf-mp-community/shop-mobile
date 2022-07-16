@@ -40,7 +40,7 @@ export default function useWatchlist(
 
   async function appendWatchlist() {
     try {
-      await axios.post(
+      const { data } = await axios.post(
         `${API}/watchlist`,
         { prod_id },
         {
@@ -50,8 +50,8 @@ export default function useWatchlist(
         }
       );
 
+      dispatch(watchlistActions.updateWatchlist(data.product));
       setState("IN");
-      dispatch(watchlistActions.increment());
     } catch (error) {
       setState("IN");
       console.log(error);
