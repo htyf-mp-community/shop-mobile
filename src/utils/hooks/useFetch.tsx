@@ -2,6 +2,8 @@ import axios, { CancelTokenSource } from "axios";
 import { useEffect, useRef, useState } from "react";
 import { API } from "@constants/routes";
 import { useUser } from "@utils/context/UserContext";
+import { useAppDispatch, useAppSelector } from "./hooks";
+import { cacheAction } from "redux/Cache/Cache";
 
 interface StateProps<T> {
   data: T | undefined;
@@ -33,6 +35,10 @@ interface SettingsProps<T> {
   /**
    * How many times should retry  **/
   retryAttempts?: number;
+
+  /**
+   * Should keep response in memory cache **/
+  cache?: boolean;
 }
 
 const DEFAULT_OPTIONS = {
@@ -40,6 +46,7 @@ const DEFAULT_OPTIONS = {
   fetchOnMount: true,
   retry: true,
   retryAttempts: 3,
+  cache: false,
 };
 
 export default function useFetch<T>(
@@ -57,10 +64,21 @@ export default function useFetch<T>(
 
   const { user } = useUser();
 
+  const cache = useAppSelector((state) => state.cache.cache);
+  const dispatch = useAppDispatch();
+
   async function query(
     cancelToken?: CancelTokenSource,
     searchOptions?: Object
   ) {
+    if (options.cache && !!cache[path]) {
+      return setState({
+        loading: false,
+        error: "",
+        data: cache[path],
+      });
+    }
+
     setState((p) => ({
       ...p,
       loading: true,
@@ -76,6 +94,10 @@ export default function useFetch<T>(
         },
         cancelToken: cancelToken?.token,
       });
+
+      if (options.cache) {
+        dispatch(cacheAction.setCacheWithKey({ key: path, data }));
+      }
 
       if (!!options.onSuccess && mounted.current) {
         options?.onSuccess?.(data, setState);

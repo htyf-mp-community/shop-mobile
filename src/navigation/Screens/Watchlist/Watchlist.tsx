@@ -5,7 +5,7 @@ import useFetch from "utils/hooks/useFetch";
 import Product from "modules/Product";
 import { Button } from "components";
 import { FontAwesome5 } from "@expo/vector-icons";
-import useWatchlist from "utils/hooks/useWatchlist";
+import useWatchlist from "modules/AddWatchlist/useWatchlist";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "utils/hooks/hooks";
 import { watchlistActions } from "redux/Watchlist/Watchlist";

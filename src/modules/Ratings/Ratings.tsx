@@ -17,7 +17,7 @@ export default function Ratings({
   rating,
   title,
   description,
-}: ProductRatingProps) {
+}: Omit<ProductRatingProps, "user_id">) {
   const { width } = useWindowDimensions();
   return (
     <View style={[styles.container, { width: width - 20 }]}>

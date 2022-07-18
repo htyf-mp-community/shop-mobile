@@ -1,5 +1,5 @@
 import { Button } from "components";
-import useWatchlist from "utils/hooks/useWatchlist";
+import useWatchlist from "./useWatchlist";
 import Icon from "./Icon";
 
 interface AddWatchlistProps {

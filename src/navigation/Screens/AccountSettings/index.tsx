@@ -5,11 +5,15 @@ import styles from "./styles";
 import { Container, Header } from "@components/index";
 import BottomSheet from "@gorhom/bottom-sheet";
 import useListenKeyboard from "utils/hooks/useListenKeyboard";
-import Block from "./components/Block";
 import SettingsBottomSheet from "navigation/Screens/AccountSettings/components/SettingsSheet";
-import { useAppSelector } from "utils/hooks/hooks";
+import Options from "./components/Options";
 
-type CurrentOptionType = "NAME" | "ADDRESS" | "PHONE_NUMBER" | "SURNAME" | "";
+export type CurrentOptionType =
+  | "NAME"
+  | "ADDRESS"
+  | "PHONE_NUMBER"
+  | "SURNAME"
+  | "";
 
 export default function AccountSettings() {
   const { theme } = useColorTheme();
@@ -33,9 +37,6 @@ export default function AccountSettings() {
   function onSheetClose() {
     sheetRef.current?.close();
   }
-  const { name, surname, phone_number, address } = useAppSelector(
-    (state) => state.user.credentials
-  );
 
   return (
     <Container>
@@ -45,22 +46,7 @@ export default function AccountSettings() {
           <Text style={[styles.heading, { color: theme.text }]}>Settings</Text>
         </View>
 
-        <Block text={name} label="Name" onPress={() => onSheetOpen("NAME")} />
-        <Block
-          text={surname}
-          label="Surname"
-          onPress={() => onSheetOpen("SURNAME")}
-        />
-        <Block
-          text={address}
-          label="Address"
-          onPress={() => onSheetOpen("ADDRESS")}
-        />
-        <Block
-          text={phone_number}
-          label="Phone number"
-          onPress={() => onSheetOpen("PHONE_NUMBER")}
-        />
+        <Options onSheetOpen={onSheetOpen} />
       </View>
 
       <SettingsBottomSheet

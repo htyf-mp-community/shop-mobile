@@ -65,7 +65,6 @@ export default function useWatchlist(
       },
     });
     dispatch(watchlistActions.removeElement(prod_id));
-    setState("NOT");
   }
 
   return { appendWatchlist, state, remove };

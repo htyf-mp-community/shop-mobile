@@ -21,7 +21,9 @@ interface FiltersProps {
 }
 
 const Filters = ({ onSetParams, params, onClearParams }: FiltersProps) => {
-  const { data = [] } = useFetch<readonly string[]>("/products/categories");
+  const { data = [] } = useFetch<readonly string[]>("/products/categories", {
+    cache: true,
+  });
 
   return (
     <>

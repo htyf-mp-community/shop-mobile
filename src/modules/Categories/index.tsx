@@ -5,7 +5,12 @@ import useFetch from "@utils/hooks/useFetch";
 import { SkeletonPlaceholder } from "components";
 
 export default function Categories() {
-  const { data, loading } = useFetch<readonly string[]>("/products/categories");
+  const { data, loading } = useFetch<readonly string[]>(
+    "/products/categories",
+    {
+      cache: true,
+    }
+  );
 
   function renderItem({ item }: { item: string }) {
     return <Category category={item} />;

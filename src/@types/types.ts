@@ -1,6 +1,5 @@
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RouteProp } from "@react-navigation/native";
-import { ProductTypeProps } from "modules/Product";
 
 export type UserContextProviderType = {
   children: React.ReactNode;

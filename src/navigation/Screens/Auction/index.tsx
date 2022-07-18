@@ -3,10 +3,10 @@ import { Image, ScrollView, useWindowDimensions } from "react-native";
 import { Colors } from "constants/styles";
 import { image } from "functions/image";
 import { useAddBid, useGetAuction } from "./hooks";
-import Bid from "./components/Bids/Bid";
-import BidList from "./components/Bids/Bid_list";
+import Bid from "./components/Bid";
+import BidList from "./components/Bid_list";
 import useBoolean from "utils/hooks/useBoolean";
-import Addbid from "./components/Bids/Add_bid";
+import Addbid from "./components/Add_bid";
 import Details from "../ProductDetails/components/Details/Details";
 import { API } from "constants/routes";
 

@@ -3,6 +3,7 @@ import { cartReducer } from "./Cart";
 import { checkoutReducer } from "./Checkout";
 import { userReducers } from "./User";
 import { watchlistReducers } from "./Watchlist/Watchlist";
+import { cacheReducer } from "./Cache/Cache";
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     cart: cartReducer,
     user: userReducers,
     watchlist: watchlistReducers,
+    cache: cacheReducer,
   },
 });
 

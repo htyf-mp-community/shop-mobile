@@ -36,7 +36,7 @@ export default function MainNavigator() {
 
   useFetch("/auth/credentials", {
     invalidate: [isLoggedIn],
-    fetchOnMount: true,
+    fetchOnMount: isLoggedIn,
     onSuccess: (data: Response) => {
       dispatch(userActions.setCredentials(data));
     },
