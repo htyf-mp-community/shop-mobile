@@ -9,11 +9,28 @@ import type { Paging, SuggestionType } from "/@types/types";
 
 type Suggestion = Paging<SuggestionType>;
 
-export default function useSearch(params: {
-  title?: string;
-  price?: string;
+export interface Params {
   category?: string;
-}) {
+  price?: "ASC" | "DESC";
+  title?: "ASC" | "DESC";
+}
+
+export default function useSearch() {
+  const [params, setParams] = useState<{
+    [key in keyof Params]: Params[key];
+  }>({});
+
+  function onSetParams<T extends keyof Params>(key: T, value: Params[T]) {
+    setParams((p) => ({
+      ...p,
+      [key]: value,
+    }));
+  }
+
+  function onClearParams() {
+    setParams({});
+  }
+
   const [query, setQuery] = useState("");
   const [suggestion, setSuggestion] = useState<Suggestion>({
     hasMore: false,
@@ -98,5 +115,14 @@ export default function useSearch(params: {
     }
   }, [skip]);
 
-  return { setQuery, query, suggestion, recent, onEndReached };
+  return {
+    setQuery,
+    query,
+    suggestion,
+    recent,
+    onEndReached,
+    params,
+    onClearParams,
+    onSetParams,
+  };
 }

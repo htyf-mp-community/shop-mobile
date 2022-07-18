@@ -7,7 +7,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useNavigationProps } from "../../@types/types";
 import { Button } from "../../components";
 import Clock from "@components/Clock";
-import useCart from "modules/AddToCart/useCart";
+import useCart from "modules/AddToCart/useAddCart";
 import Ripple from "react-native-material-ripple";
 import Loader from "./Loader";
 import AddWatchlist from "modules/AddWatchlist";

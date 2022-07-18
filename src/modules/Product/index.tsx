@@ -22,14 +22,31 @@ import { PRODUCT_WIDTH, PRODUCT_WIDTH_FULLSIZE } from "./assets";
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
 export type ProductTypeProps = Types.ProductMinified & {
+  /**
+   * Based on route prop component displays Delete button
+   **/
   route?: string;
+  /**
+   * Cart delete function
+   **/
   onRemoveCartProduct?: () => void | Promise<void>;
+  /**
+   * String id used to create shared animation
+   **/
   sharedID?: string;
+  /**
+   * Should product display action buttons by default prop is set to false
+   **/
   hide?: boolean;
-  ammount?: number;
+  /**
+   * Additional styles applied to main product container  **/
   style?: StyleProp<ViewStyle>;
+
+  /**
+   * Should product take all the available space
+   **/
+
   fullSize?: boolean;
-  discounted_price?: null | undefined | number;
 };
 
 const notfound =

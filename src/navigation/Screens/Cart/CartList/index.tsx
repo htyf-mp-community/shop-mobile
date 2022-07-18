@@ -5,7 +5,7 @@ import {
   useWindowDimensions,
   Image,
 } from "react-native";
-import Product from "../Product";
+import Product from "../../../../modules/Product";
 import { Text } from "react-native";
 import useCartDelete from "./useCartDelete";
 import text from "./styles";

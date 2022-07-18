@@ -26,21 +26,15 @@ export default function SearchScreen() {
   const sheetRef = useRef<BottomSheet>(null);
   const navigation = useNavigation<useNavigationProps>();
 
-  const [params, setParams] = useState<{
-    [key in keyof Params]: Params[key];
-  }>({});
-
-  function onSetParams<T extends keyof Params>(key: T, value: Params[T]) {
-    setParams((p) => ({
-      ...p,
-      [key]: value,
-    }));
-  }
-
-  function onClearParams() {
-    setParams({});
-  }
-  const { query, setQuery, suggestion, onEndReached } = useSearch(params);
+  const {
+    query,
+    setQuery,
+    suggestion,
+    onEndReached,
+    params,
+    onClearParams,
+    onSetParams,
+  } = useSearch();
 
   function onSheetOpen() {
     sheetRef.current?.snapToIndex(0);

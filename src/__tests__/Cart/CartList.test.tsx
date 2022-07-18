@@ -1,7 +1,7 @@
 import React from "react";
 import "@testing-library/jest-native/extend-expect";
 import { fireEvent, render } from "@testing-library/react-native";
-import CartList from "../../modules/CartList";
+import CartList from "../../navigation/Screens/Cart/CartList";
 
 jest.mock("@react-native-async-storage/async-storage", () => ({
   AsyncStorageLib: jest.fn(),
@@ -47,16 +47,14 @@ const TESTID = "CART.ELEMENT";
 
 describe("CartList Module", () => {
   it("It renders Correctly", async () => {
-    const { getAllByTestId } = render(
-      <CartList updateCartState={jest.fn} data={testingDataProps} />
-    );
+    const { getAllByTestId } = render(<CartList data={testingDataProps} />);
 
     expect(getAllByTestId(TESTID).length).toEqual(2);
   });
 
   it("It Shows amount", async () => {
     const { getAllByTestId, getByTestId } = render(
-      <CartList updateCartState={jest.fn} data={testingDataProps} />
+      <CartList data={testingDataProps} />
     );
 
     expect(getAllByTestId(TESTID).length).toEqual(2);

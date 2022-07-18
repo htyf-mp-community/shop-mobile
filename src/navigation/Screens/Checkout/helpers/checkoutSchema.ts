@@ -6,7 +6,7 @@ const checkoutSchema = yup.object().shape({
   street: yup.string().required("Address is required"),
   apartment_number: yup.string().required(""),
   city: yup.string().required(""),
-  phone: yup.string().required("Phone is required"),
+  phone: yup.string().length(12).required("Phone is required"),
 });
 
 export default checkoutSchema;

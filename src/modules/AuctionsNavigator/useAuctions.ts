@@ -3,7 +3,7 @@ import { useUser } from "utils/context/UserContext";
 
 const GET_AUCTIONS = gql`
   query Auctions {
-    auctions(take: 2) {
+    auctions(take: 3) {
       auction_id
       product {
         title

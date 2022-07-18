@@ -1,4 +1,4 @@
-import useCart from "modules/AddToCart/useCart";
+import useCart from "modules/AddToCart/useAddCart";
 import React from "react";
 import { View, Image, Text } from "react-native";
 import { SharedElement } from "react-navigation-shared-element";

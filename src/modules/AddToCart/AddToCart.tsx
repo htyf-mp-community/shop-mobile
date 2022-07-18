@@ -3,7 +3,7 @@ import { StyleProp, TextStyle, ViewStyle } from "react-native";
 import { Button } from "@components/index";
 import { Colors } from "@constants/styles";
 import CartIcon from "./CartIcon";
-import useCart from "./useCart";
+import useCart from "./useAddCart";
 
 interface AddtoCartProps {
   prod_id: number;

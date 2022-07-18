@@ -2,7 +2,7 @@ import React from "react";
 import { Text, View } from "react-native";
 import useCheckout from "./hooks/useCheckout";
 import styles from "./styles";
-import { Button, Header } from "components";
+import { Header } from "components";
 import Form from "./components/Form";
 import CheckoutModal from "./components/CheckoutModal";
 import { useAppDispatch } from "utils/hooks/hooks";

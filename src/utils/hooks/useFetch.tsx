@@ -10,21 +10,42 @@ interface StateProps<T> {
 }
 
 interface SettingsProps<T> {
+  /**
+   * If present, effect will only activate if the values in the list change.  **/
   invalidate?: any[];
+  /**
+   * Fetch on component mount, by default true **/
   fetchOnMount?: boolean;
+  /**
+   * Success response handler, replaces default success response handler **/
   onSuccess?: (
     data: T,
     setState: React.Dispatch<React.SetStateAction<StateProps<T>>>
   ) => any;
+  /**
+   * Error handler **/
   onError?: (error: unknown) => any;
+
+  /**
+   * should retry if response failed **/
+  retry?: boolean;
+
+  /**
+   * How many times should retry  **/
+  retryAttempts?: number;
 }
 
 const DEFAULT_OPTIONS = {
   invalidate: [],
   fetchOnMount: true,
+  retry: true,
+  retryAttempts: 3,
 };
 
-export default function useFetch<T>(path: `/${string}`, opt: SettingsProps<T>) {
+export default function useFetch<T>(
+  path: `/${string}`,
+  opt?: SettingsProps<T>
+) {
   const options = Object.freeze({ ...DEFAULT_OPTIONS, ...opt });
 
   const mounted = useRef(false);
@@ -105,6 +126,27 @@ export default function useFetch<T>(path: `/${string}`, opt: SettingsProps<T>) {
       }));
     });
   }
+
+  const retries = useRef(0);
+
+  useEffect(() => {
+    if (
+      options.retry &&
+      !!state.error &&
+      retries.current < options.retryAttempts
+    ) {
+      const cancelToken = axios.CancelToken.source();
+
+      retries.current++;
+
+      let timeoutId = setTimeout(() => query(cancelToken), 500);
+
+      return () => {
+        cancelToken.cancel();
+        clearTimeout(timeoutId);
+      };
+    }
+  }, [state.error, retries.current]);
 
   useEffect(() => {
     if (!options.fetchOnMount) return;

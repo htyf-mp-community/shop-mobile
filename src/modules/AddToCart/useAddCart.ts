@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useUser } from "@utils/context/UserContext";
 import axios, { CancelToken } from "axios";
 import { ENDPOINTS } from "../../constants/routes";
@@ -24,7 +24,7 @@ export default function useCart(prod_id?: number) {
   const [result, setResult] = useState<ResultType>("");
   const dispatch = useDispatch();
 
-  const cancelToken = axios.CancelToken.source();
+  const cancelToken = useRef(axios.CancelToken.source()).current;
 
   function cancelRequest() {
     cancelToken.cancel();
@@ -54,8 +54,6 @@ export default function useCart(prod_id?: number) {
       return data;
     } catch (error: any) {
       setError(error?.["message"]);
-
-      console.log(error.response.data);
     } finally {
       setLoading(false);
     }

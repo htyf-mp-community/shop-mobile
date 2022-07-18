@@ -2,7 +2,6 @@ import { SkeletonPlaceholder } from "components";
 import { ScrollView } from "react-native";
 
 export default function Loader() {
-  // return SkeletonLoader compoennt here to show loading animation
   return (
     <SkeletonPlaceholder
       backgroundColor={"#1f2b3d"}

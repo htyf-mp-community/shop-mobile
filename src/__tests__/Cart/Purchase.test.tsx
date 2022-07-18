@@ -1,7 +1,7 @@
 import "@testing-library/jest-native/extend-expect";
 import { render } from "@testing-library/react-native";
 import { Colors } from "constants/styles";
-import Purchase from "modules/Purchase/Purchase";
+import Purchase from "navigation/Screens/Cart/Purchase/Purchase";
 
 jest.mock("@react-native-async-storage/async-storage", () => ({
   AsyncStorageLib: jest.fn(),
