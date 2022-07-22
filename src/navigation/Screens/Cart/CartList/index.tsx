@@ -29,6 +29,7 @@ export default function CartList({ data, onEndReached }: CartListProps) {
     <VirtualizedList
       testID="cart-list"
       onEndReached={onEndReached}
+      onEndReachedThreshold={0.1}
       ListEmptyComponent={
         <Image
           source={require("@assets/Shopping_Cart.png")}

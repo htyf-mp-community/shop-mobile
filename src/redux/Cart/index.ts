@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ProductMinified } from "/@types/types";
+import { Paging, ProductMinified } from "/@types/types";
 
 interface Cart extends ProductMinified {
   cart_id: number;
@@ -12,6 +12,8 @@ const initialState = {
   empty: false,
   amount: 0,
   isSynced: false,
+
+  hasMore: false,
 };
 
 type State = typeof initialState;
@@ -27,14 +29,16 @@ const cartSlice = createSlice({
       state.error = "";
       state.amount = 0;
       state.cart = [];
+      state.hasMore = false;
     },
 
-    setCart(state: State, { payload }: { payload: any[] }) {
+    setCart(state: State, { payload }: { payload: Paging<Cart> }) {
       state.loading = false;
-      state.cart = payload;
+      state.cart = [...state.cart, ...payload.results];
       state.error = "";
       state.isSynced = true;
-      state.amount = amount(payload);
+      state.amount = amount(state.cart);
+      state.hasMore = payload.hasMore;
       if (state.cart.length > 0) state.empty = false;
     },
     setError(state: State, { payload }: { payload: string }) {

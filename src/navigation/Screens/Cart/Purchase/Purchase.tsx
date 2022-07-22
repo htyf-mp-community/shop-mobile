@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, { useMemo } from "react";
 import { View, Text } from "react-native";
 import { ProductMinified, useNavigationProps } from "../../../../@types/types";
 import Button from "../../../../components/Button/Button";
@@ -17,7 +17,7 @@ interface PurchaseProps {
 
 export default function Purchase({ cart }: PurchaseProps) {
   const navigation = useNavigation<useNavigationProps>();
-  const totalPrice = CalcTotalCartPrice(cart);
+  const totalPrice = useMemo(() => CalcTotalCartPrice(cart), [cart]);
 
   function PurchaseProduct() {
     navigation.navigate("Checkout", { cart, total: totalPrice });
