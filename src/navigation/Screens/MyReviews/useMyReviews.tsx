@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useCallback } from "react";
 import { useQuery, gql } from "@apollo/client";
 import { useUser } from "utils/context/UserContext";
-import RemoveProductsRepetition from "functions/RemoveRepetition";
 import { ProductRatingProps } from "/@types/types";
 
 export type Rating = Omit<ProductRatingProps, "user_id">;
@@ -18,9 +17,13 @@ const GET_RATINGS = gql`
 `;
 
 export default function useMyReviews() {
-  const [skip, setSkip] = useState(0);
+  const [skip, setSkip] = useState(5);
   const { user } = useUser();
-  const { data, loading, client, fetchMore } = useQuery<{
+  const {
+    data,
+    loading = true,
+    fetchMore,
+  } = useQuery<{
     ratings: Rating[];
   }>(GET_RATINGS, {
     context: {
@@ -31,25 +34,12 @@ export default function useMyReviews() {
     variables: { skip: 0 },
   });
 
-  useEffect(() => {
-    fetchMore({
+  const onEndReached = useCallback(async () => {
+    await fetchMore({
       variables: { skip },
-
-      updateQuery(prev, { fetchMoreResult }) {
-        if (!fetchMoreResult?.ratings?.length) return prev;
-
-        return {
-          ratings: RemoveProductsRepetition(
-            [...prev.ratings, ...(fetchMoreResult.ratings || [])],
-            "rating_id"
-          ),
-        };
-      },
     });
-    return () => {
-      client.stop();
-    };
+    setSkip((prev) => prev + 5);
   }, [skip]);
 
-  return { data, loading, setSkip };
+  return { data, loading, onEndReached };
 }

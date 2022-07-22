@@ -10,26 +10,8 @@ import usePurchaseHistory, { IHistory } from "./hooks/usePurchaseHistory";
 LogBox.ignoreAllLogs(true);
 
 export default function PurchaseHistory() {
-  const [skip, setSkip] = useState(0);
-  const { data, loading, fetchMore } = usePurchaseHistory();
+  const { data, loading, onEndReached } = usePurchaseHistory();
   const result = data?.history || [];
-
-  useEffect(() => {
-    fetchMore({
-      variables: { skip },
-
-      updateQuery(prev, { fetchMoreResult }) {
-        if (!fetchMoreResult?.history) return prev;
-
-        return {
-          history: RemoveProductsRepetition(
-            [...prev.history, ...fetchMoreResult.history],
-            "payment_id"
-          ),
-        };
-      },
-    });
-  }, [skip]);
 
   return (
     <View style={{ flex: 1, backgroundColor: Colors.primary }}>
@@ -49,7 +31,8 @@ export default function PurchaseHistory() {
         </SkeletonPlaceholder>
       )}
       <VirtualizedList
-        onEndReached={() => setSkip((prev) => prev + 5)}
+        onEndReached={onEndReached}
+        onEndReachedThreshold={0.1}
         data={result}
         getItem={(d, i) => d[i] as IHistory}
         getItemCount={(d) => d.length}

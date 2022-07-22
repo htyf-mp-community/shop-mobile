@@ -11,7 +11,7 @@ import Ratings from "../../../modules/Ratings/Ratings";
 import useMyReviews, { Rating } from "./useMyReviews";
 
 export default function MyReviews() {
-  const { data, loading, setSkip } = useMyReviews();
+  const { data, loading, onEndReached } = useMyReviews();
   const { width, height } = useWindowDimensions();
 
   return (
@@ -42,11 +42,12 @@ export default function MyReviews() {
       )}
 
       <VirtualizedList
-        onEndReached={() => setSkip((prev) => prev + 5)}
+        onEndReached={onEndReached}
         getItem={(item, index) => item[index] as Rating}
         getItemCount={(item) => item.length}
         initialNumToRender={4}
-        data={data?.ratings}
+        onEndReachedThreshold={0.1}
+        data={data?.ratings || []}
         keyExtractor={({ rating_id }: Rating) => rating_id.toString()}
         renderItem={({ item }) => <Ratings {...item} />}
       />
