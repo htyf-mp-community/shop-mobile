@@ -29,15 +29,13 @@ export default function Checkout() {
 
   const onCancel = () => setIsVisible(false);
 
-  const handleSubmitPayment = async () => {
-    purchase();
-  };
+  const handleSubmitPayment = () => purchase();
 
   return (
     <View style={styles.container}>
       <Header>
         <Text style={{ color: "#fff", fontSize: 20, padding: 10 }}>
-          Total ${total === 0 ? "Loading..." : total.toFixed(2)}
+          {total === 0 ? "Loading..." : "Total $" + total.toFixed(2)}
         </Text>
       </Header>
 

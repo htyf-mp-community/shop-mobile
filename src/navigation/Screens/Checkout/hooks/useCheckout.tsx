@@ -7,6 +7,7 @@ import { checkoutActions } from "@redux/Checkout";
 import { useAppDispatch, useAppSelector } from "utils/hooks/hooks";
 import { cartActions } from "redux/Cart";
 import { initStripe } from "@stripe/stripe-react-native";
+import { useApolloClient } from "@apollo/client";
 
 const publishableKey =
   "pk_test_51KHt5OJFFDDymwGwp9gsCogqhxvzYvyo2wJsIAwSrPflIZjFZn2OtUhBbQAwt9SNek6Ol2e7QZUSh86NJyNByl2m00scfwXXjW";
