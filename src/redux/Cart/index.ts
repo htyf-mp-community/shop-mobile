@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Paging, ProductMinified } from "/@types/types";
 
-interface Cart extends ProductMinified {
+export interface Cart extends ProductMinified {
   cart_id: number;
   ammount: number;
 }
@@ -24,6 +24,7 @@ const amount = (list: Cart[]): number =>
 const cartSlice = createSlice({
   name: "cart",
   initialState,
+
   reducers: {
     clearCart(state: State) {
       state.error = "";
@@ -34,7 +35,7 @@ const cartSlice = createSlice({
 
     setCart(state: State, { payload }: { payload: Paging<Cart> }) {
       state.loading = false;
-      state.cart = [...state.cart, ...payload.results];
+      state.cart = payload.results;
       state.error = "";
       state.isSynced = true;
       state.amount = amount(state.cart);

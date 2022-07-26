@@ -14,7 +14,6 @@ import useColorTheme from "@utils/context/ThemeContext";
 import useFetch from "utils/hooks/useFetch";
 import { useDispatch } from "react-redux";
 import { userActions } from "redux/User";
-import { useAppSelector } from "utils/hooks/hooks";
 
 const Stack = createSharedElementStackNavigator<RootStackParams>();
 
@@ -38,12 +37,10 @@ export default function MainNavigator() {
   useFetch("/auth/credentials", {
     invalidate: [isLoggedIn],
     fetchOnMount: isLoggedIn,
-    onSuccess: (data: Response) => {
+    onSuccess: (data: any) => {
       dispatch(userActions.setCredentials(data));
     },
   });
-
-  const { cart } = useAppSelector((state) => state.cart);
 
   if (isLoading) return null;
 
@@ -102,16 +99,8 @@ export default function MainNavigator() {
                 options={Option.detailsScreenOptions}
                 sharedElements={({ params }, opt) => {
                   const { prod_id, sharedID } = params;
-
-                  // Disable shared animation if product is not in cart
-                  const shouldIncludeCartRoute = !!cart.find(
-                    (prod) => prod.prod_id === prod_id
-                  );
-
                   //prettier-ignore
                   const valid = ["Home","Search","SearchResults","PurchaseHistory","Details",'Watchlist'];
-
-                  shouldIncludeCartRoute && valid.push("Cart");
 
                   if (sharedID && valid.includes(opt.name)) {
                     return ["prod_id." + prod_id + sharedID];

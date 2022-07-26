@@ -50,7 +50,15 @@ export default function CreateReview({
             title: "",
           }}
           validationSchema={schema}
-          onSubmit={(data) => upload({ ...data, prod_id, rating })}
+          onSubmit={(data) =>
+            upload({
+              variables: {
+                ...data,
+                prod_id,
+                rating,
+              },
+            })
+          }
         >
           {({
             handleBlur,

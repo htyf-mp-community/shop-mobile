@@ -47,9 +47,6 @@ export default function Avatar({
               {user?.name.split("@")[0]}
             </Text>
           </Text>
-          <Text style={[styles.username, { fontSize: 15, marginTop: 5 }]}>
-            since 28.08.2021
-          </Text>
         </>
       )}
     </Animated.View>

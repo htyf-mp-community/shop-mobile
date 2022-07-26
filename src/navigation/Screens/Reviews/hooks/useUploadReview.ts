@@ -1,14 +1,6 @@
-import axios from "axios";
-import { API } from "constants/routes";
+import { gql, useMutation } from "@apollo/client";
 import { useState } from "react";
 import { useUser } from "utils/context/UserContext";
-
-interface Input {
-  description: string;
-  title: string;
-  prod_id: number;
-  rating: number;
-}
 
 export interface State {
   status: 201 | 400;
@@ -17,40 +9,67 @@ export interface State {
   hasFinished: boolean;
 }
 
+const CREATE_RATING = gql`
+  mutation CreateRating(
+    $title: String!
+    $description: String!
+    $prod_id: Int!
+    $rating: Int!
+  ) {
+    createRating(
+      rating: {
+        title: $title
+        description: $description
+        prod_id: $prod_id
+        rating: $rating
+      }
+    ) {
+      rating_id
+      rating
+      title
+      description
+    }
+  }
+`;
+
 export default function useUploadReview() {
   const [response, setResponse] = useState<Partial<State>>({});
-
   const { user } = useUser();
 
-  async function asyncPostReview(input: Input, token: string) {
-    return axios.post(`${API}/ratings`, input, {
+  const [post] = useMutation(CREATE_RATING, {
+    context: {
       headers: {
-        token: token,
+        token: user.token,
       },
-    });
-  }
+    },
+    update(cache, { data: { createRating } }) {
+      cache.modify({
+        fields: {
+          ratings(existingRatings = []) {
+            return [...existingRatings, createRating];
+          },
+        },
+      });
+    },
 
-  async function upload(input: Input) {
-    try {
-      const { status } = await asyncPostReview(input, user.token);
+    onCompleted: () => {
       setResponse({
-        status: status as 201 | 400,
+        status: 201,
         error: null,
+        hasFinished: true,
         message:
           "Your opinion has been uploaded, thank you for your contribution",
       });
-    } catch (error: any) {
+    },
+
+    onError: (err) =>
       setResponse({
         status: 400,
-        error: error?.response?.data?.message,
-        message:
-          error?.response?.data?.message ||
-          "Sorry, something went wrong, please try again ",
-      });
-    } finally {
-      setResponse((prev) => ({ ...prev, hasFinished: true }));
-    }
-  }
+        hasFinished: true,
+        error: err.message,
+        message: err.message,
+      }),
+  });
 
-  return { upload, response, setResponse };
+  return { upload: post, response, setResponse };
 }

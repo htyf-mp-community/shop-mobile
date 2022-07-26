@@ -29,7 +29,7 @@ const THEMES = {
     primary100: "#DADDE2",
     primary200: "#B1BDC5",
     primary300: "#889FA5",
-    secondary: "#8685EF",
+    secondary: "#4E2296",
   },
 };
 

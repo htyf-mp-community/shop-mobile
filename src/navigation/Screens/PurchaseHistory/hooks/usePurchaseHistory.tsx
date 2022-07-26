@@ -23,7 +23,6 @@ const GET_HISTORY = gql`
       date
       payment_id
       total_price
-      status
       products {
         history_id
         prod_id {

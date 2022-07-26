@@ -57,15 +57,25 @@ export default function ThemeSheet() {
             Theme settings
           </Text>
 
+          <Text
+            style={{ color: "#fff", marginBottom: 15, textAlign: "center" }}
+          >
+            Functionality currently disabled
+          </Text>
+
           <Row justifyContent="space-between">
-            <Ripple onPress={() => onSwitchTheme("dark")}>
+            <Ripple
+            //   onPress={() => onSwitchTheme("dark")}
+            >
               <Text style={[styles.tip, { color: theme.text }]}>Dark</Text>
               <Image
                 style={styles.image}
                 source={require("../../../../../preview/home.jpg")}
               />
             </Ripple>
-            <Ripple onPress={() => onSwitchTheme("light")}>
+            <Ripple
+            //   onPress={() => onSwitchTheme("light")}
+            >
               <Text style={[styles.tip, { color: theme.text }]}>Light</Text>
               <Image
                 style={styles.image}

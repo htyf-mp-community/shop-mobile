@@ -25,10 +25,17 @@ export default function Purchase({ cart }: PurchaseProps) {
 
   const disabled = cart.length === 0;
 
-  const { theme } = useColorTheme();
+  const { theme, current } = useColorTheme();
 
   return (
-    <View style={[styles.container, { borderTopColor: theme.primary100 }]}>
+    <View
+      style={[
+        styles.container,
+        {
+          borderTopColor: theme.primary100,
+        },
+      ]}
+    >
       <View style={styles.content}>
         <Text style={[styles.text, { color: theme.text }]}>Total:</Text>
         <Text style={[styles.text, { color: theme.text }]}>${totalPrice}</Text>
@@ -38,6 +45,7 @@ export default function Purchase({ cart }: PurchaseProps) {
         disabled={disabled}
         text={`Continue with $${totalPrice}`}
         callback={PurchaseProduct}
+        fontStyle={{ color: "#fff" }}
         style={[
           {
             backgroundColor: !disabled ? theme.secondary : theme.primary100,

@@ -33,7 +33,7 @@ const CartIcon = ({ loading, success, error, style }: IconProps) => {
       <Ionicons
         name="close-outline"
         size={IconSize.small}
-        color={theme.text}
+        color="white"
         style={style}
       />
     );
@@ -43,18 +43,13 @@ const CartIcon = ({ loading, success, error, style }: IconProps) => {
       <Ionicons
         name="checkmark-done"
         size={IconSize.small}
-        color={theme.text}
+        color="white"
         style={style}
       />
     );
   }
   return (
-    <Ionicons
-      name="cart"
-      size={IconSize.large}
-      color={theme.text}
-      style={style}
-    />
+    <Ionicons name="cart" size={IconSize.large} color="white" style={style} />
   );
 };
 
