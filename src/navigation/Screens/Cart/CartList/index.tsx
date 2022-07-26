@@ -10,20 +10,30 @@ import { Text } from "react-native";
 import useCartDelete from "./useCartDelete";
 import text from "./styles";
 import { CartProps } from "/@types/types";
+import Loader from "../components/Loader";
 
 interface CartListProps {
   data: CartProps[];
   onEndReached: () => void;
+  isLoading: boolean;
 }
 
 const getItem = (data: CartProps[], key: number) => {
   return data[key];
 };
 
-export default function CartList({ data, onEndReached }: CartListProps) {
+export default function CartList({
+  data,
+  onEndReached,
+  isLoading,
+}: CartListProps) {
   const { width } = useWindowDimensions();
 
   const onRemoveCartProduct = useCartDelete();
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <VirtualizedList

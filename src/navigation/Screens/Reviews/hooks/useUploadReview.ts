@@ -42,8 +42,10 @@ export default function useUploadReview() {
     } catch (error: any) {
       setResponse({
         status: 400,
-        error: error?.response?.data?.error,
-        message: "Something went wrong, try again",
+        error: error?.response?.data?.message,
+        message:
+          error?.response?.data?.message ||
+          "Sorry, something went wrong, please try again ",
       });
     } finally {
       setResponse((prev) => ({ ...prev, hasFinished: true }));

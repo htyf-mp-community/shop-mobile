@@ -1,6 +1,6 @@
 import { gql, useQuery } from "@apollo/client";
 import { useUser } from "@utils/context/UserContext";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { Product } from "/@types/types";
 
 interface Prods {
@@ -52,6 +52,18 @@ export default function usePurchaseHistory() {
     setSkip((prev) => prev + 5);
   }, [skip]);
 
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onPullToRefresh = useCallback(async () => {
+    setRefreshing(true);
+
+    await fetchMore({
+      variables: { skip: 0, refreshing: true },
+    });
+
+    setRefreshing(false);
+  }, []);
+
   const { data, loading, fetchMore } = useQuery<{
     history: IHistory[];
   }>(GET_HISTORY, {
@@ -62,5 +74,5 @@ export default function usePurchaseHistory() {
     },
   });
 
-  return { data, loading, onEndReached };
+  return { data, loading, onEndReached, onPullToRefresh, refreshing };
 }

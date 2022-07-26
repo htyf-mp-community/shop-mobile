@@ -1,8 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { View, FlatList, VirtualizedList, LogBox } from "react-native";
+import React from "react";
+import {
+  View,
+  FlatList,
+  VirtualizedList,
+  LogBox,
+  RefreshControl,
+} from "react-native";
 import { Colors } from "../../../constants/styles";
 import { SkeletonPlaceholder } from "../../../components";
-import RemoveProductsRepetition from "functions/RemoveRepetition";
 import History from "./components/History";
 
 import usePurchaseHistory, { IHistory } from "./hooks/usePurchaseHistory";
@@ -10,7 +15,8 @@ import usePurchaseHistory, { IHistory } from "./hooks/usePurchaseHistory";
 LogBox.ignoreAllLogs(true);
 
 export default function PurchaseHistory() {
-  const { data, loading, onEndReached } = usePurchaseHistory();
+  const { data, loading, onEndReached, refreshing, onPullToRefresh } =
+    usePurchaseHistory();
   const result = data?.history || [];
 
   return (
@@ -31,6 +37,9 @@ export default function PurchaseHistory() {
         </SkeletonPlaceholder>
       )}
       <VirtualizedList
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onPullToRefresh} />
+        }
         onEndReached={onEndReached}
         onEndReachedThreshold={0.1}
         data={result}
