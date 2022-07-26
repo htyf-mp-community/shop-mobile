@@ -7,30 +7,46 @@ interface CredentialsProps {
   phone_number: string;
 }
 
+const initialState = {
+  isLoggedIn: false,
+  token: "",
+  name: "",
+  user_id: -1,
+
+  isLoading: true,
+
+  credentials: {
+    name: "",
+    surname: "",
+    address: "",
+    phone_number: "",
+  },
+};
+
+type State = typeof initialState;
+
 const User = createSlice({
   name: "user",
-  initialState: {
-    isLoggedIn: false,
-    token: "",
-    name: "",
-    user_id: -1,
+  initialState,
 
-    isLoading: true,
-
-    credentials: {
-      name: "",
-      surname: "",
-      address: "",
-      phone_number: "",
-    },
-  },
   reducers: {
-    setLoggedIn(state) {
+    setLoggedIn(state: State) {
       state.isLoggedIn = true;
       state.isLoading = false;
     },
 
-    setUser(state, { payload }) {
+    setUser(
+      state: State,
+      {
+        payload,
+      }: {
+        payload: {
+          token: string;
+          user_id: number;
+          name: string;
+        };
+      }
+    ) {
       state.isLoggedIn = true;
       state.token = payload.token;
       state.name = payload.name;
@@ -38,21 +54,21 @@ const User = createSlice({
       state.isLoading = false;
     },
 
-    removeUser(state) {
-      state.isLoggedIn = false;
-      state.user_id = -1;
-      state.token = "";
-      state.name = "";
+    removeUser(state: State) {
+      state = initialState;
     },
 
-    setCredentials(state, { payload }) {
+    setCredentials(state: State, { payload }: { payload: CredentialsProps }) {
       state.credentials.address = payload.address;
       state.credentials.name = payload.name;
       state.credentials.surname = payload.surname;
       state.credentials.phone_number = payload.phone_number;
     },
 
-    setCredentialsKey(state, { payload }) {
+    setCredentialsKey(
+      state: State,
+      { payload }: { payload: { value: string; key: string } }
+    ) {
       state.credentials[payload.key as keyof CredentialsProps] = payload.value;
     },
   },

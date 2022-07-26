@@ -13,7 +13,16 @@ interface AppProvidersProps {
   onSplashScreen: () => void;
 }
 
-function merge(existing: any[] = [], incoming: any[] = [], key: string) {
+function merge(
+  existing: any[] = [],
+  incoming: any[] = [],
+  key: string,
+  args: any
+) {
+  if (args?.refreshing) {
+    return incoming;
+  }
+
   if (incoming.length === 0) return existing;
 
   const index = existing.findIndex((r) => r[key] === (incoming?.[0][key] || 0));
@@ -31,11 +40,13 @@ export const client = new ApolloClient({
         fields: {
           ratings: {
             keyArgs: false,
-            merge: (ex, inc) => merge(ex, inc, "rating_id"),
+            merge: (ex, inc, { variables }) =>
+              merge(ex, inc, "rating_id", variables),
           },
           history: {
             keyArgs: false,
-            merge: (ex, inc) => merge(ex, inc, "payment_id"),
+            merge: (ex, inc, { variables }) =>
+              merge(ex, inc, "payment_id", variables),
           },
         },
       },

@@ -7,6 +7,12 @@ import useBoolean from "utils/hooks/useBoolean";
 import styles from "./styles";
 import useColorTheme from "utils/context/ThemeContext";
 import { AntDesign } from "@expo/vector-icons";
+import { useDispatch } from "react-redux";
+import { cacheAction } from "redux/Cache/Cache";
+import { cartActions } from "redux/Cart";
+import { watchlistActions } from "redux/Watchlist/Watchlist";
+import { checkoutActions } from "redux/Checkout";
+import { userActions } from "redux/User";
 
 const { height } = Dimensions.get("screen");
 
@@ -18,6 +24,23 @@ export default function SignOut() {
   const { theme } = useColorTheme();
 
   const color = { color: theme.text };
+
+  const dispatch = useDispatch();
+
+  async function handleSignOut() {
+    // clear cache
+    dispatch(cacheAction.clearCache());
+    // clear cart
+    dispatch(cartActions.clearCart());
+    // clear watchlist
+    dispatch(watchlistActions.clearWatchlist());
+    // clear checkout
+    dispatch(checkoutActions.destroySession());
+    // clear user store
+    dispatch(userActions.removeUser());
+    // remove user from storage
+    RemoveUser();
+  }
 
   return (
     <>
@@ -59,7 +82,7 @@ export default function SignOut() {
             size="xl"
             text="Sign out"
             style={{ width: "45%" }}
-            callback={RemoveUser}
+            callback={handleSignOut}
           />
         </View>
       </Modal>

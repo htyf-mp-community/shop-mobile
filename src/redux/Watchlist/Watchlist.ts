@@ -42,6 +42,10 @@ const watchlistSlice = createSlice({
       state.data = state.data.filter(({ prod_id }) => prod_id !== payload);
       state.amount = state.data.length;
     },
+
+    clearWatchlist(state: State) {
+      state = initialState;
+    },
   },
 });
 

@@ -54,17 +54,19 @@ export default function useWatchlist(
       setState("IN");
     } catch (error) {
       setState("IN");
-      console.log(error);
     }
   }
 
   async function remove(prod_id: number) {
-    await axios.delete(`${API}/watchlist/${prod_id}`, {
-      headers: {
-        token: user.token,
-      },
-    });
-    dispatch(watchlistActions.removeElement(prod_id));
+    try {
+      await axios.delete(`${API}/watchlist/${prod_id}`, {
+        headers: {
+          token: user.token,
+        },
+      });
+      dispatch(watchlistActions.removeElement(prod_id));
+      setState("NOT");
+    } catch (error) {}
   }
 
   return { appendWatchlist, state, remove };
