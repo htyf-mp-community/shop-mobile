@@ -2,6 +2,7 @@ import { useQuery } from "@apollo/client";
 import { Product } from "/@types/types";
 import { useUser } from "utils/context/UserContext";
 import { GET_PRODUCT } from "./schema";
+import { useEffect } from "react";
 
 interface ProductResponse {
   product?: Required<Product>;
@@ -10,7 +11,7 @@ interface ProductResponse {
 export default function useProduct(prod_id: number) {
   const { user } = useUser();
 
-  return useQuery<ProductResponse>(GET_PRODUCT, {
+  const query = useQuery<ProductResponse>(GET_PRODUCT, {
     variables: {
       prod_id,
     },
@@ -20,4 +21,12 @@ export default function useProduct(prod_id: number) {
       },
     },
   });
+
+  useEffect(() => {
+    return () => {
+      query.client.stop();
+    };
+  }, []);
+
+  return query;
 }

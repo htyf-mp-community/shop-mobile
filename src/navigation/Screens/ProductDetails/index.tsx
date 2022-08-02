@@ -1,4 +1,4 @@
-import { memo, useState, useCallback, useEffect } from "react";
+import { memo, useState, useCallback, useRef } from "react";
 import { ScrollView, View, RefreshControl } from "react-native";
 import ImagesCarusel from "./components/ImagesCarusel/ImagesCarusel";
 import { ScreenNavigationProps } from "/@types/types";
@@ -6,21 +6,17 @@ import styles from "./styles";
 import useColorTheme from "@utils/context/ThemeContext";
 import ProductSuggestion from "./components/Suggestions/ProductSuggestion";
 import BottomTab from "./components/BottomTab/BottomTab";
-import DetailsLoader from "./components/Loader";
 import { wait } from "functions/wait";
-import Details from "./components/Details/Details";
+import Details from "./components/Details";
 import useProduct from "./hooks/useProduct";
+import CartSheet from "modules/CartSheet";
+
+import BottomSheet from "@gorhom/bottom-sheet";
 
 function ProductDetails({ route }: Required<ScreenNavigationProps<"Details">>) {
-  const { prod_id, image, sharedID } = route.params;
-  const { data, loading = true, refetch, client } = useProduct(prod_id);
+  const { prod_id, image, sharedID, title } = route.params;
+  const { data, refetch } = useProduct(prod_id);
   const result = data?.product;
-
-  useEffect(() => {
-    return () => {
-      client.stop();
-    };
-  }, []);
 
   const images = [
     { id: 0, name: image?.split("=")[1] },
@@ -37,6 +33,8 @@ function ProductDetails({ route }: Required<ScreenNavigationProps<"Details">>) {
     wait(2000).then(() => setRefreshing(false));
   }, []);
 
+  const sheetRef = useRef<BottomSheet | null>();
+
   return (
     <View style={{ flex: 1, backgroundColor: theme.primary }}>
       <ScrollView
@@ -51,17 +49,24 @@ function ProductDetails({ route }: Required<ScreenNavigationProps<"Details">>) {
       >
         <ImagesCarusel {...{ sharedID, prod_id, images }} />
 
-        <DetailsLoader loading={loading} />
+        <Details
+          {...result}
+          prod_id={prod_id}
+          image={image}
+          title={title}
+          sharedID={sharedID}
+        />
 
-        {!loading && result && (
-          <>
-            <Details image={image} sharedID={sharedID} {...result} />
-
-            <ProductSuggestion text={result.title} />
-          </>
-        )}
+        <ProductSuggestion text={result?.title} />
       </ScrollView>
-      <BottomTab prod_id={prod_id} quantity={result?.quantity || 0} />
+
+      <BottomTab
+        onCartUpdate={() => sheetRef.current?.snapToIndex(0)}
+        prod_id={prod_id}
+        quantity={result?.quantity || 0}
+      />
+
+      <CartSheet product={result} ref={(ref) => (sheetRef.current = ref)} />
     </View>
   );
 }

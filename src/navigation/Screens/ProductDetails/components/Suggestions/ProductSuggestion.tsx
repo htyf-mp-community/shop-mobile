@@ -8,7 +8,7 @@ import useQuerySuggestions from "./useQuerySuggestions";
 import { Fonts } from "constants/styles";
 
 interface SuggestionProps {
-  text: string;
+  text?: string;
 }
 
 export default function ProductSuggestion({

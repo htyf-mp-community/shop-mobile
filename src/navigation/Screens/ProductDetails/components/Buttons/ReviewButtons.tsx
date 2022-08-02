@@ -44,7 +44,7 @@ export default function ReviewButtons({
     <View
       style={{
         justifyContent: "space-around",
-        marginBottom: 20,
+        marginVertical: 15,
         flexDirection: "row",
       }}
     >
