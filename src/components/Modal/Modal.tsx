@@ -1,7 +1,12 @@
 import { ReactNode } from "react";
 
 import RNModal, { ModalProps } from "react-native-modal";
-import { StyleSheet, useWindowDimensions, View } from "react-native";
+import {
+  Dimensions,
+  StyleSheet,
+  useWindowDimensions,
+  View,
+} from "react-native";
 import useColorTheme from "utils/context/ThemeContext";
 import { radius } from "constants/styles";
 
@@ -16,6 +21,8 @@ const styles = StyleSheet.create({
   },
 });
 
+const { height } = Dimensions.get("screen");
+
 export default function Modal({
   children,
   isVisible,
@@ -28,7 +35,16 @@ export default function Modal({
   const backgroundColor = theme.primary;
 
   return (
-    <RNModal isVisible={isVisible} {...rest}>
+    <RNModal
+      isVisible={isVisible}
+      animationIn="zoomIn"
+      animationOut="zoomOutUp"
+      deviceHeight={height}
+      statusBarTranslucent
+      useNativeDriverForBackdrop
+      style={{ alignItems: "center", paddingVertical: 20 }}
+      {...rest}
+    >
       <View
         style={[
           styles.container,

@@ -3,13 +3,6 @@ import { Dimensions, View, StyleSheet, Text } from "react-native";
 import { Padding } from "constants/styles";
 import Ripple from "react-native-material-ripple";
 import { useUser } from "utils/context/UserContext";
-import Color from "color";
-
-interface BidsProps {
-  onOpenModal: () => void;
-  bid: AuctionBid;
-  width?: number;
-}
 
 const { width } = Dimensions.get("window");
 
@@ -46,11 +39,23 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function Bid({ bid, onOpenModal, width: bidWidth }: BidsProps) {
+interface BidsProps {
+  onOpenModal?: () => void;
+  bid: AuctionBid;
+  width?: number;
+  showLabel?: boolean;
+}
+
+export default function Bid({
+  bid,
+  onOpenModal,
+  width: bidWidth,
+  showLabel = false,
+}: BidsProps) {
   const { user } = useUser();
   return (
     <View style={styles.container}>
-      {!bidWidth && (
+      {showLabel && (
         <View style={styles.row}>
           <Text style={styles.helperText}>Highest bid</Text>
           <Ripple onPress={onOpenModal}>

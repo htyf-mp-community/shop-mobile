@@ -21,7 +21,8 @@ interface SkeletonProps {
   children: React.ReactElement;
   backgroundColor?: string;
   highlightColor?: string;
-
+  marginVertical?: number;
+  marginHorizontal?: number;
   size?: ((props: Size) => Size) | Size;
 }
 
@@ -32,6 +33,8 @@ const Skeleton = ({
   backgroundColor = "#1f2b3d",
   highlightColor = "#2a3a52",
   size,
+  marginHorizontal,
+  marginVertical,
 }: SkeletonProps) => {
   const shared = useSharedValue(0);
 
@@ -59,38 +62,40 @@ const Skeleton = ({
   }));
 
   return (
-    <MaskedView
-      androidRenderingMode="software"
-      maskElement={children}
-      style={{
-        width,
-        height,
-      }}
-    >
-      <View style={[styles.background, { backgroundColor }]} />
-      <Reanimated.View style={[StyleSheet.absoluteFill, animatedStyle]}>
-        <MaskedView
-          style={StyleSheet.absoluteFill}
-          maskElement={
-            <LinearGradient
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 0 }}
-              style={StyleSheet.absoluteFill}
-              colors={["transparent", "black", "transparent"]}
+    <View style={{ width, height, marginVertical, marginHorizontal }}>
+      <MaskedView
+        androidRenderingMode="software"
+        maskElement={children}
+        style={{
+          width,
+          height,
+        }}
+      >
+        <View style={[styles.background, { backgroundColor }]} />
+        <Reanimated.View style={[StyleSheet.absoluteFill, animatedStyle]}>
+          <MaskedView
+            style={StyleSheet.absoluteFill}
+            maskElement={
+              <LinearGradient
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+                style={StyleSheet.absoluteFill}
+                colors={["transparent", "black", "transparent"]}
+              />
+            }
+          >
+            <Reanimated.View
+              entering={FadeIn}
+              exiting={FadeOut}
+              style={[
+                StyleSheet.absoluteFill,
+                { backgroundColor: highlightColor },
+              ]}
             />
-          }
-        >
-          <Reanimated.View
-            entering={FadeIn}
-            exiting={FadeOut}
-            style={[
-              StyleSheet.absoluteFill,
-              { backgroundColor: highlightColor },
-            ]}
-          />
-        </MaskedView>
-      </Reanimated.View>
-    </MaskedView>
+          </MaskedView>
+        </Reanimated.View>
+      </MaskedView>
+    </View>
   );
 };
 

@@ -18,24 +18,16 @@ const GET_AUCTION = gql`
       product {
         prod_id
         title
-        price
         rating
-        quantity
         category
+        quantity
         description
-        img_id {
+        img_id(take: 3) {
           id
           name
         }
-
-        rating_id {
-          rating_id
-          rating
-          title
-          description
-        }
       }
-      bids {
+      bids(take: 7) {
         date_add
         bid_id
         amount

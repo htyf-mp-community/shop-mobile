@@ -2,27 +2,25 @@ import { Auction, ScreenNavigationProps } from "/@types/types";
 import { Container } from "components";
 import Header from "./Header";
 import useGetPendingAuctions from "./useGetAuctions";
-import { VirtualizedList, LogBox, View } from "react-native";
+import { VirtualizedList, LogBox } from "react-native";
 import Card from "./Card";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import RemoveProductsRepetition from "functions/RemoveRepetition";
-import Placeholder from "./Placeholder";
 
 LogBox.ignoreAllLogs(true);
 
 export default function Auctions({
   navigation,
 }: Required<ScreenNavigationProps<"Auctions">>) {
-  const [skip, setSkip] = useState(0);
+  const [skip, setSkip] = useState(5);
   const { data, fetchMore, loading } = useGetPendingAuctions();
 
-  useEffect(() => {
+  const onEndReached = useCallback(async () => {
     fetchMore({
       variables: { skip },
 
-      updateQuery(prev, { fetchMoreResult }) {
+      updateQuery: (prev, { fetchMoreResult }) => {
         if (!fetchMoreResult) return prev;
-
         return {
           auctions: RemoveProductsRepetition(
             [...prev.auctions, ...fetchMoreResult.auctions],
@@ -31,11 +29,9 @@ export default function Auctions({
         };
       },
     });
-  }, [skip]);
 
-  const onEndReached = () => {
     setSkip((prev) => prev + 5);
-  };
+  }, [skip]);
 
   return (
     <Container>

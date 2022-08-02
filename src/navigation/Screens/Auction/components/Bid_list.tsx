@@ -1,34 +1,39 @@
 import { AuctionBid } from "/@types/types";
-import { useWindowDimensions, View } from "react-native";
-import Animated, { FadeIn } from "react-native-reanimated";
+import { FlatList, Text } from "react-native";
 import Bid from "./Bid";
-import { Padding } from "constants/styles";
+import { Modal } from "components";
+import { Fonts } from "constants/styles";
 
 interface BidListProps {
   isPresent: boolean;
   bids: AuctionBid[];
+
+  onCloseModal: () => void;
 }
 
-export default function BidList({ isPresent, bids }: BidListProps) {
-  const { width } = useWindowDimensions();
-
-  const CONTAINER_WIDTH = width;
-  const INNER_BID_WIDTH = CONTAINER_WIDTH - Padding.medium * 2;
-
-  return isPresent ? (
-    <View style={{ width: CONTAINER_WIDTH }}>
-      {bids
-        .slice(1, bids.length)
-        .map(({ amount, bid_id, date_add, user }, index) => (
-          <Animated.View key={bid_id} entering={FadeIn.delay(index * 100)}>
-            <Bid
-              key={bid_id}
-              bid={{ amount, bid_id, date_add, user }}
-              onOpenModal={() => {}}
-              width={INNER_BID_WIDTH}
-            />
-          </Animated.View>
-        ))}
-    </View>
-  ) : null;
+export default function BidList({
+  isPresent,
+  bids,
+  onCloseModal,
+}: BidListProps) {
+  return (
+    <Modal
+      isVisible={isPresent}
+      onBackButtonPress={onCloseModal}
+      onBackdropPress={onCloseModal}
+    >
+      {bids.length === 0 && (
+        <Text
+          style={{ fontSize: 25, fontFamily: Fonts.PoppinsBold, color: "#fff" }}
+        >
+          No bids
+        </Text>
+      )}
+      <FlatList
+        data={bids}
+        keyExtractor={(item) => item.bid_id}
+        renderItem={({ item }) => <Bid bid={item} />}
+      />
+    </Modal>
+  );
 }

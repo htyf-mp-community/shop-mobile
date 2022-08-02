@@ -4,7 +4,6 @@ import useAuctions from "./useAuctions";
 import Ripple from "react-native-material-ripple";
 import useColorTheme from "utils/context/ThemeContext";
 import { Fonts } from "constants/styles";
-import { useCallback } from "react";
 import Loader from "./Loader";
 import { useNavigation } from "@react-navigation/native";
 import { useNavigationProps } from "/@types/types";
@@ -12,20 +11,7 @@ import { useNavigationProps } from "/@types/types";
 export default function AuctionsNavigator() {
   const { width } = useWindowDimensions();
   const { data, loading } = useAuctions();
-
   const { theme } = useColorTheme();
-
-  const renderItem = useCallback(
-    ({ item, index }) => (
-      <Auction
-        images={item.product.img_id}
-        isLast={index === data?.auction?.length}
-        {...item}
-      />
-    ),
-    []
-  );
-
   const navigation = useNavigation<useNavigationProps>();
 
   return (
@@ -48,7 +34,13 @@ export default function AuctionsNavigator() {
           showsHorizontalScrollIndicator={false}
           data={data?.auctions}
           keyExtractor={({ auction_id }) => auction_id}
-          renderItem={renderItem}
+          renderItem={({ item, index }) => (
+            <Auction
+              images={item.product.img_id}
+              isLast={index === data?.auction?.length}
+              {...item}
+            />
+          )}
         />
       )}
 

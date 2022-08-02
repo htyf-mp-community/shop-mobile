@@ -24,10 +24,10 @@ export default function useCart(prod_id?: number) {
   const [result, setResult] = useState<ResultType>("");
   const dispatch = useDispatch();
 
-  const cancelToken = useRef(axios.CancelToken.source()).current;
+  const cancelToken = useRef(axios.CancelToken.source());
 
   function cancelRequest() {
-    cancelToken.cancel();
+    cancelToken.current.cancel();
   }
 
   async function addToCartAsync() {
@@ -38,7 +38,7 @@ export default function useCart(prod_id?: number) {
         ENDPOINTS.cartAdd,
         { prod_id },
         {
-          cancelToken: cancelToken.token,
+          cancelToken: cancelToken.current.token,
           headers: {
             token: user.token,
           },

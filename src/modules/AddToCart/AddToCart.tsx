@@ -13,6 +13,8 @@ interface AddtoCartProps {
   iconStyle?: StyleProp<ViewStyle & TextStyle>;
   fontStyle?: StyleProp<TextStyle>;
   disabled?: boolean;
+
+  onRequestFinish?: () => void;
 }
 
 export default function AddToCart({
@@ -23,12 +25,18 @@ export default function AddToCart({
   iconStyle,
   fontStyle,
   disabled,
+  onRequestFinish,
 }: AddtoCartProps) {
   const { pushToCart, loading, error, result, cancelRequest } =
     useCart(prod_id);
 
   const backgroundColor =
     result === "Added" ? Colors.ternary : Colors.secondary;
+
+  async function onPress() {
+    await pushToCart();
+    onRequestFinish?.();
+  }
 
   useEffect(() => {
     return () => {
@@ -40,7 +48,7 @@ export default function AddToCart({
     <Button
       disabled={disabled && !loading}
       text={text}
-      callback={pushToCart}
+      callback={onPress}
       fontStyle={[
         {
           marginLeft: !!text ? 10 : 0,

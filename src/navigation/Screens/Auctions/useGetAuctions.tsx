@@ -2,7 +2,7 @@ import { gql, useQuery } from "@apollo/client";
 import { useUser } from "utils/context/UserContext";
 
 const GET_AUCTIONS = gql`
-  query GetAuctions($skip: Int = 0) {
+  query GetAuctions($skip: Int!) {
     auctions(skip: $skip, take: 5) {
       auction_id
       bids(take: 1) {
@@ -24,10 +24,13 @@ export default function useGetPendingAuctions() {
 
   return useQuery(GET_AUCTIONS, {
     errorPolicy: "ignore",
+    variables: { skip: 0 },
     context: {
       headers: {
         token: user.token,
       },
     },
+
+    onError: (err) => console.log(err),
   });
 }

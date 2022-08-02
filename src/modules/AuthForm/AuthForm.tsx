@@ -17,7 +17,7 @@ import { useNavigation } from "@react-navigation/native";
 import PasswordToggle from "./components/PasswordToggle";
 
 interface AuthFormProps {
-  onSubmit: ({ email, password }: UserInputProps) => void;
+  onSubmit: ({ email, password }: UserInputProps) => Promise<void>;
   header: "Login" | "Register";
   error: string;
   loading: boolean;

@@ -1,22 +1,21 @@
 import { ScreenNavigationProps } from "/@types/types";
-import { Image, ScrollView, useWindowDimensions } from "react-native";
+import { ScrollView, View } from "react-native";
 import { Colors } from "constants/styles";
-import { image } from "functions/image";
 import { useAddBid, useGetAuction } from "./hooks";
 import Bid from "./components/Bid";
 import BidList from "./components/Bid_list";
 import useBoolean from "utils/hooks/useBoolean";
 import Addbid from "./components/Add_bid";
-import Details from "../ProductDetails/components/Details/Details";
+import Details from "../ProductDetails/components/Details";
 import { API } from "constants/routes";
+import ImagesCarusel from "../ProductDetails/components/ImagesCarusel/ImagesCarusel";
+import { SkeletonPlaceholder } from "components";
 
 export default function AuctionScreen({
   route,
 }: Required<ScreenNavigationProps<"Auction">>) {
-  const { data } = useGetAuction(route.params.auction_id);
+  const { data, loading } = useGetAuction(route.params.auction_id);
   const [addBid, { loading: isBidLoading }] = useAddBid();
-
-  const { width } = useWindowDimensions();
   const { state, toggle } = useBoolean();
 
   function onBid(amount: number, auction_id: string) {
@@ -32,31 +31,49 @@ export default function AuctionScreen({
     <ScrollView
       style={{ backgroundColor: Colors.primary, flex: 1, position: "relative" }}
     >
-      <Image
-        source={image(data?.auction?.product?.img_id)}
-        style={{ width: width - 20, height: 250, margin: 10, borderRadius: 5 }}
-      />
-      {data?.auction?.bids && (
+      {loading ? (
+        <SkeletonPlaceholder>
+          <View style={{ flex: 1, alignItems: "center" }}>
+            <SkeletonPlaceholder.Item height={300} width={(w) => w - 20} />
+            <SkeletonPlaceholder.Item height={200} width={(w) => w - 20} />
+            <SkeletonPlaceholder.Item height={200} width={(w) => w - 20} />
+          </View>
+        </SkeletonPlaceholder>
+      ) : (
         <>
-          <Bid
-            bid={data?.auction?.bids[0] ?? { amount: 0 }}
-            onOpenModal={toggle}
+          <ImagesCarusel
+            images={data?.auction?.product?.img_id! || []}
+            sharedID="Auction"
+            prod_id={data?.auction?.product?.prod_id || 0}
           />
-          <BidList bids={data?.auction.bids} isPresent={state} />
-          <Addbid
-            isLoading={isBidLoading}
-            highest={data?.auction.bids?.[0]?.amount || 0}
-            auction_id={route.params.auction_id}
-            onBid={onBid}
+          {data?.auction?.bids && (
+            <>
+              <Bid
+                showLabel
+                bid={data?.auction?.bids[0] ?? { amount: 0 }}
+                onOpenModal={toggle}
+              />
+              <BidList
+                onCloseModal={toggle}
+                bids={data?.auction.bids}
+                isPresent={state}
+              />
+              <Addbid
+                isLoading={isBidLoading}
+                highest={data?.auction.bids?.[0]?.amount || 0}
+                auction_id={route.params.auction_id}
+                onBid={onBid}
+              />
+            </>
+          )}
+
+          <Details
+            showPrice={false}
+            image={`${API}/upload/image=${data?.auction?.product?.img_id[0]?.name}`}
+            {...(data?.auction?.product as any)}
           />
         </>
       )}
-
-      <Details
-        showPrice={false}
-        image={`${API}/upload/image=${data?.auction?.product?.img_id[0]?.name}`}
-        {...(data?.auction?.product as any)}
-      />
     </ScrollView>
   );
 }

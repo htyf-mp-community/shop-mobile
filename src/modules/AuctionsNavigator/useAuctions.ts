@@ -2,18 +2,13 @@ import { gql, useQuery } from "@apollo/client";
 import { useUser } from "utils/context/UserContext";
 
 const GET_AUCTIONS = gql`
-  query Auctions {
-    auctions(take: 3) {
+  query GetAuctionsPreview {
+    auctions(take: 5) {
       auction_id
       product {
-        title
-        img_id {
+        img_id(take: 1) {
           name
         }
-      }
-      date_end
-      bids {
-        amount
       }
     }
   }

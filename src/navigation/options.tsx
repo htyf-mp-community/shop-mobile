@@ -29,32 +29,42 @@ const horizontalAnimation: StackNavigationOptions = {
   },
 };
 
+const horizontalAnimationFromLeft: StackNavigationOptions = {
+  cardStyleInterpolator: ({ current, layouts }) => {
+    return {
+      cardStyle: {
+        transform: [
+          {
+            translateX: current.progress.interpolate({
+              inputRange: [0, 1],
+              outputRange: [-layouts.screen.width, 0],
+            }),
+          },
+        ],
+      },
+    };
+  },
+};
+
 export const defaultStackOptions: StackNavigationOptions = {
   headerShown: HEADER[Platform.OS],
 };
 
-export const auctionOptions: StackNavigationOptions = {};
+export const auctionOptions: StackNavigationOptions = {
+  detachPreviousScreen: false,
+};
 
 export const detailsScreenOptions = ({
   route,
-  navigation,
 }: ScreenNavigationProps<"Details">): StackNavigationOptions => ({
   ...defaultStackOptions,
-  headerTitle: route.params.title.split("").slice(0, 20).join(""),
+  headerTitle: route.params.title.split("").slice(0, 30).join(""),
   headerTitleAlign: "center",
   detachPreviousScreen: false,
   transitionSpec: {
     open: { animation: "timing", config: { duration: 200 } },
     close: { animation: "timing", config: { duration: 200 } },
   },
-  headerRight: ({ tintColor }) => (
-    <Pressable
-      style={{ marginRight: 15 }}
-      onPress={() => navigation?.navigate("Cart")}
-    >
-      <AntDesign name="shoppingcart" size={24} color={tintColor} />
-    </Pressable>
-  ),
 });
 
 export const checkOutScreenOptions: StackNavigationOptions = {
@@ -71,7 +81,9 @@ export const userScreenOptions = (name: string): StackNavigationOptions => ({
 
 export const homeScreenOptions: StackNavigationOptions = { headerShown: false };
 
-export const cartScreenOptions: StackNavigationOptions = {};
+export const cartScreenOptions: StackNavigationOptions = {
+  //  ...horizontalAnimationFromLeft,
+};
 
 export const createReviewOptions = ({
   route: { params },
