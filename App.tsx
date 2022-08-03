@@ -8,6 +8,7 @@ import * as Notification from "expo-notifications";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { EvilIcons } from "@expo/vector-icons";
+import { useUser } from "utils/context/UserContext";
 
 Notification.setNotificationHandler({
   handleNotification: async () => ({
@@ -16,6 +17,16 @@ Notification.setNotificationHandler({
     shouldSetBadge: false,
   }),
 });
+
+function InitApp() {
+  const { ReadUser } = useUser();
+
+  useEffect(() => {
+    ReadUser();
+  }, []);
+
+  return <MainNavigator />;
+}
 
 export default function App() {
   const [appReady, setAppReady] = useState(false);
@@ -57,7 +68,7 @@ export default function App() {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.primary }}>
       <AppProviders onSplashScreen={onSplashScreen}>
-        <MainNavigator />
+        <InitApp />
       </AppProviders>
     </SafeAreaView>
   );

@@ -17,10 +17,11 @@ import { image } from "functions/image";
 
 export default function DailySale() {
   const { data: sale, loading } = useDailySale();
-
   const data = sale?.sale;
-
   const navigation = useNavigation<useNavigationProps>();
+  const { pushToCart, result } = useCart(data?.prod_id || 0);
+  const { theme } = useColorTheme();
+  const isLoaderPresent = loading || !data;
 
   function toProduct() {
     if (data?.prod_id) {
@@ -32,12 +33,6 @@ export default function DailySale() {
       });
     }
   }
-
-  const { pushToCart, result } = useCart(data?.prod_id || 0);
-
-  const { theme } = useColorTheme();
-
-  const isLoaderPresent = loading || !data;
 
   return (
     <View style={styles.container}>

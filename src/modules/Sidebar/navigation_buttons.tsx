@@ -60,12 +60,6 @@ export default function NavigationButtons() {
           onPress={() => navigation.navigate("User")}
         />
       </View>
-
-      <Button
-        style={[styles.button]}
-        text="Sell products"
-        onPress={() => navigation.navigate("Upload")}
-      />
     </>
   );
 }

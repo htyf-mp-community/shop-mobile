@@ -1,8 +1,7 @@
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationOptions } from "@react-navigation/stack";
-import { Platform, Pressable } from "react-native";
+import { Platform } from "react-native";
 import { RootStackParams, ScreenNavigationProps } from "../@types/types";
-import { AntDesign } from "@expo/vector-icons";
 
 const HEADER = {
   android: true,
@@ -48,6 +47,9 @@ const horizontalAnimationFromLeft: StackNavigationOptions = {
 
 export const defaultStackOptions: StackNavigationOptions = {
   headerShown: HEADER[Platform.OS],
+  cardStyle: {
+    backgroundColor: "transparent",
+  },
 };
 
 export const auctionOptions: StackNavigationOptions = {
@@ -82,6 +84,10 @@ export const userScreenOptions = (name: string): StackNavigationOptions => ({
 export const homeScreenOptions: StackNavigationOptions = { headerShown: false };
 
 export const cartScreenOptions: StackNavigationOptions = {
+  // ...horizontalAnimationFromLeft,
+};
+
+export const watchlistScreenOptions: StackNavigationOptions = {
   //  ...horizontalAnimationFromLeft,
 };
 

@@ -7,10 +7,10 @@ import {
 } from "react-native";
 import Product from "../../../../modules/Product";
 import { Text } from "react-native";
-import useCartDelete from "./useCartDelete";
 import text from "./styles";
 import { CartProps } from "/@types/types";
 import Loader from "../components/Loader";
+import { useCart } from "../useCart";
 
 interface CartListProps {
   data: CartProps[];
@@ -29,7 +29,7 @@ export default function CartList({
 }: CartListProps) {
   const { width } = useWindowDimensions();
 
-  const onRemoveCartProduct = useCartDelete();
+  const { remove: onRemoveCartProduct } = useCart();
 
   if (isLoading) {
     return <Loader />;

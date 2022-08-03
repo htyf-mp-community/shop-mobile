@@ -3,17 +3,18 @@ import { useNavigation } from "@react-navigation/native";
 import { Button } from "components";
 import { Fonts } from "constants/styles";
 import { image } from "functions/image";
-import { forwardRef, useCallback } from "react";
+import { forwardRef, useCallback, useEffect } from "react";
 import { Image, Text, View } from "react-native";
 import useColorTheme from "utils/context/ThemeContext";
 import type { Product, useNavigationProps } from "/@types/types";
 
 interface CartSheetProps {
   product?: Product;
+  onDismiss?: () => void;
 }
 
 const CartSheet = forwardRef<BottomSheet, CartSheetProps>(
-  ({ product }, ref) => {
+  ({ product, onDismiss }, ref) => {
     const { theme } = useColorTheme();
 
     const navigation = useNavigation<useNavigationProps>();
@@ -61,7 +62,7 @@ const CartSheet = forwardRef<BottomSheet, CartSheetProps>(
                 }}
               >
                 <Image
-                  source={image(product?.img_id)}
+                  source={image(product?.img_id || undefined)}
                   style={{ width: 100, height: 100 }}
                   // resizeMode="contain"
                 />
@@ -82,7 +83,11 @@ const CartSheet = forwardRef<BottomSheet, CartSheetProps>(
             <View
               style={{ flexDirection: "row", justifyContent: "space-between" }}
             >
-              <Button text="Go back" style={{ width: "25%" }} />
+              <Button
+                text="Go back"
+                style={{ width: "25%" }}
+                onPress={onDismiss}
+              />
               <Button
                 onPress={() => navigation.navigate("Cart")}
                 style={{ width: "70%" }}

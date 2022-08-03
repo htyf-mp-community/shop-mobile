@@ -1,8 +1,6 @@
 import { DarkTheme, NavigationContainer } from "@react-navigation/native";
 import React from "react";
-import { useUser } from "@utils/context/UserContext";
 import { useEffect } from "react";
-import { UploadExpoTokenToServer } from "@utils/notifications/MainNotifications";
 import useNotifications from "@utils/notifications/MainNotifications";
 import { createSharedElementStackNavigator } from "react-navigation-shared-element";
 import type { RootStackParams } from "../@types/types";
@@ -14,25 +12,20 @@ import useColorTheme from "@utils/context/ThemeContext";
 import useFetch from "utils/hooks/useFetch";
 import { useDispatch } from "react-redux";
 import { userActions } from "redux/User";
+import Options from "./Screens/AccountSettings/components/Options";
+import AppLoader from "modules/AppLoader";
 
 const Stack = createSharedElementStackNavigator<RootStackParams>();
 
 export default function MainNavigator() {
-  const { ReadUser } = useUser();
-  const { token, isLoggedIn, name, isLoading } = useCheckToken();
-  const { expoPushToken } = useNotifications();
+  const { isLoggedIn, name, isLoading } = useCheckToken();
+  const { isNotificationsTokenUploaded } = useNotifications();
   const dispatch = useDispatch();
   const { theme, current } = useColorTheme();
 
   useEffect(() => {
-    ReadUser();
+    isNotificationsTokenUploaded();
   }, []);
-
-  useEffect(() => {
-    if (typeof expoPushToken !== "undefined") {
-      UploadExpoTokenToServer(token, expoPushToken);
-    }
-  }, [expoPushToken]);
 
   useFetch("/auth/credentials", {
     invalidate: [isLoggedIn],
@@ -87,6 +80,7 @@ export default function MainNavigator() {
               />
               <Stack.Screen
                 component={Screen.Watchlist}
+                options={Option.watchlistScreenOptions}
                 name="Watchlist"
                 sharedElements={(route) => {
                   const { prod_id, sharedID } = route.params;

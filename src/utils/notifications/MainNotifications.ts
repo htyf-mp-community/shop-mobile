@@ -4,6 +4,9 @@ import { useState, useRef, useEffect } from "react";
 import { registerForPushNotificationsAsync } from "./registerForPushNotificationsAsync";
 import axios from "axios";
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useUser } from "utils/context/UserContext";
+
 export async function UploadExpoTokenToServer(
   jwt: string,
   expoPushToken: string
@@ -21,34 +24,28 @@ export async function UploadExpoTokenToServer(
   } catch (error: any) {}
 }
 
-interface IScheduldeNotificationProps {
-  title: string;
-  body: string;
-  data?: any;
-  trigger: Object;
-}
-
-export async function schedulePushNotification({
-  title,
-  body,
-  data = "",
-  trigger,
-}: IScheduldeNotificationProps) {
-  await Notifications.scheduleNotificationAsync({
-    content: {
-      title,
-      body,
-      data: { data },
-    },
-    trigger: trigger,
-  });
-}
+const NOTIFICATIONS_KEY = "MobileNotifications";
 
 const useNotifications = () => {
   const [expoPushToken, setExpoPushToken] = useState("");
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef<any>();
   const responseListener = useRef<any>();
+
+  const { user } = useUser();
+
+  async function isNotificationsTokenUploaded() {
+    const isSaved = await AsyncStorage.getItem(NOTIFICATIONS_KEY);
+
+    if (isSaved === "false" && !!expoPushToken) {
+      try {
+        await UploadExpoTokenToServer(user.token, expoPushToken);
+      } catch (err) {}
+      try {
+        await AsyncStorage.setItem(NOTIFICATIONS_KEY, "true");
+      } catch (error) {}
+    }
+  }
 
   useEffect(() => {
     registerForPushNotificationsAsync().then((token: any) =>
@@ -73,7 +70,7 @@ const useNotifications = () => {
     };
   }, []);
 
-  return { notification, expoPushToken };
+  return { notification, expoPushToken, isNotificationsTokenUploaded };
 };
 
 export default useNotifications;

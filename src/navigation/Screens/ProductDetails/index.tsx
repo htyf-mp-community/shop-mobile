@@ -66,7 +66,11 @@ function ProductDetails({ route }: Required<ScreenNavigationProps<"Details">>) {
         quantity={result?.quantity || 0}
       />
 
-      <CartSheet product={result} ref={(ref) => (sheetRef.current = ref)} />
+      <CartSheet
+        onDismiss={() => sheetRef.current?.close()}
+        product={result}
+        ref={(ref) => (sheetRef.current = ref)}
+      />
     </View>
   );
 }

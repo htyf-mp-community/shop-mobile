@@ -51,14 +51,10 @@ export const UserContextProvider = ({
       const value = await getItemAsync(USER_PREFIX);
 
       if (value !== null) {
-        setUser(JSON.parse(value));
-        setLoggedIn();
+        setUser({ ...JSON.parse(value), isLoading: false, isLoggedIn: true });
       }
-    } catch (error) {
-      setUser((p) => ({ ...p, isLoading: false }));
     } finally {
       onSplashScreen();
-      setUser((p) => ({ ...p, isLoading: false }));
     }
   }
 
