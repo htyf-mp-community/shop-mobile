@@ -53,14 +53,20 @@ export const defaultStackOptions: StackNavigationOptions = {
 };
 
 export const auctionOptions: StackNavigationOptions = {
+  ...defaultStackOptions,
+  headerTitleAlign: "center",
   detachPreviousScreen: false,
+  transitionSpec: {
+    open: { animation: "timing", config: { duration: 200 } },
+    close: { animation: "timing", config: { duration: 200 } },
+  },
 };
 
 export const detailsScreenOptions = ({
   route,
 }: ScreenNavigationProps<"Details">): StackNavigationOptions => ({
   ...defaultStackOptions,
-  headerTitle: route.params.title.split("").slice(0, 30).join(""),
+  headerTitle: route?.params?.title?.split("").slice(0, 30).join(""),
   headerTitleAlign: "center",
   detachPreviousScreen: false,
   transitionSpec: {

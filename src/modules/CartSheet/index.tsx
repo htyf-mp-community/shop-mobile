@@ -62,7 +62,7 @@ const CartSheet = forwardRef<BottomSheet, CartSheetProps>(
                 }}
               >
                 <Image
-                  source={image(product?.img_id || undefined)}
+                  source={image(product?.img_id?.[0]?.name)}
                   style={{ width: 100, height: 100 }}
                   // resizeMode="contain"
                 />

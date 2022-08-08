@@ -35,11 +35,16 @@ const cartSlice = createSlice({
 
     setCart(state: State, { payload }: { payload: Paging<Cart> }) {
       state.loading = false;
-      state.cart = payload.results;
+      if (!state.isSynced) {
+        state.cart = payload.results;
+      } else {
+        state.cart = [...state.cart, ...payload.results];
+      }
       state.error = "";
       state.isSynced = true;
       state.amount = amount(state.cart);
       state.hasMore = payload.hasMore;
+
       if (state.cart.length > 0) state.empty = false;
     },
     setError(state: State, { payload }: { payload: string }) {

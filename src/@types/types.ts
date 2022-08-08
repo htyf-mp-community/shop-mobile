@@ -3,7 +3,7 @@ import { RouteProp } from "@react-navigation/native";
 
 export type UserContextProviderType = {
   children: React.ReactNode;
-  onSplashScreen: () => void;
+  onSplashScreen?: () => void;
 };
 
 export interface ProductImageProps {
@@ -64,15 +64,16 @@ export type UserContextType = {
   user: UserType;
   setUser: React.Dispatch<React.SetStateAction<UserType>>;
   SaveUser: (props: any) => void;
-  ReadUser: () => void;
+  ReadUser: () => Promise<undefined | UserType>;
   RemoveUser: () => void;
+  updateToken: (s: string) => void;
 };
 
 export type RootStackParams = {
   initialRouteName: Object | undefined;
   Search: undefined;
   Home: undefined;
-  Auction: { auction_id: string };
+  Auction: { auction_id: string; title?: string };
   Auctions: undefined;
   PurchaseHistory: undefined;
   Cart: undefined;

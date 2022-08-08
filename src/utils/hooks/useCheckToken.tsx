@@ -10,8 +10,9 @@ import { UserType } from "../../@types/types";
  * Hook that sends request for new JWT token to the server, if current token is invalid it displays global modal and forces user to sign again
  * @returns {UserType} user state
  **/
+
 export default function useCheckToken(): UserType {
-  const { user, SaveUser, setUser } = useUser();
+  const { user, setUser, updateToken } = useUser();
 
   useEffect(() => {
     const cancelToken = axios.CancelToken.source();
@@ -27,12 +28,7 @@ export default function useCheckToken(): UserType {
             }
           );
 
-          SaveUser({
-            isLoggedIn: true,
-            token: data.token,
-            name: user.name,
-            user_id: data.id,
-          });
+          updateToken(data.token);
         } catch (err: any) {
           if (typeof err?.response?.data !== "undefined") {
             Alert.alert("Session Expired", "Please login again", [

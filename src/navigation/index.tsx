@@ -12,18 +12,19 @@ import useColorTheme from "@utils/context/ThemeContext";
 import useFetch from "utils/hooks/useFetch";
 import { useDispatch } from "react-redux";
 import { userActions } from "redux/User";
-import Options from "./Screens/AccountSettings/components/Options";
-import AppLoader from "modules/AppLoader";
+import { useUser } from "utils/context/UserContext";
 
 const Stack = createSharedElementStackNavigator<RootStackParams>();
 
 export default function MainNavigator() {
-  const { isLoggedIn, name, isLoading } = useCheckToken();
+  const { isLoggedIn, name } = useCheckToken();
   const { isNotificationsTokenUploaded } = useNotifications();
   const dispatch = useDispatch();
   const { theme, current } = useColorTheme();
+  const { ReadUser } = useUser();
 
   useEffect(() => {
+    ReadUser();
     isNotificationsTokenUploaded();
   }, []);
 
@@ -34,8 +35,6 @@ export default function MainNavigator() {
       dispatch(userActions.setCredentials(data));
     },
   });
-
-  if (isLoading) return null;
 
   return (
     <>
@@ -76,7 +75,7 @@ export default function MainNavigator() {
               <Stack.Screen
                 component={Screen.User}
                 name="User"
-                options={() => Option.userScreenOptions(name)}
+                options={() => Option.userScreenOptions(name ?? "")}
               />
               <Stack.Screen
                 component={Screen.Watchlist}

@@ -2,9 +2,9 @@ import { API } from "constants/routes";
 import { ProductImageProps } from "/@types/types";
 import { ImageSourcePropType } from "react-native";
 
-export function image(
-  input: ProductImageProps[] | string | undefined
-): ImageSourcePropType | { uri: string } {
+export function image(input: ProductImageProps[] | string | undefined): {
+  uri: string;
+} {
   if (typeof input === "string") {
     return { uri: `${API}/upload/images=${input}` };
   }

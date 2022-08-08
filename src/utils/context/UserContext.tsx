@@ -19,10 +19,11 @@ export const init: UserType = {
 
 const User = createContext<UserContextType>({
   user: init,
-  ReadUser: () => {},
+  ReadUser: () => new Promise((r, j) => {}),
   RemoveUser: () => {},
   SaveUser: (props: UserType) => {},
   setUser: (prop) => {},
+  updateToken: (token: string) => {},
 });
 
 export const UserContextProvider = ({
@@ -46,6 +47,12 @@ export const UserContextProvider = ({
     }
   }
 
+  async function updateToken(token: string) {
+    await setItemAsync(USER_PREFIX, JSON.stringify({ ...user, token }));
+
+    setUser((prev) => ({ ...prev, token }));
+  }
+
   async function ReadUser() {
     try {
       const value = await getItemAsync(USER_PREFIX);
@@ -53,8 +60,11 @@ export const UserContextProvider = ({
       if (value !== null) {
         setUser({ ...JSON.parse(value), isLoading: false, isLoggedIn: true });
       }
+
+      return JSON.parse(value ?? "{}");
+    } catch (error) {
     } finally {
-      onSplashScreen();
+      onSplashScreen?.();
     }
   }
 
@@ -64,7 +74,9 @@ export const UserContextProvider = ({
   }
 
   return (
-    <User.Provider value={{ user, setUser, SaveUser, ReadUser, RemoveUser }}>
+    <User.Provider
+      value={{ user, setUser, SaveUser, updateToken, ReadUser, RemoveUser }}
+    >
       {children}
     </User.Provider>
   );

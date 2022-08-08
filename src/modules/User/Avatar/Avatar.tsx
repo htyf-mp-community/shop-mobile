@@ -44,7 +44,7 @@ export default function Avatar({
           <Text style={styles.username}>
             Hi!{" "}
             <Text style={{ color: Colors.secondary }}>
-              {user?.name.split("@")[0]}
+              {user?.name?.split("@")[0]}
             </Text>
           </Text>
         </>
