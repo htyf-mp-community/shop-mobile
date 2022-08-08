@@ -4,18 +4,21 @@ import {
   View,
   useWindowDimensions,
   Image,
+  ActivityIndicator,
 } from "react-native";
 import Product from "../../../../modules/Product";
 import { Text } from "react-native";
 import text from "./styles";
 import { CartProps } from "/@types/types";
 import Loader from "../components/Loader";
-import { useCart } from "../useCart";
+import useRemoveCart from "../hooks/useRemoveCart";
+import CartProduct from "../components/CartProduct";
 
 interface CartListProps {
   data: CartProps[];
   onEndReached: () => void;
   isLoading: boolean;
+  isFetchingMore: boolean;
 }
 
 const getItem = (data: CartProps[], key: number) => {
@@ -26,10 +29,9 @@ export default function CartList({
   data,
   onEndReached,
   isLoading,
+  isFetchingMore,
 }: CartListProps) {
   const { width } = useWindowDimensions();
-
-  const { remove: onRemoveCartProduct } = useCart();
 
   if (isLoading) {
     return <Loader />;
@@ -37,6 +39,11 @@ export default function CartList({
 
   return (
     <VirtualizedList
+      ListFooterComponent={
+        isFetchingMore ? (
+          <ActivityIndicator color="#fff" size={"large"} />
+        ) : null
+      }
       testID="cart-list"
       onEndReached={onEndReached}
       onEndReachedThreshold={0.1}
@@ -48,12 +55,13 @@ export default function CartList({
       }
       showsVerticalScrollIndicator={false}
       getItem={getItem}
-      initialNumToRender={3}
+      initialNumToRender={5}
       getItemCount={(data) => data.length}
       keyExtractor={({ prod_id }) => prod_id.toString()}
       data={data}
       renderItem={({ item }) => (
-        <View
+        <CartProduct product={item} />
+        /*     <View
           style={{ position: "relative" }}
           testID="CART.ELEMENT"
           accessibilityLabel="Item"
@@ -68,7 +76,7 @@ export default function CartList({
           <Text style={text} testID={`CART.ELEMENT.${item.prod_id}`}>
             {item.ammount}
           </Text>
-        </View>
+        </View> */
       )}
     />
   );

@@ -3,18 +3,16 @@ import { View, Text, Alert } from "react-native";
 import Purchase from "navigation/Screens/Cart/Purchase/Purchase";
 import CartList from "navigation/Screens/Cart/CartList";
 import useColorTheme from "@utils/context/ThemeContext";
-import { useCart } from "./useCart";
+import { useCart } from "./hooks/useCart";
 import { ScreenNavigationProps } from "/@types/types";
 import Ripple from "react-native-material-ripple";
+import useRemoveCart from "./hooks/useRemoveCart";
 
 export default function Cart({ navigation }: ScreenNavigationProps<"Cart">) {
   const { theme } = useColorTheme();
-  const {
-    cart,
-    isLoading,
-    onEndReached,
-    remove: removeAllProductsFromCartAsync,
-  } = useCart();
+  const { cart, isLoading, onEndReached, isFetchingMore } = useCart();
+
+  const { remove } = useRemoveCart();
 
   useLayoutEffect(() => {
     navigation?.setOptions({
@@ -30,7 +28,7 @@ export default function Cart({ navigation }: ScreenNavigationProps<"Cart">) {
                 { text: "Cancel", style: "cancel" },
                 {
                   text: "Confirm",
-                  onPress: () => removeAllProductsFromCartAsync(0, true),
+                  onPress: () => remove(0, true),
                   style: "destructive",
                 },
               ]
@@ -45,7 +43,12 @@ export default function Cart({ navigation }: ScreenNavigationProps<"Cart">) {
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.primary }}>
-      <CartList isLoading={isLoading} onEndReached={onEndReached} data={cart} />
+      <CartList
+        isFetchingMore={isFetchingMore}
+        isLoading={isLoading}
+        onEndReached={onEndReached}
+        data={cart}
+      />
       <Purchase cart={cart} />
     </View>
   );

@@ -25,7 +25,7 @@ export default function Purchase({ cart }: PurchaseProps) {
 
   const disabled = cart.length === 0;
 
-  const { theme, current } = useColorTheme();
+  const { theme } = useColorTheme();
 
   return (
     <View
