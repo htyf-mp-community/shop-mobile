@@ -10,13 +10,20 @@ import Details from "../ProductDetails/components/Details";
 import { API } from "constants/routes";
 import ImagesCarusel from "../ProductDetails/components/ImagesCarusel/ImagesCarusel";
 import { SkeletonPlaceholder } from "components";
+import { useEffect } from "react";
 
 export default function AuctionScreen({
   route,
+  navigation,
 }: Required<ScreenNavigationProps<"Auction">>) {
   const { data, loading } = useGetAuction(route.params.auction_id);
   const [addBid, { loading: isBidLoading }] = useAddBid();
   const { state, toggle } = useBoolean();
+
+  useEffect(() => {
+    if (!!data?.auction)
+      navigation.setOptions({ title: data.auction.product?.title });
+  }, [data?.auction]);
 
   function onBid(amount: number, auction_id: string) {
     return addBid({

@@ -39,12 +39,8 @@ export default function useRecent() {
   }
 
   useEffect(() => {
-    loadRecentAsync();
-  }, []);
-
-  useEffect(() => {
     if (!!recent.length) saveRecentAsync();
   }, [recent]);
 
-  return { recent, removeRecent, appendRecent };
+  return { recent, removeRecent, appendRecent, loadRecentAsync };
 }

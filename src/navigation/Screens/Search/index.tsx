@@ -10,6 +10,7 @@ import Filters from "./components/Filters";
 import type { SuggestionType } from "/@types/types";
 import HeaderActions from "./components/HeaderActions";
 import RecentSearches from "./components/RecentSearches";
+import RecentGrid from "./components/RecentGrid";
 
 export interface Params {
   category?: string;
@@ -67,17 +68,21 @@ export default function SearchScreen() {
 
       <RecentSearches query={query} data={suggestion.results} />
 
-      <VirtualizedList
-        data={suggestion.results}
-        onEndReached={onEndReached}
-        keyExtractor={({ prod_id }) => prod_id.toString()}
-        getItemCount={(data) => data.length}
-        getItem={getItem}
-        initialNumToRender={2}
-        renderItem={({ item, index }) => (
-          <Suggestion index={index} navigation={navigation} {...item} />
-        )}
-      />
+      {suggestion.results.length > 0 && (
+        <VirtualizedList
+          data={suggestion.results}
+          onEndReached={onEndReached}
+          keyExtractor={({ prod_id }) => prod_id.toString()}
+          getItemCount={(data) => data.length}
+          getItem={getItem}
+          initialNumToRender={2}
+          renderItem={({ item, index }) => (
+            <Suggestion index={index} navigation={navigation} {...item} />
+          )}
+        />
+      )}
+
+      {/*    <RecentGrid /> */}
 
       <BottomSheet
         ref={sheetRef}

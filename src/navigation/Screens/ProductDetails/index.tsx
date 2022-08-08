@@ -13,7 +13,9 @@ import CartSheet from "modules/CartSheet";
 
 import BottomSheet from "@gorhom/bottom-sheet";
 
-function ProductDetails({ route }: Required<ScreenNavigationProps<"Details">>) {
+export default function ProductDetails({
+  route,
+}: Required<ScreenNavigationProps<"Details">>) {
   const { prod_id, image, sharedID, title } = route.params;
   const { data, refetch } = useProduct(prod_id);
   const result = data?.product;
@@ -74,5 +76,3 @@ function ProductDetails({ route }: Required<ScreenNavigationProps<"Details">>) {
     </View>
   );
 }
-
-export default memo(ProductDetails);
