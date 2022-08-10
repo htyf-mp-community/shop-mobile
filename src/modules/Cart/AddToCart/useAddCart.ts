@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { useUser } from "@utils/context/UserContext";
-import axios, { CancelToken } from "axios";
-import { ENDPOINTS } from "../../constants/routes";
+import axios from "axios";
+import { ENDPOINTS } from "@constants/routes";
 import useDelay from "utils/hooks/useDelay";
 import { useDispatch } from "react-redux";
 import { cartActions } from "redux/Cart";

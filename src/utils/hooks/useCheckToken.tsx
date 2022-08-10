@@ -12,7 +12,7 @@ import { UserType } from "../../@types/types";
  **/
 
 export default function useCheckToken(): UserType {
-  const { user, setUser, updateToken } = useUser();
+  const { user, setUser, updateToken, SaveUser } = useUser();
 
   useEffect(() => {
     const cancelToken = axios.CancelToken.source();
@@ -28,7 +28,7 @@ export default function useCheckToken(): UserType {
             }
           );
 
-          updateToken(data.token);
+          SaveUser({ ...user, token: data.token, user_id: data.id });
         } catch (err: any) {
           if (typeof err?.response?.data !== "undefined") {
             Alert.alert("Session Expired", "Please login again", [

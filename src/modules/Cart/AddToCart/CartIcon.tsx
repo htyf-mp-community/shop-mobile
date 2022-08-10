@@ -6,7 +6,7 @@ import {
   TextStyle,
   ViewStyle,
 } from "react-native";
-import { IconSize } from "../../constants/styles";
+import { IconSize } from "@constants/styles";
 import useColorTheme from "utils/context/ThemeContext";
 
 interface IconProps {

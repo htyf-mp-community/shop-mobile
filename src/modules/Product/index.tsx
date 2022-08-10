@@ -9,7 +9,7 @@ import {
   ViewStyle,
 } from "react-native";
 import Button from "../../components/Button/Button";
-import AddToCart from "../AddToCart/AddToCart";
+import AddToCart from "../Cart/AddToCart/AddToCart";
 import { API } from "../../constants/routes";
 import { useNavigation } from "@react-navigation/native";
 import { SharedElement } from "react-navigation-shared-element";

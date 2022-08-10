@@ -1,4 +1,4 @@
-import AddToCart from "modules/AddToCart/AddToCart";
+import AddToCart from "modules/Cart/AddToCart/AddToCart";
 import useColorTheme from "utils/context/ThemeContext";
 import Animated, { ZoomIn } from "react-native-reanimated";
 import styles from "../../styles";

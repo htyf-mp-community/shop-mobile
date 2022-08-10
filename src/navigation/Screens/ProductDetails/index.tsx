@@ -1,7 +1,7 @@
 import { memo, useState, useCallback, useRef } from "react";
 import { ScrollView, View, RefreshControl } from "react-native";
 import ImagesCarusel from "./components/ImagesCarusel/ImagesCarusel";
-import { ScreenNavigationProps } from "/@types/types";
+import { Product, ScreenNavigationProps } from "/@types/types";
 import styles from "./styles";
 import useColorTheme from "@utils/context/ThemeContext";
 import ProductSuggestion from "./components/Suggestions/ProductSuggestion";
@@ -9,7 +9,7 @@ import BottomTab from "./components/BottomTab/BottomTab";
 import { wait } from "functions/wait";
 import Details from "./components/Details";
 import useProduct from "./hooks/useProduct";
-import CartSheet from "modules/CartSheet";
+import CartSheet from "modules/Cart/CartSheet";
 
 import BottomSheet from "@gorhom/bottom-sheet";
 
@@ -70,7 +70,7 @@ export default function ProductDetails({
 
       <CartSheet
         onDismiss={() => sheetRef.current?.close()}
-        product={result}
+        product={{ ...(result as Product), prod_id }}
         ref={(ref) => (sheetRef.current = ref)}
       />
     </View>

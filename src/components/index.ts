@@ -13,3 +13,4 @@ export { default as Modal } from "./Modal/Modal";
 export { default as BackButton } from "./BackButton/index";
 export { default as Header } from "./Header/Header";
 export { default as Row } from "./Row/index";
+export { default as IconButton } from "./IconButton/IconButton";
