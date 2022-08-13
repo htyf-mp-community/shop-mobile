@@ -56,7 +56,7 @@ const CartSheet = forwardRef<BottomSheet, CartSheetProps>(
                 </Text>
                 <View style={{ flexDirection: "row", marginTop: 10 }}>
                   <CartRemoveIconButton
-                    amount={cartProduct?.ammount}
+                    isDisabled={cartProduct.ammount === 1}
                     cart_id={cartProduct?.cart_id}
                   />
                   <Text style={styles.amount_text}>{cartProduct?.ammount}</Text>

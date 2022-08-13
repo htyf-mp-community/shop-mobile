@@ -10,7 +10,6 @@ import { API } from "constants/routes";
 
 interface AppProvidersProps {
   children: ReactNode;
-  onSplashScreen: () => void;
 }
 
 function merge(
@@ -54,18 +53,13 @@ export const client = new ApolloClient({
   }),
 });
 
-export default function AppProviders({
-  children,
-  onSplashScreen,
-}: AppProvidersProps) {
+export default function AppProviders({ children }: AppProvidersProps) {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <Provider store={store}>
         <ApolloProvider client={client}>
           <ThemeContextProvider>
-            <UserContextProvider onSplashScreen={onSplashScreen}>
-              {children}
-            </UserContextProvider>
+            <UserContextProvider>{children}</UserContextProvider>
           </ThemeContextProvider>
         </ApolloProvider>
       </Provider>

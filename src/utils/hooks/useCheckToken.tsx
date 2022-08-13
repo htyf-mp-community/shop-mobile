@@ -6,13 +6,8 @@ import { Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { UserType } from "../../@types/types";
 
-/**
- * Hook that sends request for new JWT token to the server, if current token is invalid it displays global modal and forces user to sign again
- * @returns {UserType} user state
- **/
-
 export default function useCheckToken(): UserType {
-  const { user, setUser, updateToken, SaveUser } = useUser();
+  const { user, setUser, SaveUser } = useUser();
 
   useEffect(() => {
     const cancelToken = axios.CancelToken.source();

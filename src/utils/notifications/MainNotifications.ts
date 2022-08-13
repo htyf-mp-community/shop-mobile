@@ -3,9 +3,7 @@ import { ENDPOINTS } from "@constants/routes";
 import { useState, useRef, useEffect } from "react";
 import { registerForPushNotificationsAsync } from "./registerForPushNotificationsAsync";
 import axios from "axios";
-
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useUser } from "utils/context/UserContext";
 
 export async function UploadExpoTokenToServer(
   jwt: string,
@@ -32,14 +30,12 @@ const useNotifications = () => {
   const notificationListener = useRef<any>();
   const responseListener = useRef<any>();
 
-  const { user } = useUser();
-
-  async function isNotificationsTokenUploaded() {
+  async function isNotificationsTokenUploaded(token: string) {
     const isSaved = await AsyncStorage.getItem(NOTIFICATIONS_KEY);
 
     if (isSaved === "false" && !!expoPushToken) {
       try {
-        await UploadExpoTokenToServer(user.token, expoPushToken);
+        await UploadExpoTokenToServer(token, expoPushToken);
       } catch (err) {}
       try {
         await AsyncStorage.setItem(NOTIFICATIONS_KEY, "true");

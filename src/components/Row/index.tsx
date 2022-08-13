@@ -1,18 +1,9 @@
 import { ReactNode } from "react";
-import { StyleProp, View, ViewStyle } from "react-native";
+import { FlexStyle, StyleProp, View, ViewStyle } from "react-native";
 
-type JustifyContent =
-  | "center"
-  | "flex-start"
-  | "flex-end"
-  | "space-around"
-  | "space-between"
-  | "space-evenly";
-
-interface RowProps {
+interface RowProps extends Pick<FlexStyle, "justifyContent"> {
   children: ReactNode;
   style?: StyleProp<ViewStyle>;
-  justifyContent?: JustifyContent;
 }
 
 export default function Row({ children, style, justifyContent }: RowProps) {

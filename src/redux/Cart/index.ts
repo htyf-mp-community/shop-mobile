@@ -68,7 +68,6 @@ const cartSlice = createSlice({
 
         state.cart = copy;
       }
-
       state.amount = amount(copy);
     },
 

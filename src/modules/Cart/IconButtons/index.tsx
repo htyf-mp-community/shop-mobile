@@ -5,15 +5,14 @@ import useAddCart from "@modules/Cart/AddToCart/useAddCart";
 
 export const CartRemoveIconButton = ({
   cart_id,
-  amount,
+  isDisabled: isButtonDisabled = false,
 }: {
   cart_id: number;
-  amount?: number;
+  isDisabled?: boolean;
 }) => {
   const { remove, loading: loadingRemove } = useRemoveCart();
 
-  const isDisabled =
-    loadingRemove || (amount === undefined ? false : amount === 1);
+  const isDisabled = loadingRemove || isButtonDisabled;
 
   return (
     <IconButton

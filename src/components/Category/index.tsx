@@ -8,10 +8,6 @@ interface CategoryProps {
   category: string;
 }
 
-/**
- * @param {String} category text displayed inside component
- **/
-
 export default function Category({ category }: CategoryProps) {
   const navigation = useNavigation<useNavigationProps>();
 

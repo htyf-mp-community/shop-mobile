@@ -15,17 +15,24 @@ import useColorTheme from "utils/context/ThemeContext";
 
 interface ButtonProps extends RippleProps {
   text?: string;
+  /** Function called on onPress event */
   callback?: () => void;
   icon?: React.ReactNode;
   style?: StyleProp<ViewStyle>;
+  /** Styles applied to button's text */
   fontStyle?: StyleProp<TextStyle>;
+  /** Styles applied to icon's container */
   iconStyle?: StyleProp<ViewStyle>;
+  /** DEPRECATED Style variants of button component */
   variant?: keyof typeof VARIANTS;
-  badge?: string | number;
+  /** Floating element to display number */
+  badge?: number;
   size?: keyof typeof BUTTON_SIZE;
   borderRadius?: keyof typeof BUTTON_BORDER_RADIUS;
   disabled?: boolean;
+  /**  Style variants of button component */
   type?: keyof typeof BUTTON_TYPES;
+  /** Color variants of button */
   color?: keyof typeof VARIANTS;
 }
 

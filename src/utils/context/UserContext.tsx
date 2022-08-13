@@ -4,7 +4,7 @@ import type {
   UserContextType,
   UserType,
 } from "/@types/types";
-
+import { hideAsync } from "expo-splash-screen";
 import { setItemAsync, getItemAsync, deleteItemAsync } from "expo-secure-store";
 
 export const USER_PREFIX = "react-native-shop-user";
@@ -26,11 +26,8 @@ const User = createContext<UserContextType>({
   updateToken: (token: string) => {},
 });
 
-export const UserContextProvider = ({
-  children,
-  onSplashScreen,
-}: UserContextProviderType) => {
-  const [user, setUser] = useState<UserType>(init);
+export const UserContextProvider = ({ children }: UserContextProviderType) => {
+  const [user, setUser] = useState(init);
 
   const setLoggedIn = () => setUser((p) => ({ ...p, isLoggedIn: true }));
 
@@ -63,8 +60,9 @@ export const UserContextProvider = ({
 
       return JSON.parse(value ?? "{}");
     } catch (error) {
+      setUser((prev) => ({ ...prev, isLoading: false }));
     } finally {
-      onSplashScreen?.();
+      await hideAsync();
     }
   }
 

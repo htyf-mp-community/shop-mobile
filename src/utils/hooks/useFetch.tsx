@@ -13,10 +13,10 @@ interface StateProps<T> {
 
 interface SettingsProps<T> {
   /**
-   * If present, effect will only activate if the values in the list change.  **/
+   * If present, effect will only activate if the values in the list change.  */
   invalidate?: any[];
   /**
-   * Fetch on component mount, by default true **/
+   * fetch data on component mount */
   fetchOnMount?: boolean;
   /**
    * Success response handler, replaces default success response handler **/
@@ -37,7 +37,7 @@ interface SettingsProps<T> {
   retryAttempts?: number;
 
   /**
-   * Should keep response in memory cache **/
+   * cache results **/
   cache?: boolean;
 }
 

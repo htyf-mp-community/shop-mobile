@@ -4,14 +4,10 @@ import { Animated, Dimensions } from "react-native";
 const { width } = Dimensions.get("screen");
 
 interface DotsProps {
+  /** Array of any elements, length of the array represents amount of the dots */
   arr: any[];
   x: Animated.Value;
 }
-
-/**
- * @param {Array} arr length of the Array represents ammount of dots
- * @param {Animated.Value} x Based on this value, component interpolates dots current active position
- **/
 
 export default function Dots({ arr, x }: DotsProps) {
   return (

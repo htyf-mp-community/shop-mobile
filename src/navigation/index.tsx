@@ -1,47 +1,25 @@
 import { DarkTheme, NavigationContainer } from "@react-navigation/native";
 import React from "react";
-import { useEffect } from "react";
-import useNotifications from "@utils/notifications/MainNotifications";
 import { createSharedElementStackNavigator } from "react-navigation-shared-element";
-import type { RootStackParams } from "../@types/types";
+import type { RootStackParams } from "/@types/types";
 import useCheckToken from "utils/hooks/useCheckToken";
 import * as Screen from "./Screens";
 import * as Option from "./options";
 import { StatusBar } from "expo-status-bar";
 import useColorTheme from "@utils/context/ThemeContext";
-import useFetch from "utils/hooks/useFetch";
-import { useDispatch } from "react-redux";
-import { userActions } from "redux/User";
-import { useUser } from "utils/context/UserContext";
 
 const Stack = createSharedElementStackNavigator<RootStackParams>();
 
 export default function MainNavigator() {
   const { isLoggedIn, name } = useCheckToken();
-  const { isNotificationsTokenUploaded } = useNotifications();
-  const dispatch = useDispatch();
   const { theme, current } = useColorTheme();
-  const { ReadUser } = useUser();
-
-  useEffect(() => {
-    ReadUser();
-    isNotificationsTokenUploaded();
-  }, []);
-
-  useFetch("/auth/credentials", {
-    invalidate: [isLoggedIn],
-    fetchOnMount: isLoggedIn,
-    onSuccess: (data: any) => {
-      dispatch(userActions.setCredentials(data));
-    },
-  });
 
   return (
     <>
       <StatusBar backgroundColor={theme.primary} />
       <NavigationContainer theme={current === "dark" ? DarkTheme : undefined}>
         <Stack.Navigator
-          initialRouteName={"Landing"}
+          initialRouteName={isLoggedIn ? "Home" : "Landing"}
           screenOptions={{
             ...Option.defaultStackOptions,
             headerStyle: { backgroundColor: theme.primary },
