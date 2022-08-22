@@ -1,11 +1,11 @@
 import { FlatList, Image, Text } from "react-native";
 import Ripple from "react-native-material-ripple";
-import { API } from "@constants/routes";
 import { useNavigation } from "@react-navigation/native";
 import type { ProductMinified, useNavigationProps } from "/@types/types";
 import { image } from "functions/image";
 import useQuerySuggestions from "./useQuerySuggestions";
 import { Fonts } from "constants/styles";
+import { useMemo } from "react";
 
 interface SuggestionProps {
   text?: string;
@@ -18,19 +18,24 @@ export default function ProductSuggestion({
 
   const navigation = useNavigation<useNavigationProps>();
 
-  function onReplaceScreen(item: ProductMinified) {
+  function navigateProduct(item: ProductMinified) {
     navigation.push("Details", {
-      image: `${API}/upload/images=${item.img_id?.[0].name}`,
+      image: image(item.img_id).uri,
       title: item.title,
       prod_id: item.prod_id,
       sharedID: "",
     });
   }
 
-  const hasMoreThanOne =
-    typeof data?.suggestions === "undefined" || data?.suggestions.length === 1;
+  const filteredProducts = useMemo(
+    () => data?.suggestions.filter(({ title }) => title !== productTitle),
+    [data?.suggestions]
+  );
 
-  return !hasMoreThanOne ? (
+  const hasMoreThanOne =
+    typeof data?.suggestions !== "undefined" && data?.suggestions.length > 1;
+
+  return hasMoreThanOne ? (
     <>
       <Text
         style={{
@@ -43,14 +48,14 @@ export default function ProductSuggestion({
         Check these out
       </Text>
       <FlatList
-        data={data?.suggestions.filter(({ title }) => title !== productTitle)}
+        data={filteredProducts}
         horizontal
         showsHorizontalScrollIndicator={false}
         style={{ padding: 5, marginBottom: 10 }}
         keyExtractor={({ prod_id }) => prod_id.toString()}
         renderItem={({ item, index }) => (
           <Ripple
-            onPress={() => onReplaceScreen(item)}
+            onPress={() => navigateProduct(item)}
             style={{ marginRight: 10, marginLeft: index === 0 ? 8 : 0 }}
           >
             <Image

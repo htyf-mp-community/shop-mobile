@@ -52,17 +52,13 @@ export default function InfiniteScroll<T>({
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.primary }}>
-      {!!heading && (
-        <Text style={{ fontSize: 25, color: "white" }}>{heading}</Text>
-      )}
-
       {loading && data.length === 0 && (
         <SkeletonPlaceholder
           backgroundColor={"#1f2b3d"}
           highlightColor={"#2a3a52"}
           size={
             placeholderDimenssionsValue ||
-            ({ width: width - 40, height: 250 } as any)
+            ({ width: width - 20, height: 250 } as any)
           }
         >
           <View
@@ -89,15 +85,26 @@ export default function InfiniteScroll<T>({
         data={data}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
+        ListHeaderComponent={
+          !!heading ? (
+            <Text style={{ fontSize: 25, color: "white" }}>{heading}</Text>
+          ) : null
+        }
+        ListFooterComponent={
+          showLoadMoreSpinner && loading ? (
+            <View
+              style={{
+                width,
+                padding: Padding.medium,
+                justifyContent: "center",
+              }}
+            >
+              <ActivityIndicator size={"large"} color="#fff" />
+            </View>
+          ) : null
+        }
         {...rest}
       />
-      {showLoadMoreSpinner && loading && (
-        <View
-          style={{ width, padding: Padding.medium, justifyContent: "center" }}
-        >
-          <ActivityIndicator size={"large"} color="#fff" />
-        </View>
-      )}
     </View>
   );
 }

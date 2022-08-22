@@ -10,10 +10,11 @@ export default StyleSheet.create({
   navigation_container: {
     flexDirection: "row",
     justifyContent: "space-between",
+    paddingBottom: 10,
   },
   title: {
     color: "#fff",
-    fontSize: 25,
+    fontSize: 27,
     fontFamily: Fonts.PoppinsBold,
   },
   preview_container: {

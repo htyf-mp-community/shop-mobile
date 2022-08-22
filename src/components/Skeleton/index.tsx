@@ -62,7 +62,10 @@ const Skeleton = ({
   }));
 
   return (
-    <View style={{ width, height, marginVertical, marginHorizontal }}>
+    <Reanimated.View
+      exiting={FadeOut}
+      style={{ width, height, marginVertical, marginHorizontal }}
+    >
       <MaskedView
         androidRenderingMode="software"
         maskElement={children}
@@ -95,7 +98,7 @@ const Skeleton = ({
           </MaskedView>
         </Reanimated.View>
       </MaskedView>
-    </View>
+    </Reanimated.View>
   );
 };
 

@@ -10,8 +10,8 @@ import Preview from "./components/Preview";
 import Navigators from "./components/Navigators";
 
 interface CartSheetProps {
-  product?: Product;
-  onDismiss?: () => void;
+  product: Partial<Omit<Product, "prod_id">> & Pick<Product, "prod_id">;
+  onDismiss: () => void;
 }
 
 const CartSheet = forwardRef<BottomSheet, CartSheetProps>(
@@ -31,7 +31,7 @@ const CartSheet = forwardRef<BottomSheet, CartSheetProps>(
 
     const { cart } = useAppSelector((state) => state.cart);
 
-    const cartProduct = cart.find((item) => item.prod_id === product!.prod_id);
+    const cartProduct = cart.find((item) => item.prod_id === product.prod_id);
 
     return (
       <BottomSheet

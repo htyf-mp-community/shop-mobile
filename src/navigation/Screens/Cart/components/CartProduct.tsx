@@ -45,7 +45,11 @@ export default function CartProduct({ product }: CartProductProps) {
         source={img}
       />
       <View
-        style={{ flex: 3, paddingHorizontal: 5, justifyContent: "flex-start" }}
+        style={{
+          flex: 3,
+          paddingHorizontal: 5,
+          justifyContent: "flex-start",
+        }}
       >
         <Text
           numberOfLines={3}

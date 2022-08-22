@@ -1,17 +1,12 @@
 import React from "react";
 import {
   VirtualizedList,
-  View,
   useWindowDimensions,
   Image,
   ActivityIndicator,
 } from "react-native";
-import Product from "../../../../modules/Product";
-import { Text } from "react-native";
-import text from "./styles";
 import { CartProps } from "/@types/types";
 import Loader from "../components/Loader";
-import useRemoveCart from "../hooks/useRemoveCart";
 import CartProduct from "../components/CartProduct";
 
 interface CartListProps {
@@ -59,25 +54,7 @@ export default function CartList({
       getItemCount={(data) => data.length}
       keyExtractor={({ prod_id }) => prod_id.toString()}
       data={data}
-      renderItem={({ item }) => (
-        <CartProduct product={item} />
-        /*     <View
-          style={{ position: "relative" }}
-          testID="CART.ELEMENT"
-          accessibilityLabel="Item"
-        >
-          <Product
-            onRemoveCartProduct={() => onRemoveCartProduct(item.cart_id)}
-            route="Cart"
-            sharedID="CartItems"
-            fullSize
-            {...item}
-          />
-          <Text style={text} testID={`CART.ELEMENT.${item.prod_id}`}>
-            {item.ammount}
-          </Text>
-        </View> */
-      )}
+      renderItem={({ item }) => <CartProduct product={item} />}
     />
   );
 }

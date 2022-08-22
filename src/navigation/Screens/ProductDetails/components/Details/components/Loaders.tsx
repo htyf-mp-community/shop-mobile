@@ -23,3 +23,11 @@ export const SkeletonDescription = () => (
     </View>
   </SkeletonPlaceholder>
 );
+
+export const ButtonsLoader = () => (
+  <SkeletonPlaceholder size={(d) => ({ width: d.width - 20, height: 90 })}>
+    <View style={{ flex: 1 }}>
+      <SkeletonPlaceholder.Item width={(w) => w - 20} height={60} />
+    </View>
+  </SkeletonPlaceholder>
+);

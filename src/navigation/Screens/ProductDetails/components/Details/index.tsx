@@ -7,7 +7,11 @@ import type { DetailsProps, ProductRatingProps } from "/@types/types";
 import Title from "./components/Title";
 import DetailRow from "./components/DetailRow";
 import TagsList from "./components/TagsList";
-import { SkeletonDescription, SkeletonRow } from "./components/Loaders";
+import {
+  ButtonsLoader,
+  SkeletonDescription,
+  SkeletonRow,
+} from "./components/Loaders";
 import Description from "./components/Description";
 
 interface IDetailsProps extends Omit<DetailsProps, "rating_id"> {
@@ -51,13 +55,17 @@ export default function Details({
         <TagsList category={props.category} quantity={props.quantity} />
       )}
 
-      <ReviewButtons
-        thumbnail={props.image!}
-        prod_id={props.prod_id!}
-        sharedID={props.sharedID!}
-        reviews={rating_id}
-        name={props.title!}
-      />
+      {props.description !== undefined ? (
+        <ReviewButtons
+          thumbnail={props.image!}
+          prod_id={props.prod_id!}
+          sharedID={props.sharedID!}
+          reviews={rating_id}
+          name={props.title!}
+        />
+      ) : (
+        <ButtonsLoader />
+      )}
 
       {props.description === undefined ? (
         <SkeletonDescription />

@@ -10,7 +10,7 @@ interface PreviewProps {
 export default function Preview({ product }: PreviewProps) {
   return (
     <View style={styles.preview_container}>
-      <Image source={image(product?.img_id?.[0]?.name)} style={styles.image} />
+      <Image source={image(product?.img_id)} style={styles.image} />
       <View style={styles.text_column}>
         <Text style={styles.product_title}>{product?.title}</Text>
         <Text style={{ color: "#fff" }}>${product?.price}</Text>

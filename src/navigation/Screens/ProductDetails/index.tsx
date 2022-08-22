@@ -1,4 +1,4 @@
-import { memo, useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef } from "react";
 import { ScrollView, View, RefreshControl } from "react-native";
 import ImagesCarusel from "./components/ImagesCarusel/ImagesCarusel";
 import { Product, ScreenNavigationProps } from "/@types/types";
@@ -17,7 +17,7 @@ export default function ProductDetails({
   route,
 }: Required<ScreenNavigationProps<"Details">>) {
   const { prod_id, image, sharedID, title } = route.params;
-  const { data, refetch } = useProduct(prod_id);
+  const { data, refetch, loading } = useProduct(prod_id);
   const result = data?.product;
 
   const images = [
@@ -35,7 +35,7 @@ export default function ProductDetails({
     wait(2000).then(() => setRefreshing(false));
   }, []);
 
-  const sheetRef = useRef<BottomSheet | null>();
+  const sheetRef = useRef<BottomSheet | null>(null);
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.primary }}>
