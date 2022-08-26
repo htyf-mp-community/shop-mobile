@@ -1,11 +1,12 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useUser } from "@utils/context/UserContext";
-import axios from "axios";
+import axios, { CancelTokenSource } from "axios";
 import { ENDPOINTS } from "@constants/routes";
 import useDelay from "utils/hooks/useDelay";
 import { useDispatch } from "react-redux";
 import { cartActions } from "redux/Cart";
 import { CartProps } from "/@types/types";
+import useMounted from "utils/hooks/useMounted";
 
 type ResultType = "Added" | "";
 
@@ -23,29 +24,32 @@ export default function useCart(prod_id?: number) {
   const [error, setError] = useState();
   const [result, setResult] = useState<ResultType>("");
   const dispatch = useDispatch();
+  const mounted = useMounted();
 
-  const cancelToken = useRef(axios.CancelToken.source());
+  const cancelToken = useRef<CancelTokenSource | null>(null);
 
   function cancelRequest() {
-    cancelToken.current.cancel();
+    cancelToken?.current?.cancel();
   }
 
   async function addToCartAsync() {
     try {
       setLoading(true);
 
+      cancelToken.current = axios.CancelToken.source();
+
       const { data, status } = await axios.post<CartResponse>(
         ENDPOINTS.cartAdd,
         { prod_id },
         {
-          cancelToken: cancelToken.current.token,
+          cancelToken: cancelToken?.current?.token,
           headers: {
             token: user.token,
           },
         }
       );
 
-      if (data !== null && status === 201) {
+      if (data !== null && status === 201 && mounted) {
         dispatch(cartActions.appendCart(data.product));
 
         setResult("Added");
@@ -60,6 +64,10 @@ export default function useCart(prod_id?: number) {
   }
 
   useDelay(() => setResult(""), 3000, [addToCartAsync]);
+
+  useEffect(() => {
+    return () => cancelRequest();
+  }, []);
 
   return { pushToCart: addToCartAsync, loading, error, result, cancelRequest };
 }

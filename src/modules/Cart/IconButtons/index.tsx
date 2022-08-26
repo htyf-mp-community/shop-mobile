@@ -23,12 +23,18 @@ export const CartRemoveIconButton = ({
   );
 };
 
-export const CartAddIconButton = ({ prod_id }: { prod_id: number }) => {
+export const CartAddIconButton = ({
+  prod_id,
+  isDisabled = false,
+}: {
+  isDisabled: boolean;
+  prod_id: number;
+}) => {
   const { pushToCart: addToCart, loading: loadingAdd } = useAddCart(prod_id);
 
   return (
     <IconButton
-      disabled={loadingAdd}
+      disabled={loadingAdd || isDisabled}
       onPress={() => addToCart()}
       icon={<Entypo color="white" name="plus" />}
     />

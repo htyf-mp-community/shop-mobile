@@ -27,8 +27,7 @@ export default function AddToCart({
   disabled,
   onRequestFinish,
 }: AddtoCartProps) {
-  const { pushToCart, loading, error, result, cancelRequest } =
-    useCart(prod_id);
+  const { pushToCart, loading, error, result } = useCart(prod_id);
 
   const backgroundColor =
     result === "Added" ? Colors.ternary : Colors.secondary;
@@ -37,12 +36,6 @@ export default function AddToCart({
     await pushToCart();
     onRequestFinish?.();
   }
-
-  useEffect(() => {
-    return () => {
-      cancelRequest();
-    };
-  }, []);
 
   return (
     <Button

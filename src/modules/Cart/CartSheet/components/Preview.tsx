@@ -4,7 +4,7 @@ import type { Product } from "/@types/types";
 import { image } from "functions/image";
 
 interface PreviewProps {
-  product?: Partial<Product>;
+  product: Partial<Product>;
 }
 
 export default function Preview({ product }: PreviewProps) {

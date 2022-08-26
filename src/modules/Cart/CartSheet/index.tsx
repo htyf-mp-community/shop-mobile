@@ -60,7 +60,12 @@ const CartSheet = forwardRef<BottomSheet, CartSheetProps>(
                     cart_id={cartProduct?.cart_id}
                   />
                   <Text style={styles.amount_text}>{cartProduct?.ammount}</Text>
-                  <CartAddIconButton prod_id={cartProduct?.prod_id} />
+                  <CartAddIconButton
+                    isDisabled={
+                      (cartProduct?.ammount || 0) > (product?.quantity || 0)
+                    }
+                    prod_id={cartProduct?.prod_id}
+                  />
                 </View>
               </View>
             </View>
