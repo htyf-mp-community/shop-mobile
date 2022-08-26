@@ -69,9 +69,15 @@ export type UserContextType = {
   updateToken: (s: string) => void;
 };
 
+export type NestedSearchScreens = {
+  Filters: undefined;
+  Searched: undefined;
+  Query: undefined;
+};
+
 export type RootStackParams = {
   initialRouteName: Object | undefined;
-  Search: undefined;
+  Search: NestedSearchScreens;
   Home: undefined;
   Auction: { auction_id: string; title?: string };
   Auctions: undefined;

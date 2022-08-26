@@ -11,7 +11,7 @@ const HEADER = {
   web: false,
 };
 
-const horizontalAnimation: StackNavigationOptions = {
+export const horizontalAnimation: StackNavigationOptions = {
   cardStyleInterpolator: ({ current, layouts }) => {
     return {
       cardStyle: {

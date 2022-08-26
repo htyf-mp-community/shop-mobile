@@ -6,6 +6,7 @@ import { IHistory } from "../hooks/usePurchaseHistory";
 import { image } from "functions/image";
 import { h2 } from "constants/styles";
 import Ripple from "react-native-material-ripple";
+import layout from "constants/layout";
 
 const styles = StyleSheet.create({
   container: {
@@ -50,7 +51,12 @@ export default function History({ products, date, total_price }: IHistory) {
           <Ripple
             onPress={() => onPushRoute(product)}
             key={arg.history_id}
-            style={{ flexDirection: "row", marginBottom: 10 }}
+            style={{
+              flexDirection: "row",
+              marginBottom: 10,
+              width: layout.screen.width - 20,
+              overflow: "hidden",
+            }}
           >
             <Image
               source={image(product.img_id[0].name)}
@@ -58,7 +64,13 @@ export default function History({ products, date, total_price }: IHistory) {
             />
 
             <View style={{ paddingLeft: 10 }}>
-              <Text style={{ color: "#fff" }}>{product.title}</Text>
+              <Text
+                style={{ color: "#fff" }}
+                numberOfLines={2}
+                textBreakStrategy="simple"
+              >
+                {product.title}
+              </Text>
               <Text style={{ color: "#fff" }}>${product.price}</Text>
               <Text style={{ color: "#fff" }}>
                 {new Date(+date!).toLocaleDateString()}

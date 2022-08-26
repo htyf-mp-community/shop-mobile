@@ -4,6 +4,7 @@ import { checkoutReducer } from "./Checkout";
 import { userReducers } from "./User";
 import { watchlistReducers } from "./Watchlist/Watchlist";
 import { cacheReducer } from "./Cache/Cache";
+import searchReducer from "./Search/search";
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     user: userReducers,
     watchlist: watchlistReducers,
     cache: cacheReducer,
+    search: searchReducer,
   },
 });
 
