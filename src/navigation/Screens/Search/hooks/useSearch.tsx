@@ -6,32 +6,11 @@ import { API } from "constants/routes";
 import useRecent from "navigation/Screens/Search/hooks/useRecent";
 
 import type { Paging, SuggestionType } from "/@types/types";
+import RemoveProductsRepetition from "functions/RemoveRepetition";
 
 type Suggestion = Paging<SuggestionType>;
 
-export interface Params {
-  category?: string;
-  price?: "ASC" | "DESC";
-  title?: "ASC" | "DESC";
-}
-
 export default function useSearch() {
-  const [params, setParams] = useState<{
-    [key in keyof Params]: Params[key];
-  }>({});
-
-  function onSetParams<T extends keyof Params>(key: T, value: Params[T]) {
-    setParams((p) => ({
-      ...p,
-      [key]: value,
-    }));
-  }
-
-  function onClearParams() {
-    setParams({});
-  }
-
-  const [query, setQuery] = useState("");
   const [suggestion, setSuggestion] = useState<Suggestion>({
     hasMore: false,
     results: [],
@@ -55,28 +34,30 @@ export default function useSearch() {
    **/
   async function getSuggestionsAsync(
     cancelToken: CancelTokenSource,
+    text: string,
     withPagination: boolean
   ) {
-    if (query.trim() !== "") {
+    if (text.trim() !== "") {
       try {
-        appendRecent(query);
+        appendRecent(text);
         const { data } = await axios.get(`${API}/products/search`, {
           method: "GET",
+          params: {
+            q: text,
+          },
           headers: {
             token,
           },
           cancelToken: cancelToken.token,
-          params: {
-            q: query,
-            ...params,
-            skip,
-          },
         });
 
         setSuggestion((prev) => ({
           hasMore: data.hasMore,
           results: withPagination
-            ? [...prev.results, ...data.results]
+            ? RemoveProductsRepetition(
+                [...prev.results, ...data.results],
+                "prod_id"
+              )
             : data.results,
         }));
       } catch (error: any) {
@@ -85,44 +66,11 @@ export default function useSearch() {
     }
   }
 
-  useEffect(() => {
-    const cancelToken = axios.CancelToken.source();
-
-    const delay = setTimeout(
-      () => getSuggestionsAsync(cancelToken, false),
-      500
-    );
-
-    return () => {
-      cancelToken.cancel();
-      clearTimeout(delay);
-    };
-  }, [query, params]);
-
-  useEffect(() => {
-    if (suggestion.hasMore) {
-      const cancelToken = axios.CancelToken.source();
-
-      const delay = setTimeout(
-        () => getSuggestionsAsync(cancelToken, true),
-        500
-      );
-
-      return () => {
-        cancelToken.cancel();
-        clearTimeout(delay);
-      };
-    }
-  }, [skip]);
-
   return {
-    setQuery,
-    query,
+    getSuggestionsAsync,
+
     suggestion,
     recent,
     onEndReached,
-    params,
-    onClearParams,
-    onSetParams,
   };
 }
