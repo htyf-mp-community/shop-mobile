@@ -1,5 +1,5 @@
 import { StackNavigationProp } from "@react-navigation/stack";
-import { RouteProp } from "@react-navigation/native";
+import { ParamListBase, RouteProp } from "@react-navigation/native";
 
 export type UserContextProviderType = {
   children: React.ReactNode;
@@ -121,10 +121,19 @@ export type RootStackParams = {
 
 export type useNavigationProps = StackNavigationProp<RootStackParams>;
 
-export interface ScreenNavigationProps<T extends keyof RootStackParams> {
-  route: RouteProp<RootStackParams, T>;
-  navigation?: StackNavigationProp<RootStackParams>;
+interface ConfigurableScreenProps<
+  T extends ParamListBase,
+  List extends keyof T
+> {
+  route: RouteProp<T, List>;
+  navigation: StackNavigationProp<T>;
 }
+
+export type SearchNestedScreenProps<T extends keyof NestedSearchScreens> =
+  ConfigurableScreenProps<NestedSearchScreens, T>;
+
+export type ScreenNavigationProps<T extends keyof RootStackParams> =
+  ConfigurableScreenProps<RootStackParams, T>;
 
 export interface SuggestionType {
   image: string;

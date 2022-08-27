@@ -4,7 +4,7 @@ import ScreenContainer from "components/ScreenContainer";
 import { useEffect } from "react";
 import { VirtualizedList } from "react-native";
 import ActiveFiltersList from "../components/ActiveFiltersList";
-import type { SuggestionType } from "/@types/types";
+import type { SearchNestedScreenProps, SuggestionType } from "/@types/types";
 import InputHeaderControll from "../components/InputHeaderControll";
 import useSearch from "../hooks/useSearch";
 import { Suggestion } from "components";
@@ -15,29 +15,32 @@ const getItem = (data: SuggestionType[], index: number) => {
   return data[index];
 };
 
-export default function Searched({ navigation }: any) {
+export default function Searched({
+  navigation,
+}: SearchNestedScreenProps<"Searched">) {
   const isFocused = useIsFocused();
   const { searchedText } = useAppSelector((state) => state.search);
   const { getSuggestionsAsync, suggestion } = useSearch();
+
+  // Apply infinite scroll
 
   useDelay(
     () => {
       if (isFocused) {
         let cancelToken = axios.CancelToken.source();
-        getSuggestionsAsync(cancelToken, searchedText, true);
+        getSuggestionsAsync(cancelToken, searchedText);
 
         return () => cancelToken.cancel();
       }
     },
     500,
-    [isFocused, searchedText]
+    [isFocused]
   );
 
   return (
     <ScreenContainer>
       <InputHeaderControll mode="display" />
       <ActiveFiltersList
-        filters={[]}
         handleOpenFilters={() => navigation.navigate("Filters")}
       />
       <VirtualizedList
@@ -48,9 +51,7 @@ export default function Searched({ navigation }: any) {
         getItemCount={(data) => data.length}
         getItem={getItem}
         initialNumToRender={2}
-        renderItem={({ item, index }) => (
-          <Suggestion index={index} navigation={navigation} {...item} />
-        )}
+        renderItem={({ item, index }) => <Suggestion index={index} {...item} />}
       />
     </ScreenContainer>
   );

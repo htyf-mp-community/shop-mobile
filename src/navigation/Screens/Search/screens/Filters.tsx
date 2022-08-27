@@ -1,13 +1,19 @@
-import { Button, IconButton } from "components";
 import ScreenContainer from "components/ScreenContainer";
-import { View, Text } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
-import { useIsFocused, useNavigation } from "@react-navigation/native";
+import { View } from "react-native";
+import { useIsFocused } from "@react-navigation/native";
 import useListenBackPress from "utils/hooks/useListenBackPress";
+import FiltersScreenHeader from "../components/FiltersScreenHeader";
+import SortingFilter from "../components/SortingFilter";
+import CategoryFilter from "../components/CategoryFilter";
+import PriceFilters from "../components/PriceFilters";
+import { Button } from "components";
+import { Colors } from "constants/styles";
+import useColorTheme from "utils/context/ThemeContext";
+import { SearchNestedScreenProps } from "/@types/types";
 
-export default function Filters() {
-  const navigation = useNavigation();
-
+export default function Filters({
+  navigation,
+}: SearchNestedScreenProps<"Filters">) {
   const isFocused = useIsFocused();
   useListenBackPress(() => {
     if (navigation.canGoBack()) {
@@ -17,36 +23,29 @@ export default function Filters() {
     return true;
   }, [isFocused]);
 
+  const { current } = useColorTheme();
+
   return (
-    <ScreenContainer style={{ padding: 10 }}>
-      <View
-        style={{
-          marginTop: 5,
-          justifyContent: "space-between",
-          flexDirection: "row",
-          alignItems: "center",
-        }}
-      >
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <IconButton
-            onPress={() => navigation.goBack()}
-            icon={<AntDesign name="close" size={24} color="white" />}
-          />
+    <ScreenContainer style={{ padding: 10, justifyContent: "space-between" }}>
+      <View>
+        <FiltersScreenHeader />
 
-          <Text style={{ color: "#fff", marginLeft: 10, fontSize: 20 }}>
-            Filters
-          </Text>
-        </View>
+        <SortingFilter />
 
-        <Button text="CLEAR FILTERS" fontStyle={{ fontSize: 16 }} />
+        <CategoryFilter />
+
+        <PriceFilters />
       </View>
 
-      <Text style={{ color: "#fff", fontSize: 25, marginTop: 10 }}>Sort</Text>
-      <Text style={{ color: "#fff", fontSize: 25, marginTop: 10 }}>
-        Select category
-      </Text>
-
-      <Text style={{ color: "#fff", fontSize: 25, marginTop: 10 }}>Price </Text>
+      <Button
+        onPress={() => navigation.goBack()}
+        text="Show results"
+        style={{
+          backgroundColor: current === "dark" ? "#fff" : Colors.primary,
+          paddingVertical: 15,
+        }}
+        fontStyle={{ color: Colors.primary, fontWeight: "bold" }}
+      />
     </ScreenContainer>
   );
 }

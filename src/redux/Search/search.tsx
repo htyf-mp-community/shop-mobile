@@ -1,12 +1,22 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type Filter = {
   name: string;
   value: string;
 };
 
+type History = {};
+
 const initialState = {
-  filters: [] as Filter[],
+  filters: {
+    category: "",
+    price: {
+      min: 0,
+      max: 0,
+    },
+    sorting: "",
+  },
+  searchHistory: [] as History[],
   searchedText: "",
 };
 
@@ -18,14 +28,27 @@ export const searchSlice = createSlice({
     setText(state, action) {
       state.searchedText = action.payload;
     },
-    addFilter(state, action) {
-      state.filters.push(action.payload);
+    setFilter<T extends keyof typeof initialState.filters>(
+      state: typeof initialState,
+      action: PayloadAction<{
+        key: T;
+        value: typeof initialState.filters[T];
+      }>
+    ) {
+      state.filters[action.payload.key] = action.payload.value;
     },
 
-    removeFilter(state, action) {
-      state.filters = state.filters.filter(
-        (filter) => filter.name !== action.payload
-      );
+    clearAllFilters(state) {
+      state.filters = initialState.filters;
+    },
+
+    clearFilter<T extends keyof typeof initialState.filters>(
+      state: typeof initialState,
+      action: {
+        payload: T;
+      }
+    ) {
+      state.filters[action.payload] = initialState.filters[action.payload];
     },
   },
 });

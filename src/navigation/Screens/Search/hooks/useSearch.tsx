@@ -28,14 +28,9 @@ export default function useSearch() {
     if (suggestion.hasMore) setSkip(skip + 5);
   }
 
-  /**
-   * fetches product's suggestions from api
-   * @param {Boolean} withPagination if prop is true then new records are added to list with previous results, otherwise not
-   **/
   async function getSuggestionsAsync(
     cancelToken: CancelTokenSource,
-    text: string,
-    withPagination: boolean
+    text: string
   ) {
     if (text.trim() !== "") {
       try {
@@ -53,12 +48,7 @@ export default function useSearch() {
 
         setSuggestion((prev) => ({
           hasMore: data.hasMore,
-          results: withPagination
-            ? RemoveProductsRepetition(
-                [...prev.results, ...data.results],
-                "prod_id"
-              )
-            : data.results,
+          results: data.results,
         }));
       } catch (error: any) {
         console.warn(error.response.data);

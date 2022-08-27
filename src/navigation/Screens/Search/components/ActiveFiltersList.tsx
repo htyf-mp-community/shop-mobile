@@ -3,16 +3,16 @@ import { Colors } from "constants/styles";
 import { ScrollView, View, Text } from "react-native";
 
 import { Entypo } from "@expo/vector-icons";
+import { useAppSelector } from "utils/hooks/hooks";
 
 interface ActiveFiltersListProps {
-  filters: any[];
   handleOpenFilters: () => void;
 }
 
 export default function ActiveFiltersList({
-  filters,
   handleOpenFilters,
 }: ActiveFiltersListProps) {
+  const { filters } = useAppSelector((state) => state.search);
   return (
     <View>
       <ScrollView
@@ -41,9 +41,9 @@ export default function ActiveFiltersList({
           }}
         />
 
-        {[0, 1, 2, 4, 5, 6, 7].map((filter) => (
+        {/*    {filters.map((filter) => (
           <View
-            key={filter}
+            key={filter.name}
             style={{
               padding: 5,
               backgroundColor: Colors.primary100,
@@ -54,7 +54,7 @@ export default function ActiveFiltersList({
           >
             <Text style={{ color: "#fff" }}>Filter</Text>
           </View>
-        ))}
+        ))} */}
       </ScrollView>
     </View>
   );
