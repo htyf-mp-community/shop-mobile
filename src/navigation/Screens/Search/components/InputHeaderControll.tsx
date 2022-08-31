@@ -5,19 +5,36 @@ import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useAppDispatch, useAppSelector } from "utils/hooks/hooks";
 import { searchActions } from "redux/Search/search";
+import { useState, useEffect } from "react";
 
 interface InputHeaderControllProps {
   mode: "display" | "edit";
+
+  beforeSubmitEditing?: (finalText?: string) => void;
 }
 
 export default function InputHeaderControll({
   mode,
+  beforeSubmitEditing,
 }: InputHeaderControllProps) {
   const navigation = useNavigation<any>();
   const dispatch = useAppDispatch();
-  const { searchedText } = useAppSelector((state) => state.search);
 
+  const { searchedText } = useAppSelector((state) => state.search);
   const InputContainer = mode === "edit" ? View : Pressable;
+  const [text, setText] = useState("");
+
+  useEffect(() => {
+    setText(searchedText);
+  }, []);
+
+  const handleSubmitEditing = () => {
+    dispatch(searchActions.setText(text));
+    beforeSubmitEditing?.(text);
+    navigation.goBack();
+
+    console.log({ text, searchedText });
+  };
 
   return (
     <View
@@ -43,12 +60,14 @@ export default function InputHeaderControll({
         style={{ flex: 1 }}
       >
         <TextInput
+          placeholder="Find something for you"
+          placeholderTextColor="#ffffff9c"
           autoCorrect
           autoFocus={mode === "edit"}
-          onSubmitEditing={() => navigation.goBack()}
-          onChangeText={(text) => dispatch(searchActions.setText(text))}
+          onSubmitEditing={handleSubmitEditing}
+          onChangeText={setText}
           editable={mode === "edit"}
-          value={searchedText}
+          value={mode === "display" ? searchedText : text}
           style={{
             color: "#fff",
             fontSize: 18,
@@ -58,12 +77,19 @@ export default function InputHeaderControll({
         />
       </InputContainer>
 
-      <IconButton
-        onPress={() => {
-          dispatch(searchActions.setText(""));
-        }}
-        icon={<AntDesign name="close" size={24} color="white" />}
-      />
+      {mode === "display" ? (
+        <IconButton
+          onPress={() => {
+            dispatch(searchActions.setText(""));
+          }}
+          icon={<AntDesign name="close" size={24} color="white" />}
+        />
+      ) : (
+        <IconButton
+          onPress={handleSubmitEditing}
+          icon={<AntDesign name="search1" size={20} color="white" />}
+        />
+      )}
     </View>
   );
 }

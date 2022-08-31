@@ -70,7 +70,7 @@ export default function ProductDetails({
 
       <CartSheet
         onDismiss={() => sheetRef.current?.close()}
-        product={{ ...(result as Product), prod_id }}
+        product={{ ...(result as Product), prod_id, img_id: images }}
         ref={(ref) => (sheetRef.current = ref)}
       />
     </View>

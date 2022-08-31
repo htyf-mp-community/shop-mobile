@@ -13,6 +13,24 @@ export default function ActiveFiltersList({
   handleOpenFilters,
 }: ActiveFiltersListProps) {
   const { filters } = useAppSelector((state) => state.search);
+
+  const filtersList = Object.entries(filters).map(([key, value]) => (
+    <View
+      key={key}
+      style={{
+        padding: 5,
+        backgroundColor: Colors.primary100,
+        marginRight: 5,
+        paddingHorizontal: 10,
+        justifyContent: "center",
+      }}
+    >
+      <Text style={{ color: "#fff" }}>
+        {key}: {typeof value === "string" ? value : `${value.min}-${value.max}`}
+      </Text>
+    </View>
+  ));
+
   return (
     <View>
       <ScrollView
@@ -41,20 +59,7 @@ export default function ActiveFiltersList({
           }}
         />
 
-        {/*    {filters.map((filter) => (
-          <View
-            key={filter.name}
-            style={{
-              padding: 5,
-              backgroundColor: Colors.primary100,
-              marginRight: 5,
-              paddingHorizontal: 10,
-              justifyContent: "center",
-            }}
-          >
-            <Text style={{ color: "#fff" }}>Filter</Text>
-          </View>
-        ))} */}
+        {filtersList}
       </ScrollView>
     </View>
   );

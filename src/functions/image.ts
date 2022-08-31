@@ -9,7 +9,7 @@ export function image(input: ProductImageProps[] | string | undefined): {
     return { uri: `${API}/upload/images=${input}` };
   }
 
-  if (typeof input?.length !== "undefined") {
+  if (typeof input?.length !== "undefined" && input.length > 0) {
     return { uri: `${API}/upload/images=${input[0].name}` };
   }
 

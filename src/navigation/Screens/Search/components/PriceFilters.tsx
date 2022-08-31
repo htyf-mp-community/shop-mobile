@@ -38,6 +38,7 @@ export default function PriceFilters() {
     <FilterOptionContainer title="Set price range">
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
         <Input
+          keyboardType="numeric"
           name="Min"
           labelStyle={labelStyle}
           value={min}
@@ -47,6 +48,7 @@ export default function PriceFilters() {
           }}
         />
         <Input
+          keyboardType="numeric"
           name="Max"
           value={max}
           labelStyle={labelStyle}

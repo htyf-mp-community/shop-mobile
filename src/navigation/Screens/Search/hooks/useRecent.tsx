@@ -1,46 +1,54 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import RemoveProductsRepetition from "functions/RemoveRepetition";
 import { useEffect, useState } from "react";
-
-export interface Recent {
-  text: string;
-  date: Date;
-  id: number;
-}
+import { searchActions } from "redux/Search/search";
+import { useAppDispatch, useAppSelector } from "utils/hooks/hooks";
 
 const KEY = "GET_SEARCHED";
 
 export default function useRecent() {
-  const [recent, setRecent] = useState<Recent[]>([]);
+  const { searchHistory } = useAppSelector((st) => st.search);
+  const dispatch = useAppDispatch();
 
   async function loadRecentAsync() {
-    const json = (await AsyncStorage.getItem(KEY)!) as string;
-
-    return JSON.parse(json);
+    const recent = await AsyncStorage.getItem(KEY);
+    if (recent) {
+      dispatch(searchActions.setSearchHistory(JSON.parse(recent)));
+    }
   }
 
-  async function saveRecentAsync() {
-    await AsyncStorage.setItem(KEY, JSON.stringify(recent));
+  async function saveSearchHistory() {
+    await AsyncStorage.setItem(
+      KEY,
+      JSON.stringify(RemoveProductsRepetition(searchHistory, "text"))
+    );
   }
 
-  function removeRecent(id: number) {
-    setRecent((recent) => recent.filter((r) => r.id !== id));
+  async function appendRecent(text: string) {
+    dispatch(
+      searchActions.addSearchHistory({
+        id: Date.now(),
+        text,
+      })
+    );
   }
 
-  function appendRecent(text: string) {
-    if (text !== "")
-      setRecent((recent) => [
-        ...recent,
-        {
-          text,
-          date: new Date(),
-          id: Date.now(),
-        },
-      ]);
+  async function removeRecent(id: number) {
+    dispatch(searchActions.removeSearchHistory(id));
   }
 
   useEffect(() => {
-    if (!!recent.length) saveRecentAsync();
-  }, [recent]);
+    loadRecentAsync();
+  }, []);
 
-  return { recent, removeRecent, appendRecent, loadRecentAsync };
+  useEffect(() => {
+    if (searchHistory.length > 0) saveSearchHistory();
+  }, [searchHistory]);
+
+  return {
+    recent: searchHistory,
+    loadRecentAsync,
+    appendRecent,
+    removeRecent,
+  };
 }
