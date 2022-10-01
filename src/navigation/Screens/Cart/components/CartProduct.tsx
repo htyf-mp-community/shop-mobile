@@ -73,7 +73,10 @@ export default function CartProduct({ product }: CartProductProps) {
         </Text>
       </View>
       <Pressable style={{ flex: 0.5, alignItems: "center" }}>
-        <CartAddIconButton prod_id={product.prod_id} />
+        <CartAddIconButton
+          prod_id={product.prod_id}
+          isDisabled={product.ammount > 100} // TODO: change to product.quantity
+        />
         <Text style={{ color: "#fff", fontSize: 16, paddingVertical: 5 }}>
           {product.ammount}
         </Text>

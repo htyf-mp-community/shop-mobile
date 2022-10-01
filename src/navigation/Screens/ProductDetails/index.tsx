@@ -17,7 +17,7 @@ export default function ProductDetails({
   route,
 }: Required<ScreenNavigationProps<"Details">>) {
   const { prod_id, image, sharedID, title } = route.params;
-  const { data, refetch, loading } = useProduct(prod_id);
+  const { data, refetch } = useProduct(prod_id);
   const result = data?.product;
 
   const images = [

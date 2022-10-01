@@ -1,18 +1,23 @@
 import { useNavigation } from "@react-navigation/core";
 import React from "react";
 import { Text } from "react-native";
-import { useNavigationProps } from "../../@types/types";
 import Ripple from "react-native-material-ripple";
+import { useAppDispatch } from "utils/hooks/hooks";
+import { searchActions } from "redux/Search/search";
 
 interface CategoryProps {
   category: string;
 }
 
 export default function Category({ category }: CategoryProps) {
-  const navigation = useNavigation<useNavigationProps>();
+  const navigation = useNavigation<any>();
+
+  const dispatch = useAppDispatch();
 
   async function GetProductsByCategory() {
-    navigation.navigate("SearchResults", { category });
+    dispatch(searchActions.setFilter({ key: "category", value: category }));
+
+    navigation.navigate("Search");
   }
   return (
     <Ripple

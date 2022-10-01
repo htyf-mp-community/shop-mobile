@@ -1,78 +1,48 @@
 import { createSlice } from "@reduxjs/toolkit";
-
-type TransactionStatus = "PREPARING" | "PENDING" | "FINISHED" | "FAILED";
-
-const credentials = {
-  name: "",
-  surname: "",
-  street: "",
-  apartment_number: "",
-  city: "",
-  phone: "",
-};
-
-const initialState = {
-  paymentResult: "",
-  paymentError: "",
-  paymentLoading: false,
-  paymentIntentClientSecret: "",
-  total: 0,
-  status: "PREPARING" as TransactionStatus,
-  ammountCharged: 0,
-
-  credentials,
-};
-
-type State = typeof initialState;
+import { createPayment, createPaymentIntent } from "./HttpService";
+import { initialState } from "./constants";
 
 const checkoutSlice = createSlice({
   name: "checkout",
   initialState,
-  reducers: {
-    setSecret(state: State, { payload }: { payload: string }) {
-      state.paymentIntentClientSecret = payload;
-    },
+  reducers: {},
 
-    setTotal(state: State, { payload }: { payload: number }) {
-      state.total = payload;
-    },
-
-    finishTransaction(state: State) {
-      state.status = "FINISHED";
-
-      state.paymentError = "";
+  extraReducers: (builder) => {
+    builder.addCase(createPaymentIntent.fulfilled, (state, { payload }) => {
+      state.paymentIntentClientSecret = payload.clientSecret;
+      state.total = payload.total;
       state.paymentLoading = false;
-      state.paymentResult = "finished";
-    },
+    });
 
-    updateTransactionStatus(state: State) {
+    builder.addCase(createPaymentIntent.rejected, (state) => {
+      state.paymentError = "Error creating payment intent";
+      state.paymentLoading = false;
+      state.status = "FAILED";
+    });
+
+    builder.addCase(createPayment.pending, (state) => {
+      state.paymentLoading = true;
+
       if (state.status === "PREPARING") {
         state.status = "PENDING";
       } else if (state.status === "PENDING") {
         state.status = "FINISHED";
       }
-    },
+    });
 
-    setCharged(state: State, { payload }: { payload: number }) {
-      state.ammountCharged = payload;
-    },
-
-    setCredentials(state: State, { payload }: { payload: typeof credentials }) {
-      state.credentials = payload;
-    },
-
-    startTransaction(state: State) {
-      state.paymentLoading = true;
-    },
-    failTransaction(state: State, { payload }: { payload: string }) {
+    builder.addCase(createPayment.fulfilled, (state, { payload }) => {
+      state.ammountCharged = payload.paymentIntent.amount;
+      state.status = "FINISHED";
+      state.paymentError = "";
       state.paymentLoading = false;
-      state.paymentError = payload;
-      state.status = "FAILED";
-    },
+      state.paymentResult = "finished";
+    });
 
-    destroySession(state: State) {
-      state = initialState;
-    },
+    builder.addCase(createPayment.rejected, (state, { payload }) => {
+      state.paymentError = payload as string;
+      state.status = "FAILED";
+      state.paymentLoading = false;
+    });
   },
 });
 

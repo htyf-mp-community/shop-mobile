@@ -15,14 +15,14 @@ export default function useSearch() {
 
   const onEndReached = () => dispatch(searchActions.nextPage());
 
-  const getSearchedAsync = (isInfiniteScroll: boolean) =>
+  const getSearchedAsync = (fetchMore: boolean) =>
     dispatch(
       getSearchedProducts({
         filters: filters,
         skip,
         token,
         searchedText,
-        isInfiniteScroll,
+        isInfiniteScroll: fetchMore,
       })
     );
 

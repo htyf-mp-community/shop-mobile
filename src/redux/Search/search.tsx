@@ -30,13 +30,12 @@ interface ThunkResponse {
 export const getSearchedProducts = createAsyncThunk<ThunkResponse, SearchState>(
   "search/get",
   async (args, { rejectWithValue }) => {
-    if (args.searchedText.trim() === "") {
+    if (args.searchedText.trim() === "")
       return {
         hasMore: false,
         isInfiniteScroll: false,
         results: [],
       };
-    }
 
     const response = await axios.get(`${API}/products/search`, {
       headers: {
@@ -45,7 +44,6 @@ export const getSearchedProducts = createAsyncThunk<ThunkResponse, SearchState>(
       params: {
         q: args.searchedText,
         skip: args.skip,
-        // attach filters later
       },
     });
 
@@ -58,6 +56,10 @@ const initialState = {
     hasMore: false,
     results: [] as SuggestionType[],
   },
+
+  isLoading: false,
+
+  error: "",
 
   filters: {
     category: "All",
@@ -134,6 +136,12 @@ export const searchSlice = createSlice({
         : payload.results;
 
       state.response.hasMore = payload.hasMore;
+    });
+
+    builder.addCase(getSearchedProducts.rejected, (state, { payload }) => {
+      // state.error = payload as string;
+
+      console.log("error, payload", payload);
     });
   },
 });
