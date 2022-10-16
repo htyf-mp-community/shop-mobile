@@ -9,79 +9,109 @@ import {
   CartRemoveIconButton,
 } from "modules/Cart/IconButtons";
 
+import Checkbox from "expo-checkbox";
+
 interface CartProductProps {
   product: CartProps;
+
+  handleSelectProduct: (value: boolean) => void;
+
+  isProductSelected: boolean;
+
+  showCheckbox: boolean;
+
+  handleShowCheckbox: () => void;
 }
 
-export default function CartProduct({ product }: CartProductProps) {
+export default function CartProduct({
+  product,
+  handleSelectProduct,
+  isProductSelected,
+  showCheckbox,
+  handleShowCheckbox,
+}: CartProductProps) {
   const navigation = useNavigation<useNavigationProps>();
 
   const img = image(product.img_id);
 
   return (
-    <TouchableOpacity
-      activeOpacity={0.8}
-      onPress={() =>
-        navigation.navigate("Details", {
-          sharedID: "",
-          title: product.title,
-          prod_id: product.prod_id,
-          image: img.uri,
-        })
-      }
-      style={{
-        width: layout.screen.width,
-        padding: 10,
-        marginTop: 5,
-        flexDirection: "row",
-      }}
-    >
-      <Image
-        style={{
-          flex: 2,
-          height: "100%",
-          borderRadius: 3,
+    <>
+      {showCheckbox && (
+        <Checkbox
+          value={isProductSelected}
+          onValueChange={handleSelectProduct}
+          style={{ marginLeft: 10, marginTop: 20 }}
+        />
+      )}
+      <TouchableOpacity
+        delayLongPress={500}
+        onLongPress={() => {
+          handleShowCheckbox();
+          handleSelectProduct(true);
         }}
-        source={img}
-      />
-      <View
+        activeOpacity={0.8}
+        onPress={() =>
+          navigation.navigate("Details", {
+            sharedID: "",
+            title: product.title,
+            prod_id: product.prod_id,
+            image: img.uri,
+          })
+        }
         style={{
-          flex: 3,
-          paddingHorizontal: 5,
-          justifyContent: "flex-start",
+          width: layout.screen.width,
+          padding: 10,
+          flexDirection: "row",
+          marginTop: showCheckbox ? 0 : 5,
         }}
       >
-        <Text
-          numberOfLines={3}
+        <Image
           style={{
-            color: "#fff",
-            fontSize: 16,
-            fontFamily: Fonts.PoppinsMedium,
+            flex: 2,
+            height: "100%",
+            borderRadius: 3,
           }}
-        >
-          {product.title}
-        </Text>
-        <Text
-          style={{
-            color: "#fff",
-            fontSize: 16,
-            marginTop: 5,
-            fontWeight: "bold",
-          }}
-        >
-          ${product.price}
-        </Text>
-      </View>
-      <Pressable style={{ flex: 0.5, alignItems: "center" }}>
-        <CartAddIconButton
-          prod_id={product.prod_id}
-          isDisabled={product.ammount > 100} // TODO: change to product.quantity
+          source={img}
         />
-        <Text style={{ color: "#fff", fontSize: 16, paddingVertical: 5 }}>
-          {product.ammount}
-        </Text>
-        <CartRemoveIconButton cart_id={product.cart_id} />
-      </Pressable>
-    </TouchableOpacity>
+        <View
+          style={{
+            flex: 3,
+            paddingHorizontal: 5,
+            justifyContent: "flex-start",
+          }}
+        >
+          <Text
+            numberOfLines={3}
+            style={{
+              color: "#fff",
+              fontSize: 16,
+              fontFamily: Fonts.PoppinsMedium,
+            }}
+          >
+            {product.title}
+          </Text>
+          <Text
+            style={{
+              color: "#fff",
+              fontSize: 16,
+              marginTop: 5,
+              fontWeight: "bold",
+            }}
+          >
+            ${product.price}
+          </Text>
+        </View>
+        <Pressable style={{ flex: 0.5, alignItems: "center" }}>
+          <CartAddIconButton
+            prod_id={product.prod_id}
+            isDisabled={product.ammount > 100} // TODO: change to product.quantity
+          />
+          <Text style={{ color: "#fff", fontSize: 16, paddingVertical: 5 }}>
+            {product.ammount}
+          </Text>
+          <CartRemoveIconButton cart_id={product.cart_id} />
+        </Pressable>
+      </TouchableOpacity>
+    </>
   );
 }
