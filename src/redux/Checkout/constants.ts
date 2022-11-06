@@ -1,4 +1,11 @@
-type TransactionStatus = "PREPARING" | "PENDING" | "FINISHED" | "FAILED";
+//type TransactionStatus = "PREPARING" | "PENDING" | "FINISHED" | "FAILED";
+
+export enum TransactionStatus {
+  PREPARING = "PREPARING",
+  PENDING = "PENDING",
+  FINISHED = "FINISHED",
+  FAILED = "FAILED",
+}
 
 const credentials = {
   name: "",

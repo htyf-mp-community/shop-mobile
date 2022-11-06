@@ -13,6 +13,7 @@ import { cartActions } from "redux/Cart";
 import { watchlistActions } from "redux/Watchlist/Watchlist";
 import { checkoutActions } from "redux/Checkout";
 import { userActions } from "redux/User";
+import { useApolloClient } from "@apollo/client";
 
 const { height } = Dimensions.get("screen");
 
@@ -27,7 +28,11 @@ export default function SignOut() {
 
   const dispatch = useDispatch();
 
+  const apolloClient = useApolloClient();
+
   async function handleSignOut() {
+    // clear graphql cache
+    await apolloClient.clearStore();
     // clear cache
     dispatch(cacheAction.clearCache());
     // clear cart

@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useUser } from "@utils/context/UserContext";
 import axios from "axios";
 import { API } from "@constants/routes";
+import { wait } from "functions/wait";
+import { useNavigation } from "@react-navigation/native";
 
 export interface UserInputProps {
   email: string;
@@ -29,9 +31,11 @@ export default function useAuth(route: Route, callbacks?: Partial<Callbacks>) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<null | string>(null);
 
+  const navigation = useNavigation<any>();
+
   const url = ROUTES[route];
 
-  async function onSubmit({ email, password }: UserInputProps): Promise<any> {
+  async function onSubmit({ email, password }: UserInputProps) {
     let response;
     try {
       setLoading(true);
@@ -58,7 +62,7 @@ export default function useAuth(route: Route, callbacks?: Partial<Callbacks>) {
 
   // for future updates
 
-  const { setUser } = useUser();
+  // const { setUser } = useUser();
 
   async function onLogin({ email, password }: UserInputProps) {
     try {
@@ -71,6 +75,8 @@ export default function useAuth(route: Route, callbacks?: Partial<Callbacks>) {
         isLoggedIn: true,
         isLoading: false,
       });
+
+      navigation.navigate("Home", {});
     } catch (error) {}
   }
 

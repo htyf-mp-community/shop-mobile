@@ -32,16 +32,10 @@ export const UserContextProvider = ({ children }: UserContextProviderType) => {
   const setLoggedIn = () => setUser((p) => ({ ...p, isLoggedIn: true }));
 
   async function SaveUser(props: UserType) {
-    try {
-      const value = await setItemAsync(USER_PREFIX, JSON.stringify(props));
+    setUser(props);
+    setLoggedIn();
 
-      if (value !== null) {
-        setUser(props);
-        setLoggedIn();
-      }
-    } catch (error) {
-      console.warn(error);
-    }
+    await setItemAsync(USER_PREFIX, JSON.stringify(props));
   }
 
   async function updateToken(token: string) {

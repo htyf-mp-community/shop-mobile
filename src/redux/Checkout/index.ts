@@ -1,11 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createPayment, createPaymentIntent } from "./HttpService";
-import { initialState } from "./constants";
+import { initialState, TransactionStatus } from "./constants";
 
 const checkoutSlice = createSlice({
   name: "checkout",
   initialState,
-  reducers: {},
+  reducers: {
+    saveCredentials(state, { payload }) {
+      state.credentials = payload;
+    },
+
+    destroySession(state) {
+      state = initialState;
+    },
+  },
 
   extraReducers: (builder) => {
     builder.addCase(createPaymentIntent.fulfilled, (state, { payload }) => {
@@ -17,22 +25,22 @@ const checkoutSlice = createSlice({
     builder.addCase(createPaymentIntent.rejected, (state) => {
       state.paymentError = "Error creating payment intent";
       state.paymentLoading = false;
-      state.status = "FAILED";
+      state.status = TransactionStatus.FAILED;
     });
 
     builder.addCase(createPayment.pending, (state) => {
       state.paymentLoading = true;
 
       if (state.status === "PREPARING") {
-        state.status = "PENDING";
+        state.status = TransactionStatus.PENDING;
       } else if (state.status === "PENDING") {
-        state.status = "FINISHED";
+        state.status = TransactionStatus.FINISHED;
       }
     });
 
     builder.addCase(createPayment.fulfilled, (state, { payload }) => {
       state.ammountCharged = payload.paymentIntent.amount;
-      state.status = "FINISHED";
+      state.status = TransactionStatus.FINISHED;
       state.paymentError = "";
       state.paymentLoading = false;
       state.paymentResult = "finished";
@@ -40,7 +48,7 @@ const checkoutSlice = createSlice({
 
     builder.addCase(createPayment.rejected, (state, { payload }) => {
       state.paymentError = payload as string;
-      state.status = "FAILED";
+      state.status = TransactionStatus.FAILED;
       state.paymentLoading = false;
     });
   },
