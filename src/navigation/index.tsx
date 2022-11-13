@@ -1,5 +1,5 @@
 import { DarkTheme, NavigationContainer } from "@react-navigation/native";
-import React from "react";
+import React, { useEffect } from "react";
 import { createSharedElementStackNavigator } from "react-navigation-shared-element";
 import type { RootStackParams } from "/@types/types";
 import useCheckToken from "utils/hooks/useCheckToken";
@@ -34,12 +34,12 @@ export default function MainNavigator() {
                 options={Option.homeScreenOptions}
               />
               <Stack.Screen name="Auctions" component={Screen.Auctions} />
-              <Stack.Screen name="Dashboard" component={Screen.Dashboard} />
-              <Stack.Screen
+              {/* <Stack.Screen name="Dashboard" component={Screen.Dashboard} /> */}
+              {/* <Stack.Screen
                 name="Upload"
                 component={Screen.Upload}
                 options={{ headerShown: false }}
-              />
+              /> */}
               <Stack.Screen
                 name="Auction"
                 component={Screen.Auction}
@@ -50,11 +50,13 @@ export default function MainNavigator() {
                 component={Screen.Cart}
                 options={Option.cartScreenOptions}
               />
+
               <Stack.Screen
                 component={Screen.User}
                 name="User"
                 options={() => Option.userScreenOptions(name ?? "")}
               />
+
               <Stack.Screen
                 component={Screen.Watchlist}
                 options={Option.watchlistScreenOptions}
@@ -128,14 +130,20 @@ export default function MainNavigator() {
           ) : (
             <>
               <Stack.Screen
-                name="Auth"
-                component={Screen.Auth}
-                options={Option.authOptions}
-              />
-              <Stack.Screen
                 name="Landing"
                 component={Screen.Landing}
                 options={Option.landingOptions}
+              />
+
+              <Stack.Screen
+                name="Register"
+                component={Screen.Register}
+                options={Option.authOptions}
+              />
+              <Stack.Screen
+                name="Login"
+                component={Screen.Login}
+                options={Option.authOptions}
               />
             </>
           )}

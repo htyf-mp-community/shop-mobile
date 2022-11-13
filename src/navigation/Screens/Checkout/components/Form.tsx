@@ -27,7 +27,7 @@ export default function Form({ onSubmit }: FormProps) {
         street: "",
         apartment_number: "",
         city: "",
-        phone: credentials?.phone_number || "",
+        phone: credentials.phone_number ? "+48" + credentials.phone_number : "",
       }}
       onSubmit={onSubmit}
       validationSchema={checkoutSchema}

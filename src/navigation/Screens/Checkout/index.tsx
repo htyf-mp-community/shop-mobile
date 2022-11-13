@@ -24,12 +24,10 @@ export default function Checkout() {
 
   const onSubmit = async (input: Input) => {
     setIsVisible(true);
-    dispatch(checkoutActions.setCredentials(input));
+    dispatch(checkoutActions.saveCredentials(input));
   };
 
   const onCancel = () => setIsVisible(false);
-
-  const handleSubmitPayment = () => purchase();
 
   return (
     <View style={styles.container}>
@@ -43,7 +41,7 @@ export default function Checkout() {
 
       <CheckoutModal
         onCancel={onCancel}
-        onSubmit={handleSubmitPayment}
+        onSubmit={purchase}
         isVisible={isVisible}
       />
     </View>

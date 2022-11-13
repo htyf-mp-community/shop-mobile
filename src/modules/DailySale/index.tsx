@@ -14,6 +14,7 @@ import AddWatchlist from "modules/AddWatchlist";
 import useColorTheme from "utils/context/ThemeContext";
 import useDailySale from "./useDailySale";
 import { image } from "functions/image";
+import { Fonts } from "constants/styles";
 
 export default function DailySale() {
   const { data: sale, loading } = useDailySale();
@@ -53,7 +54,14 @@ export default function DailySale() {
             </SharedElement>
           </Ripple>
           <View style={[styles.details]}>
-            <Text style={{ color: theme.text, fontSize: 20 }}>
+            <Text
+              style={{
+                color: theme.text,
+                fontSize: 20,
+                marginLeft: 20,
+                fontFamily: Fonts.PoppinsRegular,
+              }}
+            >
               {data?.title}
             </Text>
 

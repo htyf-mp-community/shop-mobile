@@ -112,9 +112,7 @@ export default function AuthForm({
 
             <TouchableOpacity
               onPress={() =>
-                navigation.navigate("Auth", {
-                  screen: header === "Login" ? "Register" : "Login",
-                })
+                navigation.navigate(header === "Login" ? "Register" : "Login")
               }
               style={{
                 marginTop: 10,

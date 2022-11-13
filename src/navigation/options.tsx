@@ -87,7 +87,10 @@ export const userScreenOptions = (name: string): StackNavigationOptions => ({
   // presentation: "modal",
 });
 
-export const homeScreenOptions: StackNavigationOptions = { headerShown: false };
+export const homeScreenOptions: StackNavigationOptions = {
+  headerShown: false,
+  ...horizontalAnimation,
+};
 
 export const cartScreenOptions: StackNavigationOptions = {
   // ...horizontalAnimationFromLeft,
@@ -138,11 +141,12 @@ export const purchaseHistoryOption: StackNavigationOptions = {
 };
 
 export const authOptions: StackNavigationOptions = {
-  headerShown: false,
+  headerShown: true,
   ...horizontalAnimation,
 };
 
 export const landingOptions: StackNavigationOptions = {
   ...authOptions,
+  headerShown: false,
   animationTypeForReplace: "pop",
 };

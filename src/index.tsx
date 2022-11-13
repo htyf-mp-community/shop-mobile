@@ -11,10 +11,16 @@ import MainNavigator from "navigation";
 
 export default function InitApp() {
   const [appReady, setAppReady] = useState(false);
+  const { isLoggedIn, token } = useCheckToken();
+  const { isNotificationsTokenUploaded } = useNotifications();
+  const dispatch = useDispatch();
+  const { ReadUser } = useUser();
 
   useEffect(() => {
     async function prepare() {
       try {
+        ReadUser();
+
         await Font.loadAsync({
           PoppinsBold: require("../assets/fonts/Poppins-Bold.ttf"),
           PoppinsThin: require("../assets/fonts/Poppins-Thin.ttf"),
@@ -31,15 +37,6 @@ export default function InitApp() {
       }
     }
     prepare();
-  }, []);
-
-  const { isLoggedIn, token } = useCheckToken();
-  const { isNotificationsTokenUploaded } = useNotifications();
-  const dispatch = useDispatch();
-  const { ReadUser } = useUser();
-
-  useEffect(() => {
-    ReadUser();
   }, []);
 
   useEffect(() => {

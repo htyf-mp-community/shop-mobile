@@ -63,7 +63,6 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   details: {
-    alignItems: "center",
     justifyContent: "space-between",
   },
   price: {
@@ -90,6 +89,7 @@ const styles = StyleSheet.create({
   bottom_tab: {
     width: WIDTH,
     padding: 10,
+    paddingTop: 5,
     alignItems: "center",
     justifyContent: "center",
   },

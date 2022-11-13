@@ -7,13 +7,16 @@ import styles from "./styles";
 
 export default function Landing({ navigation }: any) {
   function onNavigateLogin() {
-    navigation.navigate("Auth", {
-      screen: "Login",
+    navigation.navigate("Login", {
+      //  screen: "Login",
     });
   }
 
   function onNavigateRegister() {
-    navigation.navigate("Auth", { screen: "Register" });
+    navigation.navigate(
+      "Register"
+      //   { screen: "Register" }
+    );
   }
 
   const { width } = useWindowDimensions();

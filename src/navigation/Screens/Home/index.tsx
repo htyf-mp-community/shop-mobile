@@ -3,7 +3,6 @@ import React from "react";
 import Sidebar from "@modules/Sidebar";
 import Header from "modules/Header";
 import Categories from "modules/Categories";
-import Promotions from "modules/Promotions";
 import DailySale from "modules/DailySale";
 import AuctionsNavigator from "modules/AuctionsNavigator";
 import Carusels from "./components/Carusels";
@@ -27,7 +26,7 @@ export default function Home() {
         <Header toggleSidebar={toggle} />
         <Categories />
 
-        <Promotions />
+        {/* <Promotions /> */}
 
         <DailySale />
 

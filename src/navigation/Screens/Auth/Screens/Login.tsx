@@ -1,12 +1,12 @@
 import React from "react";
 import AuthForm from "@modules/AuthForm/AuthForm";
 import useAuth from "utils/hooks/useAuth";
-import { Text, Image, Dimensions } from "react-native";
+import { Text, Image, ActivityIndicator } from "react-native";
 import { Button, Container, Modal } from "@components/index";
 import useBoolean from "utils/hooks/useBoolean";
 import { Fonts } from "constants/styles";
-
-const { height, width } = Dimensions.get("screen");
+import RNModal from "react-native-modal";
+import layout from "constants/layout";
 
 export default function LoginScreen() {
   const { onLogin, error, loading, onClear } = useAuth("login", {
@@ -31,12 +31,21 @@ export default function LoginScreen() {
         error={error || ""}
       />
 
+      <RNModal
+        isVisible={loading}
+        deviceHeight={layout.screen.height}
+        statusBarTranslucent
+        useNativeDriverForBackdrop
+        animationIn={"fadeIn"}
+      >
+        <ActivityIndicator size={"large"} color="#fff" />
+      </RNModal>
+
       <Modal
         isVisible={state}
         onBackdropPress={clear}
         animationIn="zoomIn"
         animationOut="zoomOutUp"
-        deviceHeight={height}
         onBackButtonPress={clear}
         statusBarTranslucent
         useNativeDriverForBackdrop
@@ -74,7 +83,7 @@ export default function LoginScreen() {
           variant="primary"
           size="xl"
           borderRadius="full"
-          style={{ marginTop: 30, width: width - 40 - 40 }}
+          style={{ marginTop: 30, width: layout.window.width - 40 - 40 }}
         />
       </Modal>
     </Container>
