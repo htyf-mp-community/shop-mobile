@@ -7,12 +7,14 @@ interface ValidatedInputProps<
     [key: string]: string;
   }
 > extends FormikProps<Schema>,
-    InputProps {
+    Omit<InputProps, "value" | "setValue"> {
   name: string;
   label?: string;
   placeholder?: string;
   parseValue?: (v: string) => string;
   style: StyleProp<ViewStyle & TextStyle>;
+
+  showLabel?: boolean;
 }
 
 export default function ValidatedInput<T extends { [key: string]: string }>({
@@ -26,6 +28,9 @@ export default function ValidatedInput<T extends { [key: string]: string }>({
   placeholder,
   parseValue = (a) => a,
   style,
+
+  showLabel,
+  ...rest
 }: ValidatedInputProps<T>) {
   const capitalizeLabel = name.charAt(0).toUpperCase() + name.slice(1);
   return (
@@ -33,14 +38,16 @@ export default function ValidatedInput<T extends { [key: string]: string }>({
       style={style}
       value={parseValue(values[name])}
       onChangeText={handleChange(name)}
-      name={
-        !!errors[name] && touched[name]
-          ? String(errors[name]).toString()
-          : label ?? capitalizeLabel
-      }
       placeholder={placeholder ?? label ?? capitalizeLabel}
       onBlur={handleBlur(name)}
       error={Boolean(!!errors[name] && touched[name])}
+      {...(showLabel && {
+        name:
+          !!errors[name] && touched[name]
+            ? String(errors[name]).toString()
+            : label ?? capitalizeLabel,
+      })}
+      {...rest}
     />
   );
 }

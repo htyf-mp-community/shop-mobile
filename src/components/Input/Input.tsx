@@ -107,7 +107,7 @@ export default function Input({
           backgroundColor: Colors.primary100,
           borderRadius: 5,
           flexDirection: "row",
-          width: layout.screen.width * 0.9,
+          width: layout.screen.width * 0.95,
           borderWidth: 2,
           borderColor: error ? "#ff3030" : Colors.primary100,
           alignItems: "center",
