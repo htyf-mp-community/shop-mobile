@@ -23,17 +23,6 @@ const styles = StyleSheet.create({
     borderRadius: radius.small,
     flexDirection: "row-reverse",
   },
-  toggle: {
-    position: "absolute",
-    right: 2,
-    top: 2,
-    backgroundColor: Colors.primary100,
-    height: 55,
-    padding: Padding.small,
-    marginTop: 5,
-    alignItems: "center",
-    justifyContent: "center",
-  },
 });
 
 export default styles;

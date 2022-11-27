@@ -13,11 +13,7 @@ export default function PasswordToggle({
   vissible,
 }: PasswordToggleProps) {
   return (
-    <Ripple
-      rippleCentered
-      onPress={() => setVissible((p: boolean) => !p)}
-      style={[styles.toggle]}
-    >
+    <Ripple rippleCentered onPress={() => setVissible((p: boolean) => !p)}>
       {!vissible ? (
         <Entypo name="eye" size={IconSize.small} color="white" />
       ) : (

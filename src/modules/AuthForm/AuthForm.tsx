@@ -16,6 +16,8 @@ import type { UserInputProps } from "utils/hooks/useAuth";
 import { useNavigation } from "@react-navigation/native";
 import PasswordToggle from "./components/PasswordToggle";
 
+import { AntDesign } from "@expo/vector-icons";
+
 interface AuthFormProps {
   onSubmit: ({ email, password }: UserInputProps) => Promise<void>;
   header: "Login" | "Register";
@@ -53,13 +55,14 @@ export default function AuthForm({
         }) => (
           <>
             <Input
+              leftIcon={<AntDesign name="user" size={20} color="white" />}
               autoFocus
               value={values.email}
               onChangeText={handleChange("email")}
               placeholder="Email*"
-              style={[styles.input, { width: width - 40 }]}
+              style={[styles.input, { width: width - 40, paddingVertical: 10 }]}
               error={!!errors.email && touched.email}
-              autoCompleteType="email"
+              autoComplete="email"
               autoCorrect={false}
               keyboardType="email-address"
               returnKeyType="next"
@@ -73,11 +76,15 @@ export default function AuthForm({
             />
             <View style={{ flexDirection: "row", position: "relative" }}>
               <Input
+                leftIcon={<AntDesign name="lock" size={20} color="white" />}
                 value={values.password}
                 autoCorrect={false}
                 onChangeText={handleChange("password")}
                 placeholder="Password*"
-                style={[styles.input]}
+                style={[
+                  styles.input,
+                  { width: width - 40, paddingVertical: 10 },
+                ]}
                 error={!!errors.password && touched.password}
                 helperText={
                   !!errors.password && touched.password
@@ -86,8 +93,13 @@ export default function AuthForm({
                 }
                 onBlur={handleBlur("password")}
                 secureTextEntry={!vissible}
+                rightIcon={
+                  <PasswordToggle
+                    setVissible={setVissible}
+                    vissible={vissible}
+                  />
+                }
               />
-              <PasswordToggle setVissible={setVissible} vissible={vissible} />
             </View>
 
             <Button
