@@ -15,7 +15,7 @@ import BottomSheet from "@gorhom/bottom-sheet";
 
 export default function ProductDetails({
   route,
-}: Required<ScreenNavigationProps<"Details">>) {
+}: Required<ScreenNavigationProps<"Product">>) {
   const { prod_id, image, sharedID, title } = route.params;
   const { data, refetch } = useProduct(prod_id);
   const result = data?.product;

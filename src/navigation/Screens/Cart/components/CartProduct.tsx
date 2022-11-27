@@ -10,9 +10,12 @@ import {
 } from "modules/Cart/IconButtons";
 
 import Checkbox from "expo-checkbox";
+import Animated, { FadeIn } from "react-native-reanimated";
 
 interface CartProductProps {
   product: CartProps;
+
+  productIndex?: number;
 
   handleSelectProduct: (value: boolean) => void;
 
@@ -29,13 +32,14 @@ export default function CartProduct({
   isProductSelected,
   showCheckbox,
   handleShowCheckbox,
+  productIndex = 0,
 }: CartProductProps) {
   const navigation = useNavigation<useNavigationProps>();
 
   const img = image(product.img_id);
 
   return (
-    <>
+    <Animated.View entering={FadeIn.delay(productIndex * 75)}>
       {showCheckbox && (
         <Checkbox
           value={isProductSelected}
@@ -51,7 +55,7 @@ export default function CartProduct({
         }}
         activeOpacity={0.8}
         onPress={() =>
-          navigation.navigate("Details", {
+          navigation.navigate("Product", {
             sharedID: "",
             title: product.title,
             prod_id: product.prod_id,
@@ -112,6 +116,6 @@ export default function CartProduct({
           <CartRemoveIconButton cart_id={product.cart_id} />
         </Pressable>
       </TouchableOpacity>
-    </>
+    </Animated.View>
   );
 }

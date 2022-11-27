@@ -12,6 +12,7 @@ import Loader from "../components/Loader";
 import CartProduct from "../components/CartProduct";
 import { Button } from "components";
 import { Colors } from "constants/styles";
+import Color from "color";
 
 interface CartListProps {
   data: CartProps[];
@@ -56,10 +57,12 @@ export default function CartList({
             style={{
               justifyContent: "space-between",
               marginHorizontal: 10,
-              backgroundColor: "red",
+              paddingVertical: 15,
+              backgroundColor: Color("red").darken(0.7).alpha(0.2).string(),
             }}
+            fontStyle={{ color: "red" }}
             icon={
-              <Text style={{ color: "#fff", fontSize: 20 }}>
+              <Text style={{ color: "red", fontSize: 20 }}>
                 {selectedProducts.length}
               </Text>
             }
@@ -86,8 +89,9 @@ export default function CartList({
       getItemCount={(data) => data.length}
       keyExtractor={({ prod_id }) => prod_id.toString()}
       data={data}
-      renderItem={({ item }) => (
+      renderItem={({ item, index }) => (
         <CartProduct
+          productIndex={index}
           handleShowCheckbox={() => setShowCheckboxes((prev) => !prev)}
           showCheckbox={showCheckboxes}
           isProductSelected={selectedProducts.includes(item.prod_id)}

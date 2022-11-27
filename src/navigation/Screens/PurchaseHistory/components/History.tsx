@@ -35,7 +35,7 @@ export default function History({ products, date, total_price }: IHistory) {
   const navigation = useNavigation<useNavigationProps>();
 
   function onPushRoute(product: Product) {
-    navigation.push("Details", {
+    navigation.push("Product", {
       image: `${API}/upload/images=${product.img_id[0].name}`,
       prod_id: product.prod_id,
       sharedID: "",
