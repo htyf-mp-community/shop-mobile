@@ -38,12 +38,7 @@ const cacheSlice = createSlice({
     },
 
     clearCache: (state: State) => {
-      const copy = { ...state.cache };
-      Object.keys(copy).forEach((key) => {
-        delete copy[key];
-      });
-
-      state.cache = copy;
+      state.cache = {};
     },
 
     updateCache: (state: State, { payload }: SetCacheType) => {

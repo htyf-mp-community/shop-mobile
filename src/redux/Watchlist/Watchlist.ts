@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { addProduct, checkElementStatus, removeProduct } from "./httpThunk";
 import { Paging, ProductMinified } from "/@types/types";
 
 const initialState = {
@@ -25,7 +26,11 @@ const watchlistSlice = createSlice({
       { payload }: { payload: Paging<ProductMinified> }
     ) {
       state.loading = false;
-      state.data = payload.results;
+      if (state.isSynced) {
+        state.data = [...state.data, ...payload.results];
+      } else {
+        state.data = payload.results;
+      }
       state.error = "";
       state.hasMore = payload.hasMore;
       state.amount = state.data.length;
@@ -46,6 +51,17 @@ const watchlistSlice = createSlice({
     clearWatchlist(state: State) {
       state = initialState;
     },
+  },
+
+  extraReducers: (builder) => {
+    builder.addCase(addProduct.fulfilled, (state, { payload }) => {
+      state.data = [...state.data, payload as ProductMinified];
+      state.amount += 1;
+    });
+    builder.addCase(removeProduct.fulfilled, (state, { payload }) => {
+      state.data = state.data.filter(({ prod_id }) => prod_id !== payload);
+      state.amount = state.data.length;
+    });
   },
 });
 
