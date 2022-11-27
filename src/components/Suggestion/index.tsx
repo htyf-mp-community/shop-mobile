@@ -24,7 +24,7 @@ function Suggestion({ image, prod_id, title, price, index }: SuggestionProps) {
   const navigation = useNavigation<useNavigationProps>();
 
   function navigateToProduct() {
-    navigation.navigate("Details", {
+    navigation.navigate("Product", {
       prod_id,
       title: title,
       image: thumbnail,
@@ -43,7 +43,6 @@ function Suggestion({ image, prod_id, title, price, index }: SuggestionProps) {
         <SharedElement id={`prod_id.${prod_id}Search`}>
           <Image
             resizeMode="cover"
-            height={300}
             source={{ uri: thumbnail }}
             style={styles.image}
           />

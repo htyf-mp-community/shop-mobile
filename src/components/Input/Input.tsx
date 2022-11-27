@@ -10,18 +10,66 @@ import {
 import styles from "./styles";
 import React from "react";
 import { Colors } from "constants/styles";
+import layout from "constants/layout";
 
-interface InputProps extends TextInputProps {
+export interface InputProps extends TextInputProps {
+  /**
+   * Input label
+   **/
   name?: string;
+  /**
+   * Input value
+   **/
   value: string;
+  /** 
+   Input set text function
+    **/
   setValue?: (text: string) => void;
+  /**
+   * input container style
+   **/
   style?: StyleProp<ViewStyle & TextStyle>;
+  /**
+   * label style
+   **/
   labelStyle?: StyleProp<TextStyle>;
+  /**
+   * placeholder color
+   **/
   placeholderColor?: string;
+  /**
+   * ref
+   **/
   inputRef?: any;
+  /**
+   * hint text
+   **/
   helperText?: string;
+  /**
+   * hint text style
+   **/
   helperStyle?: StyleProp<TextStyle>;
+  /**
+   * Is error state
+   **/
   error?: boolean;
+
+  /**
+   * Icon to be displayed on the left side of the input
+   **/
+
+  leftIcon?: React.ReactNode;
+
+  /**
+   * Icon to be displayed on the right side of the input
+   **/
+
+  rightIcon?: React.ReactNode;
+
+  /**
+   * size of the input
+   */
+  size?: "small" | "medium" | "large";
 }
 
 export default function Input({
@@ -35,6 +83,8 @@ export default function Input({
   helperText,
   helperStyle,
   error,
+  leftIcon,
+  rightIcon,
   ...rest
 }: InputProps) {
   return (
@@ -52,22 +102,37 @@ export default function Input({
           {name}
         </Text>
       )}
-      <TextInput
-        value={value}
-        onChangeText={setValue}
-        placeholderTextColor={error ? "#ff3030" : "white"}
-        style={[
-          styles.input,
-          style,
-          {
-            borderWidth: 2,
-            borderColor: error ? "#ff3030" : Colors.primary,
-            color: error ? "#ff3030" : "white",
-          },
-        ]}
-        ref={inputRef}
-        {...rest}
-      />
+      <View
+        style={{
+          backgroundColor: Colors.primary100,
+          borderRadius: 5,
+          flexDirection: "row",
+          width: layout.screen.width * 0.9,
+          borderWidth: 2,
+          borderColor: error ? "#ff3030" : Colors.primary100,
+          alignItems: "center",
+        }}
+      >
+        {leftIcon && <View style={{ paddingHorizontal: 7.5 }}>{leftIcon}</View>}
+        <TextInput
+          value={value}
+          onChangeText={setValue}
+          placeholderTextColor={error ? "#ff3030" : "white"}
+          style={[
+            styles.input,
+            style,
+            {
+              borderWidth: 0,
+              color: error ? "#ff3030" : "white",
+            },
+          ]}
+          ref={inputRef}
+          {...rest}
+        />
+        {rightIcon && (
+          <View style={{ paddingHorizontal: 7.5 }}>{rightIcon}</View>
+        )}
+      </View>
       {typeof helperText !== "undefined" && (
         <Text
           style={[

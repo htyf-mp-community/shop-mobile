@@ -10,13 +10,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   input: {
-    width: WIDTH * 0.9,
-    padding: 15,
+    paddingVertical: 15,
+    paddingHorizontal: 10,
+
     fontSize: 18,
     borderRadius: 5,
     fontFamily: "PoppinsRegular",
-    backgroundColor: Colors.primary100,
     color: "#fff",
+    flex: 1,
   },
   label: {
     fontSize: 21,
