@@ -94,11 +94,14 @@ export type RootStackParams = {
   MyReviews: undefined;
   AccountSettings: undefined;
   SearchResults: { category: string; options?: Object };
-  Details: {
+  // Details:
+  Product: {
     prod_id: number;
     sharedID: string;
     image: string;
     title: string;
+
+    isSharedAnimationUsed?: boolean;
   };
   CreateReview: {
     prod_id: number;

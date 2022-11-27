@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, Image } from "react-native";
 import { SharedElement } from "react-navigation-shared-element";
 import styles from "./styles";
-import { API } from "../../constants/routes";
+import { API, screens } from "../../constants/routes";
 import { useNavigation } from "@react-navigation/native";
 import { useNavigationProps } from "../../@types/types";
 import { Button } from "../../components";
@@ -26,11 +26,12 @@ export default function DailySale() {
 
   function toProduct() {
     if (data?.prod_id) {
-      navigation.navigate("Details", {
+      navigation.navigate("Product", {
         image: `${API}/upload/images=${data?.img_id[0]?.name}`,
         prod_id: data?.prod_id,
         sharedID: "DAILY",
         title: data?.title,
+        isSharedAnimationUsed: true,
       });
     }
   }

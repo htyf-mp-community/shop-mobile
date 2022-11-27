@@ -9,6 +9,8 @@ interface StateProps<T> {
   data: T | undefined;
   loading: boolean;
   error: string;
+
+  hasMore: boolean;
 }
 
 interface SettingsProps<T> {
@@ -39,6 +41,12 @@ interface SettingsProps<T> {
   /**
    * cache results **/
   cache?: boolean;
+
+  /**
+   * Infinite scroll
+   */
+
+  infiniteScroll?: boolean;
 }
 
 const DEFAULT_OPTIONS = {
@@ -47,6 +55,10 @@ const DEFAULT_OPTIONS = {
   retry: true,
   retryAttempts: 3,
   cache: false,
+
+  infiniteScroll: false,
+
+  defaultPageSize: 5,
 };
 
 export default function useFetch<T>(
@@ -60,12 +72,28 @@ export default function useFetch<T>(
     data: undefined,
     loading: false,
     error: "",
+
+    hasMore: false,
   });
+
+  const [skip, setSkip] = useState(0);
 
   const { user } = useUser();
 
   const cache = useAppSelector((state) => state.cache.cache);
   const dispatch = useAppDispatch();
+
+  function onEndReached(_hasMore?: boolean) {
+    if (state.hasMore || _hasMore) {
+      setSkip((_skip) => _skip + options.defaultPageSize);
+    }
+  }
+
+  function cacheResponse(data: T) {
+    if (options.cache) {
+      dispatch(cacheAction.setCacheWithKey({ key: path, data }));
+    }
+  }
 
   async function query(
     cancelToken?: CancelTokenSource,
@@ -76,6 +104,7 @@ export default function useFetch<T>(
         loading: false,
         error: "",
         data: cache[path],
+        hasMore: false,
       });
     }
 
@@ -90,23 +119,24 @@ export default function useFetch<T>(
           token: user.token,
         },
         params: {
+          ...(opt?.infiniteScroll && { skip, take: options.defaultPageSize }),
           ...searchOptions,
         },
         cancelToken: cancelToken?.token,
       });
 
-      if (options.cache) {
-        dispatch(cacheAction.setCacheWithKey({ key: path, data }));
-      }
+      cacheResponse(data);
 
       if (!!options.onSuccess && mounted.current) {
         options?.onSuccess?.(data, setState);
       } else if (mounted.current) {
-        setState({
+        setState((prev) => ({
+          ...prev,
           loading: false,
           data: data,
           error: "",
-        });
+          // hasMore: data.hasMore
+        }));
       }
 
       return data as T;
@@ -149,27 +179,6 @@ export default function useFetch<T>(
     });
   }
 
-  const retries = useRef(0);
-
-  useEffect(() => {
-    if (
-      options.retry &&
-      !!state.error &&
-      retries.current < options.retryAttempts
-    ) {
-      const cancelToken = axios.CancelToken.source();
-
-      retries.current++;
-
-      let timeoutId = setTimeout(() => query(cancelToken), 500);
-
-      return () => {
-        cancelToken.cancel();
-        clearTimeout(timeoutId);
-      };
-    }
-  }, [state.error, retries.current]);
-
   useEffect(() => {
     if (!options.fetchOnMount) return;
 
@@ -184,5 +193,5 @@ export default function useFetch<T>(
     };
   }, options.invalidate);
 
-  return { ...state, setState, refetch: query, mutate };
+  return { ...state, setState, refetch: query, mutate, onEndReached };
 }

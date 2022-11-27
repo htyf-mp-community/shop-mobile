@@ -1,9 +1,7 @@
-import axios from "axios";
-import { API } from "constants/routes";
 import { useEffect, useState } from "react";
-import { useUser } from "@utils/context/UserContext";
 import { useDispatch } from "react-redux";
-import { watchlistActions } from "redux/Watchlist/Watchlist";
+
+import * as HttpThunk from "@redux/Watchlist/httpThunk";
 
 interface OptionProps {
   withCheck?: boolean;
@@ -16,57 +14,44 @@ export default function useWatchlist(
   { withCheck = false }: OptionProps
 ) {
   const [state, setState] = useState<States>("");
-  const { user } = useUser();
+  const dispatch = useDispatch<any>();
 
   useEffect(() => {
     if (withCheck && prod_id !== undefined) {
       (async () => {
-        try {
-          const { data } = await axios.post(
-            `${API}/watchlist/check`,
-            { prod_id },
-            {
-              headers: { token: user.token },
-            }
-          );
+        const isIn = await dispatch(
+          HttpThunk.checkElementStatus(prod_id)
+        ).unwrap();
 
-          setState(() => (data.isIn ? "IN" : "NOT"));
-        } catch (error: any) {}
+        // console.log({ prod_id, ...isIn });
+
+        setState(isIn.isIn ? "IN" : "NOT");
       })();
     }
   }, [prod_id]);
 
-  const dispatch = useDispatch();
-
   async function appendWatchlist() {
-    try {
-      const { data } = await axios.post(
-        `${API}/watchlist`,
-        { prod_id },
-        {
-          headers: {
-            token: user.token,
-          },
-        }
-      );
+    // try {
+    //   const { data } = await http().post(`/watchlist`, { prod_id });
 
-      dispatch(watchlistActions.updateWatchlist(data.product));
-      setState("IN");
-    } catch (error) {
-      setState("IN");
-    }
+    //   dispatch(watchlistActions.updateWatchlist(data.product));
+    //   setState("IN");
+    // } catch (error) {
+    //   setState("NOT");
+    // }
+    await dispatch(HttpThunk.addProduct(prod_id)).unwrap();
+    setState("IN");
   }
 
   async function remove(prod_id: number) {
-    try {
-      await axios.delete(`${API}/watchlist/${prod_id}`, {
-        headers: {
-          token: user.token,
-        },
-      });
-      dispatch(watchlistActions.removeElement(prod_id));
-      setState("NOT");
-    } catch (error) {}
+    // try {
+    //   await http().delete(`${API}/watchlist/${prod_id}`);
+    //   dispatch(watchlistActions.removeElement(prod_id));
+    //   setState("NOT");
+    // } catch (error) {}
+
+    await dispatch(HttpThunk.removeProduct(prod_id)).unwrap();
+    setState("NOT");
   }
 
   return { appendWatchlist, state, remove };

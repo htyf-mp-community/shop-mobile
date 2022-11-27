@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import Button from "../../components/Button/Button";
 import AddToCart from "../Cart/AddToCart/AddToCart";
-import { API } from "../../constants/routes";
+import { API, screens } from "../../constants/routes";
 import { useNavigation } from "@react-navigation/native";
 import { SharedElement } from "react-navigation-shared-element";
 import { Ionicons } from "@expo/vector-icons";
@@ -71,11 +71,13 @@ function Product({
     : notfound;
 
   function ShowMore() {
-    navigation.navigate("Details", {
+    navigation.navigate("Product", {
       prod_id,
       image,
       sharedID,
       title,
+
+      isSharedAnimationUsed: true,
     });
   }
 

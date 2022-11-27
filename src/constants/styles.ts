@@ -42,6 +42,7 @@ export const Colors = {
   text: "#fff",
   textFaded: "#b8b8b8",
   primary: "#0f172a",
+
   primary100: "#212a40",
   primary200: "#26314a",
   primary300: "#1d273d",

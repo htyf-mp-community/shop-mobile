@@ -1,5 +1,7 @@
 //export const API = "http://192.168.0.25:3000";
 
+import { RootStackParams } from "/@types/types";
+
 export const API = "http://srv11.mikr.us:20220";
 
 export const ENDPOINTS = {
@@ -27,4 +29,17 @@ export const ENDPOINTS = {
   //
 
   dailySale: `${API}/sales/daily`,
+};
+
+export const screens = {
+  HOME: "Home",
+  LOGIN: "Login",
+  REGISTER: "Register",
+  AUCTIONS: "Auctions",
+  AUCTION: "Auction",
+  CART: "Cart",
+  USER: "User",
+  SEARCH: "Search",
+  WATCHLIST: "Watchlist",
+  PRODUCT: "Product",
 };

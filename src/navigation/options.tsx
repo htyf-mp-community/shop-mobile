@@ -64,7 +64,7 @@ export const auctionOptions: StackNavigationOptions = {
 
 export const detailsScreenOptions = ({
   route,
-}: ScreenNavigationProps<"Details">): StackNavigationOptions => ({
+}: ScreenNavigationProps<"Product">): StackNavigationOptions => ({
   ...defaultStackOptions,
   headerTitle: route?.params?.title?.split("").slice(0, 30).join(""),
   headerTitleAlign: "center",
@@ -73,6 +73,8 @@ export const detailsScreenOptions = ({
     open: { animation: "timing", config: { duration: 200 } },
     close: { animation: "timing", config: { duration: 200 } },
   },
+
+  ...(!route.params.isSharedAnimationUsed && horizontalAnimation),
 });
 
 export const checkOutScreenOptions: StackNavigationOptions = {

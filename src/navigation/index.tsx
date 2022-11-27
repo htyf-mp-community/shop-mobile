@@ -68,7 +68,7 @@ export default function MainNavigator() {
               />
               <Stack.Screen
                 component={Screen.ProductDetails}
-                name="Details"
+                name="Product"
                 options={Option.detailsScreenOptions}
                 sharedElements={({ params }, opt) => {
                   const { prod_id, sharedID } = params;

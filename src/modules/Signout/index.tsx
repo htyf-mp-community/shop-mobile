@@ -41,6 +41,8 @@ export default function SignOut() {
     dispatch(watchlistActions.clearWatchlist());
     // clear checkout
     dispatch(checkoutActions.destroySession());
+    // hide modal
+    negative();
     // clear user store
     dispatch(userActions.removeUser());
     // remove user from storage
