@@ -6,7 +6,6 @@ const { width: SCREEN_WIDTH } = Dimensions.get("window");
 const styles = StyleSheet.create({
   form: {
     flex: 1,
-    backgroundColor: Colors.primary,
     alignItems: "center",
   },
   input: {
@@ -15,7 +14,7 @@ const styles = StyleSheet.create({
     textDecorationLine: "none",
   },
   btn: {
-    width: SCREEN_WIDTH - 40,
+    width: SCREEN_WIDTH * 0.95,
     marginTop: 5,
     padding: 15,
     color: Colors.text,

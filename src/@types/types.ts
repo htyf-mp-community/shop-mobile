@@ -88,7 +88,10 @@ export type RootStackParams = {
   Landing: undefined;
   Dashboard: undefined;
   Register?: undefined;
-  Login?: undefined;
+  Login?: {
+    email?: string;
+    password?: string;
+  };
   Watchlist?: undefined;
   Upload: undefined;
   MyReviews: undefined;

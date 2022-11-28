@@ -4,25 +4,29 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
   Text,
-  View,
-  useWindowDimensions,
   ActivityIndicator,
 } from "react-native";
 import Button from "@components/Button/Button";
-import Input from "@components/Input/Input";
 import styles from "./styles";
 import schema from "./schema";
 import type { UserInputProps } from "utils/hooks/useAuth";
 import { useNavigation } from "@react-navigation/native";
 import PasswordToggle from "./components/PasswordToggle";
+import { ValidatedInput } from "components";
 
 import { AntDesign } from "@expo/vector-icons";
+import layout from "constants/layout";
 
 interface AuthFormProps {
-  onSubmit: ({ email, password }: UserInputProps) => Promise<void>;
+  onSubmit: ({ email, password }: UserInputProps) => Promise<void> | void;
   header: "Login" | "Register";
   error: string;
   loading: boolean;
+
+  initialValues?: {
+    email?: string;
+    password?: string;
+  };
 }
 
 export default function AuthForm({
@@ -30,110 +34,130 @@ export default function AuthForm({
   header,
   error,
   loading,
+  initialValues: initialValuesProp,
 }: AuthFormProps) {
   const navigation = useNavigation<any>();
   const [vissible, setVissible] = useState(false);
-  const { width } = useWindowDimensions();
+
+  const loadingIcon = loading ? (
+    <ActivityIndicator
+      size={"small"}
+      color="white"
+      style={{ marginRight: 10 }}
+    />
+  ) : null;
+
+  const isRegister = header === "Register";
+
+  const initialValues = {
+    email: initialValuesProp?.email || "",
+    password: initialValuesProp?.password || "",
+    ...(header === "Register" && { confirmPassword: "" }),
+  };
+
+  const inputStyle = [
+    styles.input,
+    { width: layout.screen.width - 20, paddingVertical: 10 },
+  ];
 
   return (
     <KeyboardAvoidingView style={[styles.form]}>
       <Formik
-        validationSchema={schema}
-        initialValues={{ email: "", password: "" }}
+        enableReinitialize
+        validationSchema={schema(isRegister)}
+        initialValues={initialValues}
         onSubmit={(values) => onSubmit(values)}
         validateOnChange
       >
-        {({
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          values,
-          errors,
-          isValid,
-          dirty,
-          touched,
-        }) => (
+        {(formik) => (
           <>
-            <Input
-              leftIcon={<AntDesign name="user" size={20} color="white" />}
+            <ValidatedInput
               autoFocus
-              value={values.email}
-              onChangeText={handleChange("email")}
+              name="email"
+              style={inputStyle}
               placeholder="Email*"
-              style={[styles.input, { width: width - 40, paddingVertical: 10 }]}
-              error={!!errors.email && touched.email}
+              //prettier-ignore
+              leftIcon={<AntDesign name="user" size={20} color={
+                !!formik.errors.email && formik.touched.email ? "#ff3030" : "white"
+              } />}
               autoComplete="email"
               autoCorrect={false}
               keyboardType="email-address"
               returnKeyType="next"
-              helperText={
-                !!errors.email && touched.email
-                  ? errors.email
-                  : "6-60 characters*"
-              }
-              onBlur={handleBlur("email")}
               clearButtonMode={"always"}
+              {...formik}
             />
-            <View style={{ flexDirection: "row", position: "relative" }}>
-              <Input
-                leftIcon={<AntDesign name="lock" size={20} color="white" />}
-                value={values.password}
+            <ValidatedInput
+              name="password"
+              style={inputStyle}
+              placeholder="Password*"
+              //prettier-ignore
+              leftIcon={<AntDesign name="lock" size={20} color={
+                !!formik.errors.password && formik.touched.password ? "#ff3030" : "white"
+              } />}
+              autoComplete="password"
+              autoCorrect={false}
+              secureTextEntry={!vissible}
+              returnKeyType="done"
+              clearButtonMode={"always"}
+              rightIcon={
+                <PasswordToggle
+                  isError={!!formik.errors.password && formik.touched.password}
+                  setVissible={setVissible}
+                  vissible={vissible}
+                />
+              }
+              {...formik}
+            />
+
+            {isRegister && (
+              <ValidatedInput
+                style={inputStyle}
+                placeholder="Confirm Password*"
+                //prettier-ignore
+                leftIcon={<AntDesign name="lock" size={20} color={
+                !!formik.errors.confirmPassword && formik.touched.confirmPassword ? "#ff3030" : "white"
+              } />}
+                autoComplete="password"
                 autoCorrect={false}
-                onChangeText={handleChange("password")}
-                placeholder="Password*"
-                style={[
-                  styles.input,
-                  { width: width - 40, paddingVertical: 10 },
-                ]}
-                error={!!errors.password && touched.password}
-                helperText={
-                  !!errors.password && touched.password
-                    ? errors.password
-                    : "6-60 characters*"
-                }
-                onBlur={handleBlur("password")}
                 secureTextEntry={!vissible}
                 rightIcon={
                   <PasswordToggle
+                    isError={
+                      !!formik.errors.confirmPassword &&
+                      formik.touched.confirmPassword
+                    }
                     setVissible={setVissible}
                     vissible={vissible}
                   />
                 }
+                name="confirmPassword"
+                {...formik}
               />
-            </View>
+            )}
 
             <Button
               text={header.toUpperCase()}
-              onPress={() => handleSubmit()}
+              onPress={() => formik.handleSubmit()}
               style={[styles.btn]}
-              icon={
-                loading ? (
-                  <ActivityIndicator
-                    size={"small"}
-                    color="white"
-                    style={{ marginRight: 10 }}
-                  />
-                ) : null
-              }
+              icon={loadingIcon}
               type="contained"
               variant="primary"
-              disabled={!(isValid && dirty && !loading && !error)}
+              disabled={!(formik.isValid && formik.dirty && !loading && !error)}
               fontStyle={{ fontWeight: "bold" }}
               testID="SUBMIT_BUTTON"
             />
 
             <TouchableOpacity
               onPress={() =>
-                navigation.navigate(header === "Login" ? "Register" : "Login")
+                navigation.navigate(!isRegister ? "Register" : "Login")
               }
               style={{
                 marginTop: 10,
               }}
             >
               <Text style={{ color: "gray" }}>
-                {header === "Login"
-                  ? "Don't have account?"
-                  : "Have an account?"}
+                {!isRegister ? "Don't have account?" : "Have an account?"}
               </Text>
             </TouchableOpacity>
           </>

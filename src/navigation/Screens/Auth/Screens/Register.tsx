@@ -2,14 +2,27 @@ import React from "react";
 import AuthForm from "@modules/AuthForm/AuthForm";
 import useAuth from "@utils/hooks/useAuth";
 import { Container } from "@components/index";
-import RegisterModal from "../components/Modal";
+import RegisterModal from "../components/RegisterModal";
+import { ScreenNavigationProps } from "/@types/types";
 
-export default function RegisterScreen() {
+export default function RegisterScreen({
+  navigation,
+}: ScreenNavigationProps<"Register">) {
   const [isVisible, setIsVisible] = React.useState(false);
+
+  const [credentials, setCredentials] = React.useState({
+    email: "",
+    password: "",
+  });
 
   const { onRegister, error, onClear, loading } = useAuth("register", {
     onStart: () => setIsVisible(true),
   });
+
+  function handleSubmit(input: { email: string; password: string }) {
+    setCredentials(input);
+    onRegister(input);
+  }
 
   return (
     <Container centerVertical>
@@ -17,9 +30,15 @@ export default function RegisterScreen() {
         loading={loading}
         error={error || ""}
         header="Register"
-        onSubmit={onRegister}
+        onSubmit={handleSubmit}
       />
       <RegisterModal
+        onSignInPress={() => {
+          console.log("onSignInPress");
+          navigation.navigate("Login", {
+            ...credentials,
+          });
+        }}
         error={error}
         isVisible={isVisible}
         onCloseModal={() => {

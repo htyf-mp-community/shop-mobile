@@ -1,7 +1,4 @@
-import { StyleSheet, Dimensions } from "react-native";
-import { Colors } from "../../constants/styles";
-
-const { width: WIDTH } = Dimensions.get("screen");
+import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   container: {
@@ -12,12 +9,13 @@ const styles = StyleSheet.create({
   input: {
     paddingVertical: 15,
     paddingHorizontal: 10,
-
     fontSize: 18,
     borderRadius: 5,
     fontFamily: "PoppinsRegular",
     color: "#fff",
     flex: 1,
+    textDecorationLine: "none",
+    minHeight: 50,
   },
   label: {
     fontSize: 21,
