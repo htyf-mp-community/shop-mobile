@@ -1,45 +1,48 @@
-import { ProductMinified } from "/@types/types";
-import { View } from "react-native";
+import { Text, View } from "react-native";
 import useColorTheme from "utils/context/ThemeContext";
-import useFetch from "utils/hooks/useFetch";
-import { useDispatch } from "react-redux";
-import { useAppSelector } from "utils/hooks/hooks";
-import { watchlistActions } from "redux/Watchlist/Watchlist";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import ProductsList from "./components/ProductsList";
 import { transformInto2DimsArray } from "./transform2Dims";
+import useWatchlist from "./useWatchlist";
+import { ScreenNavigationProps } from "/@types/types";
+import { IconButton } from "components";
 
-const init = {
-  hasMore: false,
-  results: [],
-};
+import { Entypo } from "@expo/vector-icons";
+import Ripple from "react-native-material-ripple";
+import { Colors } from "constants/styles";
+import Menu from "components/Menu";
 
-interface FetchProps {
-  hasMore: boolean;
-  results: ProductMinified[];
-}
-
-export default function Watchlist() {
+export default function Watchlist({
+  navigation,
+}: ScreenNavigationProps<"Watchlist">) {
   const { theme } = useColorTheme();
-  const dispatch = useDispatch();
-  const { data, isSynced, hasMore } = useAppSelector(
-    (state) => state.watchlist
-  );
-
-  const { onEndReached } = useFetch<FetchProps>("/watchlist", {
-    invalidate: [],
-    // infiniteScroll: true,
-    fetchOnMount: !isSynced,
-    onSuccess: (data = init) => {
-      dispatch(watchlistActions.setWatchlist(data));
-    },
-  });
+  const { data, onEndReached } = useWatchlist();
 
   const watchlist = useMemo(() => transformInto2DimsArray(data), [data]);
 
+  const [showMenu, setShowMenu] = useState(false);
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: ({}) => (
+        <Ripple
+          rippleCentered
+          rippleColor="#fff"
+          style={{ margin: 10 }}
+          onPress={() => setShowMenu((prev) => !prev)}
+        >
+          <Entypo name="dots-three-vertical" size={20} color="white" />
+        </Ripple>
+      ),
+    });
+  }, []);
+
   return (
     <View style={{ flex: 1, backgroundColor: theme.primary }}>
-      <ProductsList data={watchlist} />
+      <ProductsList onEndReached={onEndReached} data={watchlist} />
+
+      {/* <Menu placement="right" isOpen={showMenu} />
+       */}
     </View>
   );
 }

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import RemoveProductsRepetition from "functions/RemoveRepetition";
 import { addProduct, checkElementStatus, removeProduct } from "./httpThunk";
 import { Paging, ProductMinified } from "/@types/types";
 
@@ -26,8 +27,14 @@ const watchlistSlice = createSlice({
       { payload }: { payload: Paging<ProductMinified> }
     ) {
       state.loading = false;
+
+      console.log(payload.results.length, payload.hasMore);
+
       if (state.isSynced) {
-        state.data = [...state.data, ...payload.results];
+        state.data = RemoveProductsRepetition(
+          [...state.data, ...payload.results],
+          "prod_id"
+        );
       } else {
         state.data = payload.results;
       }

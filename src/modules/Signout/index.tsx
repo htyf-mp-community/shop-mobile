@@ -96,7 +96,7 @@ export default function SignOut() {
 
       <Button
         onPress={positive}
-        color="primary"
+        color="secondary"
         size="xl"
         type="contained"
         text={"Sign out"}

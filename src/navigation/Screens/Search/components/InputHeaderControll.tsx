@@ -46,7 +46,7 @@ export default function InputHeaderControll({
         justifyContent: "space-between",
         alignItems: "center",
         marginHorizontal: 15,
-        marginTop: 15,
+        marginTop: 5,
       }}
     >
       <IconButton

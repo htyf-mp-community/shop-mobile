@@ -24,10 +24,10 @@ const styles = StyleSheet.create({
   },
   button: {
     flexDirection: "row-reverse",
-    justifyContent: "center",
-    width: WIDTH * 0.5,
+    justifyContent: "flex-end",
+    width: WIDTH * 0.55,
     marginTop: 10,
-    padding: 20,
+    padding: 15,
     backgroundColor: "#131d33",
     alignItems: "center",
     borderRadius: 10,

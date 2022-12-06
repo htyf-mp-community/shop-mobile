@@ -5,8 +5,10 @@ import { Button } from "components/index";
 import { Dimensions } from "react-native";
 import Row from "./Row";
 import { ScrollView } from "react-native-gesture-handler";
-import { ValidatedInput } from "../helpers/input_helpers";
+import { ValidatedInput } from "@components/index";
 import Separator from "./Separator";
+
+import { AntDesign } from "@expo/vector-icons";
 
 const { width } = Dimensions.get("screen");
 
@@ -40,33 +42,43 @@ export default function Form({ onSubmit }: FormProps) {
             contentContainerStyle={{ alignItems: "center" }}
           >
             <Separator text="Personal Information" />
-            <ValidatedInput formik={f} name="name" style={inputWidth} />
+            <ValidatedInput
+              name="name"
+              style={inputWidth}
+              leftIcon={<AntDesign name="user" size={20} color="white" />}
+              {...f}
+            />
 
-            <ValidatedInput formik={f} name="surname" style={inputWidth} />
+            <ValidatedInput
+              name="surname"
+              style={inputWidth}
+              leftIcon={<AntDesign name="user" size={20} color="white" />}
+              {...f}
+            />
 
             <Separator text="Contact Information" />
 
-            <ValidatedInput formik={f} name="street" style={inputWidth} />
+            <ValidatedInput name="street" style={inputWidth} {...f} />
 
             <Row>
               <ValidatedInput
-                formik={f}
                 name="apartment_number"
                 style={{ width: width / 2 - 15 }}
                 label="Apartment nr"
+                {...f}
               />
               <ValidatedInput
-                formik={f}
                 name="city"
                 style={{ width: width / 2 - 15 }}
+                {...f}
               />
             </Row>
 
             <ValidatedInput
               placeholder="+00 000 000 000"
-              formik={f}
               name="phone"
               style={inputWidth}
+              {...f}
             />
 
             <Button

@@ -54,7 +54,7 @@ export default function MainNavigator() {
               <Stack.Screen
                 component={Screen.User}
                 name="User"
-                options={() => Option.userScreenOptions(name ?? "")}
+                options={() => Option.userScreenOptions(name)}
               />
 
               <Stack.Screen

@@ -34,8 +34,7 @@ export const BUTTON_TYPES = {
     },
     shadowOpacity: 1,
     shadowRadius: 20.0,
-
-    elevation: 30,
+    // elevation: 30,
   }),
   outlined: (mainColor: string): Return => ({
     borderWidth: 2,

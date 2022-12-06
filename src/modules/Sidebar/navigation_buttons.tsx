@@ -2,64 +2,94 @@ import { View } from "react-native";
 import { Button } from "@components/index";
 import { AntDesign } from "@expo/vector-icons";
 import { useAppSelector } from "utils/hooks/hooks";
-import { useNavigationProps } from "../../@types/types";
+import { RootStackParams, useNavigationProps } from "../../@types/types";
 import { useNavigation } from "@react-navigation/core";
 import styles from "./Sidebar.styles";
+import { Fonts } from "constants/styles";
+import SignOut from "modules/Signout";
 
 export default function NavigationButtons() {
   const { cart, watchlist } = useAppSelector((state) => state);
   const navigation = useNavigation<useNavigationProps>();
 
+  const NavigationButton = (props: {
+    screen: any;
+    icon: any;
+    count?: number;
+    text: string;
+  }) => (
+    <Button
+      icon={props.icon}
+      style={[styles.button]}
+      fontStyle={{
+        color: "#fff",
+        fontSize: 19,
+      }}
+      text={props.text}
+      onPress={() => navigation.navigate(props.screen)}
+      {...(props.count && { badge: props.count })}
+    />
+  );
+
+  const Icon = (props: { name: string; color?: string }) => (
+    <AntDesign
+      name={props.name as any}
+      style={{ marginRight: 10 }}
+      size={25}
+      color={props.color || "#fff"}
+    />
+  );
+
   return (
-    <>
-      <View style={{ flex: 1 }}>
-        <Button
-          badge={watchlist.amount}
-          icon={
-            <AntDesign
-              name={"heart"}
-              style={{ marginRight: 10 }}
-              size={25}
-              color={"red"}
-            />
-          }
-          style={[styles.button]}
-          fontStyle={{ color: "#fff" }}
-          text={"Watchlist"}
-          onPress={() => navigation.navigate("Watchlist")}
-        />
+    <View style={{ flex: 1 }}>
+      <NavigationButton
+        screen="Watchlist"
+        text="Watchlist"
+        count={watchlist.data.length}
+        icon={<Icon name="heart" />}
+      />
 
-        <Button
-          badge={cart.amount}
-          icon={
-            <AntDesign
-              name={"shoppingcart"}
-              style={{ marginRight: 10 }}
-              size={30}
-              color={"#fff"}
-            />
-          }
-          style={[styles.button]}
-          fontStyle={{ color: "#fff" }}
-          text={"Cart"}
-          onPress={() => navigation.navigate("Cart")}
-        />
+      <NavigationButton
+        screen="Cart"
+        icon={<Icon name="shoppingcart" />}
+        text="Cart"
+        count={cart.cart.length}
+      />
 
-        <Button
-          icon={
-            <AntDesign
-              name={"user"}
-              style={{ marginRight: 10 }}
-              size={30}
-              color={"#fff"}
-            />
-          }
-          style={[styles.button]}
-          fontStyle={{ color: "#fff" }}
-          text={"User"}
-          onPress={() => navigation.navigate("User")}
-        />
-      </View>
-    </>
+      <NavigationButton
+        screen="PurchaseHistory"
+        icon={<Icon name="profile" />}
+        text="Orders history"
+      />
+
+      <NavigationButton
+        screen="AccountSettings"
+        icon={<Icon name="setting" />}
+        text="Account settings"
+      />
+
+      <NavigationButton
+        screen="MyReviews"
+        icon={<Icon name="star" />}
+        text="My reviews"
+      />
+
+      <SignOut />
+
+      {/* <Button
+        icon={
+          <AntDesign
+            name={"user"}
+            style={{ marginRight: 10 }}
+            size={30}
+            color={"#fff"}
+          />
+        }
+        style={[styles.button]}
+        fontStyle={{ color: "#fff" }}
+        text={"User"}
+        onPress={() => navigation.navigate("User")}
+      /> */}
+    </View>
   );
 }

@@ -8,6 +8,7 @@ import { userActions } from "./redux/User";
 import { useEffect, useState } from "react";
 import * as Font from "expo-font";
 import MainNavigator from "navigation";
+import axios from "axios";
 
 export default function InitApp() {
   const [appReady, setAppReady] = useState(false);
@@ -40,7 +41,11 @@ export default function InitApp() {
   }, []);
 
   useEffect(() => {
-    isNotificationsTokenUploaded(token);
+    const cancelToken = axios.CancelToken.source();
+
+    isNotificationsTokenUploaded(token, cancelToken);
+
+    return () => cancelToken.cancel();
   }, [token]);
 
   useFetch("/auth/credentials", {

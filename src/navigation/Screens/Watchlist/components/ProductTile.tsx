@@ -40,7 +40,7 @@ export default function ProductTile({ product, listIndex }: ProductTileProps) {
   const [showControls, setShowControls] = useState(false);
 
   return (
-    <Animated.View entering={FadeIn.delay(listIndex * 150)}>
+    <Animated.View>
       <TouchableOpacity
         activeOpacity={0.9}
         // disabled={showControls}
@@ -50,7 +50,7 @@ export default function ProductTile({ product, listIndex }: ProductTileProps) {
         <Image
           style={{
             width: TILE_WIDTH,
-            height: TILE_WIDTH * 1.3,
+            height: TILE_WIDTH * 1.4,
             borderRadius: 5,
           }}
           source={thumbnail}

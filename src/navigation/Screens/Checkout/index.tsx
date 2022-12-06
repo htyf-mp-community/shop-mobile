@@ -7,6 +7,7 @@ import Form from "./components/Form";
 import CheckoutModal from "./components/CheckoutModal";
 import { useAppDispatch } from "utils/hooks/hooks";
 import { checkoutActions } from "redux/Checkout";
+import layout from "constants/layout";
 
 interface Input {
   name: string;
@@ -30,7 +31,7 @@ export default function Checkout() {
   const onCancel = () => setIsVisible(false);
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container]}>
       <Header>
         <Text style={{ color: "#fff", fontSize: 20, padding: 10 }}>
           {total === 0 ? "Loading..." : "Total $" + total.toFixed(2)}

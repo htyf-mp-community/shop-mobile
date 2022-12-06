@@ -1,5 +1,6 @@
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationOptions } from "@react-navigation/stack";
+import layout from "constants/layout";
 import { Platform } from "react-native";
 import { RootStackParams, ScreenNavigationProps } from "../@types/types";
 
@@ -9,6 +10,31 @@ const HEADER = {
   windows: true,
   macos: true,
   web: false,
+};
+
+const defaultFadeInScreenAnimation: StackNavigationOptions = {
+  cardStyleInterpolator: ({ current: { progress } }) => ({
+    cardStyle: {
+      opacity: progress.interpolate({
+        inputRange: [0.5, 1],
+        outputRange: [0, 1],
+      }),
+      transform: [
+        {
+          translateY: progress.interpolate({
+            inputRange: [0, 1],
+            outputRange: [layout.screen.height / 2, 0],
+          }),
+        },
+        {
+          scale: progress.interpolate({
+            inputRange: [0, 1],
+            outputRange: [0.8, 1],
+          }),
+        },
+      ],
+    },
+  }),
 };
 
 export const horizontalAnimation: StackNavigationOptions = {
@@ -50,6 +76,7 @@ export const defaultStackOptions: StackNavigationOptions = {
   cardStyle: {
     backgroundColor: "transparent",
   },
+  ...defaultFadeInScreenAnimation,
 };
 
 export const auctionOptions: StackNavigationOptions = {
@@ -85,13 +112,12 @@ export const checkOutScreenOptions: StackNavigationOptions = {
 
 export const userScreenOptions = (name: string): StackNavigationOptions => ({
   headerTitleAlign: "center",
-  headerTitle: name.split("@")[0],
+  headerTitle: name,
   // presentation: "modal",
 });
 
 export const homeScreenOptions: StackNavigationOptions = {
   headerShown: false,
-  ...horizontalAnimation,
 };
 
 export const cartScreenOptions: StackNavigationOptions = {
@@ -123,12 +149,10 @@ export const productReviewsOption = ({
 export const myReviewsOption: StackNavigationOptions = {
   title: "My reviews",
   headerTitleAlign: "center",
-  ...horizontalAnimation,
 };
 
 export const accountSettingsOption: StackNavigationOptions = {
   headerShown: false,
-  ...horizontalAnimation,
 };
 
 export const searchOptions: StackNavigationOptions = {
@@ -139,7 +163,6 @@ export const searchOptions: StackNavigationOptions = {
 export const purchaseHistoryOption: StackNavigationOptions = {
   headerTitle: "Purchase history",
   headerTitleAlign: "center",
-  ...horizontalAnimation,
 };
 
 export const authOptions: StackNavigationOptions = {

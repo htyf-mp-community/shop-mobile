@@ -1,8 +1,12 @@
 import { Button, Input } from "components";
-import { Padding } from "constants/styles";
+import { Colors, Padding } from "constants/styles";
 import { useState } from "react";
-import { View, StyleSheet, Dimensions } from "react-native";
+import { View, StyleSheet, Dimensions, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import layout from "constants/layout";
+import Ripple from "react-native-material-ripple";
+
+import { FontAwesome5 } from "@expo/vector-icons";
 
 const { width } = Dimensions.get("window");
 
@@ -11,10 +15,6 @@ const styles = StyleSheet.create({
     width,
     padding: Padding.medium,
     flexDirection: "row",
-  },
-  input: {
-    width: width / 3,
-    textAlign: "center",
   },
   button: {
     marginBottom: 12,
@@ -66,31 +66,31 @@ export default function Addbid({
         text="+ $5"
         onPress={() => onBid(highest + 5, auction_id)}
       />
+
       <Input
+        placeholder="Place your bid"
+        keyboardType="number-pad"
         value={value}
         onChangeText={setValue}
-        placeholder="custom $"
-        style={styles.input}
-        keyboardType="number-pad"
-        clearButtonMode="while-editing"
         onBlur={() => setTouched(true)}
-        error={+value < highest && touched}
-      />
-      <Button
-        disabled={+value <= highest || !touched || isLoading}
-        icon={
-          <Ionicons
-            name="ios-cash-outline"
-            style={{ marginRight: 10 }}
-            size={24}
-            color="#fff"
-          />
+        leftIcon={<FontAwesome5 name="money-check" size={20} color="white" />}
+        rightIcon={
+          <Ripple
+            onPress={handleBidSubmit}
+            disabled={+value <= highest || !touched || isLoading}
+            style={{
+              padding: 5,
+              borderRadius: 100,
+              backgroundColor: Colors.primary,
+            }}
+          >
+            <Ionicons name="add-outline" size={24} color="white" />
+          </Ripple>
         }
-        onPress={handleBidSubmit}
-        text="Bid"
-        color="primary"
-        type="contained"
-        style={styles.button}
+        style={{
+          lineHeight: 20,
+          width: layout.screen.width - 20 * 2 - 55,
+        }}
       />
     </View>
   );

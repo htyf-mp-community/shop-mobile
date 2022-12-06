@@ -8,7 +8,7 @@ import {
   TextStyle,
 } from "react-native";
 import styles from "./styles";
-import React from "react";
+import React, { useState } from "react";
 import { Colors } from "constants/styles";
 import layout from "constants/layout";
 
@@ -85,8 +85,11 @@ export default function Input({
   error,
   leftIcon,
   rightIcon,
+  onBlur,
   ...rest
 }: InputProps) {
+  const [isFocused, setIsFocused] = useState(false);
+
   return (
     <View style={styles.container}>
       {typeof name !== "undefined" && (
@@ -107,9 +110,13 @@ export default function Input({
           backgroundColor: Colors.primary100,
           borderRadius: 5,
           flexDirection: "row",
-          width: layout.screen.width * 0.95,
+          width: (style as any)?.width ?? layout.screen.width * 0.95,
           borderWidth: 2,
-          borderColor: error ? "#ff3030" : Colors.primary100,
+          borderColor: error
+            ? "#ff3030"
+            : isFocused
+            ? "#8408D4"
+            : Colors.primary100,
           alignItems: "center",
         }}
       >
@@ -127,6 +134,14 @@ export default function Input({
             },
           ]}
           ref={inputRef}
+          onFocus={(event) => {
+            setIsFocused(true);
+            rest?.onFocus?.(event);
+          }}
+          onBlur={(event) => {
+            setIsFocused(false);
+            onBlur?.(event);
+          }}
           {...rest}
         />
         {rightIcon && (

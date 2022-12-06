@@ -2,25 +2,9 @@ import * as Notifications from "expo-notifications";
 import { ENDPOINTS } from "@constants/routes";
 import { useState, useRef, useEffect } from "react";
 import { registerForPushNotificationsAsync } from "./registerForPushNotificationsAsync";
-import axios from "axios";
+import axios, { CancelTokenSource } from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
-export async function UploadExpoTokenToServer(
-  jwt: string,
-  expoPushToken: string
-) {
-  try {
-    await axios.post(
-      ENDPOINTS.notificationsAddToken,
-      { token: expoPushToken },
-      {
-        headers: {
-          token: jwt,
-        },
-      }
-    );
-  } catch (error: any) {}
-}
+import http from "utils/service/http/http";
 
 const NOTIFICATIONS_KEY = "MobileNotifications";
 
@@ -30,16 +14,22 @@ const useNotifications = () => {
   const notificationListener = useRef<any>();
   const responseListener = useRef<any>();
 
-  async function isNotificationsTokenUploaded(token: string) {
+  async function isNotificationsTokenUploaded(
+    token: string,
+    cancelToken: CancelTokenSource
+  ) {
     const isSaved = await AsyncStorage.getItem(NOTIFICATIONS_KEY);
 
     if (isSaved === "false" && !!expoPushToken) {
-      try {
-        await UploadExpoTokenToServer(token, expoPushToken);
-      } catch (err) {}
-      try {
-        await AsyncStorage.setItem(NOTIFICATIONS_KEY, "true");
-      } catch (error) {}
+      await http().post(
+        "/notifications/upload-token",
+        {
+          token: expoPushToken,
+        },
+        { cancelToken: cancelToken.token }
+      );
+
+      await AsyncStorage.setItem(NOTIFICATIONS_KEY, "true");
     }
   }
 

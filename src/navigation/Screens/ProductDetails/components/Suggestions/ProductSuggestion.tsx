@@ -19,7 +19,7 @@ export default function ProductSuggestion({
   const navigation = useNavigation<useNavigationProps>();
 
   function navigateProduct(item: ProductMinified) {
-    navigation.push("Details", {
+    navigation.push("Product", {
       image: image(item.img_id).uri,
       title: item.title,
       prod_id: item.prod_id,
