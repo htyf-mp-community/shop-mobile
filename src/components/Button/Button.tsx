@@ -72,7 +72,6 @@ export default function Button({
 
   return (
     <Ripple
-      rippleColor="#fff"
       rippleCentered
       onPress={callback}
       disabled={disabled}

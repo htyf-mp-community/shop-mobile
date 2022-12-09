@@ -107,16 +107,16 @@ export default function Input({
       )}
       <View
         style={{
-          backgroundColor: Colors.primary100,
+          backgroundColor: Colors.primary_light,
           borderRadius: 5,
           flexDirection: "row",
           width: (style as any)?.width ?? layout.screen.width * 0.95,
           borderWidth: 2,
           borderColor: error
-            ? "#ff3030"
+            ? Colors.error
             : isFocused
-            ? "#8408D4"
-            : Colors.primary100,
+            ? Colors.secondary
+            : Colors.primary_light,
           alignItems: "center",
         }}
       >

@@ -14,7 +14,8 @@ export const styles = StyleSheet.create({
 });
 
 export const VARIANTS = {
-  primary: "#FF0056",
+  // primary: "#FF0056",
+  primary: "#8408D4",
   secondary: Colors.primary,
   ternary: Colors.secondary,
   disabled: "#131d33",
