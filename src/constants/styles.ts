@@ -1,3 +1,4 @@
+import Color from "color";
 import { TextStyle } from "react-native";
 
 export const radius = {
@@ -43,17 +44,24 @@ export const Colors = {
   textFaded: "#b8b8b8",
   primary: "#0f172a",
 
-  primary100: "#212a40",
-  primary200: "#26314a",
-  primary300: "#1d273d",
-  primary400: "#0d0d0d",
-  secondary: "#009950",
-  secondary100: "#008a48",
-  secondary300: "#00703b",
-  secondary500: "#004f2a",
-  ternary: "#2F4858",
-  ternary200: "#223642",
-  ternary400: "#1c2c36",
+  primary_light: Color("#0f172a").lighten(0.5).string(),
+
+  // primary100: "#212a40",
+  // primary200: "#26314a",
+  // primary300: "#1d273d",
+  // primary400: "#0d0d0d",
+  // secondary: "#009950",
+  secondary: "#8408D4",
+
+  secondary_light: Color("#8408D4").lighten(0.5).string(),
+
+  secondary_dark: Color("#8408D4").darken(0.5).string(),
+
+  accent: "#3B4157",
+
+  success: "#4BB543",
+
+  error: "#ff3030",
 };
 
 const textBase: TextStyle = {
