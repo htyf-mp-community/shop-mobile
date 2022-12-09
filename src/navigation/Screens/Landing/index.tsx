@@ -40,7 +40,7 @@ export default function Landing({ navigation }: any) {
         <Button
           type="contained"
           fontStyle={{ fontSize: 20 }}
-          style={[styles.button, { backgroundColor: Colors.primary100 }]}
+          style={[styles.button, { backgroundColor: Colors.primary_light }]}
           text="Log in"
           callback={onNavigateLogin}
         />

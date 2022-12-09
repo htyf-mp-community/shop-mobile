@@ -50,10 +50,14 @@ export default function useAnimate() {
   function toggle() {
     isOpen.value = !isOpen.value;
     if (isOpen.value) {
-      translateX.value = withTiming(WIDTH * 0.7);
+      translateX.value = withTiming(WIDTH * 0.7, {
+        duration: 200,
+      });
       setIsVissible(true);
     } else {
-      translateX.value = withTiming(0);
+      translateX.value = withTiming(0, {
+        duration: 200,
+      });
       start.value = 0;
       setIsVissible(false);
     }
