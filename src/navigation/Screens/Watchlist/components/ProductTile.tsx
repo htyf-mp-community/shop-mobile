@@ -4,9 +4,6 @@ import { image } from "functions/image";
 import { View, Image, Pressable } from "react-native";
 import Ripple from "react-native-material-ripple";
 import { useNavigation } from "@react-navigation/native";
-import { useState } from "react";
-import { IconButton } from "components";
-import { Feather } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Animated, { FadeIn } from "react-native-reanimated";
 
@@ -14,6 +11,8 @@ interface ProductTileProps {
   product: ProductMinified;
 
   listIndex: number;
+
+  onLongProductPress: (prod: ProductMinified) => void;
 }
 
 const TILES_PER_ROW = 2;
@@ -22,7 +21,11 @@ const TILE_GAP = 5;
 
 const TILE_WIDTH = layout.screen.width / TILES_PER_ROW - TILE_GAP * 2;
 
-export default function ProductTile({ product, listIndex }: ProductTileProps) {
+export default function ProductTile({
+  product,
+  listIndex,
+  onLongProductPress,
+}: ProductTileProps) {
   const navigation = useNavigation<useNavigationProps>();
 
   const thumbnail = image(product.img_id);
@@ -37,13 +40,10 @@ export default function ProductTile({ product, listIndex }: ProductTileProps) {
     });
   }
 
-  const [showControls, setShowControls] = useState(false);
-
   return (
     <Animated.View>
-      <TouchableOpacity
-        activeOpacity={0.9}
-        // disabled={showControls}
+      <Ripple
+        onLongPress={() => onLongProductPress(product)}
         onPress={navigateToProduct}
         //  onLongPress={() => setShowControls((p) => !p)}
       >
@@ -55,25 +55,7 @@ export default function ProductTile({ product, listIndex }: ProductTileProps) {
           }}
           source={thumbnail}
         />
-
-        {showControls && (
-          <View
-            // onPress={(event) => event.stopPropagation()}
-            style={{
-              position: "absolute",
-              bottom: 0,
-              right: 0,
-              padding: 10,
-              backgroundColor: "red",
-            }}
-          >
-            <IconButton
-              icon={<Feather name="trash" size={20} color="white" />}
-              onPress={() => console.log("icon press")}
-            />
-          </View>
-        )}
-      </TouchableOpacity>
+      </Ripple>
     </Animated.View>
   );
 }
