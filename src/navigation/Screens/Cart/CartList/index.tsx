@@ -6,6 +6,7 @@ import {
   ActivityIndicator,
   View,
   Text,
+  ScrollView,
 } from "react-native";
 import { CartProps } from "/@types/types";
 import Loader from "../components/Loader";
@@ -13,6 +14,7 @@ import CartProduct from "../components/CartProduct";
 import { Button } from "components";
 import { Colors } from "constants/styles";
 import Color from "color";
+import layout from "constants/layout";
 
 interface CartListProps {
   data: CartProps[];
@@ -101,4 +103,20 @@ export default function CartList({
       )}
     />
   );
+
+  // return (
+  //   <ScrollView style={{ height: layout.screen.height }}>
+  //     {data.map((item, index) => (
+  //       <CartProduct
+  //         key={item.prod_id}
+  //         productIndex={index}
+  //         handleShowCheckbox={() => setShowCheckboxes((prev) => !prev)}
+  //         showCheckbox={showCheckboxes}
+  //         isProductSelected={selectedProducts.includes(item.prod_id)}
+  //         handleSelectProduct={(value) => handleToggleSelect(value, item)}
+  //         product={item}
+  //       />
+  //     ))}
+  //   </ScrollView>
+  // );
 }

@@ -5,8 +5,9 @@ import CartList from "navigation/Screens/Cart/CartList";
 import useColorTheme from "@utils/context/ThemeContext";
 import { useCart } from "./hooks/useCart";
 import { ScreenNavigationProps } from "/@types/types";
-import Ripple from "react-native-material-ripple";
 import useRemoveCart from "./hooks/useRemoveCart";
+import { IconButton } from "components";
+import { Feather } from "@expo/vector-icons";
 
 export default function Cart({ navigation }: ScreenNavigationProps<"Cart">) {
   const { theme } = useColorTheme();
@@ -14,30 +15,31 @@ export default function Cart({ navigation }: ScreenNavigationProps<"Cart">) {
 
   const { remove } = useRemoveCart();
 
+  function clearCart() {
+    Alert.alert(
+      "Are you sure you want to remove all products from cart?",
+      "Action cannot be undone",
+      [
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "Confirm",
+          onPress: () => remove(0, true),
+          style: "destructive",
+        },
+      ]
+    );
+  }
+
   useLayoutEffect(() => {
     navigation?.setOptions({
-      headerRight: () => (
-        <Ripple
-          style={{ paddingHorizontal: 15 }}
-          onPress={() => {
-            // removes all products from cart
-            Alert.alert(
-              "Are you sure you want to remove all products from cart?",
-              "Action cannot be undone",
-              [
-                { text: "Cancel", style: "cancel" },
-                {
-                  text: "Confirm",
-                  onPress: () => remove(0, true),
-                  style: "destructive",
-                },
-              ]
-            );
-          }}
-        >
-          <Text style={{ color: "#fff", fontSize: 18 }}>Remove All</Text>
-        </Ripple>
-      ),
+      headerRight: () =>
+        cart.length > 0 ? (
+          <IconButton
+            hideBackground
+            onPress={clearCart}
+            icon={<Feather name="trash" size={20} color="white" />}
+          />
+        ) : null,
     });
   }, []);
 

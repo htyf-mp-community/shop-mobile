@@ -6,6 +6,8 @@ import Button from "../../../../components/Button/Button";
 import useColorTheme from "@utils/context/ThemeContext";
 import { CalcTotalCartPrice } from "../../../../functions/CalcTotalCartPrice";
 import styles from "./Purchases.styles";
+import Color from "color";
+import { Colors } from "constants/styles";
 
 interface CartProduct extends ProductMinified {
   ammount: number;
@@ -27,12 +29,14 @@ export default function Purchase({ cart }: PurchaseProps) {
 
   const { theme } = useColorTheme();
 
+  const primaryLighten = Color(Colors.primary).lighten(0.5).string();
+
   return (
     <View
       style={[
         styles.container,
         {
-          borderTopColor: theme.primary100,
+          borderTopColor: primaryLighten,
         },
       ]}
     >
@@ -48,7 +52,7 @@ export default function Purchase({ cart }: PurchaseProps) {
         fontStyle={{ color: "#fff" }}
         style={[
           {
-            backgroundColor: !disabled ? theme.secondary : theme.primary100,
+            backgroundColor: !disabled ? theme.secondary : primaryLighten,
           },
           styles.button,
         ]}
