@@ -1,3 +1,4 @@
+import Color from "color";
 import { StyleSheet, Dimensions } from "react-native";
 import { Colors, Fonts } from "../../constants/styles";
 
@@ -51,16 +52,6 @@ const styles = StyleSheet.create({
     shadowRadius: 4.65,
 
     elevation: 7,
-  },
-  saved: {
-    position: "absolute",
-    top: -10,
-    left: 10,
-    backgroundColor: Colors.primary100,
-    color: "#fff",
-    fontSize: 25,
-    zIndex: 20,
-    padding: 5,
   },
   details: {
     justifyContent: "space-between",

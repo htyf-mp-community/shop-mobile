@@ -14,6 +14,7 @@ import { watchlistActions } from "redux/Watchlist/Watchlist";
 import { checkoutActions } from "redux/Checkout";
 import { userActions } from "redux/User";
 import { useApolloClient } from "@apollo/client";
+import Color from "color";
 
 const { height } = Dimensions.get("screen");
 
@@ -31,6 +32,9 @@ export default function SignOut() {
   const apolloClient = useApolloClient();
 
   async function handleSignOut() {
+    // hide modal
+    negative();
+
     // clear graphql cache
     await apolloClient.clearStore();
     // clear cache
@@ -41,8 +45,7 @@ export default function SignOut() {
     dispatch(watchlistActions.clearWatchlist());
     // clear checkout
     dispatch(checkoutActions.destroySession());
-    // hide modal
-    negative();
+
     // clear user store
     dispatch(userActions.removeUser());
     // remove user from storage
@@ -96,14 +99,22 @@ export default function SignOut() {
 
       <Button
         onPress={positive}
-        color="secondary"
-        size="xl"
+        color="primary"
+        size="md"
         type="contained"
-        text={"Sign out"}
+        text={"SIGN OUT"}
+        rippleColor="red"
+        fontStyle={{
+          fontSize: 17,
+          color: theme.error,
+        }}
         style={{
-          marginTop: 20,
+          marginTop: 50,
           marginBottom: 20,
           justifyContent: "center",
+          backgroundColor: Color(theme.error).alpha(0.125).string(),
+          borderWidth: 1,
+          borderColor: Color(theme.error).alpha(0.2).string(),
         }}
       />
     </>

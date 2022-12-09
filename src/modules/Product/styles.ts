@@ -38,19 +38,9 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.secondary,
   },
   info: {
-    backgroundColor: Colors.secondary,
     color: Colors.text,
-    position: "absolute",
-    bottom: 10,
-    left: 10,
     fontSize: 18,
-    padding: 10,
-    borderRadius: radius.small,
-  },
-  remove_button: {
-    backgroundColor: "red",
-    padding: 12,
-    justifyContent: "center",
+    marginLeft: 5,
   },
 });
 

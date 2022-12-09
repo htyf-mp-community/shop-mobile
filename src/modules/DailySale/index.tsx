@@ -43,7 +43,7 @@ export default function DailySale() {
         <Clock />
       </View>
       {!isLoaderPresent ? (
-        <>
+        <View>
           <Ripple onPress={toProduct} style={styles.image_container}>
             <Text style={styles.off}>20% Off</Text>
             <SharedElement id={`prod_id.${data?.prod_id}DAILY`}>
@@ -87,6 +87,7 @@ export default function DailySale() {
               <View style={[styles.row, { marginTop: 10, zIndex: 5 }]}>
                 <AddWatchlist prod_id={data!.prod_id} />
                 <Button
+                  fontStyle={{ textTransform: "uppercase" }}
                   style={styles.button}
                   callback={pushToCart}
                   text={!!result ? "Added" : "Add to cart"}
@@ -96,7 +97,7 @@ export default function DailySale() {
               </View>
             </View>
           </View>
-        </>
+        </View>
       ) : (
         <Loader />
       )}

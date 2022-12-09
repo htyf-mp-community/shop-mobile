@@ -29,8 +29,8 @@ export default function AddToCart({
 }: AddtoCartProps) {
   const { pushToCart, loading, error, result } = useCart(prod_id);
 
-  const backgroundColor =
-    result === "Added" ? Colors.ternary : Colors.secondary;
+  // const backgroundColor =
+  //   result === "Added" ? Colors.secondary_dark : Colors.secondary;
 
   async function onPress() {
     await pushToCart();
@@ -53,7 +53,7 @@ export default function AddToCart({
           width: 50,
           height: 50,
           justifyContent: "center",
-          backgroundColor,
+          backgroundColor: Colors.secondary,
         },
         !relative && { position: "absolute", bottom: 10, right: 10 },
         style,

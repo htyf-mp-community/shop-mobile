@@ -13,11 +13,12 @@ import AddToCart from "../Cart/AddToCart/AddToCart";
 import { API, screens } from "../../constants/routes";
 import { useNavigation } from "@react-navigation/native";
 import { SharedElement } from "react-navigation-shared-element";
-import { Ionicons } from "@expo/vector-icons";
+import { Feather, Ionicons } from "@expo/vector-icons";
 import styles from "./styles";
 import { Colors } from "../../constants/styles";
 import * as Types from "../../@types/types";
 import { PRODUCT_WIDTH, PRODUCT_WIDTH_FULLSIZE } from "./assets";
+import useCart from "modules/Cart/AddToCart/useAddCart";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
@@ -83,6 +84,8 @@ function Product({
 
   const ElementWidth = fullSize ? PRODUCT_WIDTH_FULLSIZE : PRODUCT_WIDTH;
 
+  const { pushToCart: appendCart, result } = useCart(prod_id);
+
   return (
     <TouchableOpacity
       testID={"product." + prod_id}
@@ -106,7 +109,7 @@ function Product({
           />
         </SharedElement>
 
-        {!hide && (
+        {/* {!hide && (
           <>
             {route === "Cart" && (
               <Button
@@ -115,15 +118,30 @@ function Product({
                 icon={<Ionicons name="close" size={22} color={Colors.text} />}
               />
             )}
-
-            <AddToCart
-              prod_id={prod_id}
-              style={{ right: route === "Cart" ? 70 : 10 }}
-            />
           </>
-        )}
+        )} */}
 
-        <Text style={styles.info}>${price}</Text>
+        <Button
+          icon={
+            <Feather
+              style={{ marginRight: 10 }}
+              name={result === "Added" ? "check" : "shopping-bag"}
+              size={22}
+              color={Colors.text}
+            />
+          }
+          callback={appendCart}
+          variant="primary"
+          type="contained"
+          text={`$${price}`}
+          style={{
+            position: "absolute",
+            bottom: 10,
+            right: 10,
+            flexDirection: "row-reverse",
+            backgroundColor: Colors.primary,
+          }}
+        />
       </View>
     </TouchableOpacity>
   );

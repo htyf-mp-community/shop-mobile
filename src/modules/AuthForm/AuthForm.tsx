@@ -16,6 +16,7 @@ import { ValidatedInput } from "components";
 
 import { AntDesign } from "@expo/vector-icons";
 import layout from "constants/layout";
+import PasswordStrength from "./components/PasswordStrength";
 
 interface AuthFormProps {
   onSubmit: ({ email, password }: UserInputProps) => Promise<void> | void;
@@ -134,6 +135,10 @@ export default function AuthForm({
                 name="confirmPassword"
                 {...formik}
               />
+            )}
+
+            {isRegister && (
+              <PasswordStrength password={formik.values.password} />
             )}
 
             <Button
