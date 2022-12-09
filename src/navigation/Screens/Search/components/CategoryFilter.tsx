@@ -47,7 +47,7 @@ export default function CategoryFilter() {
                 justifyContent: "flex-start",
                 backgroundColor:
                   filters.category === item
-                    ? Colors.primary100
+                    ? Colors.primary_light
                     : Colors.primary,
               }}
               text={item}
@@ -59,7 +59,7 @@ export default function CategoryFilter() {
         style={{
           flexDirection: "row",
           alignItems: "center",
-          backgroundColor: Colors.primary100,
+          backgroundColor: Colors.primary_light,
           borderRadius: 2.5,
           padding: 5,
         }}
@@ -68,7 +68,7 @@ export default function CategoryFilter() {
           onPress={toggle}
           text={filters.category || "All categories"}
           style={{
-            backgroundColor: Colors.primary100,
+            backgroundColor: Colors.primary_light,
             justifyContent: "space-between",
             width: layout.screen.width - 20 - 40 - 10,
           }}

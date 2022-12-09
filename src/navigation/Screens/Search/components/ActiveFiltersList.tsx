@@ -19,7 +19,7 @@ export default function ActiveFiltersList({
       key={key}
       style={{
         padding: 5,
-        backgroundColor: Colors.primary100,
+        backgroundColor: Colors.primary_light,
         marginRight: 5,
         paddingHorizontal: 10,
         justifyContent: "center",
@@ -53,7 +53,7 @@ export default function ActiveFiltersList({
           style={{
             marginLeft: 15,
             marginRight: 5,
-            backgroundColor: Colors.primary100,
+            backgroundColor: Colors.primary_light,
             width: 80,
             borderRadius: 2.5,
           }}

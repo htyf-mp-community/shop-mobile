@@ -26,7 +26,7 @@ export default function SearchHistory({
       style={{
         flexDirection: "row",
         alignItems: "center",
-        backgroundColor: Colors.primary100,
+        backgroundColor: Colors.primary_light,
         marginTop: 10,
         justifyContent: "space-between",
       }}

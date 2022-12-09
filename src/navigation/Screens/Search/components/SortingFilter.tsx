@@ -46,7 +46,7 @@ export default function SortingFilter() {
                 backgroundColor:
                   filters.sorting === option.value
                     ? Colors.secondary
-                    : Colors.primary100,
+                    : Colors.primary_light,
                 borderRadius: 2.5,
                 marginRight: 10,
               }}

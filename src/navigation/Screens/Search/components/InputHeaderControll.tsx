@@ -39,7 +39,7 @@ export default function InputHeaderControll({
   return (
     <View
       style={{
-        backgroundColor: Colors.primary100,
+        backgroundColor: Colors.primary_light,
         padding: 5,
         borderRadius: 5,
         flexDirection: "row",
