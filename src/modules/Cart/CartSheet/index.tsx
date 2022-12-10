@@ -3,19 +3,21 @@ import { forwardRef, useCallback } from "react";
 import { Text, View } from "react-native";
 import useColorTheme from "utils/context/ThemeContext";
 import type { Product } from "/@types/types";
-import { useAppSelector } from "@utils/hooks/hooks";
 import { CartAddIconButton, CartRemoveIconButton } from "../IconButtons";
 import styles from "./styles";
 import Preview from "./components/Preview";
 import Navigators from "./components/Navigators";
+import { Cart } from "redux/Cart";
 
 interface CartSheetProps {
   product: Partial<Omit<Product, "prod_id">> & Pick<Product, "prod_id">;
   onDismiss: () => void;
+
+  cartProduct: Cart | undefined;
 }
 
 const CartSheet = forwardRef<BottomSheet, CartSheetProps>(
-  ({ product, onDismiss }, ref) => {
+  ({ product, onDismiss, cartProduct }, ref) => {
     const { theme } = useColorTheme();
 
     const backdropComponent = useCallback(
@@ -28,10 +30,6 @@ const CartSheet = forwardRef<BottomSheet, CartSheetProps>(
       ),
       []
     );
-
-    const { cart } = useAppSelector((state) => state.cart);
-
-    const cartProduct = cart.find((item) => item.prod_id === product.prod_id);
 
     return (
       <BottomSheet

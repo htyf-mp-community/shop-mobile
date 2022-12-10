@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, Image } from "react-native";
 import { SharedElement } from "react-navigation-shared-element";
 import styles from "./styles";
-import { API, screens } from "../../constants/routes";
+import { API } from "../../constants/routes";
 import { useNavigation } from "@react-navigation/native";
 import { useNavigationProps } from "../../@types/types";
 import { Button } from "../../components";
@@ -15,6 +15,7 @@ import useColorTheme from "utils/context/ThemeContext";
 import useDailySale from "./useDailySale";
 import { image } from "functions/image";
 import { Fonts } from "constants/styles";
+import { useAppSelector } from "utils/hooks/hooks";
 
 export default function DailySale() {
   const { data: sale, loading } = useDailySale();
@@ -23,6 +24,8 @@ export default function DailySale() {
   const { pushToCart, result } = useCart(data?.prod_id || 0);
   const { theme } = useColorTheme();
   const isLoaderPresent = loading || !data;
+
+  const { cart } = useAppSelector((st) => st.cart);
 
   function toProduct() {
     if (data?.prod_id) {
@@ -35,6 +38,8 @@ export default function DailySale() {
       });
     }
   }
+
+  const product = cart.find((p) => p.prod_id === data?.prod_id);
 
   return (
     <View style={styles.container}>
@@ -90,7 +95,11 @@ export default function DailySale() {
                   fontStyle={{ textTransform: "uppercase" }}
                   style={styles.button}
                   callback={pushToCart}
-                  text={!!result ? "Added" : "Add to cart"}
+                  text={
+                    !!result
+                      ? `product added (${product?.ammount})`
+                      : "add to cart"
+                  }
                   color="primary"
                   type="contained"
                 />

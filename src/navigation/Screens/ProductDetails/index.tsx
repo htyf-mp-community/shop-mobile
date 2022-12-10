@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { ScrollView, View, RefreshControl } from "react-native";
 import ImagesCarusel from "./components/ImagesCarusel/ImagesCarusel";
 import { Product, ScreenNavigationProps } from "/@types/types";
@@ -9,9 +9,11 @@ import BottomTab from "./components/BottomTab/BottomTab";
 import { wait } from "functions/wait";
 import Details from "./components/Details";
 import useProduct from "./hooks/useProduct";
-import CartSheet from "modules/Cart/CartSheet";
+import CartSheet from "@modules/Cart/CartSheet";
 
 import BottomSheet from "@gorhom/bottom-sheet";
+import { useAppSelector } from "utils/hooks/hooks";
+import { useIsFocused } from "@react-navigation/native";
 
 export default function ProductDetails({
   route,
@@ -36,6 +38,17 @@ export default function ProductDetails({
   }, []);
 
   const sheetRef = useRef<BottomSheet | null>(null);
+
+  const isFocused = useIsFocused();
+  const { cart } = useAppSelector((state) => state.cart);
+
+  const cartProduct = cart.find((item) => item.prod_id === result?.prod_id);
+
+  useEffect(() => {
+    if (!!cartProduct) {
+      sheetRef.current?.close();
+    }
+  }, [cart, isFocused]);
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.primary }}>
@@ -69,6 +82,7 @@ export default function ProductDetails({
       />
 
       <CartSheet
+        cartProduct={cartProduct}
         onDismiss={() => sheetRef.current?.close()}
         product={{ ...(result as Product), prod_id, img_id: images }}
         ref={(ref) => (sheetRef.current = ref)}

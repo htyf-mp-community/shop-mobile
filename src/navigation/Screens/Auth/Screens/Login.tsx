@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import AuthForm from "@modules/AuthForm/AuthForm";
 import useAuth from "utils/hooks/useAuth";
 import { ActivityIndicator } from "react-native";
@@ -9,7 +9,10 @@ import layout from "constants/layout";
 import { ScreenNavigationProps } from "/@types/types";
 import LoginModal from "../components/LoginModal";
 
-export default function LoginScreen({ route }: ScreenNavigationProps<"Login">) {
+export default function LoginScreen({
+  route,
+  navigation,
+}: ScreenNavigationProps<"Login">) {
   const { onLogin, error, loading, onClear } = useAuth("login", {
     onFailed: () => {
       toggle();
@@ -22,6 +25,13 @@ export default function LoginScreen({ route }: ScreenNavigationProps<"Login">) {
     onClear();
     toggle();
   }
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: "Welcome Back",
+      headerTitleAlign: "center",
+    });
+  }, []);
 
   return (
     <Container centerVertical>

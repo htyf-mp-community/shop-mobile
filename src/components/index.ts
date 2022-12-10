@@ -15,3 +15,4 @@ export { default as Header } from "./Header/Header";
 export { default as Row } from "./Row/index";
 export { default as IconButton } from "./IconButton/IconButton";
 export { default as ValidatedInput } from "./ValidatedInput/index";
+export { default as ThemedText } from "./ThemedText/index";

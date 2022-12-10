@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import AuthForm from "@modules/AuthForm/AuthForm";
 import useAuth from "@utils/hooks/useAuth";
 import { Container } from "@components/index";
@@ -24,6 +24,13 @@ export default function RegisterScreen({
     onRegister(input);
   }
 
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: "Welcome stranger",
+      headerTitleAlign: "center",
+    });
+  }, []);
+
   return (
     <Container centerVertical>
       <AuthForm
@@ -34,7 +41,6 @@ export default function RegisterScreen({
       />
       <RegisterModal
         onSignInPress={() => {
-          console.log("onSignInPress");
           navigation.navigate("Login", {
             ...credentials,
           });

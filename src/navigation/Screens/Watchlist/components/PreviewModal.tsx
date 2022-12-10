@@ -23,6 +23,13 @@ export default function PreviewModal({
     { withCheck: false }
   );
 
+  const handleRemoveProduct = async () => {
+    if (selectedProduct?.prod_id) {
+      await remove(selectedProduct.prod_id);
+      closeModal();
+    }
+  };
+
   return (
     <Modal
       animationInTiming={100}
@@ -31,13 +38,14 @@ export default function PreviewModal({
       isVisible={isModalVisible}
       onBackButtonPress={closeModal}
       onBackdropPress={closeModal}
-      style={{ padding: 0, borderRadius: 0 }}
+      style={{ padding: 10, borderRadius: 12.5 }}
     >
       <Image
         source={image(selectedProduct?.img_id)}
         style={{
           width: "100%",
           height: 250,
+          borderRadius: 5,
         }}
       />
 
@@ -65,22 +73,6 @@ export default function PreviewModal({
             justifyContent: "flex-end",
           }}
         >
-          {/* <Button
-            onPress={() => add()}
-            fontStyle={{ fontSize: 15 }}
-            text="ADD TO CART"
-            type="contained"
-            color="primary"
-            style={{ marginRight: 10, paddingHorizontal: 15 }}
-          />
-          <Button
-            onPress={() => remove(selectedProduct!.prod_id)}
-            fontStyle={{ fontSize: 15 }}
-            text="UNFOLLOW"
-            type="contained"
-            style={{ paddingHorizontal: 15, backgroundColor: Colors.error }}
-          /> */}
-
           <Button
             // onPress={() => add()}
             color="primary"
@@ -99,7 +91,7 @@ export default function PreviewModal({
           />
 
           <IconButton
-            onPress={() => remove(selectedProduct!.prod_id)}
+            onPress={handleRemoveProduct}
             containerStyle={{
               backgroundColor: Colors.error,
             }}

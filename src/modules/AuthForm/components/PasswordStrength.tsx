@@ -52,6 +52,7 @@ export default function PasswordStrength({ password }: { password: string }) {
       >
         {[...Array(TILES_COUNT)].map((_, index) => (
           <View
+            key={index}
             style={{
               width: TILE_WIDTH,
               margin: TILE_MARGIN / 2,

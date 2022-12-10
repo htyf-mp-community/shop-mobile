@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     elevation: 7,
   },
   social: {
-    backgroundColor: Colors.primary100,
+    backgroundColor: Colors.primary_light,
     width: 50,
     height: 50,
     borderRadius: 100,
