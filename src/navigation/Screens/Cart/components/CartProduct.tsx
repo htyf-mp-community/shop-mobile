@@ -1,5 +1,12 @@
 import { CartProps, useNavigationProps } from "/@types/types";
-import { Image, Pressable, Text, TouchableOpacity, View } from "react-native";
+import {
+  Image,
+  Pressable,
+  Text,
+  TouchableOpacity,
+  View,
+  StyleSheet,
+} from "react-native";
 import { image } from "functions/image";
 import layout from "constants/layout";
 import { Fonts } from "constants/styles";
@@ -8,17 +15,46 @@ import {
   CartAddIconButton,
   CartRemoveIconButton,
 } from "modules/Cart/IconButtons";
-
 import Checkbox from "expo-checkbox";
 import Animated, {
   FadeIn,
   Layout,
   SlideInLeft,
-  SlideInRight,
   SlideOutLeft,
-  ZoomOutEasyDown,
-  ZoomOutRight,
 } from "react-native-reanimated";
+
+const styles = StyleSheet.create({
+  container: {
+    width: layout.screen.width,
+    padding: 5,
+    paddingHorizontal: 10,
+    flexDirection: "row",
+
+    marginBottom: 20,
+  },
+  image: {
+    flex: 2,
+    height: "100%",
+    borderRadius: 3,
+  },
+  content_container: {
+    flex: 3,
+    paddingHorizontal: 5,
+    paddingLeft: 10,
+    justifyContent: "flex-start",
+  },
+  price: {
+    color: "#fff",
+    fontSize: 16,
+    marginTop: 5,
+    fontWeight: "bold",
+  },
+  title: {
+    color: "#fff",
+    fontSize: 16,
+    fontFamily: Fonts.PoppinsMedium,
+  },
+});
 
 interface CartProductProps {
   product: CartProps;
@@ -48,6 +84,19 @@ export default function CartProduct({
 
   const delay = productIndex * 75; //ms
 
+  const navigate = () =>
+    navigation.navigate("Product", {
+      sharedID: "",
+      title: product.title,
+      prod_id: product.prod_id,
+      image: img.uri,
+    });
+
+  const onLongPress = () => {
+    handleShowCheckbox();
+    handleSelectProduct(true);
+  };
+
   return (
     <Animated.View entering={FadeIn.delay(delay)} layout={Layout.delay(100)}>
       {showCheckbox && (
@@ -64,61 +113,22 @@ export default function CartProduct({
       )}
       <TouchableOpacity
         delayLongPress={500}
-        onLongPress={() => {
-          handleShowCheckbox();
-          handleSelectProduct(true);
-        }}
+        onLongPress={onLongPress}
         activeOpacity={0.8}
-        onPress={() =>
-          navigation.navigate("Product", {
-            sharedID: "",
-            title: product.title,
-            prod_id: product.prod_id,
-            image: img.uri,
-          })
-        }
-        style={{
-          width: layout.screen.width,
-          padding: 10,
-          flexDirection: "row",
-          marginTop: showCheckbox ? 0 : 5,
-        }}
+        onPress={navigate}
+        style={[
+          styles.container,
+          {
+            marginTop: showCheckbox ? 10 : 0,
+          },
+        ]}
       >
-        <Image
-          style={{
-            flex: 2,
-            height: "100%",
-            borderRadius: 3,
-          }}
-          source={img}
-        />
-        <View
-          style={{
-            flex: 3,
-            paddingHorizontal: 5,
-            justifyContent: "flex-start",
-          }}
-        >
-          <Text
-            numberOfLines={3}
-            style={{
-              color: "#fff",
-              fontSize: 16,
-              fontFamily: Fonts.PoppinsMedium,
-            }}
-          >
+        <Image style={styles.image} source={img} />
+        <View style={styles.content_container}>
+          <Text numberOfLines={3} style={styles.title}>
             {product.title}
           </Text>
-          <Text
-            style={{
-              color: "#fff",
-              fontSize: 16,
-              marginTop: 5,
-              fontWeight: "bold",
-            }}
-          >
-            ${product.price}
-          </Text>
+          <Text style={styles.price}>${product.price}</Text>
         </View>
         <Pressable style={{ flex: 0.5, alignItems: "center" }}>
           <CartAddIconButton

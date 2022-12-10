@@ -7,6 +7,7 @@ export default StyleSheet.create({
     width,
     alignItems: "center",
     padding: 10,
+    marginVertical: 5,
     borderTopWidth: 1,
   },
   content: {
@@ -20,8 +21,9 @@ export default StyleSheet.create({
     fontFamily: "PoppinsRegular",
   },
   button: {
-    width: width * 0.9,
+    width: width * 0.95,
     justifyContent: "center",
     padding: 15,
+    marginTop: 10,
   },
 });

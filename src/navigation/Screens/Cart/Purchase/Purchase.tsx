@@ -47,12 +47,13 @@ export default function Purchase({ cart }: PurchaseProps) {
       <Button
         testID={"PURCHASE.BUTTON"}
         disabled={disabled}
-        text={`Continue with $${totalPrice}`}
+        text={`PAY $${totalPrice}`}
         callback={PurchaseProduct}
         fontStyle={{ color: "#fff" }}
         style={[
           {
             backgroundColor: !disabled ? theme.secondary : primaryLighten,
+            borderRadius: 100,
           },
           styles.button,
         ]}

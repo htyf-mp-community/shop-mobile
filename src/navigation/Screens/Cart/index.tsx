@@ -13,9 +13,9 @@ export default function Cart({ navigation }: ScreenNavigationProps<"Cart">) {
   const { theme } = useColorTheme();
   const { cart, isLoading, onEndReached, isFetchingMore } = useCart();
 
-  const { remove } = useRemoveCart();
+  const { removeAll } = useRemoveCart();
 
-  function clearCart() {
+  const clearCart = () =>
     Alert.alert(
       "Are you sure you want to remove all products from cart?",
       "Action cannot be undone",
@@ -23,15 +23,16 @@ export default function Cart({ navigation }: ScreenNavigationProps<"Cart">) {
         { text: "Cancel", style: "cancel" },
         {
           text: "Confirm",
-          onPress: () => remove(0, true),
+          onPress: removeAll,
           style: "destructive",
         },
       ]
     );
-  }
 
   useLayoutEffect(() => {
     navigation?.setOptions({
+      headerTitle: `Cart (${cart.length})`,
+      headerTitleAlign: "center",
       headerRight: () =>
         cart.length > 0 ? (
           <IconButton
@@ -41,7 +42,7 @@ export default function Cart({ navigation }: ScreenNavigationProps<"Cart">) {
           />
         ) : null,
     });
-  }, []);
+  }, [cart.length]);
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.primary }}>

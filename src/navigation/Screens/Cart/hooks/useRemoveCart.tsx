@@ -41,5 +41,12 @@ export default function useRemoveCart() {
     }
   }
 
-  return { remove: removeProductFromCartAsync, loading };
+  const removeAllProductsFromCartAsync = () =>
+    removeProductFromCartAsync(0, true);
+
+  return {
+    remove: removeProductFromCartAsync,
+    loading,
+    removeAll: removeAllProductsFromCartAsync,
+  };
 }

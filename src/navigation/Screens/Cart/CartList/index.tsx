@@ -11,7 +11,7 @@ import {
 import { CartProps } from "/@types/types";
 import Loader from "../components/Loader";
 import CartProduct from "../components/CartProduct";
-import { Button } from "components";
+import { Button, ThemedText } from "components";
 import { Colors } from "constants/styles";
 import Color from "color";
 import layout from "constants/layout";
@@ -80,10 +80,18 @@ export default function CartList({
       onEndReached={onEndReached}
       onEndReachedThreshold={0.1}
       ListEmptyComponent={
-        <Image
-          source={require("@assets/Shopping_Cart.png")}
-          style={{ width, height: 400 }}
-        />
+        <View
+          style={{
+            height: layout.screen.height - 225,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Image
+            source={require("@assets/Shopping_Cart.png")}
+            style={{ width: layout.screen.width - 40, height: 350 }}
+          />
+        </View>
       }
       showsVerticalScrollIndicator={false}
       getItem={getItem}
