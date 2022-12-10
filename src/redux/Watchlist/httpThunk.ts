@@ -56,7 +56,10 @@ export const removeProduct = createAsyncThunk(
         "/watchlist/" + prod_id
       );
 
-      return response.data;
+      return {
+        ...response.data,
+        prod_id,
+      };
     } catch (error: any) {
       return error.response.data;
     }

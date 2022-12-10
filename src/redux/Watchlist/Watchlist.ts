@@ -28,8 +28,6 @@ const watchlistSlice = createSlice({
     ) {
       state.loading = false;
 
-      console.log(payload.results.length, payload.hasMore);
-
       if (state.isSynced) {
         state.data = RemoveProductsRepetition(
           [...state.data, ...payload.results],
@@ -66,7 +64,9 @@ const watchlistSlice = createSlice({
       state.amount += 1;
     });
     builder.addCase(removeProduct.fulfilled, (state, { payload }) => {
-      state.data = state.data.filter(({ prod_id }) => prod_id !== payload);
+      state.data = state.data.filter(
+        ({ prod_id }) => prod_id !== payload.prod_id
+      );
       state.amount = state.data.length;
     });
   },
