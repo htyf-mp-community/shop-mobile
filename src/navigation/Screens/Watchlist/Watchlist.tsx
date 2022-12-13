@@ -18,7 +18,9 @@ export default function Watchlist({
   const { theme } = useColorTheme();
   const { data, onEndReached } = useWatchlist();
 
-  const watchlist = useMemo(() => transformInto2DimsArray(data), [data]);
+  //const watchlist = useMemo(() => transformInto2DimsArray(data), [data]);
+
+  const watchlist = transformInto2DimsArray(data);
 
   const [showMenu, setShowMenu] = useState(false);
 

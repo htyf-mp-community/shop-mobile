@@ -13,6 +13,8 @@ interface ProductTileProps {
   listIndex: number;
 
   onLongProductPress: (prod: ProductMinified) => void;
+
+  isExpanded: boolean;
 }
 
 const TILES_PER_ROW = 2;
@@ -25,6 +27,7 @@ export default function ProductTile({
   product,
   listIndex,
   onLongProductPress,
+  isExpanded,
 }: ProductTileProps) {
   const navigation = useNavigation<useNavigationProps>();
 
@@ -41,7 +44,7 @@ export default function ProductTile({
   }
 
   return (
-    <Animated.View>
+    <Animated.View style={{ marginBottom: 10 }}>
       <Ripple
         onLongPress={() => onLongProductPress(product)}
         onPress={navigateToProduct}
@@ -49,8 +52,8 @@ export default function ProductTile({
       >
         <Image
           style={{
-            width: TILE_WIDTH,
-            height: TILE_WIDTH * 1.4,
+            width: isExpanded ? TILE_WIDTH * 2 + TILE_GAP * 2 : TILE_WIDTH,
+            height: isExpanded ? TILE_WIDTH * 1.2 : TILE_WIDTH * 1.4,
             borderRadius: 5,
           }}
           source={thumbnail}
