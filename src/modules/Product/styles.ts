@@ -29,18 +29,19 @@ const styles = StyleSheet.create({
     color: Colors.secondary,
     marginLeft: 10,
   },
-  button: {
-    color: Colors.text,
-    width: 50,
-    position: "absolute",
-    bottom: 10,
-    right: 10,
-    backgroundColor: Colors.secondary,
-  },
   info: {
     color: Colors.text,
     fontSize: 18,
     marginLeft: 5,
+  },
+  buttons_container: {
+    position: "absolute",
+    right: 5,
+    borderRadius: 5,
+    bottom: 5,
+    flexDirection: "row",
+    backgroundColor: Colors.primary,
+    alignItems: "center",
   },
 });
 

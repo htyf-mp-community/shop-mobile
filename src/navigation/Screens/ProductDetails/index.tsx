@@ -13,7 +13,6 @@ import CartSheet from "@modules/Cart/CartSheet";
 
 import BottomSheet from "@gorhom/bottom-sheet";
 import { useAppSelector } from "utils/hooks/hooks";
-import { useIsFocused } from "@react-navigation/native";
 
 export default function ProductDetails({
   route,
@@ -38,17 +37,9 @@ export default function ProductDetails({
   }, []);
 
   const sheetRef = useRef<BottomSheet | null>(null);
-
-  const isFocused = useIsFocused();
   const { cart } = useAppSelector((state) => state.cart);
 
   const cartProduct = cart.find((item) => item.prod_id === result?.prod_id);
-
-  useEffect(() => {
-    if (!!cartProduct) {
-      sheetRef.current?.close();
-    }
-  }, [cart, isFocused]);
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.primary }}>

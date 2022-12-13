@@ -1,6 +1,5 @@
 import { API } from "constants/routes";
 import { ProductImageProps } from "/@types/types";
-import { ImageSourcePropType } from "react-native";
 
 export function image(input: ProductImageProps[] | string | undefined): {
   uri: string;
