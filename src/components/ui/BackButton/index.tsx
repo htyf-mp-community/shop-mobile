@@ -1,4 +1,4 @@
-import type { useNavigationProps } from "../../@types/types";
+import type { useNavigationProps } from "../../../@types/types";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import Ripple from "react-native-material-ripple";

@@ -1,4 +1,4 @@
-import Input, { InputProps } from "components/Input/Input";
+import Input, { InputProps } from "../../components/ui/Input/Input";
 import { FormikProps } from "formik";
 import { StyleProp, TextStyle, ViewStyle } from "react-native";
 

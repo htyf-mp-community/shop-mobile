@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View, ViewStyle, StyleProp, TextStyle } from "react-native";
 import Ripple, { RippleProps } from "react-native-material-ripple";
-import Badge from "components/Badge";
+import Badge from "components/ui/Badge";
 import {
   BUTTON_BORDER_RADIUS,
   BUTTON_SIZE,

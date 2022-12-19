@@ -1,4 +1,4 @@
-import BackButton from "../BackButton/index";
+import BackButton from "../ui/BackButton/index";
 import { ReactNode } from "react";
 import { StyleProp, View, ViewStyle } from "react-native";
 import styles from "./Header.styles";

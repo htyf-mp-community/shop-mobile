@@ -1,4 +1,4 @@
-import Button from "components/Button/Button";
+import Button from "components/ui/Button/Button";
 import { View, ViewProps } from "react-native";
 
 import Animated, { FadeIn, FadeOut, withTiming } from "react-native-reanimated";
