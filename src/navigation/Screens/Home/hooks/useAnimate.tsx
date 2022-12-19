@@ -4,22 +4,45 @@ import {
   interpolate,
   withTiming,
   Extrapolate,
+  runOnJS,
 } from "react-native-reanimated";
-import { Dimensions } from "react-native";
 import { useState } from "react";
 
-const { width: WIDTH } = Dimensions.get("window");
+import { Gesture } from "react-native-gesture-handler";
+import layout from "constants/layout";
 
 export default function useAnimate() {
   const translateX = useSharedValue(0); // to -200
   const isOpen = useSharedValue(false);
 
+  const context = useSharedValue(0);
+
   const [isVissible, setIsVissible] = useState(false);
+
+  const onGestureEvent = Gesture.Pan()
+    .onStart(() => {
+      context.value = translateX.value;
+    })
+    .onUpdate(({ translationX }) => {
+      if (translationX + context.value > 0)
+        translateX.value = translationX + context.value;
+    })
+    .onEnd(() => {
+      if (translateX.value < layout.window.width / 1.5) {
+        translateX.value = withTiming(0);
+        isOpen.value = false;
+      } else {
+        isOpen.value = true;
+      }
+
+      runOnJS(setIsVissible)(isOpen.value);
+    })
+    .enabled(isVissible);
 
   const animatedStyle = useAnimatedStyle(() => {
     const scale = interpolate(
       translateX.value,
-      [0, WIDTH / 4],
+      [0, layout.window.width / 4],
       [1, 0.75],
       Extrapolate.CLAMP
     );
@@ -32,25 +55,23 @@ export default function useAnimate() {
   const animatedButtons = useAnimatedStyle(() => {
     const translationX = interpolate(
       translateX.value,
-      [0, WIDTH * 0.7],
+      [0, layout.window.width * 0.7],
       [-300, 0]
     );
     return {
       transform: [{ translateX: translationX }],
     };
   });
-  const start = useSharedValue(0);
 
   function onClose() {
     setIsVissible(false);
     translateX.value = withTiming(0);
-    start.value = 0;
   }
 
   function toggle() {
     isOpen.value = !isOpen.value;
     if (isOpen.value) {
-      translateX.value = withTiming(WIDTH * 0.7, {
+      translateX.value = withTiming(layout.window.width * 0.7, {
         duration: 200,
       });
       setIsVissible(true);
@@ -58,7 +79,7 @@ export default function useAnimate() {
       translateX.value = withTiming(0, {
         duration: 200,
       });
-      start.value = 0;
+
       setIsVissible(false);
     }
   }
@@ -70,5 +91,6 @@ export default function useAnimate() {
     isOpen,
     isVissible,
     onClose,
+    onGestureEvent,
   };
 }

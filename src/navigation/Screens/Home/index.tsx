@@ -1,4 +1,4 @@
-import { ScrollView } from "react-native";
+import { ScrollView, View } from "react-native";
 import React from "react";
 import Sidebar from "@modules/Sidebar";
 import Header from "modules/Header";
@@ -7,10 +7,17 @@ import DailySale from "modules/DailySale";
 import AuctionsNavigator from "modules/AuctionsNavigator";
 import Carusels from "./components/Carusels";
 import useAnimate from "./hooks/useAnimate";
+import { Gesture, GestureDetector } from "react-native-gesture-handler";
 
 export default function Home() {
-  const { animatedButtons, animatedStyle, toggle, isVissible, onClose } =
-    useAnimate();
+  const {
+    animatedButtons,
+    animatedStyle,
+    toggle,
+    isVissible,
+    onClose,
+    onGestureEvent,
+  } = useAnimate();
 
   return (
     <Sidebar
@@ -19,21 +26,23 @@ export default function Home() {
       animatedStyle={animatedStyle}
       animatedButtons={animatedButtons}
     >
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        stickyHeaderIndices={[0]}
-      >
-        <Header toggleSidebar={toggle} />
-        <Categories />
+      <GestureDetector gesture={onGestureEvent}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          stickyHeaderIndices={[0]}
+        >
+          <Header toggleSidebar={toggle} />
+          <Categories />
 
-        {/* <Promotions /> */}
+          {/* <Promotions /> */}
 
-        <DailySale />
+          <DailySale />
 
-        <AuctionsNavigator />
+          <AuctionsNavigator />
 
-        <Carusels />
-      </ScrollView>
+          <Carusels />
+        </ScrollView>
+      </GestureDetector>
     </Sidebar>
   );
 }
