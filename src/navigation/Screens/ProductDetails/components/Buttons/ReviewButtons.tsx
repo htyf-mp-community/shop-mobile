@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "react-native";
-import Button from "@components/Button/Button";
+import Button from "components/ui/Button/Button";
 import { ProductRatingProps, useNavigationProps } from "/@types/types";
 import { useNavigation } from "@react-navigation/native";
 import Color from "color";

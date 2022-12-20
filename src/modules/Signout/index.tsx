@@ -1,4 +1,4 @@
-import Button from "../../components/Button/Button";
+import Button from "../../components/ui/Button/Button";
 import React from "react";
 import { useUser } from "@utils/context/UserContext";
 import { Modal } from "components";

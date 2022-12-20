@@ -1,4 +1,4 @@
-import ScreenContainer from "components/ScreenContainer";
+import ScreenContainer from "components/ui/ScreenContainer";
 import { View } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
 import useListenBackPress from "utils/hooks/useListenBackPress";

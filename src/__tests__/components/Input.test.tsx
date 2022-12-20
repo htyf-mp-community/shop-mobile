@@ -1,7 +1,7 @@
 import React from "react";
 import "@testing-library/jest-native/extend-expect";
 import { render } from "@testing-library/react-native";
-import Input from "../../components/Input/Input";
+import Input from "../../components/ui/Input/Input";
 
 describe("Input test", () => {
   test("Shows error message", () => {

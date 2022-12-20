@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useMemo } from "react";
 import { View, Text } from "react-native";
 import { ProductMinified, useNavigationProps } from "../../../../@types/types";
-import Button from "../../../../components/Button/Button";
+import Button from "../../../../components/ui/Button/Button";
 import useColorTheme from "@utils/context/ThemeContext";
 import { CalcTotalCartPrice } from "../../../../functions/CalcTotalCartPrice";
 import styles from "./Purchases.styles";

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import * as HttpThunk from "@redux/Watchlist/httpThunk";
+import { useAppSelector } from "utils/hooks/hooks";
 
 interface OptionProps {
   withCheck?: boolean;
@@ -13,7 +14,12 @@ export default function useWatchlist(
   prod_id: number,
   { withCheck = false }: OptionProps
 ) {
-  const [state, setState] = useState<States>("");
+  const watchlistArray = useAppSelector((st) => st.watchlist.data);
+  const [state, setState] = useState<States>(
+    watchlistArray.findIndex((item) => item.prod_id === prod_id) !== -1
+      ? "IN"
+      : "NOT"
+  );
   const dispatch = useDispatch<any>();
 
   useEffect(() => {
@@ -22,34 +28,17 @@ export default function useWatchlist(
         const isIn = await dispatch(
           HttpThunk.checkElementStatus(prod_id)
         ).unwrap();
-
-        // console.log({ prod_id, ...isIn });
-
         setState(isIn.isIn ? "IN" : "NOT");
       })();
     }
   }, [prod_id]);
 
   async function appendWatchlist() {
-    // try {
-    //   const { data } = await http().post(`/watchlist`, { prod_id });
-
-    //   dispatch(watchlistActions.updateWatchlist(data.product));
-    //   setState("IN");
-    // } catch (error) {
-    //   setState("NOT");
-    // }
     await dispatch(HttpThunk.addProduct(prod_id)).unwrap();
     setState("IN");
   }
 
   async function remove(prod_id: number) {
-    // try {
-    //   await http().delete(`${API}/watchlist/${prod_id}`);
-    //   dispatch(watchlistActions.removeElement(prod_id));
-    //   setState("NOT");
-    // } catch (error) {}
-
     await dispatch(HttpThunk.removeProduct(prod_id)).unwrap();
     setState("NOT");
   }

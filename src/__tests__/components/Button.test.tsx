@@ -1,7 +1,7 @@
 import React from "react";
 import "@testing-library/jest-native/extend-expect";
 import { render } from "@testing-library/react-native";
-import Button from "../../components/Button/Button";
+import Button from "../../components/ui/Button/Button";
 
 describe("Button Component", () => {
   test("It render correctly", () => {

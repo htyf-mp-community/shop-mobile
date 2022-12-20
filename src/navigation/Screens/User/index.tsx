@@ -1,7 +1,7 @@
 import React from "react";
 import Avatar from "../../../modules/User/Avatar/Avatar";
 import Settings from "../../../modules/User/Settings/Settings";
-import Button from "../../../components/Button/Button";
+import Button from "../../../components/ui/Button/Button";
 import { ScreenNavigationProps } from "../../../@types/types";
 import useColorTheme from "@utils/context/ThemeContext";
 import Animated, {

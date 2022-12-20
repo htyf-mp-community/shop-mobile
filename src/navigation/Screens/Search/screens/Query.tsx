@@ -1,5 +1,5 @@
 import { useIsFocused } from "@react-navigation/native";
-import ScreenContainer from "components/ScreenContainer";
+import ScreenContainer from "components/ui/ScreenContainer";
 import InputHeaderControll from "../components/InputHeaderControll";
 import useListenBackPress from "utils/hooks/useListenBackPress";
 import { VirtualizedList, Text, View } from "react-native";

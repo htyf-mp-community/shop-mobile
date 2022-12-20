@@ -2,7 +2,7 @@ import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { View, useWindowDimensions, Image, Text } from "react-native";
 import { Colors, Fonts } from "../../../constants/styles";
-import Button from "../../../components/Button/Button";
+import Button from "../../../components/ui/Button/Button";
 import styles from "./styles";
 import layout from "constants/layout";
 import Color from "color";

@@ -6,13 +6,12 @@ import {
   Text,
   ActivityIndicator,
 } from "react-native";
-import Button from "@components/Button/Button";
 import styles from "./styles";
 import schema from "./schema";
 import type { UserInputProps } from "utils/hooks/useAuth";
 import { useNavigation } from "@react-navigation/native";
 import PasswordToggle from "./components/PasswordToggle";
-import { ValidatedInput } from "components";
+import { ValidatedInput, Button } from "@components/index";
 
 import { AntDesign } from "@expo/vector-icons";
 import layout from "constants/layout";
