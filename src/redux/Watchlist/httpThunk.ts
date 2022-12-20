@@ -35,16 +35,16 @@ export const checkElementStatus = createAsyncThunk(
 export const addProduct = createAsyncThunk(
   "watchlist/addProduct",
   async (prod_id: number, api) => {
-    try {
-      const response = await http(api.getState() as RootState).post(
-        "/watchlist",
-        { prod_id }
-      );
+    const response = await http(api.getState() as RootState).post(
+      "/watchlist",
+      { prod_id }
+    );
 
-      return response.data.product;
-    } catch (error: any) {
-      return error.response.data;
+    if (response.data.statusCode === 400) {
+      throw new Error(response.data.message);
     }
+
+    return response.data.product;
   }
 );
 

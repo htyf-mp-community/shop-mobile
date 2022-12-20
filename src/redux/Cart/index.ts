@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Paging, ProductMinified } from "/@types/types";
+import { addCartProduct, removeCartProduct } from "./CartHttp";
 
 export interface Cart extends ProductMinified {
   cart_id: number;
@@ -52,25 +53,6 @@ const cartSlice = createSlice({
       state.error = payload;
     },
 
-    appendCart(state: State, { payload }: { payload: Cart }) {
-      const index = state.cart.findIndex(
-        (element) => element.prod_id === payload.prod_id
-      );
-
-      const copy = [...state.cart];
-
-      if (index !== -1) {
-        copy[index] = payload;
-
-        state.cart = copy;
-      } else {
-        copy.push(payload);
-
-        state.cart = copy;
-      }
-      state.amount = amount(copy);
-    },
-
     startLoading(state: State) {
       state.loading = true;
     },
@@ -87,23 +69,51 @@ const cartSlice = createSlice({
         return prod;
       });
     },
-
-    removeById(state: State, { payload }: { payload: number }) {
+  },
+  extraReducers(builder) {
+    builder.addCase(removeCartProduct.fulfilled, (state, { payload }) => {
       const cart = [];
 
-      for (const product of state.cart) {
-        if (product.cart_id === payload && product.ammount > 1) {
-          cart.push({ ...product, ammount: product.ammount - 1 });
-        } else if (product.cart_id !== payload) {
-          cart.push(product);
-        } else if (product.cart_id === payload && product.ammount === 1) {
-          continue;
+      if (payload.removeAll) {
+        state.cart = [];
+        state.amount = 0;
+        return;
+      } else {
+        for (const product of state.cart) {
+          if (product.cart_id === payload.cart_id && product.ammount > 1) {
+            cart.push({ ...product, ammount: product.ammount - 1 });
+          } else if (product.cart_id !== payload.cart_id) {
+            cart.push(product);
+          } else if (
+            product.cart_id === payload.cart_id &&
+            product.ammount === 1
+          ) {
+            continue;
+          }
         }
       }
 
       state.cart = cart;
       state.amount = amount(cart);
-    },
+    });
+
+    builder.addCase(addCartProduct.fulfilled, (state, { payload }) => {
+      let found = false;
+
+      for (const product of state.cart) {
+        if (product.prod_id === payload.prod_id) {
+          product.ammount += 1;
+          state.amount += 1;
+          found = true;
+          break;
+        }
+      }
+
+      if (!found) {
+        state.cart.push(payload.product);
+        state.amount += 1;
+      }
+    });
   },
 });
 
