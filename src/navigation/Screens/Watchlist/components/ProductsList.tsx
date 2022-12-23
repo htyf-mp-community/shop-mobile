@@ -4,6 +4,7 @@ import { useState } from "react";
 import type { ProductMinified } from "/@types/types";
 import PreviewModal from "./PreviewModal";
 import { useAppSelector } from "utils/hooks/hooks";
+import { wait } from "functions/wait";
 
 interface ProductsListProps {
   data: ProductMinified[][];
@@ -24,55 +25,11 @@ export default function ProductsList({
     setModalVisible(true);
   }
 
-  function closeModal() {
+  async function closeModal() {
     setModalVisible(false);
+    await wait(100); // wait for animation to finish
     setSelectedProduct(null);
   }
-
-  // return (
-  //   <>
-  //     <VirtualizedList
-  //       contentContainerStyle={{
-  //         flexDirection: "row",
-  //         flexWrap: "wrap",
-  //         justifyContent: "space-around",
-  //       }}
-  //       data={watchlist}
-  //       initialNumToRender={6}
-  //       onEndReachedThreshold={0.5}
-  //       onEndReached={onEndReached}
-  //       keyExtractor={(list: ProductMinified, index) => {
-  //         return list.prod_id.toString();
-  //       }}
-  //       getItem={(data, key) => data[key]}
-  //       getItemCount={(d) => d.length}
-  //       renderItem={({ item: product, index }) => {
-  //         const isDivisibleByThree = index % 3 === 0;
-
-  //         const isLast = index === watchlist.length - 1;
-
-  //         const isPrevDivisibleByThree = (index - 1) % 3 === 0;
-
-  //         return (
-  //           <ProductTile
-  //             isExpanded={
-  //               isDivisibleByThree || (isLast && isPrevDivisibleByThree)
-  //             }
-  //             onLongProductPress={selectProductAndShowModal}
-  //             listIndex={index}
-  //             product={product}
-  //           />
-  //         );
-  //       }}
-  //     />
-
-  //     <PreviewModal
-  //       closeModal={closeModal}
-  //       isModalVisible={isModalVisible}
-  //       selectedProduct={selectedProduct}
-  //     />
-  //   </>
-  // );
 
   return (
     <>
@@ -107,7 +64,8 @@ export default function ProductsList({
                 <ProductTile
                   isExpanded={item.length === 1}
                   onLongProductPress={selectProductAndShowModal}
-                  listIndex={((index || 1) * (_index + 1)) / 2}
+                  //   listIndex={((index || 1) * (_index + 1)) / 2}
+                  listIndex={index}
                   product={product}
                   key={product.prod_id}
                 />

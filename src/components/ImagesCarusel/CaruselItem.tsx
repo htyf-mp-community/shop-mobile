@@ -6,7 +6,6 @@ const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 const styles = StyleSheet.create({
   img: {
     width: SCREEN_WIDTH - 20,
-    height: 260,
     borderRadius: 5,
   },
   container: {
@@ -20,12 +19,15 @@ interface CaruselItemProps {
   source: string;
   prod_id?: number;
   sharedID?: string;
+
+  height?: number;
 }
 
 export default function CaruselItem({
   source,
   prod_id,
   sharedID,
+  height = 260,
 }: CaruselItemProps) {
   return (
     <SharedElement
@@ -34,7 +36,7 @@ export default function CaruselItem({
     >
       <Image
         source={{ uri: source }}
-        style={[styles.img]}
+        style={[styles.img, { height }]}
         resizeMode="cover"
         resizeMethod="scale"
       />

@@ -1,21 +1,21 @@
 import { Text, TextProps } from "react-native";
 import useColorTheme from "utils/context/ThemeContext";
 
-export default function ThemedText(props: TextProps) {
+export default function ThemedText({ style, ...rest }: TextProps) {
   const { theme } = useColorTheme();
 
   return (
     <Text
-      {...props}
+      {...rest}
       style={[
         {
           color: theme.text,
           fontSize: 17,
         },
-        props.style,
+        style,
       ]}
     >
-      {props.children}
+      {rest.children}
     </Text>
   );
 }

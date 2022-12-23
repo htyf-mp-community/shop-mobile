@@ -5,7 +5,7 @@ import { View, Image, Pressable } from "react-native";
 import Ripple from "react-native-material-ripple";
 import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import Animated, { FadeIn } from "react-native-reanimated";
+import Animated, { FadeIn, FadeInUp } from "react-native-reanimated";
 
 interface ProductTileProps {
   product: ProductMinified;
@@ -44,7 +44,10 @@ export default function ProductTile({
   }
 
   return (
-    <Animated.View style={{ marginBottom: 10 }}>
+    <Animated.View
+      style={{ marginBottom: 10 }}
+      entering={FadeInUp.delay(listIndex * 100)}
+    >
       <Ripple
         onLongPress={() => onLongProductPress(product)}
         onPress={navigateToProduct}

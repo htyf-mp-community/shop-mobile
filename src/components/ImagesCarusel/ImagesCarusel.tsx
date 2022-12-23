@@ -4,11 +4,16 @@ import { ProductImageProps } from "/@types/types";
 import { API } from "@constants/routes";
 import Dots from "@components/Dots/Dots";
 import CaruselItem from "./CaruselItem";
+import Ripple from "react-native-material-ripple";
 
 interface ImagesCaruselProps {
   sharedID: string;
   prod_id: number;
   images: ProductImageProps[];
+
+  onPress?: (imgIndex: number) => void;
+  height?: number;
+  isSharedAnimationUsed?: boolean;
 }
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
@@ -17,6 +22,9 @@ export default function ImagesCarusel({
   sharedID,
   prod_id,
   images,
+  onPress,
+  isSharedAnimationUsed,
+  height,
 }: ImagesCaruselProps) {
   const scrollX = useRef(new Animated.Value(0)).current;
 
@@ -34,23 +42,18 @@ export default function ImagesCarusel({
         )}
         data={images}
         keyExtractor={({ id }) => id.toString()}
-        renderItem={({ item, index }) => {
-          if (item.id === 0) {
-            return (
-              <CaruselItem
-                source={`${API}/upload/images=${item.name}`}
-                prod_id={prod_id}
-                sharedID={sharedID}
-              />
-            );
-          }
-          return (
+        renderItem={({ item, index }) => (
+          <Ripple
+            disabled={typeof onPress === "undefined"}
+            onPress={() => onPress?.(index)}
+          >
             <CaruselItem
-              key={item.id}
+              height={height}
               source={`${API}/upload/images=${item.name}`}
+              {...(index === 0 && { prod_id, sharedID })}
             />
-          );
-        }}
+          </Ripple>
+        )}
       />
       <View
         style={{

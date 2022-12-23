@@ -6,13 +6,15 @@ import ReviewButtons from "../Buttons/ReviewButtons";
 import type { DetailsProps, ProductRatingProps } from "/@types/types";
 import Title from "./components/Title";
 import DetailRow from "./components/DetailRow";
-import TagsList from "./components/TagsList";
+
 import {
   ButtonsLoader,
   SkeletonDescription,
   SkeletonRow,
 } from "./components/Loaders";
 import Description from "./components/Description";
+import Taglist from "components/Taglist/Taglist";
+import tags from "./assets/tags";
 
 interface IDetailsProps extends Omit<DetailsProps, "rating_id"> {
   showPrice?: boolean;
@@ -52,7 +54,8 @@ export default function Details({
       {props.quantity === undefined ? (
         <SkeletonRow />
       ) : (
-        <TagsList category={props.category} quantity={props.quantity} />
+        // <TagsList category={props.category} quantity={props.quantity} />
+        <Taglist tagsList={tags} />
       )}
 
       {props.description !== undefined ? (

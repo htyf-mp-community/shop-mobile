@@ -8,6 +8,7 @@ export interface Sale {
   quantity: number;
   title: string;
   img_id: ProductImageProps[];
+  rating: number;
 }
 
 const GET_SALE = gql`
@@ -17,7 +18,8 @@ const GET_SALE = gql`
       price
       quantity
       title
-      img_id(take: 1) {
+      rating
+      img_id(take: 3) {
         name
         id
       }

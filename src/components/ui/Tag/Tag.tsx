@@ -1,9 +1,11 @@
-import { Fonts } from "constants/styles";
+import { Colors, Fonts } from "constants/styles";
 import { ReactElement, ReactNode } from "react";
 import { Text, View } from "react-native";
 import Ripple from "react-native-material-ripple";
 
-interface TagProps {
+import Color from "color";
+
+export interface TagProps {
   text: string;
   leftIcon?: ReactNode | ReactElement;
   rightIcon?: ReactNode | ReactElement;
@@ -11,6 +13,8 @@ interface TagProps {
   fontColor?: string;
   onPress?: () => void;
   margin?: number | string;
+
+  index?: number;
 }
 
 export default function Tag({
@@ -18,21 +22,34 @@ export default function Tag({
   text,
   leftIcon,
   rightIcon,
+  index = 0,
   ...styles
 }: TagProps) {
   return (
     <Ripple
       onPress={onPress}
       style={{
-        margin: styles.margin,
-        backgroundColor: styles.backgroundColor,
         padding: 8,
-        paddingHorizontal: 10,
         borderRadius: 5,
+        backgroundColor: Color(Colors.secondary)
+          .alpha(1 / index)
+          .string(),
+        paddingHorizontal: 15,
+        margin: 5,
+        flexDirection: "row",
+        alignItems: "center",
       }}
     >
       <View style={{ marginRight: 5 }}>{leftIcon}</View>
-      <Text style={{ color: styles.fontColor }}>{text}</Text>
+      <Text
+        style={{
+          color: styles.fontColor || "#fff",
+          fontSize: 16,
+          textTransform: "capitalize",
+        }}
+      >
+        {text}
+      </Text>
       <View style={{ marginLeft: 5 }}>{rightIcon}</View>
     </Ripple>
   );

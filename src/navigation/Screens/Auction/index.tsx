@@ -8,7 +8,7 @@ import useBoolean from "utils/hooks/useBoolean";
 import Addbid from "./components/Add_bid";
 import Details from "../ProductDetails/components/Details";
 import { API } from "constants/routes";
-import ImagesCarusel from "../ProductDetails/components/ImagesCarusel/ImagesCarusel";
+import ImagesCarusel from "../../../components/ImagesCarusel/ImagesCarusel";
 import { SkeletonPlaceholder } from "components";
 import { useEffect } from "react";
 

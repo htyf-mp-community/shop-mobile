@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef, useEffect } from "react";
 import { ScrollView, View, RefreshControl } from "react-native";
-import ImagesCarusel from "./components/ImagesCarusel/ImagesCarusel";
+import ImagesCarusel from "@components/ImagesCarusel/ImagesCarusel";
 import { Product, ScreenNavigationProps } from "/@types/types";
 import styles from "./styles";
 import useColorTheme from "@utils/context/ThemeContext";
@@ -17,7 +17,11 @@ import { useAppSelector } from "utils/hooks/hooks";
 export default function ProductDetails({
   route,
 }: Required<ScreenNavigationProps<"Product">>) {
-  const { prod_id, image, sharedID, title } = route.params;
+  const { prod_id, image, sharedID, title, isSharedAnimationUsed } =
+    route.params;
+
+  console.log({ isSharedAnimationUsed });
+
   const { data, refetch } = useProduct(prod_id);
   const result = data?.product;
 
@@ -53,7 +57,10 @@ export default function ProductDetails({
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
-        <ImagesCarusel {...{ sharedID, prod_id, images }} />
+        <ImagesCarusel
+          isSharedAnimationUsed={isSharedAnimationUsed}
+          {...{ sharedID, prod_id, images }}
+        />
 
         <Details
           {...result}

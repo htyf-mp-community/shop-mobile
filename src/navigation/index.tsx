@@ -71,11 +71,15 @@ export default function MainNavigator() {
                 name="Product"
                 options={Option.detailsScreenOptions}
                 sharedElements={({ params }, opt) => {
-                  const { prod_id, sharedID } = params;
+                  const { prod_id, sharedID, isSharedAnimationUsed } = params;
                   //prettier-ignore
                   const valid = ["Home","Search","SearchResults","PurchaseHistory","Details",'Watchlist'];
 
-                  if (sharedID && valid.includes(opt.name)) {
+                  if (
+                    sharedID &&
+                    valid.includes(opt.name) &&
+                    isSharedAnimationUsed
+                  ) {
                     return ["prod_id." + prod_id + sharedID];
                   }
                 }}
