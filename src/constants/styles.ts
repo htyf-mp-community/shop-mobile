@@ -46,11 +46,6 @@ export const Colors = {
 
   primary_light: Color("#0f172a").lighten(0.5).string(),
 
-  // primary100: "#212a40",
-  // primary200: "#26314a",
-  // primary300: "#1d273d",
-  // primary400: "#0d0d0d",
-  // secondary: "#009950",
   secondary: "#8408D4",
 
   secondary_light: Color("#8408D4").lighten(0.5).string(),

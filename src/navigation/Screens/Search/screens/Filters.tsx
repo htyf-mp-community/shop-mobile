@@ -13,6 +13,7 @@ import { SearchNestedScreenProps } from "/@types/types";
 
 export default function Filters({
   navigation,
+  route,
 }: SearchNestedScreenProps<"Filters">) {
   const isFocused = useIsFocused();
   useListenBackPress(() => {

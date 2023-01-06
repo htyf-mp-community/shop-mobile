@@ -9,10 +9,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   block: {
-    position: "relative",
     alignItems: "center",
     padding: 10,
-    flex: 1,
     marginTop: 15,
     justifyContent: "flex-end",
   },

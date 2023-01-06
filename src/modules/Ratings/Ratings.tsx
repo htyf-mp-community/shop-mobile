@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { Colors } from "../../constants/styles";
 import { Stars } from "../Stars/Stars";
+import Color from "color";
 
 const { width } = Dimensions.get("screen");
 
@@ -22,18 +23,10 @@ export default function Ratings({
   return (
     <View style={[styles.container, { width: width - 20 }]}>
       <View style={styles.header}>
-        <Image
-          source={{
-            uri: "https://i.pinimg.com/736x/8b/16/7a/8b167af653c2399dd93b952a48740620.jpg",
-          }}
-          style={styles.image}
-        />
-        <View
-          style={{ flexDirection: "row", alignItems: "center", marginLeft: 20 }}
-        >
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
           <Text style={styles.text}>Jan Kowalski</Text>
           <Text style={[{ fontSize: 18, color: "#b5b5b5", marginLeft: 10 }]}>
-            13 days ago
+            {Math.trunc(Math.random() * 10)} days ago
           </Text>
         </View>
       </View>
@@ -46,21 +39,23 @@ export default function Ratings({
         <Text style={styles.text}>{description}</Text>
       </View>
 
-      <Stars
-        rating={rating}
-        starStyle={{ transform: [{ scale: 0.5 }], padding: 0, width: 100 }}
-      />
+      <View style={{ width: "100%", alignItems: "center" }}>
+        <Stars
+          rating={rating}
+          starStyle={{ transform: [{ scale: 0.5 }], padding: 0, width: 100 }}
+        />
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.primary100,
     padding: 10,
     margin: 10,
-    borderRadius: 5,
+    borderRadius: 10,
     width: "100%",
+    backgroundColor: Color(Colors.primary).lighten(0.15).string(),
   },
   image: {
     width: 30,

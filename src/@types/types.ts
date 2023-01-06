@@ -69,8 +69,19 @@ export type UserContextType = {
   updateToken: (s: string) => void;
 };
 
+type Filters =
+  | "category"
+  | "price"
+  | "manufacturer"
+  | "vendor"
+  | "rating"
+  | "sort"
+  | "search";
+
 export type NestedSearchScreens = {
-  Filters: undefined;
+  Filters: {
+    focusedFilter: Filters;
+  };
   Searched: undefined;
   Query: undefined;
 };

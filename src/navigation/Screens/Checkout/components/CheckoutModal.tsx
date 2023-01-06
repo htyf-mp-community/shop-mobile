@@ -58,7 +58,7 @@ export default function CheckoutModal({
             onCardChange={handleValidateCard}
             style={{ height: 60, marginVertical: 10 }}
             cardStyle={{
-              backgroundColor: Colors.primary100,
+              backgroundColor: Colors.primary,
               textColor: "white",
               placeholderColor: "lightgray",
               borderRadius: 10,
