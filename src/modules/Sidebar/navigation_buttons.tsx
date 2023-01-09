@@ -9,7 +9,7 @@ import { Fonts } from "constants/styles";
 import SignOut from "modules/Signout";
 
 export default function NavigationButtons() {
-  const { cart, watchlist } = useAppSelector((state) => state);
+  const { cart, watchlist, user } = useAppSelector((state) => state);
   const navigation = useNavigation<useNavigationProps>();
 
   const NavigationButton = (props: {
@@ -73,6 +73,13 @@ export default function NavigationButtons() {
         icon={<Icon name="star" />}
         text="My reviews"
       />
+      {user.role === "developer" && (
+        <NavigationButton
+          screen="Upload"
+          icon={<Icon name="cloudupload" />}
+          text="Upload product"
+        />
+      )}
 
       <SignOut />
 

@@ -30,7 +30,5 @@ export default function useGetPendingAuctions() {
         token: user.token,
       },
     },
-
-    onError: (err) => console.log(err),
   });
 }

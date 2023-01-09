@@ -12,7 +12,7 @@ interface ValidatedInputProps<
   label?: string;
   placeholder?: string;
   parseValue?: (v: string) => string;
-  style: StyleProp<ViewStyle & TextStyle>;
+  style?: StyleProp<ViewStyle & TextStyle>;
 
   showLabel?: boolean;
 }

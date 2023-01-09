@@ -9,6 +9,7 @@ import useFetchProducts from "./useFetchProducts";
 import axios from "axios";
 import ProductSkeleton from "modules/ProductSkeleton";
 import useColorTheme from "utils/context/ThemeContext";
+import { PRODUCT_CONTAINER_SIZE_X } from "modules/Product/assets";
 
 interface MostRecentProps {
   path: string;
@@ -48,6 +49,10 @@ function ProductsCarusel({
 
   const isLoading = !notEmpty(data) && loading;
 
+  const snapToOffsets = data.map(
+    (_, index) => index * PRODUCT_CONTAINER_SIZE_X
+  );
+
   return (
     <View style={caruselStyles.container}>
       <Text style={[caruselStyles.title, { color: theme.text }]}>{title}</Text>
@@ -57,6 +62,8 @@ function ProductsCarusel({
       {isError && <EmptyList variant="error" error={error} />}
 
       <VirtualizedList
+        // pagingEnabled
+        // snapToOffsets={snapToOffsets}
         data={data}
         onEndReached={onSkip}
         horizontal

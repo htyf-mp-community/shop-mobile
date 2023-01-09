@@ -11,6 +11,15 @@ import styles from "./styles";
 import React, { useState } from "react";
 import { Colors } from "constants/styles";
 import layout from "constants/layout";
+import useColorTheme, { ThemeContextType } from "utils/context/ThemeContext";
+
+export interface RenderComponentProps {
+  theme: ThemeContextType["theme"];
+  isError: boolean;
+  isTouched: boolean;
+
+  color: string;
+}
 
 export interface InputProps extends TextInputProps {
   /**
@@ -58,13 +67,17 @@ export interface InputProps extends TextInputProps {
    * Icon to be displayed on the left side of the input
    **/
 
-  leftIcon?: React.ReactNode;
+  leftIcon?:
+    | ((prop: RenderComponentProps) => React.ReactNode)
+    | React.ReactNode;
 
   /**
    * Icon to be displayed on the right side of the input
    **/
 
-  rightIcon?: React.ReactNode;
+  rightIcon?:
+    | ((prop: RenderComponentProps) => React.ReactNode)
+    | React.ReactNode;
 
   /**
    * size of the input
@@ -89,6 +102,15 @@ export default function Input({
   ...rest
 }: InputProps) {
   const [isFocused, setIsFocused] = useState(false);
+
+  const { theme } = useColorTheme();
+
+  const renderProps = {
+    isError: error || false,
+    isTouched: isFocused,
+    theme,
+    color: error ? theme.error : isFocused ? theme.secondary : "#fff",
+  };
 
   return (
     <View style={styles.container}>
@@ -120,7 +142,11 @@ export default function Input({
           alignItems: "center",
         }}
       >
-        {leftIcon && <View style={{ paddingHorizontal: 7.5 }}>{leftIcon}</View>}
+        {leftIcon && (
+          <View style={{ paddingHorizontal: 7.5 }}>
+            {typeof leftIcon === "function" ? leftIcon(renderProps) : leftIcon}
+          </View>
+        )}
         <TextInput
           value={value}
           onChangeText={setValue}
@@ -145,7 +171,11 @@ export default function Input({
           {...rest}
         />
         {rightIcon && (
-          <View style={{ paddingHorizontal: 7.5 }}>{rightIcon}</View>
+          <View style={{ paddingHorizontal: 7.5 }}>
+            {typeof rightIcon === "function"
+              ? rightIcon(renderProps)
+              : rightIcon}
+          </View>
         )}
       </View>
       {typeof helperText !== "undefined" && (

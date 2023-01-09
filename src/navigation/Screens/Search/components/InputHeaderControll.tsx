@@ -32,8 +32,6 @@ export default function InputHeaderControll({
     dispatch(searchActions.setText(text));
     beforeSubmitEditing?.(text);
     navigation.goBack();
-
-    console.log({ text, searchedText });
   };
 
   return (

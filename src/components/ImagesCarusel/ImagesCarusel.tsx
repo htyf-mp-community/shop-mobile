@@ -13,7 +13,6 @@ interface ImagesCaruselProps {
 
   onPress?: (imgIndex: number) => void;
   height?: number;
-  isSharedAnimationUsed?: boolean;
 }
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
@@ -23,7 +22,6 @@ export default function ImagesCarusel({
   prod_id,
   images,
   onPress,
-  isSharedAnimationUsed,
   height,
 }: ImagesCaruselProps) {
   const scrollX = useRef(new Animated.Value(0)).current;

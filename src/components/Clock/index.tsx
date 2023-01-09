@@ -1,16 +1,6 @@
-import { Colors } from "constants/styles";
 import { useState } from "react";
-import { StyleProp, Text, TextStyle, View } from "react-native";
+import { Text, View } from "react-native";
 import useInterval from "utils/hooks/useInteval";
-
-const block: StyleProp<TextStyle> = {
-  fontSize: 20,
-  color: "#fff",
-  fontWeight: "bold",
-  backgroundColor: Colors.primary,
-  padding: 5,
-  marginLeft: 5,
-};
 
 export default function Clock() {
   const [time, setTime] = useState({
@@ -39,14 +29,13 @@ export default function Clock() {
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        backgroundColor: Colors.primary100,
         borderRadius: 5,
         padding: 5,
       }}
     >
-      <Text style={[block, { marginLeft: 0 }]}>{time.hours}</Text>
-      <Text style={block}>{time.minutes}</Text>
-      <Text style={block}>{time.seconds}</Text>
+      <Text style={{ color: "#fff", fontSize: 22 }}>
+        {`${time.hours}:${time.minutes}:${time.seconds}`}
+      </Text>
     </View>
   );
 }

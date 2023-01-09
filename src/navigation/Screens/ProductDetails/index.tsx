@@ -20,8 +20,6 @@ export default function ProductDetails({
   const { prod_id, image, sharedID, title, isSharedAnimationUsed } =
     route.params;
 
-  console.log({ isSharedAnimationUsed });
-
   const { data, refetch } = useProduct(prod_id);
   const result = data?.product;
 

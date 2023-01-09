@@ -77,9 +77,7 @@ export default function AuthForm({
               style={inputStyle}
               placeholder="Email*"
               //prettier-ignore
-              leftIcon={<AntDesign name="user" size={20} color={
-                !!formik.errors.email && formik.touched.email ? "#ff3030" : "white"
-              } />}
+              leftIcon={(props)=> <AntDesign name="user" size={25} color={props.color} />}
               autoComplete="email"
               autoCorrect={false}
               keyboardType="email-address"
@@ -92,21 +90,21 @@ export default function AuthForm({
               style={inputStyle}
               placeholder="Password*"
               //prettier-ignore
-              leftIcon={<AntDesign name="lock" size={20} color={
-                !!formik.errors.password && formik.touched.password ? "#ff3030" : "white"
+              leftIcon={(props) => <AntDesign name="lock" size={25} color={
+               props.color
               } />}
               autoComplete="password"
               autoCorrect={false}
               secureTextEntry={!vissible}
               returnKeyType="done"
               clearButtonMode={"always"}
-              rightIcon={
+              rightIcon={(props) => (
                 <PasswordToggle
-                  isError={!!formik.errors.password && formik.touched.password}
+                  isError={props.isError}
                   setVissible={setVissible}
                   vissible={vissible}
                 />
-              }
+              )}
               {...formik}
             />
 
@@ -115,22 +113,19 @@ export default function AuthForm({
                 style={inputStyle}
                 placeholder="Confirm Password*"
                 //prettier-ignore
-                leftIcon={<AntDesign name="lock" size={20} color={
-                !!formik.errors.confirmPassword && formik.touched.confirmPassword ? "#ff3030" : "white"
+                leftIcon={props =><AntDesign name="lock" size={20} color={
+                props.color 
               } />}
                 autoComplete="password"
                 autoCorrect={false}
                 secureTextEntry={!vissible}
-                rightIcon={
+                rightIcon={(props) => (
                   <PasswordToggle
-                    isError={
-                      !!formik.errors.confirmPassword &&
-                      formik.touched.confirmPassword
-                    }
+                    isError={props.isError}
                     setVissible={setVissible}
                     vissible={vissible}
                   />
-                }
+                )}
                 name="confirmPassword"
                 {...formik}
               />
@@ -154,7 +149,7 @@ export default function AuthForm({
 
             <TouchableOpacity
               onPress={() =>
-                navigation.navigate(!isRegister ? "Register" : "Login")
+                navigation.navigate(isRegister ? "Login" : "Register")
               }
               style={{
                 marginTop: 10,
