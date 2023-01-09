@@ -140,8 +140,6 @@ export const searchSlice = createSlice({
 
     builder.addCase(getSearchedProducts.rejected, (state, { payload }) => {
       // state.error = payload as string;
-
-      console.log("error, payload", payload);
     });
   },
 });

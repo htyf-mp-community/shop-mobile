@@ -6,7 +6,7 @@ import { notUndefined } from "@functions/typecheckers";
 
 type Variant = "light" | "dark";
 
-interface ThemeContextType {
+export interface ThemeContextType {
   theme: typeof Colors;
   current: Variant;
   onThemeChange: () => void;

@@ -15,6 +15,7 @@ export const init: UserType = {
   name: "",
   isLoggedIn: false,
   isLoading: true,
+  role: "",
 };
 
 const User = createContext<UserContextType>({

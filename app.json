@@ -11,15 +11,19 @@
       "backgroundColor": "#0f172a"
     },
     "plugins": [
-      "expo-notifications"
+      "expo-notifications",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you share them with your friends."
+        }
+      ]
     ],
     "userInterfaceStyle": "automatic",
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": false,
       "userInterfaceStyle": "automatic"

@@ -35,11 +35,7 @@ export default function MainNavigator() {
               />
               <Stack.Screen name="Auctions" component={Screen.Auctions} />
               {/* <Stack.Screen name="Dashboard" component={Screen.Dashboard} /> */}
-              {/* <Stack.Screen
-                name="Upload"
-                component={Screen.Upload}
-                options={{ headerShown: false }}
-              /> */}
+              <Stack.Screen name="Upload" component={Screen.Upload} />
               <Stack.Screen
                 name="Auction"
                 component={Screen.Auction}

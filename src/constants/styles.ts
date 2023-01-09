@@ -52,6 +52,8 @@ export const Colors = {
 
   secondary_dark: Color("#8408D4").darken(0.5).string(),
 
+  active: "#36a8f5",
+
   accent: "#3B4157",
 
   success: "#4BB543",

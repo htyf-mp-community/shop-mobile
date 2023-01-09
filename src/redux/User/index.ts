@@ -12,6 +12,7 @@ const initialState = {
   token: "",
   name: "",
   user_id: -1,
+  role: "",
 
   isLoading: true,
 
@@ -44,12 +45,14 @@ const User = createSlice({
           token: string;
           user_id: number;
           name: string;
+          role: string;
         };
       }
     ) {
       state.isLoggedIn = true;
       state.token = payload.token;
       state.name = payload.name;
+      state.role = payload.role;
       state.user_id = payload.user_id;
       state.isLoading = false;
     },

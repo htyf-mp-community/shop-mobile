@@ -74,6 +74,7 @@ export default function useAuth(route: Route, callbacks?: Partial<Callbacks>) {
         name: email,
         isLoggedIn: true,
         isLoading: false,
+        role: data.role,
       });
 
       navigation.navigate("Home", {});

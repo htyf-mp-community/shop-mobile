@@ -58,6 +58,7 @@ export type UserType = {
   user_id: number;
   isLoggedIn: boolean;
   isLoading: boolean;
+  role: string;
 };
 
 export type UserContextType = {
