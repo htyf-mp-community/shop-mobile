@@ -3,6 +3,7 @@ import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useNavigationProps } from "/@types/types";
 import { image } from "functions/image";
+import { wait } from "functions/wait";
 
 export interface UploadProps {
   price: number;
@@ -42,7 +43,6 @@ const handleUploadProduct = async (product: UploadProps) => {
   try {
     const response = await http().post("/products", {
       ...product,
-      quantity: 100,
     });
 
     const prodId = response.data.id as number;
@@ -70,6 +70,8 @@ export default function useUploadProducts() {
     setLoading(true);
     try {
       setClicked(true);
+
+      await wait(2000);
 
       const response = await handleUploadProduct(product);
 

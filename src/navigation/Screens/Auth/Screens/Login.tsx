@@ -53,7 +53,7 @@ export default function LoginScreen({
         <ActivityIndicator size={"large"} color="#fff" />
       </RNModal>
 
-      <LoginModal visible={isVisible} clear={clear} error={""} />
+      <LoginModal visible={isVisible} clear={clear} error={error || ""} />
     </Container>
   );
 }

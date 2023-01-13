@@ -1,13 +1,16 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { ActivityIndicator, Text, View } from "react-native";
 import useCheckout from "./hooks/useCheckout";
 import styles from "./styles";
 import { Header } from "components";
 import Form from "./components/Form";
 import CheckoutModal from "./components/CheckoutModal";
-import { useAppDispatch } from "utils/hooks/hooks";
+import { useAppDispatch, useAppSelector } from "utils/hooks/hooks";
 import { checkoutActions } from "redux/Checkout";
 import layout from "constants/layout";
+import ReactNativeModal from "react-native-modal";
+import { Colors } from "constants/styles";
+import ModalLoader from "components/ui/ModalLoader";
 
 interface Input {
   name: string;
@@ -23,6 +26,10 @@ export default function Checkout() {
   const dispatch = useAppDispatch();
   const [isVisible, setIsVisible] = React.useState(false);
 
+  const { paymentIntentClientSecretLoading, paymentError } = useAppSelector(
+    (s) => s.checkout
+  );
+
   const onSubmit = async (input: Input) => {
     setIsVisible(true);
     dispatch(checkoutActions.saveCredentials(input));
@@ -32,9 +39,13 @@ export default function Checkout() {
 
   return (
     <View style={[styles.container]}>
+      <ModalLoader isVisible={paymentIntentClientSecretLoading} />
+
       <Header>
         <Text style={{ color: "#fff", fontSize: 20, padding: 10 }}>
-          {total === 0 ? "Loading..." : "Total $" + total.toFixed(2)}
+          {paymentIntentClientSecretLoading
+            ? "Loading..."
+            : "Total $" + total.toFixed(2)}
         </Text>
       </Header>
 

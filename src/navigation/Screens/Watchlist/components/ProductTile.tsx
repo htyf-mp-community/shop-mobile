@@ -37,17 +37,14 @@ export default function ProductTile({
     navigation.navigate("Product", {
       image: thumbnail.uri,
       title: product.title,
-      isSharedAnimationUsed: false,
+      isSharedAnimationUsed: true,
       sharedID: "",
       prod_id: product.prod_id,
     });
   }
 
   return (
-    <Animated.View
-      style={{ marginBottom: 10 }}
-      entering={FadeInUp.delay(listIndex * 100)}
-    >
+    <Animated.View style={{ marginBottom: 10 }}>
       <Ripple
         onLongPress={() => onLongProductPress(product)}
         onPress={navigateToProduct}

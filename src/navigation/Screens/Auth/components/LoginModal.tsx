@@ -19,42 +19,51 @@ export default function LoginModal({ clear, error, visible }: LoginModalProps) {
       onBackButtonPress={clear}
       statusBarTranslucent
       useNativeDriverForBackdrop
-      style={{ alignItems: "center", paddingVertical: 20, borderRadius: 40 }}
+      style={{
+        alignItems: "center",
+        height: layout.screen.height / 2,
+        padding: 20,
+      }}
     >
-      <Image
-        source={require("@assets/4944051.png")}
-        style={{ height: 100, width: 100 }}
-      />
+      <View style={{ alignItems: "center", flex: 3 }}>
+        <Image
+          source={require("@assets/4944051.png")}
+          style={{ height: 100, width: 100 }}
+        />
 
-      <Text
-        style={{
-          color: "#fff",
-          fontFamily: Fonts.PoppinsBold,
-          fontSize: 30,
-          marginTop: 10,
-        }}
-      >
-        Ooops...
-      </Text>
+        <Text
+          style={{
+            color: "#fff",
+            fontFamily: Fonts.PoppinsBold,
+            fontSize: 30,
+          }}
+        >
+          Ooops...
+        </Text>
 
-      <Text
-        style={{
-          color: "#fff",
-          fontSize: 20,
-          fontFamily: Fonts.PoppinsRegular,
-          lineHeight: 35,
-        }}
-      >
-        Invalid email or password
-      </Text>
-      <Button
-        callback={clear}
-        text="Try again"
-        variant="primary"
-        size="xl"
-        borderRadius="full"
-        style={{ marginTop: 30, width: layout.window.width - 40 - 40 }}
-      />
+        <Text
+          style={{
+            color: "#fff",
+            fontSize: 20,
+            fontFamily: Fonts.PoppinsRegular,
+            lineHeight: 35,
+          }}
+        >
+          Something went wrong, see message below:{"\n"}
+          <Text style={{ fontWeight: "bold" }}>{error}</Text>
+        </Text>
+      </View>
+      <View style={{ flex: 1, justifyContent: "flex-end" }}>
+        <Button
+          callback={clear}
+          text="Try again"
+          type="contained"
+          color="primary"
+          size="xl"
+          borderRadius="full"
+          style={{ width: layout.window.width - 80 }}
+        />
+      </View>
     </Modal>
   );
 }

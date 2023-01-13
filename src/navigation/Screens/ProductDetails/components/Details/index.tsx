@@ -15,6 +15,8 @@ import {
 import Description from "./components/Description";
 import Taglist from "components/Taglist/Taglist";
 import tags from "./assets/tags";
+import SellerDetails from "modules/SellerDetails";
+import SellerTile from "../SellerTile/SellerTile";
 
 interface IDetailsProps extends Omit<DetailsProps, "rating_id"> {
   showPrice?: boolean;
@@ -50,6 +52,8 @@ export default function Details({
           children={<Text style={[styles.text]}>${props.price}</Text>}
         />
       )}
+
+      {/* {props.price !== undefined && <SellerTile />} */}
 
       {props.quantity === undefined ? (
         <SkeletonRow />

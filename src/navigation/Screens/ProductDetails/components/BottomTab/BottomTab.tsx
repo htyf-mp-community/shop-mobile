@@ -20,8 +20,6 @@ export default function BottomTab({
 
   const notAvailable = quantity === 0;
 
-  const backgroundColor = notAvailable ? theme.primary : "#1e3a8a";
-
   return (
     <Animated.View
       style={[
@@ -38,12 +36,7 @@ export default function BottomTab({
         relative
         prod_id={prod_id}
         text={notAvailable ? "Not Available" : "Add to Cart"}
-        style={[
-          styles.button,
-          {
-            backgroundColor,
-          },
-        ]}
+        style={[styles.button]}
       />
     </Animated.View>
   );

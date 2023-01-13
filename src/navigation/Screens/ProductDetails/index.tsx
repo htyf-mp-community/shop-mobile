@@ -48,17 +48,13 @@ export default function ProductDetails({
       <ScrollView
         style={[styles.container, { backgroundColor: theme.primary }]}
         showsHorizontalScrollIndicator={false}
-        scrollEventThrottle={16}
         showsVerticalScrollIndicator={false}
         bounces
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
-        <ImagesCarusel
-          isSharedAnimationUsed={isSharedAnimationUsed}
-          {...{ sharedID, prod_id, images }}
-        />
+        <ImagesCarusel {...{ sharedID, prod_id, images }} />
 
         <Details
           {...result}
