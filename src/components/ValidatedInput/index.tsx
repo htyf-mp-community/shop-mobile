@@ -33,19 +33,22 @@ export default function ValidatedInput<T extends { [key: string]: string }>({
   ...rest
 }: ValidatedInputProps<T>) {
   const capitalizeLabel = name.charAt(0).toUpperCase() + name.slice(1);
+
+  const isError = (key: string) => !!errors[name] && !!touched[name];
+
   return (
     <Input
       style={style}
+      placeholderTextColor={isError(name) ? "#ff3030" : "#fff"}
       value={parseValue(values[name])}
       onChangeText={handleChange(name)}
       placeholder={placeholder ?? label ?? capitalizeLabel}
       onBlur={handleBlur(name)}
-      error={Boolean(!!errors[name] && touched[name])}
+      error={isError(name)}
       {...(showLabel && {
-        name:
-          !!errors[name] && touched[name]
-            ? String(errors[name]).toString()
-            : label ?? capitalizeLabel,
+        name: isError(name)
+          ? String(errors[name]).toString()
+          : label ?? capitalizeLabel,
       })}
       {...rest}
     />

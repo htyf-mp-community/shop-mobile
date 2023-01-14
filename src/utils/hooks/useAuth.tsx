@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useUser } from "@utils/context/UserContext";
 import axios from "axios";
 import { API } from "@constants/routes";
-import { wait } from "functions/wait";
 import { useNavigation } from "@react-navigation/native";
 
 export interface UserInputProps {

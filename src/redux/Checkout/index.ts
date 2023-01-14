@@ -16,10 +16,16 @@ const checkoutSlice = createSlice({
   },
 
   extraReducers: (builder) => {
+    builder.addCase(createPaymentIntent.pending, (state) => {
+      state.paymentIntentClientSecretLoading = true;
+    });
+
     builder.addCase(createPaymentIntent.fulfilled, (state, { payload }) => {
       state.paymentIntentClientSecret = payload.clientSecret;
       state.total = payload.total;
       state.paymentLoading = false;
+
+      state.paymentIntentClientSecretLoading = false;
     });
 
     builder.addCase(createPaymentIntent.rejected, (state) => {

@@ -26,6 +26,8 @@ const initialState = {
   ammountCharged: 0,
 
   credentials,
+
+  paymentIntentClientSecretLoading: false,
 };
 
 export { initialState };
