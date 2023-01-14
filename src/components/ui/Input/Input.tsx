@@ -109,7 +109,7 @@ export default function Input({
     isError: error || false,
     isTouched: isFocused,
     theme,
-    color: error ? theme.error : isFocused ? theme.secondary : "#fff",
+    color: error ? theme.error : isFocused ? theme.active : "#fff",
   };
 
   return (
@@ -137,7 +137,7 @@ export default function Input({
           borderColor: error
             ? Colors.error
             : isFocused
-            ? Colors.secondary
+            ? Colors.active
             : Colors.primary_light,
           alignItems: "center",
         }}
@@ -148,6 +148,7 @@ export default function Input({
           </View>
         )}
         <TextInput
+          spellCheck={false}
           value={value}
           onChangeText={setValue}
           placeholderTextColor={error ? "#ff3030" : "white"}
@@ -156,7 +157,7 @@ export default function Input({
             style,
             {
               borderWidth: 0,
-              color: error ? "#ff3030" : "white",
+              color: error ? "#ff3030" : isFocused ? Colors.active : "#fff",
             },
           ]}
           ref={inputRef}
@@ -186,7 +187,7 @@ export default function Input({
               color: error ? "#ff3030" : "#e0e0e0",
               fontSize: 15,
               fontWeight: "400",
-              marginLeft: 10,
+              marginLeft: 5,
             },
             helperStyle,
           ]}

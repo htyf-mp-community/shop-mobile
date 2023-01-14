@@ -1,5 +1,5 @@
 import { Entypo } from "@expo/vector-icons";
-import { IconSize } from "@constants/styles";
+import { Colors, IconSize } from "@constants/styles";
 import Ripple from "react-native-material-ripple";
 
 interface PasswordToggleProps {
@@ -7,13 +7,18 @@ interface PasswordToggleProps {
   vissible: boolean;
 
   isError?: boolean;
+
+  isFocused?: boolean;
 }
 
 export default function PasswordToggle({
   setVissible,
   vissible,
   isError = false,
+  isFocused = false,
 }: PasswordToggleProps) {
+  const color = isError ? "#ff3030" : isFocused ? Colors.active : "#fff";
+
   return (
     <Ripple
       style={{ paddingHorizontal: 5 }}
@@ -21,17 +26,9 @@ export default function PasswordToggle({
       onPress={() => setVissible((p: boolean) => !p)}
     >
       {!vissible ? (
-        <Entypo
-          name="eye"
-          size={IconSize.small}
-          color={isError ? "#ff3030" : "white"}
-        />
+        <Entypo name="eye" size={IconSize.small} color={color} />
       ) : (
-        <Entypo
-          name="eye-with-line"
-          size={IconSize.small}
-          color={isError ? "#ff3030" : "white"}
-        />
+        <Entypo name="eye-with-line" size={IconSize.small} color={color} />
       )}
     </Ripple>
   );

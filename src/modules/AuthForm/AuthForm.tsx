@@ -1,18 +1,12 @@
-import { Formik } from "formik";
+import { Formik, FormikProps } from "formik";
 import React, { useState } from "react";
-import {
-  KeyboardAvoidingView,
-  TouchableOpacity,
-  Text,
-  ActivityIndicator,
-} from "react-native";
+import { KeyboardAvoidingView, TouchableOpacity, Text } from "react-native";
 import styles from "./styles";
 import schema from "./schema";
 import type { UserInputProps } from "utils/hooks/useAuth";
 import { useNavigation } from "@react-navigation/native";
 import PasswordToggle from "./components/PasswordToggle";
 import { ValidatedInput, Button } from "@components/index";
-
 import { AntDesign } from "@expo/vector-icons";
 import layout from "constants/layout";
 import PasswordStrength from "./components/PasswordStrength";
@@ -39,14 +33,6 @@ export default function AuthForm({
   const navigation = useNavigation<any>();
   const [vissible, setVissible] = useState(false);
 
-  const loadingIcon = loading ? (
-    <ActivityIndicator
-      size={"small"}
-      color="white"
-      style={{ marginRight: 10 }}
-    />
-  ) : null;
-
   const isRegister = header === "Register";
 
   const initialValues = {
@@ -69,98 +55,102 @@ export default function AuthForm({
         onSubmit={(values) => onSubmit(values)}
         validateOnChange
       >
-        {(formik) => (
-          <>
-            <ValidatedInput
-              autoFocus
-              name="email"
-              style={inputStyle}
-              placeholder="Email*"
-              //prettier-ignore
-              leftIcon={(props)=> <AntDesign name="user" size={25} color={props.color} />}
-              autoComplete="email"
-              autoCorrect={false}
-              keyboardType="email-address"
-              returnKeyType="next"
-              clearButtonMode={"always"}
-              {...formik}
-            />
-            <ValidatedInput
-              name="password"
-              style={inputStyle}
-              placeholder="Password*"
-              //prettier-ignore
-              leftIcon={(props) => <AntDesign name="lock" size={25} color={
-               props.color
-              } />}
-              autoComplete="password"
-              autoCorrect={false}
-              secureTextEntry={!vissible}
-              returnKeyType="done"
-              clearButtonMode={"always"}
-              rightIcon={(props) => (
-                <PasswordToggle
-                  isError={props.isError}
-                  setVissible={setVissible}
-                  vissible={vissible}
-                />
-              )}
-              {...formik}
-            />
-
-            {isRegister && (
+        {(formik) => {
+          return (
+            <>
               <ValidatedInput
+                autoFocus
+                name="email"
                 style={inputStyle}
-                placeholder="Confirm Password*"
-                //prettier-ignore
-                leftIcon={props =><AntDesign name="lock" size={20} color={
-                props.color 
-              } />}
+                placeholder="Email*"
+                leftIcon={(props) => (
+                  <AntDesign name="user" size={25} color={props.color} />
+                )}
+                autoComplete="email"
+                autoCorrect={false}
+                keyboardType="email-address"
+                returnKeyType="next"
+                clearButtonMode={"always"}
+                {...formik}
+              />
+              <ValidatedInput
+                name="password"
+                style={inputStyle}
+                placeholder="Password*"
+                leftIcon={(props) => (
+                  <AntDesign name="lock" size={25} color={props.color} />
+                )}
                 autoComplete="password"
                 autoCorrect={false}
                 secureTextEntry={!vissible}
+                returnKeyType="done"
+                clearButtonMode={"always"}
                 rightIcon={(props) => (
                   <PasswordToggle
-                    isError={props.isError}
                     setVissible={setVissible}
                     vissible={vissible}
+                    isError={props.isError}
+                    isFocused={props.isTouched}
                   />
                 )}
-                name="confirmPassword"
                 {...formik}
               />
-            )}
 
-            {isRegister && (
-              <PasswordStrength password={formik.values.password} />
-            )}
+              {isRegister && (
+                <ValidatedInput
+                  style={inputStyle}
+                  placeholder="Confirm Password*"
+                  leftIcon={(props) => (
+                    <AntDesign name="lock" size={20} color={props.color} />
+                  )}
+                  autoComplete="password"
+                  autoCorrect={false}
+                  secureTextEntry={!vissible}
+                  rightIcon={(props) => (
+                    <PasswordToggle
+                      setVissible={setVissible}
+                      vissible={vissible}
+                      isError={props.isError}
+                      isFocused={props.isTouched}
+                    />
+                  )}
+                  name="confirmPassword"
+                  {...formik}
+                />
+              )}
 
-            <Button
-              text={header.toUpperCase()}
-              onPress={() => formik.handleSubmit()}
-              style={[styles.btn]}
-              icon={loadingIcon}
-              type="contained"
-              variant="primary"
-              disabled={!(formik.isValid && formik.dirty && !loading && !error)}
-              fontStyle={{ fontWeight: "bold" }}
-              testID="SUBMIT_BUTTON"
-            />
+              {isRegister && (
+                <PasswordStrength password={formik.values.password} />
+              )}
 
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate(isRegister ? "Login" : "Register")
-              }
-              style={{
-                marginTop: 10,
-              }}
-            >
-              <Text style={{ color: "gray" }}>
-                {!isRegister ? "Don't have account?" : "Have an account?"}
-              </Text>
-            </TouchableOpacity>
-          </>
-        )}
+              <Button
+                text={header.toUpperCase()}
+                onPress={() => formik.handleSubmit()}
+                style={[styles.btn]}
+                type="contained"
+                variant="primary"
+                disabled={
+                  !(formik.isValid && formik.dirty && !loading && !error)
+                }
+                fontStyle={{ fontWeight: "bold" }}
+                testID="SUBMIT_BUTTON"
+              />
+
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate(isRegister ? "Login" : "Register")
+                }
+                style={{
+                  marginTop: 10,
+                }}
+              >
+                <Text style={{ color: "gray" }}>
+                  {!isRegister ? "Don't have account?" : "Have an account?"}
+                </Text>
+              </TouchableOpacity>
+            </>
+          );
+        }}
       </Formik>
     </KeyboardAvoidingView>
   );
