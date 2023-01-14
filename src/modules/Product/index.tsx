@@ -76,11 +76,14 @@ function Product({
     <TouchableOpacity
       testID={"product." + prod_id}
       onPress={ShowMore}
-      activeOpacity={0.9}
+      activeOpacity={0.95}
       style={[
         styles.container,
         style,
-        { width: fullSize ? SCREEN_WIDTH : PRODUCT_WIDTH_FULLSIZE },
+        {
+          width: fullSize ? SCREEN_WIDTH : PRODUCT_WIDTH_FULLSIZE,
+          marginHorizontal: 5,
+        },
       ]}
     >
       <View style={[styles.product, { width: ElementWidth }]}>

@@ -27,7 +27,8 @@ const caruselStyles = StyleSheet.create({
     fontWeight: "bold",
     color: "#fff",
     fontSize: 35,
-    paddingLeft: 10,
+    paddingLeft: 5,
+    marginBottom: 5,
   },
   container: {
     width: WIDTH,

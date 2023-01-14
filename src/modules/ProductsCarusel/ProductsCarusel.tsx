@@ -10,6 +10,7 @@ import axios from "axios";
 import ProductSkeleton from "modules/ProductSkeleton";
 import useColorTheme from "utils/context/ThemeContext";
 import { PRODUCT_CONTAINER_SIZE_X } from "modules/Product/assets";
+import layout from "constants/layout";
 
 interface MostRecentProps {
   path: string;
@@ -49,8 +50,13 @@ function ProductsCarusel({
 
   const isLoading = !notEmpty(data) && loading;
 
+  const productMargin = 5;
+
+  const gaps =
+    (layout.screen.width - (PRODUCT_CONTAINER_SIZE_X + productMargin * 2)) / 2;
+
   const snapToOffsets = data.map(
-    (_, index) => index * PRODUCT_CONTAINER_SIZE_X
+    (_, index) => index * (PRODUCT_CONTAINER_SIZE_X + 10) - gaps
   );
 
   return (
@@ -62,13 +68,15 @@ function ProductsCarusel({
       {isError && <EmptyList variant="error" error={error} />}
 
       <VirtualizedList
-        // pagingEnabled
-        // snapToOffsets={snapToOffsets}
+        decelerationRate={0.9}
+        snapToInterval={layout.screen.width - 20}
+        snapToOffsets={snapToOffsets}
         data={data}
         onEndReached={onSkip}
         horizontal
         initialNumToRender={2}
         showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
         onEndReachedThreshold={0.5}
         getItem={getItem}
         getItemCount={(data) => data.length}
