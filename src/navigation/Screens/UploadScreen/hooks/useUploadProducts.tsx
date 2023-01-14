@@ -52,7 +52,9 @@ const handleUploadProduct = async (product: UploadProps) => {
     const imgs = await Promise.all(images);
 
     return { prodId, images: imgs.map((i) => i.filename) };
-  } catch (error) {}
+  } catch (error) {
+    throw error;
+  }
 };
 
 export default function useUploadProducts() {
@@ -63,6 +65,8 @@ export default function useUploadProducts() {
   const [finished, setFinished] = React.useState(false);
 
   const [clicked, setClicked] = React.useState(false);
+
+  const [response, setResponse] = React.useState({});
 
   const navigation = useNavigation<useNavigationProps>();
 
@@ -83,8 +87,14 @@ export default function useUploadProducts() {
         isSharedAnimationUsed: false,
       });
 
+      setResponse({
+        image: image(response!.images[0]).uri,
+        prod_id: response!.prodId,
+      });
+
       setFinished(true);
     } catch (error) {
+      console.log(JSON.stringify(error, null, 2));
       setError(JSON.stringify(error, null, 2));
     } finally {
       setLoading(false);
@@ -93,7 +103,7 @@ export default function useUploadProducts() {
 
   return {
     handleUploadFinalAsync,
-    state: { loading, error, finished, clicked },
+    state: { loading, error, finished, clicked, response },
     handleUploadImage,
   };
 }
