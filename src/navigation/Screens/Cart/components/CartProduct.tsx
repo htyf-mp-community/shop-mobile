@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { image } from "functions/image";
 import layout from "constants/layout";
-import { Fonts } from "constants/styles";
+import { Colors, Fonts } from "constants/styles";
 import { useNavigation } from "@react-navigation/native";
 import {
   CartAddIconButton,
@@ -27,15 +27,13 @@ const styles = StyleSheet.create({
   container: {
     width: layout.screen.width,
     padding: 5,
-    paddingHorizontal: 10,
+    paddingHorizontal: 5,
     flexDirection: "row",
-
-    marginBottom: 20,
+    marginBottom: 10,
   },
   image: {
-    flex: 2,
+    flex: 2.5,
     height: "100%",
-    borderRadius: 3,
   },
   content_container: {
     flex: 3,
@@ -45,14 +43,15 @@ const styles = StyleSheet.create({
   },
   price: {
     color: "#fff",
-    fontSize: 16,
-    marginTop: 5,
+    fontSize: 20,
+    marginTop: 10,
     fontWeight: "bold",
   },
   title: {
     color: "#fff",
     fontSize: 16,
     fontFamily: Fonts.PoppinsMedium,
+    lineHeight: 18,
   },
 });
 

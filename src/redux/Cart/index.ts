@@ -32,6 +32,9 @@ const cartSlice = createSlice({
       state.amount = 0;
       state.cart = [];
       state.hasMore = false;
+      state.isSynced = false;
+      state.loading = false;
+      state.empty = false;
     },
 
     setCart(state: State, { payload }: { payload: Paging<Cart> }) {

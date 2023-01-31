@@ -36,11 +36,14 @@ export const CartButton = ({ text, prod_id }: CartButtonProps) => {
 
 interface WatchlistButtonProps {
   prod_id: number;
+
+  iconColor?: string;
 }
 
 export const WatchlistButton = (props: WatchlistButtonProps) => {
   return (
     <AddWatchlist
+      iconColor={props.iconColor}
       prod_id={props.prod_id}
       style={{
         backgroundColor: "transparent",

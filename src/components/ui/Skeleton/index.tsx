@@ -63,7 +63,6 @@ const Skeleton = ({
 
   return (
     <Reanimated.View
-      exiting={FadeOut}
       style={{ width, height, marginVertical, marginHorizontal }}
     >
       <MaskedView

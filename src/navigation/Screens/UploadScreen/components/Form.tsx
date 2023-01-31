@@ -7,6 +7,7 @@ import { Colors } from "constants/styles";
 import { ScrollView } from "react-native";
 import { useState } from "react";
 import ImageUpload from "./ImageUpload";
+import Tags from "./Tags";
 
 const validationSchema = yup.object().shape({
   price: yup.number().required(),
@@ -112,6 +113,8 @@ export default function Form({ onSubmit, disabled }: FormProps) {
               helperText="How many of this product do you have?"
               {...f}
             />
+
+            <Tags tagName="helo" />
 
             <ImageUpload
               images={listOfImages}

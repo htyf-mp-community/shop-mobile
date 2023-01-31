@@ -11,9 +11,10 @@ import { useLayoutEffect } from "react";
 
 interface IconProps {
   state: "IN" | "NOT" | "";
+  iconColor?: string;
 }
 
-export default function Icon({ state }: IconProps) {
+export default function Icon({ state, iconColor = "#fff" }: IconProps) {
   const scale = useSharedValue(1);
 
   const animatedScale = useAnimatedStyle(
@@ -38,7 +39,7 @@ export default function Icon({ state }: IconProps) {
       <AntDesign
         name={state === "IN" ? "heart" : "hearto"}
         size={26}
-        color="white"
+        color={state === "IN" ? iconColor : "#fff"}
       />
     </Animated.View>
   );

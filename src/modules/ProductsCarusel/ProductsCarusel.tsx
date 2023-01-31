@@ -1,5 +1,11 @@
 import React, { memo, useCallback, useState } from "react";
-import { View, Text, VirtualizedList, useWindowDimensions } from "react-native";
+import {
+  View,
+  Text,
+  VirtualizedList,
+  useWindowDimensions,
+  ActivityIndicator,
+} from "react-native";
 import Product from "../Product";
 import { ProductTypeProps } from "../Product";
 import caruselStyles from "./caruselStyles";
@@ -9,8 +15,12 @@ import useFetchProducts from "./useFetchProducts";
 import axios from "axios";
 import ProductSkeleton from "modules/ProductSkeleton";
 import useColorTheme from "utils/context/ThemeContext";
-import { PRODUCT_CONTAINER_SIZE_X } from "modules/Product/assets";
+import {
+  PRODUCT_CONTAINER_SIZE_X,
+  PRODUCT_CONTAINER_SIZE_Y,
+} from "modules/Product/assets";
 import layout from "constants/layout";
+import { Colors } from "constants/styles";
 
 interface MostRecentProps {
   path: string;
@@ -68,6 +78,21 @@ function ProductsCarusel({
       {isError && <EmptyList variant="error" error={error} />}
 
       <VirtualizedList
+        ListFooterComponent={
+          loading ? (
+            <View
+              style={{
+                marginHorizontal: 5,
+                padding: 10,
+                alignItems: "center",
+                justifyContent: "center",
+                height: PRODUCT_CONTAINER_SIZE_Y,
+              }}
+            >
+              <ActivityIndicator size={"large"} color={Colors.secondary} />
+            </View>
+          ) : null
+        }
         decelerationRate={0.9}
         snapToInterval={layout.screen.width - 20}
         snapToOffsets={snapToOffsets}
@@ -77,7 +102,6 @@ function ProductsCarusel({
         initialNumToRender={2}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
-        onEndReachedThreshold={0.5}
         getItem={getItem}
         getItemCount={(data) => data.length}
         keyExtractor={(item: ProductTypeProps) => `home.${item.prod_id}}`}
@@ -87,6 +111,9 @@ function ProductsCarusel({
             {...item}
             sharedID={sharedID}
             fullSize={center}
+            style={{
+              marginRight: data.length - 1 === index ? 10 : undefined,
+            }}
           />
         )}
       />

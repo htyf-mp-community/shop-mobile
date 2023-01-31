@@ -8,23 +8,21 @@ import RNModal from "react-native-modal";
 import layout from "constants/layout";
 import { ScreenNavigationProps } from "/@types/types";
 import LoginModal from "../components/LoginModal";
+import { Colors } from "constants/styles";
 
 export default function LoginScreen({
   route,
   navigation,
 }: ScreenNavigationProps<"Login">) {
+  const { state: isVisible, toggle } = useBoolean();
   const { onLogin, error, loading, onClear } = useAuth("login", {
-    onFailed: () => {
-      toggle();
-    },
+    onFailed: toggle,
   });
 
-  const { state: isVisible, toggle } = useBoolean();
-
-  function clear() {
+  const clearForm = () => {
     onClear();
     toggle();
-  }
+  };
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -50,10 +48,10 @@ export default function LoginScreen({
         useNativeDriverForBackdrop
         animationIn={"fadeIn"}
       >
-        <ActivityIndicator size={"large"} color="#fff" />
+        <ActivityIndicator size={"large"} color={Colors.secondary} />
       </RNModal>
 
-      <LoginModal visible={isVisible} clear={clear} error={error || ""} />
+      <LoginModal visible={isVisible} clear={clearForm} error={error || ""} />
     </Container>
   );
 }

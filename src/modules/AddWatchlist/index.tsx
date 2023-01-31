@@ -9,12 +9,15 @@ interface AddWatchlistProps {
   paddingHorizontal?: number;
 
   style?: StyleProp<ViewStyle>;
+
+  iconColor?: string;
 }
 
 export default function AddWatchlist({
   prod_id,
   paddingHorizontal = 15,
   style,
+  iconColor,
 }: AddWatchlistProps) {
   const { appendWatchlist, state, remove } = useWatchlist(prod_id, {
     withCheck: true,
@@ -36,7 +39,7 @@ export default function AddWatchlist({
       type="contained"
       color="primary"
       onPress={handleWatchlistClick}
-      icon={<Icon state={state} />}
+      icon={<Icon state={state} iconColor={iconColor} />}
     />
   );
 }

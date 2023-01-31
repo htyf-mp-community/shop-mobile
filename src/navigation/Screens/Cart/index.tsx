@@ -11,7 +11,7 @@ import { Feather } from "@expo/vector-icons";
 
 export default function Cart({ navigation }: ScreenNavigationProps<"Cart">) {
   const { theme } = useColorTheme();
-  const { cart, isLoading, onEndReached, isFetchingMore } = useCart();
+  const { cart, ...restUseCartProps } = useCart();
 
   const { removeAll } = useRemoveCart();
 
@@ -46,12 +46,7 @@ export default function Cart({ navigation }: ScreenNavigationProps<"Cart">) {
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.primary }}>
-      <CartList
-        isFetchingMore={isFetchingMore}
-        isLoading={isLoading}
-        onEndReached={onEndReached}
-        data={cart}
-      />
+      <CartList data={cart} {...restUseCartProps} />
       <Purchase cart={cart} />
     </View>
   );

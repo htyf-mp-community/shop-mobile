@@ -30,6 +30,8 @@ export default function useFetchProducts<T>(path: string, deps: any[] = []) {
   const FetchAllProducts = useCallback(
     async (url?: string | undefined, cancelToken?: CancelTokenSource) => {
       try {
+        setState((prev) => ({ ...prev, loading: true }));
+
         const finalUrl = typeof url === "undefined" ? path : url;
 
         const { data } = await axios.get<Response>(finalUrl, {

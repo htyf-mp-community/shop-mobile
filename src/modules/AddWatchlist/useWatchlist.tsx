@@ -43,5 +43,9 @@ export default function useWatchlist(
     setState("NOT");
   }
 
-  return { appendWatchlist, state, remove };
+  return {
+    appendWatchlist,
+    state: watchlistArray.find((p) => p.prod_id === prod_id) ? "IN" : state,
+    remove,
+  };
 }

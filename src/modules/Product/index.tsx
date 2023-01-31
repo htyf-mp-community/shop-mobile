@@ -59,7 +59,7 @@ function Product({
 
   const imageUrl = image(img_id).uri;
 
-  function ShowMore() {
+  const navigateProduct = () =>
     navigation.navigate("Product", {
       prod_id,
       image: imageUrl,
@@ -68,14 +68,13 @@ function Product({
 
       isSharedAnimationUsed: true,
     });
-  }
 
   const ElementWidth = fullSize ? PRODUCT_WIDTH_FULLSIZE : PRODUCT_WIDTH;
 
   return (
     <TouchableOpacity
       testID={"product." + prod_id}
-      onPress={ShowMore}
+      onPress={navigateProduct}
       activeOpacity={0.95}
       style={[
         styles.container,
@@ -99,7 +98,7 @@ function Product({
         </SharedElement>
 
         <View style={styles.buttons_container}>
-          <WatchlistButton prod_id={prod_id} />
+          <WatchlistButton iconColor="red" prod_id={prod_id} />
           <CartButton prod_id={prod_id} text={`$${price}`} />
         </View>
       </View>
