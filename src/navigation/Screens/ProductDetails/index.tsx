@@ -13,14 +13,23 @@ import CartSheet from "@modules/Cart/CartSheet";
 
 import BottomSheet from "@gorhom/bottom-sheet";
 import { useAppSelector } from "utils/hooks/hooks";
+import Animated, {
+  useAnimatedScrollHandler,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
+import { IconButton } from "components";
+import { AntDesign, Entypo } from "@expo/vector-icons";
 
 export default function ProductDetails({
   route,
+  navigation,
 }: Required<ScreenNavigationProps<"Product">>) {
   const { prod_id, image, sharedID, title, isSharedAnimationUsed } =
     route.params;
 
-  const { data, refetch } = useProduct(prod_id);
+  const { data, refetch, loading } = useProduct(prod_id);
   const result = data?.product;
 
   const images = [
@@ -41,11 +50,54 @@ export default function ProductDetails({
   const sheetRef = useRef<BottomSheet | null>(null);
   const { cart } = useAppSelector((state) => state.cart);
 
-  const cartProduct = cart.find((item) => item.prod_id === result?.prod_id);
+  const cartProduct = cart.find((item) => item.prod_id === prod_id);
+
+  const headerOpacity = useSharedValue(0);
+
+  const headerAnimatedStyle = useAnimatedStyle(() => ({
+    opacity: headerOpacity.value,
+  }));
+
+  const onListScroll = useAnimatedScrollHandler({
+    onScroll(event, context) {
+      const { contentOffset } = event;
+      const { y } = contentOffset;
+
+      if (y > 300) {
+        headerOpacity.value = withTiming(1, { duration: 200 });
+      } else {
+        headerOpacity.value = withTiming(0, { duration: 200 });
+      }
+    },
+  });
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerTitle: () => (
+        <Animated.Text
+          style={[
+            { color: "#fff", paddingHorizontal: 10, fontSize: 19 },
+            headerAnimatedStyle,
+          ]}
+          numberOfLines={1}
+        >
+          {title}
+        </Animated.Text>
+      ),
+      headerRight: () => (
+        <IconButton
+          hideBackground
+          icon={<Entypo name="dots-three-vertical" size={20} color="white" />}
+          onPress={() => {}}
+        />
+      ),
+    });
+  }, []);
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.primary }}>
-      <ScrollView
+      <Animated.ScrollView
+        onScroll={onListScroll}
         style={[styles.container, { backgroundColor: theme.primary }]}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
@@ -62,10 +114,11 @@ export default function ProductDetails({
           image={image}
           title={title}
           sharedID={sharedID}
+          isLoading={loading}
         />
 
         <ProductSuggestion text={result?.title} />
-      </ScrollView>
+      </Animated.ScrollView>
 
       <BottomTab
         onCartUpdate={() => sheetRef.current?.snapToIndex(0)}
