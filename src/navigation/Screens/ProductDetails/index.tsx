@@ -21,6 +21,9 @@ import Animated, {
 } from "react-native-reanimated";
 import { IconButton } from "components";
 import { AntDesign, Entypo } from "@expo/vector-icons";
+import ImagesModal, {
+  GesturedImage,
+} from "./components/ImagesModal/ImagesModal";
 
 export default function ProductDetails({
   route,
@@ -94,6 +97,8 @@ export default function ProductDetails({
     });
   }, []);
 
+  const [imagesModalVisible, setImagesModalVisible] = useState(false);
+
   return (
     <View style={{ flex: 1, backgroundColor: theme.primary }}>
       <Animated.ScrollView
@@ -106,7 +111,12 @@ export default function ProductDetails({
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
-        <ImagesCarusel {...{ sharedID, prod_id, images }} />
+        <ImagesCarusel
+          onPress={(index) => {
+            setImagesModalVisible(true);
+          }}
+          {...{ sharedID, prod_id, images }}
+        />
 
         <Details
           {...result}
@@ -131,6 +141,12 @@ export default function ProductDetails({
         onDismiss={() => sheetRef.current?.close()}
         product={{ ...(result as Product), prod_id, img_id: images }}
         ref={(ref) => (sheetRef.current = ref)}
+      />
+
+      <ImagesModal
+        onClose={() => setImagesModalVisible(false)}
+        visible={imagesModalVisible}
+        images={images}
       />
     </View>
   );
