@@ -51,7 +51,7 @@ export default function CheckoutModal({
       index={-1}
       onClose={() => {
         onCancel();
-        Keyboard.dismiss();
+        // Keyboard.dismiss();
       }}
       ref={sheetRef}
       snapPoints={["30%"]}
