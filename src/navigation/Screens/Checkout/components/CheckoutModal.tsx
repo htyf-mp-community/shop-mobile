@@ -3,24 +3,17 @@ import { CardField, CardFieldInput } from "@stripe/stripe-react-native";
 import { useNavigationProps } from "/@types/types";
 import { Button, Modal } from "components";
 import { Colors } from "constants/styles";
-import { useState } from "react";
-import {
-  useWindowDimensions,
-  Text,
-  ActivityIndicator,
-  View,
-  Dimensions,
-} from "react-native";
+import { useState, useRef, useEffect } from "react";
+import { Text, ActivityIndicator, View, Keyboard } from "react-native";
 import { useAppSelector } from "utils/hooks/hooks";
 import styles from "../styles";
+import BottomSheet, { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
 
 interface ModalProps {
   isVisible: boolean;
   onSubmit: () => void;
   onCancel: () => void;
 }
-
-const { height } = Dimensions.get("screen");
 
 export default function CheckoutModal({
   isVisible,
@@ -37,22 +30,43 @@ export default function CheckoutModal({
       setIsCardValid(true);
     }
   };
+
+  const sheetRef = useRef<BottomSheet | null>(null);
+
+  useEffect(() => {
+    if (isVisible) sheetRef.current?.snapToIndex(0);
+  }, [isVisible]);
+
   return (
-    <Modal
-      isVisible={isVisible}
-      animationIn="zoomIn"
-      animationOut="zoomOutUp"
-      useNativeDriverForBackdrop
-      style={styles.modal}
-      deviceHeight={height}
-      statusBarTranslucent
-      hideModalContentWhileAnimating
+    <BottomSheet
+      handleIndicatorStyle={{
+        backgroundColor: "#fff",
+      }}
+      backgroundStyle={{
+        backgroundColor: Colors.primary_light,
+      }}
+      style={{
+        padding: 10,
+      }}
+      index={-1}
+      onClose={() => {
+        onCancel();
+        Keyboard.dismiss();
+      }}
+      ref={sheetRef}
+      snapPoints={["30%"]}
+      enablePanDownToClose
+      backdropComponent={(props) => (
+        <BottomSheetBackdrop
+          {...props}
+          appearsOnIndex={0}
+          disappearsOnIndex={-1}
+        />
+      )}
     >
       {status === "PREPARING" && (
         <>
-          <Text style={styles.heading}>
-            Enter your card credentials to complete your purchase
-          </Text>
+          <Text style={styles.heading}>Enter your card credentials</Text>
 
           <CardField
             onCardChange={handleValidateCard}
@@ -69,20 +83,13 @@ export default function CheckoutModal({
             style={{ flexDirection: "row", justifyContent: "space-between" }}
           >
             <Button
-              text="Cancel"
-              variant="disabled"
-              size="xl"
-              callback={onCancel}
-              style={{ marginTop: 10, width: "45%" }}
-            />
-            <Button
               callback={onSubmit}
               disabled={!isCardValid}
               text="Pay"
               type="contained"
               color="primary"
               size="xl"
-              style={{ marginTop: 10, width: "45%" }}
+              style={{ marginTop: 10, width: "100%", borderRadius: 50 }}
             />
           </View>
         </>
@@ -122,6 +129,6 @@ export default function CheckoutModal({
           />
         </View>
       )}
-    </Modal>
+    </BottomSheet>
   );
 }

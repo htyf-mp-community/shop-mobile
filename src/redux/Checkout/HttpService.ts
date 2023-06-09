@@ -50,12 +50,17 @@ export const createPayment = createAsyncThunk<Payment>(
     const { error, paymentIntent } = await confirmPayment(
       state.checkout.paymentIntentClientSecret,
       {
-        type: "Card",
-        billingDetails: {
-          email: state.user.name,
-          name: `${credentials?.name} ${credentials?.surname}`,
-          addressCity: "",
-          phone: credentials?.phone_number,
+        paymentMethodType: "Card",
+        paymentMethodData: {
+          billingDetails: {
+            email: state.user.name,
+            name: `${credentials?.name} ${credentials?.surname}`,
+            address: {
+              city: credentials.address,
+              country: "PL",
+            },
+            phone: credentials?.phone_number,
+          },
         },
       }
     );
