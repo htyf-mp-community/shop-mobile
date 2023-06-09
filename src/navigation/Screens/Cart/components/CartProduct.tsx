@@ -18,6 +18,7 @@ import {
 import Checkbox from "expo-checkbox";
 import Animated, {
   FadeIn,
+  FadeInDown,
   Layout,
   SlideInLeft,
   SlideOutLeft,
@@ -34,6 +35,7 @@ const styles = StyleSheet.create({
   image: {
     flex: 2.5,
     height: "100%",
+    borderRadius: 5,
   },
   content_container: {
     flex: 3,
@@ -89,6 +91,7 @@ export default function CartProduct({
       title: product.title,
       prod_id: product.prod_id,
       image: img.uri,
+      isSharedAnimationUsed: true,
     });
 
   const onLongPress = () => {
@@ -97,38 +100,38 @@ export default function CartProduct({
   };
 
   return (
-    <Animated.View entering={FadeIn.delay(delay)} layout={Layout.delay(100)}>
-      {showCheckbox && (
-        <Animated.View
-          entering={SlideInLeft.delay(delay)}
-          exiting={SlideOutLeft.delay(delay)}
-        >
-          <Checkbox
-            value={isProductSelected}
-            onValueChange={handleSelectProduct}
-            style={{ marginLeft: 10 }}
-          />
-        </Animated.View>
-      )}
-      <TouchableOpacity
-        delayLongPress={500}
-        onLongPress={onLongPress}
-        activeOpacity={0.8}
-        onPress={navigate}
-        style={[
-          styles.container,
-          {
-            marginTop: showCheckbox ? 10 : 0,
-          },
-        ]}
+    <TouchableOpacity
+      delayLongPress={500}
+      onLongPress={onLongPress}
+      activeOpacity={0.8}
+      onPress={navigate}
+      style={[
+        styles.container,
+        {
+          marginTop: showCheckbox ? 10 : 0,
+        },
+      ]}
+    >
+      <Animated.Image
+        entering={FadeInDown.delay(delay)}
+        style={styles.image}
+        source={img}
+      />
+      <Animated.View
+        entering={FadeInDown.delay(delay + 75)}
+        style={styles.content_container}
       >
-        <Image style={styles.image} source={img} />
-        <View style={styles.content_container}>
-          <Text numberOfLines={3} style={styles.title}>
-            {product.title}
-          </Text>
-          <Text style={styles.price}>${product.price}</Text>
-        </View>
+        <Text numberOfLines={3} style={styles.title}>
+          {product.title}
+        </Text>
+        <Animated.Text
+          entering={FadeInDown.delay(delay + 100)}
+          style={styles.price}
+        >
+          ${product.price}
+        </Animated.Text>
+      </Animated.View>
+      <Animated.View entering={FadeInDown.delay(delay + 125)}>
         <Pressable style={{ flex: 0.5, alignItems: "center" }}>
           <CartAddIconButton
             prod_id={product.prod_id}
@@ -139,7 +142,7 @@ export default function CartProduct({
           </Text>
           <CartRemoveIconButton cart_id={product.cart_id} />
         </Pressable>
-      </TouchableOpacity>
-    </Animated.View>
+      </Animated.View>
+    </TouchableOpacity>
   );
 }

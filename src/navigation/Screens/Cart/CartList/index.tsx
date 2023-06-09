@@ -46,31 +46,33 @@ export default function CartList({
         );
   }
 
+  const listHeaderComponent =
+    selectedProducts.length > 0 && showCheckboxes ? (
+      <Button
+        text="Remove selected"
+        style={{
+          justifyContent: "space-between",
+          marginHorizontal: 10,
+          paddingVertical: 15,
+          backgroundColor: Color("red").darken(0.7).alpha(0.2).string(),
+        }}
+        fontStyle={{ color: "red" }}
+        icon={
+          <Text style={{ color: "red", fontSize: 20 }}>
+            {selectedProducts.length}
+          </Text>
+        }
+      />
+    ) : null;
+
   if (isLoading) {
     return <Loader />;
   }
 
   return (
     <VirtualizedList
-      ListHeaderComponent={
-        selectedProducts.length > 0 && showCheckboxes ? (
-          <Button
-            text="Remove selected"
-            style={{
-              justifyContent: "space-between",
-              marginHorizontal: 10,
-              paddingVertical: 15,
-              backgroundColor: Color("red").darken(0.7).alpha(0.2).string(),
-            }}
-            fontStyle={{ color: "red" }}
-            icon={
-              <Text style={{ color: "red", fontSize: 20 }}>
-                {selectedProducts.length}
-              </Text>
-            }
-          />
-        ) : null
-      }
+      removeClippedSubviews
+      ListHeaderComponent={listHeaderComponent}
       ListFooterComponent={
         isFetchingMore ? (
           <ActivityIndicator color="#fff" size={"large"} />
@@ -111,20 +113,4 @@ export default function CartList({
       )}
     />
   );
-
-  // return (
-  //   <ScrollView style={{ height: layout.screen.height }}>
-  //     {data.map((item, index) => (
-  //       <CartProduct
-  //         key={item.prod_id}
-  //         productIndex={index}
-  //         handleShowCheckbox={() => setShowCheckboxes((prev) => !prev)}
-  //         showCheckbox={showCheckboxes}
-  //         isProductSelected={selectedProducts.includes(item.prod_id)}
-  //         handleSelectProduct={(value) => handleToggleSelect(value, item)}
-  //         product={item}
-  //       />
-  //     ))}
-  //   </ScrollView>
-  // );
 }

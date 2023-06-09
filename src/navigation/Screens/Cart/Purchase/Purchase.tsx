@@ -8,6 +8,7 @@ import { CalcTotalCartPrice } from "../../../../functions/CalcTotalCartPrice";
 import styles from "./Purchases.styles";
 import Color from "color";
 import { Colors } from "constants/styles";
+import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 
 interface CartProduct extends ProductMinified {
   ammount: number;
@@ -42,12 +43,19 @@ export default function Purchase({ cart }: PurchaseProps) {
     >
       <View style={styles.content}>
         <Text style={[styles.text, { color: theme.text }]}>Total:</Text>
-        <Text style={[styles.text, { color: theme.text }]}>${totalPrice}</Text>
+        <Text style={[styles.text, { color: theme.text }]}>
+          ${totalPrice} + $9.99{" "}
+          <MaterialCommunityIcons
+            name="truck-delivery-outline"
+            size={22}
+            color="#fff"
+          />
+        </Text>
       </View>
       <Button
         testID={"PURCHASE.BUTTON"}
         disabled={disabled}
-        text={`PAY $${totalPrice}`}
+        text="Checkout"
         callback={PurchaseProduct}
         fontStyle={{ color: "#fff" }}
         style={[
