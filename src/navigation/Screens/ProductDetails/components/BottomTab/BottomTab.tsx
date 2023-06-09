@@ -1,8 +1,11 @@
 import AddToCart from "modules/Cart/AddToCart/AddToCart";
 import useColorTheme from "utils/context/ThemeContext";
-import Animated, { ZoomIn } from "react-native-reanimated";
+import Animated, { FadeInDown, ZoomIn } from "react-native-reanimated";
 import styles from "../../styles";
 import AddWatchlist from "modules/AddWatchlist";
+import { ToastAndroid } from "react-native";
+import { Colors } from "constants/styles";
+import Color from "color";
 
 interface BottomTabProps {
   prod_id: number;
@@ -26,17 +29,21 @@ export default function BottomTab({
         styles.buttonContainer,
         { backgroundColor: theme.primary, flexDirection: "row" },
       ]}
-      entering={ZoomIn.duration(200)}
+      entering={FadeInDown}
     >
       <AddWatchlist prod_id={prod_id} paddingHorizontal={20} />
 
       <AddToCart
-        onRequestFinish={onCartUpdate}
-        disabled={notAvailable}
+        onRequestFinish={
+          notAvailable
+            ? () => ToastAndroid.show("Unavailable", ToastAndroid.SHORT)
+            : onCartUpdate
+        }
+        //  disabled={notAvailable}
         relative
         prod_id={prod_id}
-        text={notAvailable ? "Not Available" : "Add to Cart"}
-        style={[styles.button]}
+        text={notAvailable ? "Not Available" : "Add product"}
+        style={[styles.button, { backgroundColor: Colors.secondary }]}
       />
     </Animated.View>
   );

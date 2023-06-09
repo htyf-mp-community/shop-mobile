@@ -4,6 +4,7 @@ import Button from "components/ui/Button/Button";
 import { ProductRatingProps, useNavigationProps } from "/@types/types";
 import { useNavigation } from "@react-navigation/native";
 import Color from "color";
+import { Colors } from "constants/styles";
 
 interface DetailsButtonsProps {
   name: string;
@@ -38,7 +39,9 @@ export default function ReviewButtons({
       sharedID,
     });
 
-  const backgroundColor = Color("green").alpha(0.15).string();
+  const backgroundColor = Color(Colors.secondary).alpha(0.15).string();
+
+  const color = Color(Colors.secondary).lighten(0.25).string();
 
   return (
     <View
@@ -57,13 +60,13 @@ export default function ReviewButtons({
           flex: 1,
           marginRight: 10,
         }}
-        fontStyle={{ color: "lightgreen" }}
+        fontStyle={{ color }}
         callback={navigateCreate}
       />
       <Button
         variant="primary"
         text="Reviews"
-        fontStyle={{ color: "lightgreen" }}
+        fontStyle={{ color }}
         style={{
           flex: 1,
           backgroundColor,

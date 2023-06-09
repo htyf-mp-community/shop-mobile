@@ -16,7 +16,7 @@ const defaultFadeInScreenAnimation: StackNavigationOptions = {
   cardStyleInterpolator: ({ current: { progress } }) => ({
     cardStyle: {
       opacity: progress.interpolate({
-        inputRange: [0.5, 1],
+        inputRange: [0.25, 1],
         outputRange: [0, 1],
       }),
       transform: [
