@@ -1,7 +1,7 @@
 import AddToCart from "modules/Cart/AddToCart/AddToCart";
 import useColorTheme from "utils/context/ThemeContext";
 import Animated, { FadeInDown, ZoomIn } from "react-native-reanimated";
-import styles from "../../styles";
+import styles from "../styles";
 import AddWatchlist from "modules/AddWatchlist";
 import { ToastAndroid } from "react-native";
 import { Colors } from "constants/styles";
@@ -39,7 +39,6 @@ export default function BottomTab({
             ? () => ToastAndroid.show("Unavailable", ToastAndroid.SHORT)
             : onCartUpdate
         }
-        //  disabled={notAvailable}
         relative
         prod_id={prod_id}
         text={notAvailable ? "Not Available" : "Add product"}

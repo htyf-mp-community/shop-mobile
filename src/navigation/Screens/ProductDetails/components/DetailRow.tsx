@@ -1,5 +1,5 @@
 import { View, Text, StyleProp, ViewStyle } from "react-native";
-import styles from "../styles";
+import styles from "./details.styles";
 import Ripple from "react-native-material-ripple";
 import { ReactNode } from "react";
 

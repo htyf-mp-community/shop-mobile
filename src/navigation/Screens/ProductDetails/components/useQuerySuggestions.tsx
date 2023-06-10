@@ -1,6 +1,6 @@
 import { useUser } from "utils/context/UserContext";
 import { useQuery } from "@apollo/client";
-import { GET_SUGGESTIONS } from "../../hooks/schema";
+import { GET_SUGGESTIONS } from "../hooks/schema";
 import { ProductMinified } from "/@types/types";
 
 function extractFrazes(input: string) {

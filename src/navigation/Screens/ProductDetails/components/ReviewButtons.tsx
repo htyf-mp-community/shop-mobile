@@ -5,6 +5,7 @@ import { ProductRatingProps, useNavigationProps } from "/@types/types";
 import { useNavigation } from "@react-navigation/native";
 import Color from "color";
 import { Colors } from "constants/styles";
+import Animated, { Easing, FadeIn, FadeInDown } from "react-native-reanimated";
 
 interface DetailsButtonsProps {
   name: string;
@@ -51,28 +52,32 @@ export default function ReviewButtons({
         flexDirection: "row",
       }}
     >
-      <Button
-        size="xl"
-        text="Create review"
-        variant="primary"
-        style={{
-          backgroundColor,
-          flex: 1,
-          marginRight: 10,
-        }}
-        fontStyle={{ color }}
-        callback={navigateCreate}
-      />
-      <Button
-        variant="primary"
-        text="Reviews"
-        fontStyle={{ color }}
-        style={{
-          flex: 1,
-          backgroundColor,
-        }}
-        callback={navigateReviews}
-      />
+      <Animated.View entering={FadeInDown.delay(75)} style={{ flex: 1 }}>
+        <Button
+          size="xl"
+          text="Create review"
+          variant="primary"
+          style={{
+            backgroundColor,
+            flex: 1,
+            marginRight: 10,
+          }}
+          fontStyle={{ color }}
+          callback={navigateCreate}
+        />
+      </Animated.View>
+      <Animated.View entering={FadeInDown.delay(120)} style={{ flex: 1 }}>
+        <Button
+          variant="primary"
+          text="Reviews"
+          fontStyle={{ color }}
+          style={{
+            flex: 1,
+            backgroundColor,
+          }}
+          callback={navigateReviews}
+        />
+      </Animated.View>
     </View>
   );
 }

@@ -39,6 +39,11 @@ const styles = StyleSheet.create({
   button: {
     padding: Padding.medium,
   },
+  description: {
+    color: "rgba(255,255,255,0.8)",
+    fontSize: 19,
+    fontFamily: Fonts.PoppinsRegular,
+  },
 });
 
 export default styles;

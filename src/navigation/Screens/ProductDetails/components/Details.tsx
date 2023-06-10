@@ -1,17 +1,15 @@
 import React from "react";
-import { View, Text } from "react-native";
-import styles from "./styles";
+import { Text } from "react-native";
+import styles from "./details.styles";
 import { Stars } from "modules/Stars/Stars";
-import ReviewButtons from "../Buttons/ReviewButtons";
+import ReviewButtons from "./ReviewButtons";
 import type { DetailsProps, ProductRatingProps } from "/@types/types";
-import Title from "./components/Title";
-import DetailRow from "./components/DetailRow";
-
-import { Skeleton } from "./components/Loaders";
-import Description from "./components/Description";
+import DetailRow from "./DetailRow";
+import { Skeleton } from "./Loaders";
 import Taglist from "components/Taglist/Taglist";
-import tags from "./assets/tags";
-import SellerTile from "../SellerTile/SellerTile";
+import tags from "./tags";
+import SellerTile from "./SellerTile";
+import Animated, { FadeInDown } from "react-native-reanimated";
 
 interface IDetailsProps extends Omit<DetailsProps, "rating_id"> {
   showPrice?: boolean;
@@ -29,8 +27,12 @@ export default function Details({
   if (isLoading) return <Skeleton />;
 
   return (
-    <View style={styles.container}>
-      <Title title={props!.title || ""} />
+    <Animated.View entering={FadeInDown} style={styles.container}>
+      {/* <Title title={props!.title || ""} /> */}
+
+      <Text style={[styles.text, { marginBottom: 5, paddingVertical: 5 }]}>
+        {props.title}
+      </Text>
 
       <SellerTile
         seller={{
@@ -62,7 +64,9 @@ export default function Details({
         name={props.title!}
       />
 
-      <Description description={props!.description as string} />
-    </View>
+      {/* <Description description={props!.description as string} /> */}
+
+      <Text style={styles.description}>{props.description}</Text>
+    </Animated.View>
   );
 }

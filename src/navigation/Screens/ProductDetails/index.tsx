@@ -4,8 +4,8 @@ import ImagesCarusel from "@components/ImagesCarusel/ImagesCarusel";
 import { Product, ScreenNavigationProps } from "/@types/types";
 import styles from "./styles";
 import useColorTheme from "@utils/context/ThemeContext";
-import ProductSuggestion from "./components/Suggestions/ProductSuggestion";
-import BottomTab from "./components/BottomTab/BottomTab";
+import ProductSuggestion from "./components/ProductSuggestion";
+import BottomTab from "./components/BottomTab";
 import { wait } from "functions/wait";
 import Details from "./components/Details";
 import useProduct from "./hooks/useProduct";
@@ -21,9 +21,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { IconButton } from "components";
 import { AntDesign, Entypo } from "@expo/vector-icons";
-import ImagesModal, {
-  GesturedImage,
-} from "./components/ImagesModal/ImagesModal";
+import ImagesModal, { GesturedImage } from "./components/ImagesModal";
 
 export default function ProductDetails({
   route,
