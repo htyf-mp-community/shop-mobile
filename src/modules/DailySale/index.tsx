@@ -15,7 +15,7 @@ import ImagesCarusel from "@components/ImagesCarusel/ImagesCarusel";
 
 import Taglist from "@components/Taglist/Taglist";
 
-import tags from "../../navigation/Screens/ProductDetails/components/Details/assets/tags";
+import tags from "../../navigation/Screens/ProductDetails/components/tags";
 
 export default function DailySale() {
   const { data: sale, loading } = useDailySale();

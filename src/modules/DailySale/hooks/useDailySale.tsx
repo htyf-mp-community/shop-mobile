@@ -11,7 +11,7 @@ export interface Sale {
   rating: number;
 }
 
-const GET_SALE = gql`
+export const GET_SALE = gql`
   query Sale {
     sale {
       prod_id

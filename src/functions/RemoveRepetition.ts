@@ -3,11 +3,16 @@
  * @returns {Array} Same type array without repetiton based on prod_id key
  **/
 
-export default function RemoveProductsRepetition(
-  arr: any[],
-  key_id: string
-): any[] {
-  return Array.from(new Set(arr.map((a) => a[key_id]))).map((id) => {
-    return arr.find((a) => a[key_id] === id);
-  });
+export default function removeDuplicatesById(arr: any[], key: string) {
+  const uniqueMap: any = {};
+  const result = [];
+
+  for (let obj of arr) {
+    const id = obj[key];
+    if (!uniqueMap[id]) {
+      uniqueMap[id] = true;
+      result.push(obj);
+    }
+  }
+  return result;
 }

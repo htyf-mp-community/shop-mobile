@@ -11,7 +11,11 @@ import { useNavigation } from "@react-navigation/native";
 import { SharedElement } from "react-navigation-shared-element";
 import styles from "./styles";
 import * as Types from "../../@types/types";
-import { PRODUCT_WIDTH, PRODUCT_WIDTH_FULLSIZE } from "./assets";
+import {
+  PRODUCT_HEIGHT,
+  PRODUCT_WIDTH,
+  PRODUCT_WIDTH_FULLSIZE,
+} from "./assets";
 import { CartButton, WatchlistButton } from "./ActionButtons";
 import { image } from "functions/image";
 
@@ -73,7 +77,6 @@ function Product({
 
   return (
     <TouchableOpacity
-      testID={"product." + prod_id}
       onPress={navigateProduct}
       activeOpacity={0.95}
       style={[
@@ -91,7 +94,9 @@ function Product({
           style={[styles.product, { width: ElementWidth }]}
         >
           <Image
-            source={{ uri: imageUrl }}
+            source={{
+              uri: imageUrl,
+            }}
             style={[styles.img]}
             resizeMode="cover"
           />

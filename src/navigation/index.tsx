@@ -1,5 +1,5 @@
 import { DarkTheme, NavigationContainer } from "@react-navigation/native";
-import React, { useEffect } from "react";
+import React from "react";
 import { createSharedElementStackNavigator } from "react-navigation-shared-element";
 import type { RootStackParams } from "/@types/types";
 import useCheckToken from "utils/hooks/useCheckToken";

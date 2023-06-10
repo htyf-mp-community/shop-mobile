@@ -1,26 +1,15 @@
-import React, { memo, useCallback, useState } from "react";
-import {
-  View,
-  Text,
-  VirtualizedList,
-  useWindowDimensions,
-  ActivityIndicator,
-} from "react-native";
+import React, { memo } from "react";
+import { View, Text, VirtualizedList } from "react-native";
 import Product from "../Product";
 import { ProductTypeProps } from "../Product";
 import caruselStyles from "./caruselStyles";
 import { notEmpty } from "../../functions/typecheckers";
 import EmptyList from "./Info";
 import useFetchProducts from "./useFetchProducts";
-import axios from "axios";
 import ProductSkeleton from "modules/ProductSkeleton";
 import useColorTheme from "utils/context/ThemeContext";
-import {
-  PRODUCT_CONTAINER_SIZE_X,
-  PRODUCT_CONTAINER_SIZE_Y,
-} from "modules/Product/assets";
+import { PRODUCT_CONTAINER_SIZE_X } from "modules/Product/assets";
 import layout from "constants/layout";
-import { Colors } from "constants/styles";
 
 interface MostRecentProps {
   path: string;
@@ -38,35 +27,29 @@ function ProductsCarusel({
   path,
   title,
   sharedID,
-  refresh,
   center = false,
 }: MostRecentProps) {
-  const { loading, data, error, hasMore, FetchAllProducts } = useFetchProducts<
-    ProductTypeProps[]
-  >(`${path}?skip=0`, [refresh]);
-  const [skip, setSkip] = useState(5);
-
-  const onSkip = useCallback(async () => {
-    if (hasMore) {
-      setSkip(skip + 5);
-      const cancelToken = axios.CancelToken.source();
-      await FetchAllProducts(`${path}?skip=${skip}`, cancelToken);
-    }
-  }, [skip, hasMore]);
-
   const { theme } = useColorTheme();
-
+  const { data, loading, onEndReached, error } = useFetchProducts(path);
   const isError = !!error && !loading && data.length === 0;
-
   const isLoading = !notEmpty(data) && loading;
-
   const productMargin = 5;
-
   const gaps =
     (layout.screen.width - (PRODUCT_CONTAINER_SIZE_X + productMargin * 2)) / 2;
 
   const snapToOffsets = data.map(
     (_, index) => index * (PRODUCT_CONTAINER_SIZE_X + 10) - gaps
+  );
+
+  const renderItem = ({ item, index }: any) => (
+    <Product
+      {...item}
+      sharedID={sharedID}
+      fullSize={center}
+      style={{
+        marginRight: data.length - 1 === index ? 10 : undefined,
+      }}
+    />
   );
 
   return (
@@ -75,48 +58,41 @@ function ProductsCarusel({
 
       {isLoading && <ProductSkeleton />}
 
-      {isError && <EmptyList variant="error" error={error} />}
+      {isError && <EmptyList variant="error" error={""} />}
 
       <VirtualizedList
-        ListFooterComponent={
-          loading ? (
-            <View
-              style={{
-                marginHorizontal: 5,
-                padding: 10,
-                alignItems: "center",
-                justifyContent: "center",
-                height: PRODUCT_CONTAINER_SIZE_Y,
-              }}
-            >
-              <ActivityIndicator size={"large"} color={Colors.secondary} />
-            </View>
-          ) : null
-        }
-        decelerationRate={0.9}
+        removeClippedSubviews
+        decelerationRate={0.95}
+        onEndReachedThreshold={0.75}
         snapToInterval={layout.screen.width - 20}
         snapToOffsets={snapToOffsets}
         data={data}
-        onEndReached={onSkip}
+        onEndReached={onEndReached}
         horizontal
-        initialNumToRender={2}
+        initialNumToRender={3}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         getItem={getItem}
         getItemCount={(data) => data.length}
-        keyExtractor={(item: ProductTypeProps) => `home.${item.prod_id}}`}
-        renderItem={({ item, index }) => (
-          <Product
-            key={`${item.prod_id}.${index}`}
-            {...item}
-            sharedID={sharedID}
-            fullSize={center}
-            style={{
-              marginRight: data.length - 1 === index ? 10 : undefined,
-            }}
-          />
-        )}
+        keyExtractor={(item: ProductTypeProps) => item.prod_id.toString()}
+        renderItem={renderItem}
       />
+
+      {/* // <FlashList  // Doesnt work properly, bugged components on 1 render
+        //   estimatedItemSize={PRODUCT_WIDTH}
+        //   data={data}
+        //   removeClippedSubviews
+        //   decelerationRate={0.95}
+        //   onEndReachedThreshold={0.5}
+        //   snapToInterval={layout.screen.width - 20}
+        //   snapToOffsets={snapToOffsets}
+        //   onEndReached={onSkip}
+        //   horizontal
+        //   showsHorizontalScrollIndicator={false}
+        //   showsVerticalScrollIndicator={false}
+        //   keyExtractor={(item: ProductTypeProps) => item.prod_id.toString()}
+        //   renderItem={renderItem}
+        // /> */}
     </View>
   );
 }

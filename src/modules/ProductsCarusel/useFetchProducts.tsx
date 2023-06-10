@@ -1,78 +1,49 @@
-import { useState, useCallback, useEffect } from "react";
-import axios, { CancelTokenSource } from "axios";
-import { useUser } from "@utils/context/UserContext";
-import RemoveProductsRepetition from "../../functions/RemoveRepetition";
-import { Product } from "../../@types/types";
+import removeDuplicatesById from "../../functions/RemoveRepetition";
+import axios from "axios";
+import { ProductTypeProps } from "modules/Product";
+import { useEffect, useState } from "react";
+import { useAppSelector } from "utils/hooks/hooks";
 
-interface StateProps<T> {
-  loading: boolean;
-  error: string;
-  data: T[];
-  hasMore: boolean;
-}
+export default function useFetchProducts(path: string) {
+  const [data, setData] = useState<ProductTypeProps[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string[]>([]);
+  const [hasMore, setHasMore] = useState(true);
+  const [skip, setSkip] = useState(0);
 
-interface Response {
-  hasMore: boolean;
-  results: Product[];
-  message?: string;
-}
+  const usr = useAppSelector((s) => s.user);
 
-export default function useFetchProducts<T>(path: string, deps: any[] = []) {
-  const { user } = useUser();
-
-  const [state, setState] = useState<StateProps<T>>({
-    loading: true,
-    error: "",
-    data: [],
-    hasMore: false,
-  });
-
-  const FetchAllProducts = useCallback(
-    async (url?: string | undefined, cancelToken?: CancelTokenSource) => {
-      try {
-        setState((prev) => ({ ...prev, loading: true }));
-
-        const finalUrl = typeof url === "undefined" ? path : url;
-
-        const { data } = await axios.get<Response>(finalUrl, {
-          headers: {
-            token: user.token,
-          },
-          cancelToken: cancelToken?.token,
-        });
-
-        if (data !== undefined && data.message !== "Token expired") {
-          setState((prev) => ({
-            ...prev,
-            hasMore: data.hasMore,
-            data: RemoveProductsRepetition(
-              [...prev.data, ...data.results],
-              "prod_id"
-            ),
-          }));
-        }
-      } catch (error: any) {
-        setState((prev) => ({
-          ...prev,
-
-          error: error?.response?.data?.message || error.message,
-        }));
-      } finally {
-        setState((prev) => ({ ...prev, loading: false }));
-      }
-    },
-    [state.error]
-  );
+  function onEndReached() {
+    if (!hasMore || loading) return;
+    setSkip((p) => p + 5);
+  }
 
   useEffect(() => {
-    let cancelToken = axios.CancelToken.source();
+    (async () => {
+      const cancelToken = axios.CancelToken.source();
 
-    FetchAllProducts(undefined, cancelToken);
+      setLoading(true);
+      try {
+        const response = await axios.get(path, {
+          cancelToken: cancelToken.token,
+          params: { skip },
+          headers: {
+            token: usr.token,
+          },
+        });
 
-    return () => {
-      cancelToken.cancel();
-    };
-  }, deps);
+        setData((prev) =>
+          removeDuplicatesById([...prev, ...response.data.results], "prod_id")
+        );
+        setHasMore(response.data.hasMore);
+      } catch (error) {
+      } finally {
+        setLoading(false);
+      }
 
-  return { ...state, FetchAllProducts };
+      return () => cancelToken.cancel();
+    })();
+  }, [skip]);
+
+  return { data, loading, error, onEndReached };
 }
