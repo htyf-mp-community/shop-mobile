@@ -1,8 +1,7 @@
 import * as Notifications from "expo-notifications";
-import { ENDPOINTS } from "@constants/routes";
 import { useState, useRef, useEffect } from "react";
 import { registerForPushNotificationsAsync } from "./registerForPushNotificationsAsync";
-import axios, { CancelTokenSource } from "axios";
+import { CancelTokenSource } from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import http from "utils/service/http/http";
 
@@ -44,9 +43,7 @@ const useNotifications = () => {
       });
 
     responseListener.current =
-      Notifications.addNotificationResponseReceivedListener((e) => {
-        console.log(e);
-      });
+      Notifications.addNotificationResponseReceivedListener((e) => {});
 
     return () => {
       Notifications.removeNotificationSubscription(

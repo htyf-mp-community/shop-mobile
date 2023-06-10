@@ -108,8 +108,14 @@ interface ItemProps {
   marginRight?: number;
 }
 
-Skeleton.Item = ({ width, height, margin, marginRight }: ItemProps) => (
-  <View
+Skeleton.Item = ({
+  width,
+  height,
+  margin,
+  marginRight,
+  ...rest
+}: ItemProps) => (
+  <Reanimated.View
     style={[
       styles.item,
       {
@@ -119,6 +125,7 @@ Skeleton.Item = ({ width, height, margin, marginRight }: ItemProps) => (
         marginRight,
       },
     ]}
+    {...rest}
   />
 );
 

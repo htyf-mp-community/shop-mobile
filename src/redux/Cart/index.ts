@@ -77,8 +77,6 @@ const cartSlice = createSlice({
     builder.addCase(removeCartProduct.fulfilled, (state, { payload }) => {
       const cart = [];
 
-      console.log(payload.removeAll);
-
       if (payload.removeAll) {
         state.cart = [];
         state.amount = 0;

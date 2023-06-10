@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import type { Paging, SuggestionType } from "/@types/types";
 import { API } from "@constants/routes";
 
@@ -29,25 +29,30 @@ interface ThunkResponse {
 
 export const getSearchedProducts = createAsyncThunk<ThunkResponse, SearchState>(
   "search/get",
-  async (args, { rejectWithValue }) => {
-    if (args.searchedText.trim() === "")
-      return {
-        hasMore: false,
-        isInfiniteScroll: false,
-        results: [],
-      };
+  async (args, { abort, rejectWithValue }) => {
+    // if (args.searchedText.trim() === "")
+    //   return {
+    //     hasMore: false,
+    //     isInfiniteScroll: false,
+    //     results: [],
+    //   };
+    let response: Awaited<AxiosResponse<any, any>>;
+    try {
+      response = await axios.get(`${API}/products/search`, {
+        headers: {
+          token: args.token,
+        },
+        params: {
+          q: args.searchedText,
+          skip: args.skip,
+        },
+      });
 
-    const response = await axios.get(`${API}/products/search`, {
-      headers: {
-        token: args.token,
-      },
-      params: {
-        q: args.searchedText,
-        skip: args.skip,
-      },
-    });
-
-    return { ...response.data, isInfiniteScroll: args.isInfiniteScroll };
+      return { ...response.data, isInfiniteScroll: args.isInfiniteScroll };
+    } catch (error) {
+      abort();
+      return rejectWithValue({});
+    }
   }
 );
 
@@ -97,7 +102,7 @@ export const searchSlice = createSlice({
       state: typeof initialState,
       action: PayloadAction<{
         key: T;
-        value: typeof initialState.filters[T];
+        value: (typeof initialState.filters)[T];
       }>
     ) {
       state.filters[action.payload.key] = action.payload.value;
@@ -138,9 +143,7 @@ export const searchSlice = createSlice({
       state.response.hasMore = payload.hasMore;
     });
 
-    builder.addCase(getSearchedProducts.rejected, (state, { payload }) => {
-      // state.error = payload as string;
-    });
+    builder.addCase(getSearchedProducts.rejected, (state, { payload }) => {});
   },
 });
 
