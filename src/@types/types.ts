@@ -68,6 +68,7 @@ export type UserContextType = {
   ReadUser: () => Promise<undefined | UserType>;
   RemoveUser: () => void;
   updateToken: (s: string) => void;
+  getToken: () => Promise<string>;
 };
 
 type Filters =

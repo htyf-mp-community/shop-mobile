@@ -44,13 +44,13 @@ export const Colors = {
   textFaded: "#b8b8b8",
   primary: "#0f172a",
 
-  primary_light: Color("#0f172a").lighten(0.5).string(),
+  primary_light: "#16233F",
 
   secondary: "#8408D4",
 
-  secondary_light: Color("#8408D4").lighten(0.5).string(),
+  secondary_light: Color("#8408D4").lighten(0.5).hex(),
 
-  secondary_dark: Color("#8408D4").darken(0.5).string(),
+  secondary_dark: Color("#8408D4").darken(0.5).hex(),
 
   active: "#36a8f5",
 

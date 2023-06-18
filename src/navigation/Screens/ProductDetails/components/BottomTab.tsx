@@ -29,7 +29,7 @@ export default function BottomTab({
         styles.buttonContainer,
         { backgroundColor: theme.primary, flexDirection: "row" },
       ]}
-      entering={FadeInDown}
+      entering={FadeInDown.delay(150)}
     >
       <AddWatchlist prod_id={prod_id} paddingHorizontal={20} />
 

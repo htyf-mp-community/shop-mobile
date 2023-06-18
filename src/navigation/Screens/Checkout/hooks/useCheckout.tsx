@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "utils/hooks/hooks";
 import { cartActions } from "redux/Cart";
-import { initStripe } from "@stripe/stripe-react-native";
+import { initStripe, presentPaymentSheet } from "@stripe/stripe-react-native";
 import { createPayment, createPaymentIntent } from "redux/Checkout/HttpService";
 import { useUser } from "utils/context/UserContext";
 
@@ -21,6 +21,8 @@ export default function useCheckout(init = true) {
       (async () => {
         await initStripe({ publishableKey });
 
+        console.log("getClientSecret");
+
         await getClientSecret();
       })();
     }
@@ -31,7 +33,11 @@ export default function useCheckout(init = true) {
   }
 
   async function Purchase() {
-    await dispatch(createPayment());
+    // await dispatch(createPayment()); OLD WAY
+
+    await presentPaymentSheet().then(console.log).catch(console.warn);
+
+    console.log("clearCart");
 
     await dispatch(cartActions.clearCart());
   }

@@ -2,6 +2,7 @@ import { ActivityIndicator, View } from "react-native";
 import { Colors } from "constants/styles";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import layout from "constants/layout";
+import { StatusBar } from "expo-status-bar";
 
 export default function ModalLoader({ isVisible }: { isVisible: boolean }) {
   return isVisible ? (
@@ -20,6 +21,7 @@ export default function ModalLoader({ isVisible }: { isVisible: boolean }) {
         zIndex: 1000,
       }}
     >
+      <StatusBar backgroundColor="rgba(0,0,0,0.5)" animated />
       <ActivityIndicator color={"#fff"} size={50} />
     </Animated.View>
   ) : null;

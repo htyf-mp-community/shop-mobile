@@ -6,6 +6,7 @@ import type {
 } from "/@types/types";
 import { hideAsync } from "expo-splash-screen";
 import { setItemAsync, getItemAsync, deleteItemAsync } from "expo-secure-store";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const USER_PREFIX = "react-native-shop-user";
 
@@ -25,6 +26,7 @@ const User = createContext<UserContextType>({
   SaveUser: (props: UserType) => {},
   setUser: (prop) => {},
   updateToken: (token: string) => {},
+  getToken: () => new Promise(() => String),
 });
 
 export const UserContextProvider = ({ children }: UserContextProviderType) => {
@@ -66,9 +68,23 @@ export const UserContextProvider = ({ children }: UserContextProviderType) => {
     setUser({ ...init, isLoading: false });
   }
 
+  async function getToken() {
+    const str = await getItemAsync(USER_PREFIX);
+    if (str !== null) return JSON.parse(str).token;
+    return "";
+  }
+
   return (
     <User.Provider
-      value={{ user, setUser, SaveUser, updateToken, ReadUser, RemoveUser }}
+      value={{
+        user,
+        setUser,
+        SaveUser,
+        updateToken,
+        ReadUser,
+        RemoveUser,
+        getToken,
+      }}
     >
       {children}
     </User.Provider>
