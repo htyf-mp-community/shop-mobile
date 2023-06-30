@@ -25,12 +25,15 @@ Mobile shop app created using Expo React-native.
 <div style="display:inline-block;">
     <img src="./preview/home.jpg" alt="Home screen preview "            style="width:200px;"
     />
-    <img src="./preview/home2.jpg" alt="Home screen preview " style="width:200px;"/>
+    <img src="./preview/home_sidebar.jpg" alt="Home screen preview " style="width:200px;"/>
 </div>
 
 ### **Checkout**
 
-<img src="./preview/checkout.jpg" alt="Home screen preview " style="width:200px;"/>
+<div style="display:inline-block;">
+<img src="./preview/checkout.jpg" alt="" style="width:200px;"/>
+<img src="./preview/checkout_sheet.jpg" alt="" style="width:200px">
+</div>
 
 ### **Cart**
 
@@ -38,7 +41,7 @@ Mobile shop app created using Expo React-native.
 
 ### **User details**
 
-<img src="./preview/user details.jpg" alt="Home screen preview" style="width:200px;"/>
+<img src="./preview/settings.jpg" alt="Home screen preview" style="width:200px;"/>
 
 ### **Landing**
 
@@ -48,7 +51,9 @@ Mobile shop app created using Expo React-native.
 
 ### **Search**
 
-<img src="./preview/search.jpg" alt="Home screen preview" style="width:200px;" />
+<img src="./preview/search_results.jpg" alt="Home screen preview" style="width:200px;" />
+<img src="./preview/search_query.jpg" alt="Home screen preview" style="width:200px;" />
+<img src="./preview/search_filters.jpg" alt="Home screen preview" style="width:200px;" />
 
 ### **My reviews**
 
@@ -63,21 +68,24 @@ Mobile shop app created using Expo React-native.
 ### **Product**
 
 <div style="display:inline-block;">
-    <img src="./preview/product.jpg" alt="Home screen preview "            style="width:200px;"
+    <img src="./preview/product_top.jpg" alt="Home screen preview "            style="width:200px;"
     />
-    <img src="./preview/product2.jpg" alt="Home screen preview " style="width:200px;"/>
+    <img src="./preview/product_content.jpg" alt="Home screen preview " style="width:200px;"/>
+    <img src="./preview/product_sheet.jpg" alt="Home screen preview " style="width:200px;"/>
+    <img src="./preview/product_review.jpg" alt="Home screen preview " style="width:200px;"/>
+    <img src="./preview/product_reviews.jpg" alt="Home screen preview " style="width:200px;"/>
+
 </div>
 
 ### **Login and Register**
 
+<img src="./preview/register.jpg" alt="Home screen preview" style="width:200px;"/>
 <img src="./preview/login.jpg" alt="Home screen preview" style="width:200px;"/>
 
 ### **Product reviews**
 
-### **Search results**
-
 <div style="display:inline-block;">
-    <img src="./preview/home.jpg" alt="Home screen preview "            style="width:200px;"
+    <img src="./preview/reviews.jpg" alt="Home screen preview "            style="width:200px;"
     />
     
 </div>
@@ -85,7 +93,7 @@ Mobile shop app created using Expo React-native.
 ### **Watchlist**
 
 <div style="display:inline-block;">
-    <img src="./preview/favourite.jpg" alt="Home screen preview "            style="width:200px;"
+    <img src="./preview/watchlist.jpg" alt="Home screen preview "            style="width:200px;"
     />
    
 </div>
@@ -97,5 +105,3 @@ Mobile shop app created using Expo React-native.
     />
     
 </div>
-
-### **Upload**
