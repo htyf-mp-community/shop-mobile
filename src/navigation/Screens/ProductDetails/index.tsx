@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useEffect } from "react";
+import { useState, useCallback, useRef, useEffect, useMemo } from "react";
 import { ScrollView, View, RefreshControl } from "react-native";
 import ImagesCarusel from "@components/ImagesCarusel/ImagesCarusel";
 import { Product, ScreenNavigationProps } from "/@types/types";
@@ -20,22 +20,21 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { IconButton } from "components";
-import { AntDesign, Entypo } from "@expo/vector-icons";
-import ImagesModal, { GesturedImage } from "./components/ImagesModal";
+import { Entypo } from "@expo/vector-icons";
+import ImagesModal from "./components/ImagesModal";
 
 export default function ProductDetails({
   route,
   navigation,
 }: Required<ScreenNavigationProps<"Product">>) {
-  const { prod_id, image, sharedID, title, isSharedAnimationUsed } =
-    route.params;
+  const { prod_id, image, sharedID, title } = route.params;
 
-  const { data, refetch, loading } = useProduct(prod_id);
-  const result = data?.product;
+  const { data, refetch, loading } = useProduct(prod_id, title);
+  const product = data?.product;
 
   const images = [
     { id: 0, name: image?.split("=")[1] },
-    ...(result?.img_id || []),
+    ...(product?.img_id || []),
   ];
 
   const { theme } = useColorTheme();
@@ -44,14 +43,17 @@ export default function ProductDetails({
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-    refetch({ prod_id });
+    refetch({ prod_id, name: title.split(" ").slice(0, 2).join(" ") });
     wait(2000).then(() => setRefreshing(false));
   }, []);
 
   const sheetRef = useRef<BottomSheet | null>(null);
   const { cart } = useAppSelector((state) => state.cart);
 
-  const cartProduct = cart.find((item) => item.prod_id === prod_id);
+  const cartProduct = useMemo(
+    () => cart.find((item) => item.prod_id === prod_id),
+    [cart]
+  );
 
   const headerOpacity = useSharedValue(0);
 
@@ -65,6 +67,7 @@ export default function ProductDetails({
       const { y } = contentOffset;
 
       if (y > 300) {
+        // image +- 250px + title component height
         headerOpacity.value = withTiming(1, { duration: 200 });
       } else {
         headerOpacity.value = withTiming(0, { duration: 200 });
@@ -77,7 +80,7 @@ export default function ProductDetails({
       headerTitle: () => (
         <Animated.Text
           style={[
-            { color: "#fff", paddingHorizontal: 10, fontSize: 19 },
+            { color: "#fff", paddingHorizontal: 10, fontSize: 18 },
             headerAnimatedStyle,
           ]}
           numberOfLines={1}
@@ -117,27 +120,25 @@ export default function ProductDetails({
         />
 
         <Details
-          {...result}
-          prod_id={prod_id}
+          {...product}
           image={image}
-          title={title}
           sharedID={sharedID}
           isLoading={loading}
         />
 
-        <ProductSuggestion text={result?.title} />
+        <ProductSuggestion data={data?.suggestions || []} text={title} />
       </Animated.ScrollView>
 
       <BottomTab
         onCartUpdate={() => sheetRef.current?.snapToIndex(0)}
         prod_id={prod_id}
-        quantity={result?.quantity || 0}
+        quantity={product?.quantity || 0}
       />
 
       <CartSheet
         cartProduct={cartProduct}
         onDismiss={() => sheetRef.current?.close()}
-        product={{ ...(result as Product), prod_id, img_id: images }}
+        product={{ ...(product as Product), img_id: images }}
         ref={(ref) => (sheetRef.current = ref)}
       />
 

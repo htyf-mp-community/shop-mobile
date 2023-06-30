@@ -3,18 +3,20 @@ import Ripple from "react-native-material-ripple";
 import { useNavigation } from "@react-navigation/native";
 import type { ProductMinified, useNavigationProps } from "/@types/types";
 import { image } from "functions/image";
-import useQuerySuggestions from "./useQuerySuggestions";
 import { Fonts } from "constants/styles";
 import { useMemo } from "react";
+import { SharedElement } from "react-navigation-shared-element";
 
 interface SuggestionProps {
   text?: string;
+  data: ProductMinified[];
 }
 
 export default function ProductSuggestion({
   text: productTitle = "",
+  data,
 }: SuggestionProps) {
-  const { data } = useQuerySuggestions(productTitle);
+  // const { data } = useQuerySuggestions(productTitle);
 
   const navigation = useNavigation<useNavigationProps>();
 
@@ -23,17 +25,17 @@ export default function ProductSuggestion({
       image: image(item.img_id).uri,
       title: item.title,
       prod_id: item.prod_id,
-      sharedID: "",
+      sharedID: "Details",
+      isSharedAnimationUsed: true,
     });
   }
 
   const filteredProducts = useMemo(
-    () => data?.suggestions.filter(({ title }) => title !== productTitle),
-    [data?.suggestions]
+    () => data?.filter(({ title }) => title !== productTitle),
+    [data]
   );
 
-  const hasMoreThanOne =
-    typeof data?.suggestions !== "undefined" && data?.suggestions.length > 1;
+  const hasMoreThanOne = typeof data !== "undefined" && data.length > 1;
 
   return hasMoreThanOne ? (
     <>

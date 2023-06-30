@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const GET_PRODUCT = gql`
-  query product($prod_id: Int!) {
+  query product($prod_id: Int!, $name: String!) {
     product(prod_id: $prod_id) {
       prod_id
       price
@@ -23,6 +23,14 @@ export const GET_PRODUCT = gql`
         rating_id
         description
         rating
+      }
+    }
+    suggestions(name: $name) {
+      prod_id
+      title
+      price
+      img_id(take: 1) {
+        name
       }
     }
   }
