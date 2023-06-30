@@ -1,3 +1,4 @@
+import { Paging, ProductMinified } from "/@types/types";
 import { useCallback, useState } from "react";
 import { watchlistActions } from "redux/Watchlist/Watchlist";
 import { useAppDispatch, useAppSelector } from "utils/hooks/hooks";
@@ -9,7 +10,7 @@ export default function useWatchlist() {
   const { isSynced, hasMore, data } = useAppSelector((s) => s.watchlist);
 
   const [skip, setSkip] = useState(5);
-  const onSuccessfulFetch = useCallback((d) => {
+  const onSuccessfulFetch = useCallback((d: Paging<ProductMinified>) => {
     dispatch(watchlistActions.setWatchlist(d));
   }, []);
 
