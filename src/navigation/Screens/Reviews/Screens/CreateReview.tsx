@@ -1,7 +1,13 @@
 import { Formik } from "formik";
 import React from "react";
 import { useState } from "react";
-import { View, Image, KeyboardAvoidingView } from "react-native";
+import {
+  View,
+  Image,
+  KeyboardAvoidingView,
+  Text,
+  ScrollView,
+} from "react-native";
 import { SharedElement } from "react-navigation-shared-element";
 import { ScreenNavigationProps } from "/@types/types";
 import { Button, Input } from "@components/index";
@@ -16,25 +22,44 @@ export default function CreateReview({
   route,
   navigation,
 }: ScreenNavigationProps<"CreateReview">) {
-  const { prod_id, thumbnail, sharedID } = route.params;
+  const { prod_id, thumbnail, sharedID, prod_name } = route.params;
   const [rating, setRating] = useState(0);
   const { status, variants } = useListenKeyboard();
   const { response, upload, setResponse } = useUploadReview();
 
   return (
-    <View style={styles.container}>
-      {status === variants.closed && (
-        <View style={{ alignItems: "center" }}>
-          <SharedElement id={`prod_id.${prod_id}${sharedID}`}>
-            <Image
-              source={{ uri: thumbnail }}
-              style={styles.img}
-              resizeMode="cover"
-              resizeMethod="scale"
-            />
-          </SharedElement>
+    <ScrollView style={styles.container}>
+      <View style={{ flexDirection: "row", padding: 10 }}>
+        <SharedElement id={`prod_id.${prod_id}${sharedID}`}>
+          <Image
+            source={{ uri: thumbnail }}
+            style={styles.img}
+            resizeMode="cover"
+            resizeMethod="scale"
+          />
+        </SharedElement>
+
+        <View
+          style={{
+            paddingHorizontal: 10,
+            justifyContent: "flex-start",
+          }}
+        >
+          <Text
+            textBreakStrategy="highQuality"
+            lineBreakMode="clip"
+            numberOfLines={4}
+            style={{
+              color: "#fff",
+              fontSize: 20,
+              fontWeight: "bold",
+              width: 225,
+            }}
+          >
+            {prod_name}
+          </Text>
         </View>
-      )}
+      </View>
 
       <ResponseModal
         state={response}
@@ -43,7 +68,7 @@ export default function CreateReview({
         isVisible={response.hasFinished || false}
       />
 
-      <KeyboardAvoidingView style={{ alignItems: "center" }}>
+      <KeyboardAvoidingView behavior="padding" style={{ alignItems: "center" }}>
         <Formik
           initialValues={{
             description: "",
@@ -76,18 +101,20 @@ export default function CreateReview({
                 value={values.title}
                 setValue={handleChange("title")}
                 onBlur={handleBlur("title")}
-                placeholder="What other's should know"
-                name={"Title"}
+                placeholder="Review's title"
+                //name={"Title"}
                 helperText={errors.title || "Atleast 6 characters*"}
                 error={!!errors.title && touched.title}
                 style={styles.input}
+                placeholderTextColor={"gray"}
               />
               <Input
+                placeholderTextColor={"gray"}
                 value={values.description}
                 setValue={handleChange("description")}
                 onBlur={handleBlur("description")}
                 placeholder="Say something more about your expirience"
-                name={"Description"}
+                // name={"Description"}
                 helperText={errors.description || "Atleast 6 characters*"}
                 style={styles.input}
                 error={!!errors.description && touched.description}
@@ -101,7 +128,7 @@ export default function CreateReview({
                 type="contained"
                 variant="primary"
                 disabled={!(isValid && dirty && rating)}
-                text="SUBMIT REVIEW"
+                text="submit"
                 callback={() => handleSubmit()}
                 style={[styles.button]}
               />
@@ -109,6 +136,6 @@ export default function CreateReview({
           )}
         </Formik>
       </KeyboardAvoidingView>
-    </View>
+    </ScrollView>
   );
 }

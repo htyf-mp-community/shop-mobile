@@ -4,12 +4,16 @@ import FilterOptionContainer from "./FilterOptionContainer";
 import { useState } from "react";
 import { View } from "react-native";
 import useDelay from "utils/hooks/useDelay";
-import { useAppDispatch } from "utils/hooks/hooks";
+import { useAppDispatch, useAppSelector } from "utils/hooks/hooks";
 import { searchActions } from "redux/Search/search";
 
 export default function PriceFilters() {
-  const [min, setMin] = useState("0");
-  const [max, setMax] = useState("");
+  const {
+    filters: { price },
+  } = useAppSelector((s) => s.search);
+
+  const [min, setMin] = useState(price.min.toString());
+  const [max, setMax] = useState(price.max.toString());
 
   const dispatch = useAppDispatch();
 

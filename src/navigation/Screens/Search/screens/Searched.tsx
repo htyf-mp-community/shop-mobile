@@ -45,7 +45,7 @@ export default function Searched({
     <ScreenContainer>
       <InputHeaderControll mode="display" />
       <ActiveFiltersList
-        handleOpenFilters={() => navigation.navigate("Filters")}
+        handleOpenFilters={() => navigation.navigate("Filters", {})}
       />
       <VirtualizedList
         style={{ marginTop: 15 }}

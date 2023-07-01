@@ -10,17 +10,18 @@ export const createStyles = StyleSheet.create({
     backgroundColor: Colors.primary,
   },
   img: {
-    width: width - 30,
-    height: 220,
+    width: 150,
+    height: 100,
     borderRadius: 5,
   },
   input: {
     color: "white",
   },
   button: {
-    width: width * 0.9,
+    width: width - 20,
     marginTop: 20,
     justifyContent: "center",
     padding: 15,
+    borderRadius: 100,
   },
 });

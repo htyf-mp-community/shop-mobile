@@ -29,6 +29,7 @@ function Suggestion({ image, prod_id, title, price, index }: SuggestionProps) {
       title: title,
       image: thumbnail,
       sharedID: "Search",
+      isSharedAnimationUsed: true,
     });
   }
 
