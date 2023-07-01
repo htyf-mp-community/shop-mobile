@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import axios, { CancelTokenSource } from "axios";
 import useDelay from "utils/hooks/useDelay";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "@utils/hooks/hooks";
 import { addCartProduct } from "redux/Cart/CartHttp";
 
 type ResultType = "Added" | "";
@@ -10,7 +10,7 @@ export default function useCart(prod_id: number) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState();
   const [result, setResult] = useState<ResultType>("");
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const cancelToken = useRef<CancelTokenSource | null>(null);
 
@@ -26,7 +26,7 @@ export default function useCart(prod_id: number) {
 
       await dispatch(
         addCartProduct({ prod_id, cancelToken: cancelToken.current })
-      );
+      ).unwrap();
 
       setResult("Added");
     } catch (error: any) {

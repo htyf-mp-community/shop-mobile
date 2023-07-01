@@ -68,19 +68,19 @@ export default function ThemeSheet() {
             //   onPress={() => onSwitchTheme("dark")}
             >
               <Text style={[styles.tip, { color: theme.text }]}>Dark</Text>
-              <Image
+              {/* <Image
                 style={styles.image}
                 source={require("../../../../../preview/home.jpg")}
-              />
+              /> */}
             </Ripple>
             <Ripple
             //   onPress={() => onSwitchTheme("light")}
             >
               <Text style={[styles.tip, { color: theme.text }]}>Light</Text>
-              <Image
+              {/* <Image
                 style={styles.image}
                 source={require("../../../../../preview/home.jpg")}
-              />
+              /> */}
             </Ripple>
           </Row>
         </View>

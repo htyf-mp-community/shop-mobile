@@ -1,4 +1,4 @@
-import { AntDesign } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 interface IconProps {
   state: "IN" | "NOT" | "";
   iconColor?: string;
@@ -6,9 +6,9 @@ interface IconProps {
 
 export default function Icon({ state, iconColor = "#fff" }: IconProps) {
   return (
-    <AntDesign
-      name={state === "IN" ? "heart" : "hearto"}
-      size={26}
+    <MaterialCommunityIcons
+      name={state === "IN" ? "cards-heart" : "cards-heart-outline"}
+      size={27}
       color={state === "IN" ? iconColor : "#fff"}
     />
   );

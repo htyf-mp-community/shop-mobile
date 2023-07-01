@@ -73,13 +73,13 @@ export default function NavigationButtons() {
         icon={<Icon name="star" />}
         text="My reviews"
       />
-      {user.role === "developer" && (
-        <NavigationButton
-          screen="Upload"
-          icon={<Icon name="cloudupload" />}
-          text="Upload product"
-        />
-      )}
+      {/* {user.role === "developer" && ( */}
+      <NavigationButton
+        screen="Upload"
+        icon={<Icon name="cloudupload" />}
+        text="Upload product"
+      />
+      {/* )} */}
 
       <SignOut />
 

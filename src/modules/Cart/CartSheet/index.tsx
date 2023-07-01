@@ -1,4 +1,7 @@
-import BottomSheet, { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
+import BottomSheet, {
+  BottomSheetBackdrop,
+  BottomSheetBackdropProps,
+} from "@gorhom/bottom-sheet";
 import { forwardRef, useCallback } from "react";
 import { Text, View } from "react-native";
 import useColorTheme from "utils/context/ThemeContext";
@@ -10,7 +13,7 @@ import Navigators from "./components/Navigators";
 import { Cart } from "redux/Cart";
 
 interface CartSheetProps {
-  product: Partial<Omit<Product, "prod_id">> & Pick<Product, "prod_id">;
+  product: Partial<Product>;
   onDismiss: () => void;
 
   cartProduct: Cart | undefined;
@@ -21,7 +24,7 @@ const CartSheet = forwardRef<BottomSheet, CartSheetProps>(
     const { theme } = useColorTheme();
 
     const backdropComponent = useCallback(
-      (props) => (
+      (props: BottomSheetBackdropProps) => (
         <BottomSheetBackdrop
           {...props}
           disappearsOnIndex={-1}
@@ -35,11 +38,11 @@ const CartSheet = forwardRef<BottomSheet, CartSheetProps>(
       <BottomSheet
         index={-1}
         ref={ref}
-        snapPoints={["65%"]}
+        snapPoints={["50%"]}
         backgroundStyle={{ backgroundColor: theme.primary }}
         enablePanDownToClose
         handleIndicatorStyle={{ backgroundColor: "#fff" }}
-        backdropComponent={backdropComponent}
+        // backdropComponent={backdropComponent}
       >
         <View style={styles.container}>
           {cartProduct && (
@@ -69,7 +72,10 @@ const CartSheet = forwardRef<BottomSheet, CartSheetProps>(
             </View>
           )}
           <View style={styles.navigation_container}>
-            <Navigators onDismiss={onDismiss} />
+            <Navigators
+              prod_id={cartProduct?.prod_id || 0}
+              onDismiss={onDismiss}
+            />
           </View>
         </View>
       </BottomSheet>

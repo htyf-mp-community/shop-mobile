@@ -8,7 +8,10 @@ import EmptyList from "./Info";
 import useFetchProducts from "./useFetchProducts";
 import ProductSkeleton from "modules/ProductSkeleton";
 import useColorTheme from "utils/context/ThemeContext";
-import { PRODUCT_CONTAINER_SIZE_X } from "modules/Product/assets";
+import {
+  PRODUCT_CONTAINER_SIZE_X,
+  PRODUCT_WIDTH,
+} from "modules/Product/assets";
 import layout from "constants/layout";
 
 interface MostRecentProps {
@@ -77,22 +80,6 @@ function ProductsCarusel({
         keyExtractor={(item: ProductTypeProps) => item.prod_id.toString()}
         renderItem={renderItem}
       />
-
-      {/* // <FlashList  // Doesnt work properly, bugged components on 1 render
-        //   estimatedItemSize={PRODUCT_WIDTH}
-        //   data={data}
-        //   removeClippedSubviews
-        //   decelerationRate={0.95}
-        //   onEndReachedThreshold={0.5}
-        //   snapToInterval={layout.screen.width - 20}
-        //   snapToOffsets={snapToOffsets}
-        //   onEndReached={onSkip}
-        //   horizontal
-        //   showsHorizontalScrollIndicator={false}
-        //   showsVerticalScrollIndicator={false}
-        //   keyExtractor={(item: ProductTypeProps) => item.prod_id.toString()}
-        //   renderItem={renderItem}
-        // /> */}
     </View>
   );
 }
