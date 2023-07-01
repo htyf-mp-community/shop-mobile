@@ -58,8 +58,6 @@ export const UserContextProvider = ({ children }: UserContextProviderType) => {
       return JSON.parse(value ?? "{}");
     } catch (error) {
       setUser((prev) => ({ ...prev, isLoading: false }));
-    } finally {
-      await hideAsync();
     }
   }
 

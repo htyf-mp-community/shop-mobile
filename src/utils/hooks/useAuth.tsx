@@ -3,6 +3,8 @@ import { useUser } from "@utils/context/UserContext";
 import axios from "axios";
 import { API } from "@constants/routes";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
+import { userActions } from "redux/User";
 
 export interface UserInputProps {
   email: string;
@@ -33,6 +35,8 @@ export default function useAuth(route: Route, callbacks?: Partial<Callbacks>) {
   const navigation = useNavigation<any>();
 
   const url = ROUTES[route];
+
+  const dispatch = useDispatch();
 
   async function onSubmit({ email, password }: UserInputProps) {
     let response;
@@ -75,6 +79,15 @@ export default function useAuth(route: Route, callbacks?: Partial<Callbacks>) {
         isLoading: false,
         role: data.role,
       });
+
+      dispatch(
+        userActions.setUser({
+          user_id: data.user_id,
+          token: data.token,
+          name: email,
+          role: data.role,
+        })
+      );
 
       navigation.navigate("Home", {});
     } catch (error) {}
