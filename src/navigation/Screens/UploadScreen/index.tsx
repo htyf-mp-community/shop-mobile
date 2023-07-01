@@ -10,12 +10,6 @@ export default function UploadScreen({}: ScreenNavigationProps<"Upload">) {
 
   return (
     <Container centerVertical>
-      <Modal isVisible={state.finished}>
-        <Text style={{ color: "#fff", fontSize: 25 }}>Product uploaded</Text>
-        <Text style={{ color: "#fff", fontSize: 25 }}>id: </Text>
-        
-      </Modal>
-
       <ModalLoader isVisible={state.loading} />
       <Form
         onSubmit={upload as any}

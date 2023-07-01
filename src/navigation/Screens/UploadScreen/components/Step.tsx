@@ -7,6 +7,7 @@ import { ReactNode } from "react";
 import Ripple from "react-native-material-ripple";
 import { AntDesign } from "@expo/vector-icons";
 import { Formik } from "formik";
+import { Colors } from "constants/styles";
 
 interface StepProps {
   children?: ReactNode;
@@ -21,23 +22,10 @@ export default function Step({ children }: StepProps) {
         width: layout.screen.width,
         height: "100%",
         padding,
+        backgroundColor: Color(Colors.secondary).alpha(Math.random()).hex(),
       }}
     >
-      <View style={{ flex: 1 }}>
-        <Formik
-          initialValues={{
-            name: "",
-            price: "",
-          }}
-        >
-          {(f) => (
-            <>
-              <ValidatedInput name="name" style={{ marginTop: 10 }} {...f} />
-              <ValidatedInput name="price" style={{ marginTop: 10 }} {...f} />
-            </>
-          )}
-        </Formik>
-      </View>
+      <View style={{ flex: 1 }}>{children}</View>
     </Animated.View>
   );
 }

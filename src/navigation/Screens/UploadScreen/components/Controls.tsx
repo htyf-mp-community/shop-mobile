@@ -43,7 +43,7 @@ const Controls = (props: {
       variant="primary"
       type="contained"
       style={{ flex: 1, borderRadius: 40 }}
-    ></Button>
+    />
   </View>
 );
 

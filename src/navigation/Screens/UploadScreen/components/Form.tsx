@@ -3,11 +3,16 @@ import * as yup from "yup";
 import { Formik } from "formik";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
-import { Colors } from "constants/styles";
-import { ScrollView } from "react-native";
+import { Colors, Fonts } from "constants/styles";
+import { ScrollView, View, KeyboardAvoidingView, Text } from "react-native";
 import { useState } from "react";
 import ImageUpload from "./ImageUpload";
 import Tags from "./Tags";
+import Select from "components/ui/Select/Select";
+import useFetch from "utils/hooks/useFetch";
+import { useNavigation } from "@react-navigation/native";
+import { useEffect } from "react";
+import Ripple from "react-native-material-ripple";
 
 const validationSchema = yup.object().shape({
   price: yup.number().required(),
@@ -25,6 +30,7 @@ const initialValues = {
   title: "",
   manufactor: "",
   quantity: "0",
+  tags: [] as any,
 };
 
 interface FormProps {
@@ -35,6 +41,12 @@ interface FormProps {
 
 export default function Form({ onSubmit, disabled }: FormProps) {
   const [listOfImages, setListOfImages] = useState<string[]>([]);
+
+  const { data, error } = useFetch("/products/categories", {
+    cache: true,
+  });
+
+  const navigation = useNavigation();
 
   return (
     <Formik
@@ -47,20 +59,25 @@ export default function Form({ onSubmit, disabled }: FormProps) {
           quantity: +res.quantity,
           price: +res.price,
           images: listOfImages,
-          tags: `${res.title.split(" ").join(",")},${res.manufactor},${
-            res.category
-          }`,
+          tags: res.tags.join(", "),
         })
       }
     >
       {(f) => {
         return (
-          <ScrollView
+          <View
             style={{
               padding: 10,
               flex: 1,
             }}
           >
+            <Button
+              onPress={() => f.handleSubmit()}
+              variant="primary"
+              type="contained"
+              text="Upload"
+              disabled={!f.isValid}
+            />
             <ValidatedInput
               style={{ lineHeight: 25, textDecorationLine: "none" }}
               leftIcon={<Ionicons name="text" size={24} color="white" />}
@@ -98,11 +115,31 @@ export default function Form({ onSubmit, disabled }: FormProps) {
               helperText="Product's manufacturer"
               {...f}
             />
-            <ValidatedInput
-              style={{ lineHeight: 25 }}
-              name="category"
-              helperText="What's product category e.g Electronic, Food ..."
-              {...f}
+
+            <Select
+              multiSelect
+              maxSelectHeight={300}
+              transparentOverlay={false}
+              containerStyle={{ marginBottom: 10 }}
+              selected={[f.values.category]}
+              renderDefaultItem
+              placeholderText="Select category"
+              setSelected={([_, selected]) => {
+                f.setFieldValue("category", selected);
+              }}
+              options={data as string[]}
+            />
+
+            <Select
+              multiSelect
+              maxSelectHeight={400}
+              displayAboveInput
+              transparentOverlay={false}
+              containerStyle={{ marginBottom: 15 }}
+              //prettier-ignore
+              options={["electronics","clothing","accessories","home decor","furniture","beauty","toys","books","sports","outdoor",]}
+              selected={f.values.tags || []}
+              setSelected={(v) => f.setFieldValue("tags", v)}
             />
 
             <ValidatedInput
@@ -114,8 +151,6 @@ export default function Form({ onSubmit, disabled }: FormProps) {
               {...f}
             />
 
-            <Tags tagName="helo" />
-
             <ImageUpload
               images={listOfImages}
               handleRemoveImage={(img) => {
@@ -125,17 +160,7 @@ export default function Form({ onSubmit, disabled }: FormProps) {
                 setListOfImages((prev) => [...prev, img]);
               }}
             />
-
-            <Button
-              size="xl"
-              style={{ width: "100%", marginBottom: 20 }}
-              type="contained"
-              color="primary"
-              text="Submit"
-              callback={() => f.handleSubmit()}
-              disabled={!(f.isValid && f.dirty && disabled)}
-            />
-          </ScrollView>
+          </View>
         );
       }}
     </Formik>

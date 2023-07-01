@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { MediaTypeOptions, launchImageLibraryAsync } from "expo-image-picker";
 import { Colors } from "constants/styles";
 import { EvilIcons } from "@expo/vector-icons";
+import layout from "constants/layout";
 
 interface ImageUploadProps {
   images: string[];
@@ -31,7 +32,13 @@ export default function ImageUpload({
   };
 
   return (
-    <View style={{ marginBottom: 20 }}>
+    <View
+      style={{
+        marginBottom: 20,
+        width: layout.screen.width - 20,
+        overflow: "hidden",
+      }}
+    >
       <ScrollView
         horizontal
         style={{
@@ -40,6 +47,20 @@ export default function ImageUpload({
           marginBottom: 5,
         }}
       >
+        <Ripple
+          onPress={onPress}
+          style={{
+            width: 100,
+            height: 100,
+            backgroundColor: Colors.primary_light,
+            marginRight: 10,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <EvilIcons name="plus" size={50} color="white" />
+        </Ripple>
+
         {images.map((image, index) => (
           <Ripple key={image} onLongPress={() => handleRemoveImage(image)}>
             <Image
@@ -55,20 +76,6 @@ export default function ImageUpload({
             />
           </Ripple>
         ))}
-
-        <Ripple
-          onPress={onPress}
-          style={{
-            width: 100,
-            height: 100,
-            backgroundColor: Colors.primary_light,
-            marginLeft: images.length !== 0 ? 10 : 0,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <EvilIcons name="plus" size={50} color="white" />
-        </Ripple>
       </ScrollView>
       <Text style={{ color: "#fff", fontSize: 18 }}>
         Product's images ({images.length}/9)
