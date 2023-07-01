@@ -16,7 +16,7 @@ const defaultFadeInScreenAnimation: StackNavigationOptions = {
   cardStyleInterpolator: ({ current: { progress } }) => ({
     cardStyle: {
       opacity: progress.interpolate({
-        inputRange: [0.25, 1],
+        inputRange: [0.8, 1],
         outputRange: [0, 1],
       }),
       transform: [
@@ -29,7 +29,7 @@ const defaultFadeInScreenAnimation: StackNavigationOptions = {
         {
           scale: progress.interpolate({
             inputRange: [0, 1],
-            outputRange: [0.8, 1],
+            outputRange: [0.5, 1],
           }),
         },
       ],
@@ -96,10 +96,10 @@ export const detailsScreenOptions = ({
   headerTitle: route?.params?.title?.split("").slice(0, 30).join(""),
   headerTitleAlign: "center",
   detachPreviousScreen: false,
-  transitionSpec: {
-    open: { animation: "timing", config: { duration: 200 } },
-    close: { animation: "timing", config: { duration: 200 } },
-  },
+  // transitionSpec: {
+  //   open: { animation: "timing", config: { duration: 100 } },
+  //   close: { animation: "timing", config: { duration: 100 } },
+  // },
 
   ...(!route.params.isSharedAnimationUsed && horizontalAnimation),
 });
@@ -122,6 +122,9 @@ export const homeScreenOptions: StackNavigationOptions = {
 
 export const cartScreenOptions: StackNavigationOptions = {
   // ...horizontalAnimationFromLeft,
+  ...defaultStackOptions,
+
+  // detachPreviousScreen: true,
 };
 
 export const watchlistScreenOptions: StackNavigationOptions = {
@@ -133,8 +136,8 @@ export const createReviewOptions = ({
 }: {
   route: RouteProp<RootStackParams, "CreateReview">;
 }): StackNavigationOptions => ({
-  title: `Rate product: ${params.prod_name}`,
-  ...horizontalAnimation,
+  // ...horizontalAnimation,
+  headerTitle: "",
 });
 
 export const productReviewsOption = ({

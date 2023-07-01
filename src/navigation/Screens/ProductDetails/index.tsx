@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef, useEffect, useMemo } from "react";
-import { ScrollView, View, RefreshControl } from "react-native";
+import { View, RefreshControl } from "react-native";
 import ImagesCarusel from "@components/ImagesCarusel/ImagesCarusel";
 import { Product, ScreenNavigationProps } from "/@types/types";
 import styles from "./styles";
@@ -22,6 +22,8 @@ import Animated, {
 import { IconButton } from "components";
 import { Entypo } from "@expo/vector-icons";
 import ImagesModal from "./components/ImagesModal";
+import useListenBackPress from "utils/hooks/useListenBackPress";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function ProductDetails({
   route,
@@ -47,7 +49,6 @@ export default function ProductDetails({
     wait(2000).then(() => setRefreshing(false));
   }, []);
 
-  const sheetRef = useRef<BottomSheet | null>(null);
   const { cart } = useAppSelector((state) => state.cart);
 
   const cartProduct = useMemo(
@@ -75,6 +76,8 @@ export default function ProductDetails({
     },
   });
 
+  const sheetRef = useRef<BottomSheet | null>(null);
+
   useEffect(() => {
     navigation.setOptions({
       headerTitle: () => (
@@ -97,6 +100,16 @@ export default function ProductDetails({
       ),
     });
   }, []);
+
+  useListenBackPress(() => {
+    if (navigation.canGoBack()) navigation.pop();
+
+    return true;
+  }, []);
+
+  useFocusEffect(() => {
+    sheetRef.current?.close();
+  });
 
   const [imagesModalVisible, setImagesModalVisible] = useState(false);
 
@@ -130,7 +143,7 @@ export default function ProductDetails({
       </Animated.ScrollView>
 
       <BottomTab
-        onCartUpdate={() => sheetRef.current?.snapToIndex(0)}
+        onCartUpdate={() => sheetRef.current?.expand()}
         prod_id={prod_id}
         quantity={product?.quantity || 0}
       />

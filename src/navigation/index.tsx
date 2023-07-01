@@ -17,8 +17,14 @@ export default function MainNavigator() {
   return (
     <>
       <StatusBar backgroundColor={theme.primary} />
-      <NavigationContainer theme={current === "dark" ? DarkTheme : undefined}>
+      <NavigationContainer
+        onStateChange={(state) =>
+          console.log(state?.routes.map(({ name }) => name))
+        }
+        theme={current === "dark" ? DarkTheme : undefined}
+      >
         <Stack.Navigator
+          detachInactiveScreens={false}
           initialRouteName={isLoggedIn ? "Home" : "Landing"}
           screenOptions={{
             ...Option.defaultStackOptions,
@@ -44,7 +50,13 @@ export default function MainNavigator() {
               <Stack.Screen
                 name="Cart"
                 component={Screen.Cart}
+                initialParams={{ sharedID: "Cart" }}
                 options={Option.cartScreenOptions}
+                sharedElements={({ params }) => {
+                  return !!params.selectedProductId
+                    ? ["prod_id." + params.selectedProductId + params.sharedID]
+                    : [];
+                }}
               />
 
               <Stack.Screen
@@ -57,10 +69,11 @@ export default function MainNavigator() {
                 component={Screen.Watchlist}
                 options={Option.watchlistScreenOptions}
                 name="Watchlist"
-                sharedElements={(route) => {
-                  const { prod_id, sharedID } = route.params;
-                  return ["prod_id." + prod_id + sharedID];
-                }}
+                // NIE POTRZEBNE
+                // sharedElements={(route) => {
+                //   const { prod_id, sharedID } = route.params;
+                //   return ["prod_id." + prod_id + sharedID];
+                // }}
               />
               <Stack.Screen
                 component={Screen.ProductDetails}
@@ -69,7 +82,7 @@ export default function MainNavigator() {
                 sharedElements={({ params }, opt) => {
                   const { prod_id, sharedID, isSharedAnimationUsed } = params;
                   //prettier-ignore
-                  const valid = ["Home","Search","SearchResults","PurchaseHistory","Details",'Watchlist'];
+                  const valid = ["Home","Search","SearchResults","PurchaseHistory","Details",'Watchlist',"Cart"];
 
                   if (
                     sharedID &&

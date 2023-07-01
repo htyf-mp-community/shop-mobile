@@ -8,7 +8,7 @@ export function useCart() {
   const { cart, isSynced, hasMore } = useAppSelector((state) => state.cart);
   const [skip, setSkip] = useState(5);
 
-  const onSuccess = useCallback((data) => {
+  const onSuccess = useCallback((data: any) => {
     dispatch(cartActions.setCart(data));
   }, []);
 

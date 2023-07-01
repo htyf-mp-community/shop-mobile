@@ -95,7 +95,11 @@ export type RootStackParams = {
   Auction: { auction_id: string; title?: string };
   Auctions: undefined;
   PurchaseHistory: undefined;
-  Cart: undefined;
+  Cart: {
+    selectedProductId?: number;
+    scrollToProductOnOpen?: boolean;
+    sharedID: string;
+  };
   User: undefined;
   Auth?: undefined;
   Landing: undefined;
@@ -118,6 +122,8 @@ export type RootStackParams = {
     title: string;
 
     isSharedAnimationUsed?: boolean;
+
+    previousScreen?: string;
   };
   CreateReview: {
     prod_id: number;

@@ -1,28 +1,16 @@
 import { CartProps, useNavigationProps } from "/@types/types";
-import {
-  Image,
-  Pressable,
-  Text,
-  TouchableOpacity,
-  View,
-  StyleSheet,
-} from "react-native";
+import { Pressable, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { image } from "functions/image";
 import layout from "constants/layout";
-import { Colors, Fonts } from "constants/styles";
+import { Fonts } from "constants/styles";
 import { useNavigation } from "@react-navigation/native";
 import {
   CartAddIconButton,
   CartRemoveIconButton,
 } from "modules/Cart/IconButtons";
-import Checkbox from "expo-checkbox";
-import Animated, {
-  FadeIn,
-  FadeInDown,
-  Layout,
-  SlideInLeft,
-  SlideOutLeft,
-} from "react-native-reanimated";
+
+import Animated, { FadeInDown } from "react-native-reanimated";
+import { SharedElement } from "react-navigation-shared-element";
 
 const styles = StyleSheet.create({
   container: {
@@ -83,16 +71,20 @@ export default function CartProduct({
 
   const img = image(product.img_id);
 
-  const delay = productIndex * 75; //ms
+  const delay = productIndex * 50; //ms
 
-  const navigate = () =>
-    navigation.navigate("Product", {
-      sharedID: "",
+  const sharedID = "Cart";
+
+  const navigate = () => {
+    navigation.push("Product", {
+      sharedID: sharedID,
       title: product.title,
       prod_id: product.prod_id,
       image: img.uri,
       isSharedAnimationUsed: true,
+      // previousScreen: "Cart",
     });
+  };
 
   const onLongPress = () => {
     handleShowCheckbox();
@@ -112,26 +104,30 @@ export default function CartProduct({
         },
       ]}
     >
-      <Animated.Image
-        entering={FadeInDown.delay(delay)}
+      <SharedElement
         style={styles.image}
-        source={img}
-      />
+        id={`prod_id.${product.prod_id}${sharedID}`}
+      >
+        <Animated.Image
+          resizeMethod="resize"
+          resizeMode="center"
+          entering={FadeInDown.delay(delay)}
+          style={styles.image}
+          source={img}
+        />
+      </SharedElement>
       <Animated.View
-        entering={FadeInDown.delay(delay + 75)}
+        entering={FadeInDown.delay(delay)}
         style={styles.content_container}
       >
         <Text numberOfLines={3} style={styles.title}>
           {product.title}
         </Text>
-        <Animated.Text
-          entering={FadeInDown.delay(delay + 100)}
-          style={styles.price}
-        >
+        <Animated.Text entering={FadeInDown.delay(delay)} style={styles.price}>
           ${product.price}
         </Animated.Text>
       </Animated.View>
-      <Animated.View entering={FadeInDown.delay(delay + 125)}>
+      <Animated.View entering={FadeInDown.delay(delay)}>
         <Pressable style={{ flex: 0.5, alignItems: "center" }}>
           <CartAddIconButton
             prod_id={product.prod_id}

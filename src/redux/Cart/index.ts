@@ -56,22 +56,22 @@ const cartSlice = createSlice({
       state.error = payload;
     },
 
-    startLoading(state: State) {
-      state.loading = true;
-    },
+    // startLoading(state: State) {
+    //   state.loading = true;
+    // },
 
-    increment(state: State) {
-      state.amount += 1;
-    },
+    // increment(state: State) {
+    //   state.amount += 1;
+    // },
 
-    incrementAmmount(state: State, { payload }: { payload: number }) {
-      state.cart = state.cart.map((prod) => {
-        if (prod.prod_id === payload) {
-          return { ...prod, ammount: prod.ammount + 1 };
-        }
-        return prod;
-      });
-    },
+    // incrementAmmount(state: State, { payload }: { payload: number }) {
+    //   state.cart = state.cart.map((prod) => {
+    //     if (prod.prod_id === payload) {
+    //       return { ...prod, ammount: prod.ammount + 1 };
+    //     }
+    //     return prod;
+    //   });
+    // },
   },
   extraReducers(builder) {
     builder.addCase(removeCartProduct.fulfilled, (state, { payload }) => {
@@ -113,7 +113,7 @@ const cartSlice = createSlice({
       }
 
       if (!found) {
-        state.cart.push(payload.product);
+        state.cart.unshift(payload.product);
         state.amount += 1;
       }
     });
