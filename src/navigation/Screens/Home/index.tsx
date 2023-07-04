@@ -8,6 +8,7 @@ import AuctionsNavigator from "modules/AuctionsNavigator";
 import Carusels from "./components/Carusels";
 import useAnimate from "./hooks/useAnimate";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
+import ReviewCards from "modules/ReviewCards";
 
 export default function Home() {
   const {
@@ -37,6 +38,8 @@ export default function Home() {
           {/* <Promotions /> */}
 
           <DailySale />
+
+          <ReviewCards />
 
           <AuctionsNavigator />
 

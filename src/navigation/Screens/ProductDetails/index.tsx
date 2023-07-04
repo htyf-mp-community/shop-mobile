@@ -128,6 +128,7 @@ export default function ProductDetails({
         <ImagesCarusel
           onPress={(index) => {
             setImagesModalVisible(true);
+            // navigation.navigate('ImagePreview',{})
           }}
           {...{ sharedID, prod_id, images }}
         />

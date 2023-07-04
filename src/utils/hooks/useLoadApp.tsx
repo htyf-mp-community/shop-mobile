@@ -5,7 +5,6 @@ import { EvilIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useApolloClient } from "@apollo/client";
 import { GET_SALE } from "modules/DailySale/hooks/useDailySale";
 import { hideAsync } from "expo-splash-screen";
-import { wait } from "@testing-library/user-event/dist/utils";
 
 export default function useLoadApp() {
   const [appReady, setAppReady] = useState(false);

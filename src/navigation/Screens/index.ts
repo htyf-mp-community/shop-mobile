@@ -18,3 +18,4 @@ export { default as Auctions } from "./Auctions/index";
 export { default as Dashboard } from "./Dashboard/index";
 export { default as Login } from "./Auth/Screens/Login";
 export { default as Register } from "./Auth/Screens/Register";
+export { default as ImagePreview } from "./ImagePreview/ImagePreview";

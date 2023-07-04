@@ -21,8 +21,6 @@ export default function useCheckout(init = true) {
       (async () => {
         await initStripe({ publishableKey });
 
-        console.log("getClientSecret");
-
         await getClientSecret();
       })();
     }
@@ -36,8 +34,6 @@ export default function useCheckout(init = true) {
     // await dispatch(createPayment()); OLD WAY
 
     await presentPaymentSheet().then(console.log).catch(console.warn);
-
-    console.log("clearCart");
 
     await dispatch(cartActions.clearCart());
   }

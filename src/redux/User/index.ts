@@ -58,7 +58,13 @@ const User = createSlice({
     },
 
     removeUser(state: State) {
-      state = initialState;
+      state.credentials = initialState.credentials;
+      state.isLoading = initialState.isLoading;
+      state.isLoggedIn = initialState.isLoggedIn;
+      state.name = initialState.name;
+      state.user_id = initialState.user_id;
+      state.role = initialState.role;
+      state.token = initialState.token;
     },
 
     setCredentials(state: State, { payload }: { payload: CredentialsProps }) {

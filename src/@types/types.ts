@@ -142,6 +142,8 @@ export type RootStackParams = {
 
   Checkout_details: undefined;
   Checkout_payment: undefined;
+
+  ImagePreview: { images: ProductImageProps[] };
 };
 
 export type useNavigationProps = StackNavigationProp<RootStackParams>;
