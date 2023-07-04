@@ -6,20 +6,18 @@ import Ripple from "react-native-material-ripple";
 
 const styles = StyleSheet.create({
   container: {
-    margin: 10,
     padding: 10,
-    backgroundColor: Colors.primary100,
-    borderRadius: 15,
-    flexDirection: "row",
+    flexDirection: "column",
+    marginBottom: 10,
   },
   thumbnail: {
-    width: 100 * 1.3,
-    height: 75 * 1.3,
-    borderRadius: 10,
+    width: "100%",
+    height: 205,
   },
   side: {
     flex: 1,
-    paddingHorizontal: 10,
+    padding: 10,
+    backgroundColor: Colors.primary_light,
   },
   title: {
     color: "#fff",
@@ -67,6 +65,7 @@ export default function Card({
         <Text style={styles.text}>
           Highest bid ${bids?.[0]?.amount || "No bid"}
         </Text>
+        <Text style={styles.text}>Ends in</Text>
       </View>
     </Ripple>
   );

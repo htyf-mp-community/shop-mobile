@@ -56,13 +56,6 @@ export default function Auctions({
           />
         )}
       />
-      {/*  {loading && !data?.auctions && (
-        <View style={{ position: "absolute", top: 100 }}>
-          {new Array(5).fill({}).map((_, index) => (
-            <Placeholder key={index} />
-          ))}
-        </View>
-      )} */}
     </Container>
   );
 }

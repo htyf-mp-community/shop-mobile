@@ -2,7 +2,7 @@ import { Formik } from "formik";
 import { useAppSelector } from "utils/hooks/hooks";
 import checkoutSchema from "../helpers/checkoutSchema";
 import { Button } from "components/index";
-import { Dimensions, View } from "react-native";
+import { View, Text } from "react-native";
 import Row from "./Row";
 import { ScrollView } from "react-native-gesture-handler";
 import { ValidatedInput } from "@components/index";
@@ -11,8 +11,7 @@ import Separator from "./Separator";
 import { AntDesign } from "@expo/vector-icons";
 import useListenKeyboard from "utils/hooks/useListenKeyboard";
 import Animated, { FadeInDown } from "react-native-reanimated";
-
-const { width } = Dimensions.get("screen");
+import layout from "constants/layout";
 
 interface FormProps {
   onSubmit: (v: any) => void;
@@ -20,11 +19,13 @@ interface FormProps {
 
 export default function Form({ onSubmit }: FormProps) {
   const { credentials } = useAppSelector((st) => st.user);
-  const inputWidth = { width: width - 20 };
+  const inputWidth = { width: layout.screen.width - 20 };
 
   const kb = useListenKeyboard();
 
   const [adress, apart, city] = credentials.address.split(" ");
+
+  const products = useAppSelector((s) => s.cart.cart);
 
   return (
     <Formik
@@ -45,9 +46,17 @@ export default function Form({ onSubmit }: FormProps) {
         return (
           <View style={{ flex: 1 }}>
             <ScrollView
-              style={{ width }}
+              style={{ width: layout.screen.width }}
               contentContainerStyle={{ alignItems: "center" }}
             >
+              {/* <View style={{ width: "100%", padding: 5 }}>
+                {products.map((product) => (
+                  <Text style={{ fontSize: 12, color: "#fff" }}>
+                    {product.title} x{product.ammount}
+                  </Text>
+                ))}
+              </View> */}
+
               <Separator text="Personal Information" />
               <ValidatedInput
                 name="name"
@@ -70,13 +79,13 @@ export default function Form({ onSubmit }: FormProps) {
               <Row>
                 <ValidatedInput
                   name="apartment_number"
-                  style={{ width: width / 2 - 15 }}
+                  style={{ width: layout.screen.width / 2 - 15 }}
                   label="Apartment nr"
                   {...f}
                 />
                 <ValidatedInput
                   name="city"
-                  style={{ width: width / 2 - 15 }}
+                  style={{ width: layout.screen.width / 2 - 15 }}
                   {...f}
                 />
               </Row>
@@ -102,7 +111,7 @@ export default function Form({ onSubmit }: FormProps) {
                   style={{
                     paddingVertical: 20,
                     marginVertical: 15,
-                    width: width - 20,
+                    width: layout.screen.width - 20,
                     borderRadius: 50,
                   }}
                   onPress={() => f.handleSubmit()}
