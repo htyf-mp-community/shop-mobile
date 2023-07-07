@@ -1,9 +1,9 @@
-export const API = "http://192.168.0.25:3000";
+//export const API = "http://192.168.0.25:3000";
 
 import { RootStackParams } from "/@types/types";
 
-//export const API = "http://srv11.mikr.us:20220";
-
+export const API = "http://srv18.mikr.us:20410";
+ 
 export const ENDPOINTS = {
   //
   cartAdd: `${API}/cart`,
