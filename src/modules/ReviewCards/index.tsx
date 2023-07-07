@@ -1,6 +1,7 @@
 import Color from "color";
 import layout from "constants/layout";
-import { Colors } from "constants/styles";
+import { Colors, Fonts } from "constants/styles";
+import { Stars } from "modules/Stars/Stars";
 import { View, Text, Image } from "react-native";
 import Animated, {
   Extrapolate,
@@ -109,11 +110,34 @@ const AnimatedTileComponent = ({
           marginRight: TILE_GAP / 2,
           borderRadius: 10,
           padding: 15,
+          justifyContent: "space-between",
         },
         animatedStyle,
       ]}
     >
-      <Text style={{ color: "#fff" }}>Card title</Text>
+      <Text
+        style={{
+          color: "#fff",
+          fontWeight: "bold",
+          fontSize: 25,
+          fontFamily: Fonts.PoppinsBold,
+        }}
+      >
+        Card title
+      </Text>
+      <Text style={{ color: "#fff", marginTop: 5, textAlign: "center" }}>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit ullam
+        necessitatibus fugiat, enim nobis iusto dolorem rem modi molestiae
+      </Text>
+
+      <Stars
+        rating={4}
+        starStyle={{
+          transform: [{ scale: 0.5 }],
+
+          padding: 0,
+        }}
+      />
     </Animated.View>
   );
 };

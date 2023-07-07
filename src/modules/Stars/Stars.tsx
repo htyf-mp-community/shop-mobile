@@ -94,13 +94,13 @@ export const Stars = ({ rating, starStyle = {} }: TStarsProps) => {
 const styles = StyleSheet.create({
   container: {
     padding: 10,
-    width: SCREEN_WIDTH,
+    width: "100%",
     alignItems: "center",
     justifyContent: "center",
   },
   stars: {
+    width: 200,
     flexDirection: "row",
-    width: SCREEN_WIDTH * 0.6,
     justifyContent: "space-evenly",
   },
 });

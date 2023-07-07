@@ -8,7 +8,7 @@ import * as Option from "./options";
 import { StatusBar } from "expo-status-bar";
 import useColorTheme from "@utils/context/ThemeContext";
 
-const Stack = createSharedElementStackNavigator<RootStackParams>();
+export const Stack = createSharedElementStackNavigator<RootStackParams>();
 
 export default function MainNavigator() {
   const { isLoggedIn, name } = useCheckToken();

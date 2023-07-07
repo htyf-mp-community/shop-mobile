@@ -29,6 +29,7 @@ const CartSheet = forwardRef<BottomSheet, CartSheetProps>(
           {...props}
           disappearsOnIndex={-1}
           appearsOnIndex={0}
+          opacity={0.5}
         />
       ),
       []
@@ -42,7 +43,7 @@ const CartSheet = forwardRef<BottomSheet, CartSheetProps>(
         backgroundStyle={{ backgroundColor: theme.primary }}
         enablePanDownToClose
         handleIndicatorStyle={{ backgroundColor: "#fff" }}
-        // backdropComponent={backdropComponent}
+        backdropComponent={backdropComponent}
       >
         <View style={styles.container}>
           {cartProduct && (
