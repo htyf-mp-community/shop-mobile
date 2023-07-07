@@ -26,20 +26,18 @@ export default function Searched({
   } = useSearch();
 
   useEffect(() => {
-    if (skip > 0 && hasMore && isFocused) {
-      const promise = getSuggestionsAsync(true);
+    const promise = getSuggestionsAsync(true);
 
-      return () => promise.abort();
-    }
-  }, [skip]);
+    return () => promise.abort();
+  }, [skip, searchedText]);
 
-  useEffect(() => {
-    if (isFocused) {
-      const promise = getSuggestionsAsync(false);
+  // useEffect(() => {
+  //   if (isFocused) {
+  //     const promise = getSuggestionsAsync(false);
 
-      return () => promise.abort();
-    }
-  }, [isFocused, searchedText]);
+  //     return () => promise.abort();
+  //   }
+  // }, [isFocused, searchedText]);
 
   return (
     <ScreenContainer>
@@ -48,7 +46,7 @@ export default function Searched({
         handleOpenFilters={() => navigation.navigate("Filters", {})}
       />
       <VirtualizedList
-        style={{ marginTop: 15 }}
+        style={{ marginTop: 15, flex: 1 }}
         data={results}
         onEndReached={onEndReached}
         keyExtractor={({ prod_id }) => prod_id.toString()}

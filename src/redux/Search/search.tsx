@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios, { AxiosResponse } from "axios";
 import type { Paging, SuggestionType } from "/@types/types";
 import { API } from "@constants/routes";
+import removeDuplicatesById from "functions/RemoveRepetition";
 
 interface SearchHistory {
   text: string;
@@ -30,12 +31,6 @@ interface ThunkResponse {
 export const getSearchedProducts = createAsyncThunk<ThunkResponse, SearchState>(
   "search/get",
   async (args, { abort, rejectWithValue }) => {
-    // if (args.searchedText.trim() === "")
-    //   return {
-    //     hasMore: false,
-    //     isInfiniteScroll: false,
-    //     results: [],
-    //   };
     let response: Awaited<AxiosResponse<any, any>>;
     try {
       response = await axios.get(`${API}/products/search`, {
@@ -90,6 +85,10 @@ export const searchSlice = createSlice({
       state.searchedText = action.payload;
 
       state.skip = 0;
+
+      console.log("TEXT SET: " + action.payload);
+      state.response.hasMore = true;
+      state.response.results = [];
     },
 
     nextPage(state) {
@@ -137,7 +136,10 @@ export const searchSlice = createSlice({
   extraReducers(builder) {
     builder.addCase(getSearchedProducts.fulfilled, (state, { payload }) => {
       state.response.results = payload.isInfiniteScroll
-        ? [...state.response.results, ...payload.results]
+        ? removeDuplicatesById(
+            [...state.response.results, ...payload.results],
+            "prod_id"
+          )
         : payload.results;
 
       state.response.hasMore = payload.hasMore;

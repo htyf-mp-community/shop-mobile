@@ -18,6 +18,7 @@ export default function Navigators({
           navigation.navigate("Cart", {
             scrollToProductOnOpen: true,
             selectedProductId: prod_id,
+            sharedID: "",
           })
         }
         style={{ width: "70%", borderRadius: 100 }}
