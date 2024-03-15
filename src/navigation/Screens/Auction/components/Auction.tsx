@@ -6,7 +6,7 @@ import { image } from "functions/image";
 
 const { width } = Dimensions.get("window");
 
-const WIDTH = width / 1.5;
+const WIDTH = width / 1.7;
 
 const styles = StyleSheet.create({
   container: {
@@ -16,8 +16,8 @@ const styles = StyleSheet.create({
   },
   image: {
     width: WIDTH,
-    height: 150,
-    borderRadius: 5,
+    height: 125,
+    borderRadius: 10,
   },
 });
 
@@ -35,7 +35,7 @@ export default function Auction({ images, auction_id, isLast }: AuctionProps) {
       onPress={() => navigation.navigate("Auction", { auction_id })}
     >
       <Image
-        resizeMode="cover"
+        resizeMode="contain"
         style={styles.image}
         source={image(images[0].name)}
       />

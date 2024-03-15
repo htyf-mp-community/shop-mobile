@@ -11,6 +11,8 @@ import Reanimated, {
   FadeIn,
   FadeOut,
 } from "react-native-reanimated";
+import { Colors } from "constants/styles";
+import Color from "color";
 
 type Size = {
   width: number;
@@ -30,8 +32,8 @@ const dims = Dimensions.get("screen");
 
 const Skeleton = ({
   children,
-  backgroundColor = "#1f2b3d",
-  highlightColor = "#2a3a52",
+  backgroundColor = Color(Colors.primary).lighten(0.1).hex(),
+  highlightColor = Color(Colors.primary_light).lighten(0.25).hex(),
   size,
   marginHorizontal,
   marginVertical,
@@ -73,7 +75,12 @@ const Skeleton = ({
           height,
         }}
       >
-        <View style={[styles.background, { backgroundColor }]} />
+        <View
+          style={[
+            styles.background,
+            { backgroundColor: Color(Colors.primary).lighten(0.15).hex() },
+          ]}
+        />
         <Reanimated.View style={[StyleSheet.absoluteFill, animatedStyle]}>
           <MaskedView
             style={StyleSheet.absoluteFill}
@@ -91,7 +98,11 @@ const Skeleton = ({
               exiting={FadeOut}
               style={[
                 StyleSheet.absoluteFill,
-                { backgroundColor: highlightColor },
+                {
+                  backgroundColor: Color(Colors.primary_light)
+                    .lighten(0.3)
+                    .hex(),
+                },
               ]}
             />
           </MaskedView>

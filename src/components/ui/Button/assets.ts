@@ -3,7 +3,7 @@ import { StyleSheet, ViewStyle } from "react-native";
 export const styles = StyleSheet.create({
   button: {
     flexDirection: "row",
-    borderRadius: radius.small,
+    borderRadius: 10,
     position: "relative",
     alignItems: "center",
     justifyContent: "center",
@@ -15,9 +15,9 @@ export const styles = StyleSheet.create({
 
 export const VARIANTS = {
   // primary: "#FF0056",
-  primary: "#8408D4",
+  primary: Colors.secondary,
   secondary: Colors.primary,
-  ternary: Colors.secondary,
+  ternary: Colors.secondary_dark,
   disabled: "#131d33",
   text: "transparent",
 };

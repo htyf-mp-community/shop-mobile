@@ -10,6 +10,8 @@ import Ripple from "react-native-material-ripple";
 import Animated, { FadeIn } from "react-native-reanimated";
 import { useNavigation } from "@react-navigation/native";
 import { image } from "@functions/image";
+import Button from "components/ui/Button/Button";
+import layout from "constants/layout";
 
 interface SuggestionProps extends SuggestionType {
   index: number;
@@ -48,25 +50,43 @@ function Suggestion({
     >
       <Ripple onPress={navigateToProduct}>
         <SharedElement id={`prod_id.${prod_id}${sharedID}`}>
-          <Image resizeMode="cover" source={thumbnail} style={styles.image} />
+          <Image
+            resizeMode="contain"
+            source={thumbnail}
+            style={[
+              styles.image,
+              { width: layout.screen.width - 40, height: 250 },
+            ]}
+          />
         </SharedElement>
       </Ripple>
 
-      <View style={styles.textContainer}>
-        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+      <View style={{ flex: 1, padding: 10 }}>
+        <View style={styles.textContainer}>
+          <Text style={styles.title}>{title}</Text>
+
           <Text style={styles.price}>${price}</Text>
-          <Ripple
-            onPress={() => onPress()}
-            style={{ padding: 10, flexDirection: "row" }}
-            rippleColor="#fff"
-          >
-            {result === "Added" && (
-              <AntDesign name="check" size={20} color="white" />
-            )}
-            <Text style={{ color: "#DADDE2" }}>ADD TO CART</Text>
-          </Ripple>
         </View>
-        <Text style={styles.title}>{title}</Text>
+
+        <Button
+          size="xl"
+          onPress={() => onPress()}
+          variant="primary"
+          type="contained"
+          text="Add to cart"
+          fontStyle={{ textTransform: "uppercase", fontSize: 16 }}
+          style={{ flexDirection: "row-reverse", marginTop: 5 }}
+          icon={
+            result === "Added" && (
+              <AntDesign
+                size={21}
+                color={"#fff"}
+                name="check"
+                style={{ marginRight: 5 }}
+              />
+            )
+          }
+        />
       </View>
     </Animated.View>
   );

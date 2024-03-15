@@ -17,11 +17,9 @@ export default function useCheckToken() {
   async function loadUser() {
     const cancelToken = axios.CancelToken.source();
 
-    let usr: UserType;
+    const usr = await ReadUser();
 
     try {
-      const usr = await ReadUser();
-
       if (typeof usr === "undefined" || usr?.token === undefined)
         throw new Error("no_token");
 

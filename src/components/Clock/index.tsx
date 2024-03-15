@@ -33,8 +33,8 @@ export default function Clock() {
         padding: 5,
       }}
     >
-      <Text style={{ color: "#fff", fontSize: 22 }}>
-        {`${time.hours}:${time.minutes}:${time.seconds}`}
+      <Text style={{ color: "#fff", fontSize: 15 }}>
+        Ends in {`${time.hours}h ${time.minutes}min`}
       </Text>
     </View>
   );

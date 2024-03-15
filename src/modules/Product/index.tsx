@@ -7,7 +7,7 @@ import {
   StyleProp,
   ViewStyle,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { SharedElement } from "react-navigation-shared-element";
 import styles from "./styles";
 import * as Types from "../../@types/types";
@@ -18,6 +18,7 @@ import {
 } from "./assets";
 import { CartButton, WatchlistButton } from "./ActionButtons";
 import { image } from "functions/image";
+import Animated from "react-native-reanimated";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
@@ -99,14 +100,14 @@ function Product({
               cache: "force-cache",
             }}
             style={[styles.img]}
-            resizeMode="cover"
+            resizeMode="contain"
           />
         </SharedElement>
 
-        <View style={styles.buttons_container}>
+        <Animated.View style={styles.buttons_container}>
           <WatchlistButton iconColor="red" prod_id={prod_id} />
           <CartButton prod_id={prod_id} text={`$${price}`} />
-        </View>
+        </Animated.View>
       </View>
     </TouchableOpacity>
   );

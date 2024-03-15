@@ -49,7 +49,11 @@ export default function ImagesModal({
             hideBackground
             icon={<AntDesign size={30} name="close" color={"#fff"} />}
           />
-          <ScrollView horizontal style={{ flex: 1 }} pagingEnabled>
+          <ScrollView
+            horizontal
+            style={{ flex: 1, transform: [{ translateY: -50 }] }}
+            pagingEnabled
+          >
             {images.map((img, index) => (
               <GesturedImage key={img.id} index={index} name={img.name} />
             ))}

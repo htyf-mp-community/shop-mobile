@@ -5,11 +5,10 @@ const { width } = Dimensions.get("window");
 export default StyleSheet.create({
   container: {
     width: width,
-    marginBottom: 50,
-    marginTop: 10,
+    marginBottom: 30,
     alignItems: "center",
   },
-  image: { width: width - 40, height: 250, borderRadius: 5 },
+  image: { borderRadius: 10 },
 
   textContainer: {
     flexDirection: "column",
@@ -19,13 +18,12 @@ export default StyleSheet.create({
   price: {
     color: "#DADDE2",
     fontSize: 20,
+    marginTop: 5,
     fontFamily: "PoppinsRegular",
-    paddingTop: 10,
   },
   title: {
     color: "#fff",
-    fontSize: 25,
+    fontSize: 20,
     fontFamily: "PoppinsBold",
-    marginTop: 5,
   },
 });

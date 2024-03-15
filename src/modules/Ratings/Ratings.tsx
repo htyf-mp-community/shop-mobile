@@ -25,9 +25,6 @@ export default function Ratings({
       <View style={styles.header}>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <Text style={styles.text}>Jan Kowalski</Text>
-          <Text style={[{ fontSize: 18, color: "#b5b5b5", marginLeft: 10 }]}>
-            {Math.trunc(Math.random() * 10)} days ago
-          </Text>
         </View>
       </View>
 
@@ -55,7 +52,7 @@ const styles = StyleSheet.create({
     margin: 10,
     borderRadius: 10,
     width: "100%",
-    backgroundColor: Color(Colors.primary).lighten(0.15).string(),
+    backgroundColor: Color(Colors.primary_light).lighten(0.15).string(),
   },
   image: {
     width: 30,

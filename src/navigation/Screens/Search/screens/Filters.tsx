@@ -42,10 +42,10 @@ export default function Filters({
         onPress={() => navigation.goBack()}
         text="Show results"
         style={{
-          backgroundColor: current === "dark" ? "#fff" : Colors.primary,
           paddingVertical: 15,
         }}
-        fontStyle={{ color: Colors.primary, fontWeight: "bold" }}
+        variant="primary"
+        type="contained"
       />
     </ScreenContainer>
   );

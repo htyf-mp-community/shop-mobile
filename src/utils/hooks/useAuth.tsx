@@ -39,7 +39,6 @@ export default function useAuth(route: Route, callbacks?: Partial<Callbacks>) {
   const dispatch = useDispatch();
 
   async function onSubmit({ email, password }: UserInputProps) {
-    let response;
     try {
       setLoading(true);
       setError("");
@@ -52,15 +51,13 @@ export default function useAuth(route: Route, callbacks?: Partial<Callbacks>) {
 
       callbacks?.onSuccess?.();
 
-      response = data;
+      return data;
     } catch (err: any) {
       setError(err?.response?.data?.message || err.message);
       callbacks?.onFailed?.(err);
     } finally {
       setLoading(false);
     }
-
-    return response;
   }
 
   // for future updates

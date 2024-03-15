@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   },
   img: {
     ...StyleSheet.absoluteFillObject,
-    borderRadius: radius.small,
+    borderRadius: 10,
   },
 
   text: {
@@ -36,9 +36,9 @@ const styles = StyleSheet.create({
   },
   buttons_container: {
     position: "absolute",
-    right: 5,
-    borderRadius: 5,
-    bottom: 5,
+    right: 10,
+    borderRadius: 10,
+    bottom: 10,
     flexDirection: "row",
     backgroundColor: Colors.primary,
     alignItems: "center",

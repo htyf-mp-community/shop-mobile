@@ -36,7 +36,8 @@ const THEMES = {
 const KEY = "SHOP_CURRENT_THEME";
 
 export const ThemeContextProvider: React.FC = ({ children }) => {
-  const colorScheme = useColorScheme()! as Variant;
+  //  const colorScheme = useColorScheme()! as Variant;
+  const colorScheme = "dark";
 
   const [{ theme, current }, setTheme] = useState<{
     theme: typeof THEMES.dark;

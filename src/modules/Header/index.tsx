@@ -18,14 +18,14 @@ export default function Header({ toggleSidebar: onToggle }: SearchBarProps) {
     <View style={[styles.container, { backgroundColor: theme.primary }]}>
       <Button
         onPress={onToggle}
-        icon={<EvilIcons name="navicon" size={30} color={theme.text} />}
-        style={{ marginLeft: 10, padding: 5 }}
+        icon={<EvilIcons name="navicon" size={32} color={theme.text} />}
+        style={{ marginLeft: 0, padding: 5 }}
       />
 
       <Button
-        icon={<EvilIcons name="search" size={25} color={theme.text} />}
+        icon={<EvilIcons name="search" size={27} color={theme.text} />}
         onPress={() => navigation.navigate("Search")}
-        style={{ marginRight: 10, padding: 5 }}
+        style={{ marginRight: 0, padding: 5 }}
       />
     </View>
   );
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     zIndex: 120,
-    padding: 10,
+    paddingVertical: 15,
     justifyContent: "space-between",
   },
 });

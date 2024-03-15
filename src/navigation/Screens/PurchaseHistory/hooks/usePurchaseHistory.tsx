@@ -14,7 +14,7 @@ export interface IHistory {
   total_price?: number;
   status?: string;
 
-  products?: Prods[];
+  products: Prods[];
 }
 
 const GET_HISTORY = gql`

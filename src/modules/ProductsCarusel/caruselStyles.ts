@@ -32,8 +32,10 @@ const caruselStyles = StyleSheet.create({
   },
   container: {
     width: WIDTH,
-    height: PRODUCT_CONTAINER_SIZE_Y + 60,
+    height: 320,
     marginTop: 20,
+    flex: 1,
+    flexGrow: 1,
   },
 });
 

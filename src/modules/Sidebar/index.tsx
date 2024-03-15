@@ -52,12 +52,7 @@ export default function Sidebar({
       style={[styles.container, { backgroundColor: theme.primary, flex: 1 }]}
     >
       <Animated.View style={[styles.navigation, animatedButtons]}>
-        <Avatar
-          hide
-          avatarStyles={{
-            backgroundColor: "#131d33",
-          }}
-        />
+        <Avatar hide />
 
         <NavigationButtons />
       </Animated.View>

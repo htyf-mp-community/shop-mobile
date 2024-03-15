@@ -46,7 +46,7 @@ export default function PurchaseHistory() {
         getItem={(d, i) => d[i] as IHistory}
         getItemCount={(d) => d.length}
         keyExtractor={(arg: any) => arg.payment_id!}
-        initialNumToRender={6}
+        initialNumToRender={3}
         renderItem={({ item }) => <History {...item} />}
       />
     </View>

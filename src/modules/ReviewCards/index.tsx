@@ -15,7 +15,7 @@ import Animated, {
 } from "react-native-reanimated";
 
 const TEST_LIST = Array.from(new Array(10).keys());
-const TILE_CONTAINER_HEIGHT = 200;
+const TILE_CONTAINER_HEIGHT = 180;
 const TILE_WIDTH = layout.screen.width * 0.7 + 5;
 const TILE_HEIGHT = TILE_CONTAINER_HEIGHT - 20;
 
@@ -121,13 +121,14 @@ const AnimatedTileComponent = ({
           fontWeight: "bold",
           fontSize: 25,
           fontFamily: Fonts.PoppinsBold,
+          textAlign: "center",
         }}
       >
         Card title
       </Text>
       <Text style={{ color: "#fff", marginTop: 5, textAlign: "center" }}>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit ullam
-        necessitatibus fugiat, enim nobis iusto dolorem rem modi molestiae
+        necessitatibus
       </Text>
 
       <Stars

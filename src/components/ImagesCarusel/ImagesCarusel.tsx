@@ -5,6 +5,7 @@ import { API } from "@constants/routes";
 import Dots from "@components/Dots/Dots";
 import CaruselItem from "./CaruselItem";
 import Ripple from "react-native-material-ripple";
+import layout from "constants/layout";
 
 interface ImagesCaruselProps {
   sharedID: string;
@@ -15,7 +16,7 @@ interface ImagesCaruselProps {
   height?: number;
 }
 
-const { width: SCREEN_WIDTH } = Dimensions.get("screen");
+const SCREEN_WIDTH = layout.screen.width;
 
 export default function ImagesCarusel({
   sharedID,

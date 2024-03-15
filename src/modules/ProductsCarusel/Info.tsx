@@ -19,7 +19,7 @@ export default function EmptyList({
           style={[
             styles.product,
             caruselStyles.errorContainer,
-            { backgroundColor: Colors.primary100, width: width - 20 },
+            { backgroundColor: Colors.primary_light, width: width - 20 },
           ]}
         >
           <MaterialIcons name="error" size={100} color="white" />
@@ -36,7 +36,7 @@ export default function EmptyList({
       style={[
         caruselStyles.nothing,
         {
-          backgroundColor: Colors.primary100,
+          backgroundColor: Colors.primary_light,
           marginLeft: 10,
           borderRadius: 10,
         },

@@ -42,7 +42,7 @@ const CartSheet = forwardRef<BottomSheet, CartSheetProps>(
         snapPoints={["50%"]}
         backgroundStyle={{ backgroundColor: theme.primary }}
         enablePanDownToClose
-        handleIndicatorStyle={{ backgroundColor: "#fff" }}
+        handleIndicatorStyle={{ backgroundColor: "#fff", width: "25%" }}
         backdropComponent={backdropComponent}
       >
         <View style={styles.container}>

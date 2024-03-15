@@ -7,12 +7,24 @@ import { Fonts } from "constants/styles";
 import Loader from "./Loader";
 import { useNavigation } from "@react-navigation/native";
 import { useNavigationProps } from "/@types/types";
+import { useCallback } from "react";
 
 export default function AuctionsNavigator() {
   const { width } = useWindowDimensions();
   const { data, loading } = useAuctions();
   const { theme } = useColorTheme();
   const navigation = useNavigation<useNavigationProps>();
+
+  const renderItem = useCallback(
+    ({ item, index }: any) => (
+      <Auction
+        images={item.product.img_id}
+        isLast={index === data?.auction?.length}
+        {...item}
+      />
+    ),
+    []
+  );
 
   return (
     <View style={{ width, padding: 10 }}>
@@ -34,23 +46,16 @@ export default function AuctionsNavigator() {
           showsHorizontalScrollIndicator={false}
           data={data?.auctions}
           keyExtractor={({ auction_id }) => auction_id}
-          renderItem={({ item, index }) => (
-            <Auction
-              images={item.product.img_id}
-              isLast={index === data?.auction?.length}
-              {...item}
-            />
-          )}
+          renderItem={renderItem}
         />
       )}
 
       <Ripple onPress={() => navigation.navigate("Auctions")}>
         <Text
           style={{
-            padding: 5,
+            paddingHorizontal: 5,
             color: theme.text,
-            fontSize: 20,
-            fontFamily: Fonts.PoppinsMedium,
+            fontSize: 17,
           }}
         >
           See all auctions

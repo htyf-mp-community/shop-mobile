@@ -3,11 +3,7 @@ import { ScrollView } from "react-native";
 
 export default function Loader() {
   return (
-    <SkeletonPlaceholder
-      backgroundColor={"#1f2b3d"}
-      highlightColor={"#2a3a52"}
-      size={({ width }) => ({ width, height: 160 })}
-    >
+    <SkeletonPlaceholder size={({ width }) => ({ width, height: 160 })}>
       <ScrollView
         contentContainerStyle={{ alignItems: "center" }}
         horizontal

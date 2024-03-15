@@ -35,7 +35,7 @@ export default function Auctions({
 
   return (
     <Container>
-      {/* <Header /> */}
+      <Header />
 
       <VirtualizedList
         onEndReachedThreshold={0.5}

@@ -18,10 +18,11 @@ export const CartButton = ({ text, prod_id }: CartButtonProps) => {
         <Feather
           style={{ marginRight: 5 }}
           name={result === "Added" ? "check" : "shopping-bag"}
-          size={22}
+          size={18}
           color={Colors.text}
         />
       }
+      fontStyle={{ fontSize: 18 }}
       callback={appendCart}
       variant="primary"
       type="contained"
@@ -43,14 +44,15 @@ interface WatchlistButtonProps {
 export const WatchlistButton = (props: WatchlistButtonProps) => {
   return (
     <AddWatchlist
-      iconColor={props.iconColor}
+      iconColor={Colors.secondary}
       prod_id={props.prod_id}
+      iconSize={20}
       style={{
         backgroundColor: "transparent",
         margin: 0,
         marginRight: 5,
         borderRightWidth: 1,
-        borderRightColor: "rgba(255,255,255,0.5)",
+        borderRightColor: "rgba(255,255,255,0.3)",
         borderRadius: 0,
       }}
     />

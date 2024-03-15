@@ -15,8 +15,6 @@ export default function Badge({
   const innerSize = outerSize - padding * 2;
   return (
     <Animated.View
-      entering={ZoomIn}
-      exiting={ZoomOut}
       style={{
         position: "absolute",
         ...(left ? { left: -5 } : { right: -5 }),
@@ -34,11 +32,11 @@ export default function Badge({
           width: innerSize,
           height: innerSize,
           color: "#fff",
-          fontFamily: "PoppinsBold",
           textAlign: "center",
           backgroundColor: "red",
           textAlignVertical: "center",
           borderRadius: 100,
+          fontSize: 14,
         }}
       >
         {amount}

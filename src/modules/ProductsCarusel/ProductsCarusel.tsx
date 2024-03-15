@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useCallback } from "react";
 import { View, Text, VirtualizedList } from "react-native";
 import Product from "../Product";
 import { ProductTypeProps } from "../Product";
@@ -10,7 +10,7 @@ import ProductSkeleton from "modules/ProductSkeleton";
 import useColorTheme from "utils/context/ThemeContext";
 import {
   PRODUCT_CONTAINER_SIZE_X,
-  PRODUCT_WIDTH,
+  PRODUCT_WIDTH_FULLSIZE,
 } from "modules/Product/assets";
 import layout from "constants/layout";
 
@@ -44,15 +44,18 @@ function ProductsCarusel({
     (_, index) => index * (PRODUCT_CONTAINER_SIZE_X + 10) - gaps
   );
 
-  const renderItem = ({ item, index }: any) => (
-    <Product
-      {...item}
-      sharedID={sharedID}
-      fullSize={center}
-      style={{
-        marginRight: data.length - 1 === index ? 10 : undefined,
-      }}
-    />
+  const renderItem = useCallback(
+    ({ item, index }: any) => (
+      <Product
+        {...item}
+        sharedID={sharedID}
+        fullSize={center}
+        style={{
+          marginRight: data.length - 1 === index ? 10 : undefined,
+        }}
+      />
+    ),
+    []
   );
 
   return (
@@ -65,6 +68,12 @@ function ProductsCarusel({
 
       <VirtualizedList
         removeClippedSubviews
+        maxToRenderPerBatch={60}
+        updateCellsBatchingPeriod={100}
+        windowSize={5}
+        initialNumToRender={2}
+        //
+        //
         decelerationRate={0.95}
         onEndReachedThreshold={0.75}
         snapToInterval={layout.screen.width - 20}
@@ -72,11 +81,15 @@ function ProductsCarusel({
         data={data}
         onEndReached={onEndReached}
         horizontal
-        initialNumToRender={3}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         getItem={getItem}
         getItemCount={(data) => data.length}
+        getItemLayout={(_, index) => ({
+          index,
+          length: PRODUCT_WIDTH_FULLSIZE,
+          offset: (PRODUCT_WIDTH_FULLSIZE + 10) * index,
+        })}
         keyExtractor={(item: ProductTypeProps) => item.prod_id.toString()}
         renderItem={renderItem}
       />

@@ -91,13 +91,6 @@ export default function ProductDetails({
           {title}
         </Animated.Text>
       ),
-      headerRight: () => (
-        <IconButton
-          hideBackground
-          icon={<Entypo name="dots-three-vertical" size={20} color="white" />}
-          onPress={() => {}}
-        />
-      ),
     });
   }, []);
 
@@ -107,9 +100,9 @@ export default function ProductDetails({
     return true;
   }, []);
 
-  useFocusEffect(() => {
-    sheetRef.current?.close();
-  });
+  // useFocusEffect(() => {
+  //   //  sheetRef.current?.close();
+  // });
 
   const [imagesModalVisible, setImagesModalVisible] = useState(false);
 

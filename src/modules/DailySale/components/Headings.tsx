@@ -11,7 +11,7 @@ Headings.Title = (props: { text: string }) => (
   <ThemedText
     style={{
       fontSize: 20,
-      marginLeft: 20,
+      marginLeft: 10,
       fontFamily: Fonts.PoppinsRegular,
     }}
   >
@@ -20,15 +20,13 @@ Headings.Title = (props: { text: string }) => (
 );
 
 Headings.Price = (props: { price: number; quantity: number }) => (
-  <View
-    style={[styles.row, { width: "100%", justifyContent: "space-between" }]}
-  >
-    <View style={[styles.row, { width: "50%" }]}>
+  <View style={{ flex: 1, width: "100%" }}>
+    <ThemedText style={styles.discounted}>
+      Before ${Math.ceil((props.price || 0) * 1.25)}
+    </ThemedText>
+    <View style={[styles.row, { justifyContent: "space-between" }]}>
       <ThemedText style={[styles.price]}>${props.price}</ThemedText>
-      <ThemedText style={styles.discounted}>
-        ${Math.ceil((props.price || 0) * 1.25)}
-      </ThemedText>
+      <ThemedText>{props.quantity} Left</ThemedText>
     </View>
-    <ThemedText>{props.quantity} Left</ThemedText>
   </View>
 );

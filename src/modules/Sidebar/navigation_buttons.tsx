@@ -82,21 +82,6 @@ export default function NavigationButtons() {
       {/* )} */}
 
       <SignOut />
-
-      {/* <Button
-        icon={
-          <AntDesign
-            name={"user"}
-            style={{ marginRight: 10 }}
-            size={30}
-            color={"#fff"}
-          />
-        }
-        style={[styles.button]}
-        fontStyle={{ color: "#fff" }}
-        text={"User"}
-        onPress={() => navigation.navigate("User")}
-      /> */}
     </View>
   );
 }

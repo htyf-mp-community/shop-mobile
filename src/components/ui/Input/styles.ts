@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     paddingHorizontal: 10,
     fontSize: 18,
-    borderRadius: 5,
+    borderRadius: 10,
     fontFamily: "PoppinsRegular",
     color: "#fff",
     flex: 1,

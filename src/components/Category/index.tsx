@@ -4,6 +4,7 @@ import { Text } from "react-native";
 import Ripple from "react-native-material-ripple";
 import { useAppDispatch } from "utils/hooks/hooks";
 import { searchActions } from "redux/Search/search";
+import { Colors } from "constants/styles";
 
 interface CategoryProps {
   category: string;
@@ -24,7 +25,7 @@ export default function Category({ category }: CategoryProps) {
       rippleColor="white"
       onPress={GetProductsByCategory}
       style={{
-        backgroundColor: "#131d33",
+        backgroundColor: Colors.primary_light,
 
         padding: 10,
         paddingLeft: 20,

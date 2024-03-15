@@ -42,15 +42,15 @@ export const fontSize = {
 export const Colors = {
   text: "#fff",
   textFaded: "#b8b8b8",
-  primary: "#0f172a",
+  primary: "#0c0c0d",
 
-  primary_light: "#16233F",
+  primary_light: "#161618",
 
-  secondary: "#8408D4",
+  secondary: "#6289FF",
 
-  secondary_light: Color("#8408D4").lighten(0.5).hex(),
+  secondary_light: Color("#6289FF").lighten(0.5).hex(),
 
-  secondary_dark: Color("#8408D4").darken(0.5).hex(),
+  secondary_dark: Color("#6289FF").darken(0.5).hex(),
 
   active: "#36a8f5",
 

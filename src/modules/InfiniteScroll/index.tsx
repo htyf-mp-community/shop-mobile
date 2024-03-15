@@ -54,8 +54,6 @@ export default function InfiniteScroll<T>({
     <View style={{ flex: 1, backgroundColor: theme.primary }}>
       {loading && data.length === 0 && (
         <SkeletonPlaceholder
-          backgroundColor={"#1f2b3d"}
-          highlightColor={"#2a3a52"}
           size={
             placeholderDimenssionsValue ||
             ({ width: width - 20, height: 250 } as any)

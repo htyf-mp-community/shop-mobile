@@ -16,7 +16,7 @@ export default function Header() {
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        backgroundColor: Colors.primary100,
+        backgroundColor: Colors.primary_light,
       }}
     >
       <Text

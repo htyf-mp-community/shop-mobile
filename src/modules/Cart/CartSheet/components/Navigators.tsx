@@ -12,7 +12,7 @@ export default function Navigators({
   const navigation = useNavigation<useNavigationProps>();
   return (
     <>
-      <Button text="Go back" style={{ width: "25%" }} onPress={onDismiss} />
+      <Button text="Back" style={{ width: "25%" }} onPress={onDismiss} />
       <Button
         onPress={() =>
           navigation.navigate("Cart", {

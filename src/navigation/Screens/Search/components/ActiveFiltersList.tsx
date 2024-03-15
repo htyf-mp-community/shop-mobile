@@ -21,10 +21,10 @@ export default function ActiveFiltersList({
       key={key}
       style={{
         backgroundColor: Colors.primary_light,
-        marginRight: 5,
+        marginRight: 10,
         paddingHorizontal: 15,
         justifyContent: "center",
-        borderRadius: 20,
+        borderRadius: 10,
         flexDirection: "row",
         alignItems: "center",
       }}
@@ -37,35 +37,33 @@ export default function ActiveFiltersList({
   ));
 
   return (
-    <View>
-      <ScrollView
-        style={{ marginTop: 10 }}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-      >
-        <Button
-          onPress={() => handleOpenFilters()}
-          icon={
-            <Entypo
-              name="dots-three-vertical"
-              size={16}
-              style={{ marginLeft: 5 }}
-              color="white"
-            />
-          }
-          text="Filters"
-          fontStyle={{ fontSize: 16 }}
-          style={{
-            marginLeft: 15,
-            marginRight: 5,
-            backgroundColor: Colors.primary_light,
-            borderRadius: 20,
-            paddingHorizontal: 20,
-          }}
-        />
+    <ScrollView
+      style={{ marginTop: 10, maxHeight: 45 }}
+      horizontal
+      showsHorizontalScrollIndicator={false}
+    >
+      <Button
+        onPress={() => handleOpenFilters()}
+        icon={
+          <Entypo
+            name="dots-three-vertical"
+            size={16}
+            style={{ marginLeft: 5 }}
+            color="white"
+          />
+        }
+        text="Filters"
+        fontStyle={{ fontSize: 16 }}
+        style={{
+          marginLeft: 15,
+          marginRight: 10,
+          backgroundColor: Colors.primary_light,
+          borderRadius: 10,
+          paddingHorizontal: 20,
+        }}
+      />
 
-        {filtersList}
-      </ScrollView>
-    </View>
+      {filtersList}
+    </ScrollView>
   );
 }

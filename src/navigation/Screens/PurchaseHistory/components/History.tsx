@@ -4,9 +4,10 @@ import { useNavigation } from "@react-navigation/native";
 import { Product, useNavigationProps } from "/@types/types";
 import { IHistory } from "../hooks/usePurchaseHistory";
 import { image } from "functions/image";
-import { h2 } from "constants/styles";
+import { Colors, h2 } from "constants/styles";
 import Ripple from "react-native-material-ripple";
 import layout from "constants/layout";
+import { useMemo } from "react";
 
 const styles = StyleSheet.create({
   container: {
@@ -45,44 +46,52 @@ export default function History({ products, date, total_price }: IHistory) {
 
   return (
     <View style={[styles.container, { marginBottom: 20 }]}>
-      {products?.map((arg) => {
-        const product = arg.prod_id as Product;
-        return (
-          <Ripple
-            onPress={() => onPushRoute(product)}
-            key={arg.history_id}
-            style={{
-              flexDirection: "row",
-              marginBottom: 10,
-              width: layout.screen.width - 20,
-              overflow: "hidden",
-            }}
-          >
-            <Image
-              source={image(product.img_id[0].name)}
-              style={styles.image}
-            />
+      <View
+        style={{
+          padding: 15,
+          backgroundColor: Colors.primary_light,
+          borderRadius: 15,
+        }}
+      >
+        {products?.map((arg) => {
+          const product = arg.prod_id as Product;
+          return (
+            <Ripple
+              onPress={() => onPushRoute(product)}
+              key={arg.history_id}
+              style={{
+                flexDirection: "row",
+                marginBottom: 10,
+                width: "100%",
+                overflow: "hidden",
+              }}
+            >
+              <Image
+                source={image(product.img_id[0].name)}
+                style={styles.image}
+              />
 
-            <View style={{ paddingLeft: 10 }}>
-              <Text
-                style={{ color: "#fff" }}
-                numberOfLines={2}
-                textBreakStrategy="simple"
-              >
-                {product.title}
-              </Text>
-              <Text style={{ color: "#fff" }}>${product.price}</Text>
-              <Text style={{ color: "#fff" }}>
-                {new Date(+date!).toLocaleDateString()}
-              </Text>
-            </View>
-          </Ripple>
-        );
-      })}
+              <View style={{ paddingLeft: 10 }}>
+                <Text
+                  style={{ color: "#fff" }}
+                  numberOfLines={2}
+                  textBreakStrategy="simple"
+                >
+                  {product.title}
+                </Text>
+                <Text style={{ color: "#fff" }}>${product.price}</Text>
+              </View>
+            </Ripple>
+          );
+        })}
 
-      <Text style={[h2, { fontSize: 20, lineHeight: 30 }]}>
-        Total: ${total_price}
-      </Text>
+        <Text style={{ color: "#fff", marginTop: 10 }}>
+          {new Date(+date!).toDateString()}
+        </Text>
+        <Text style={[h2, { fontSize: 18, lineHeight: 30 }]}>
+          Total: ${total_price}{" "}
+        </Text>
+      </View>
     </View>
   );
 }

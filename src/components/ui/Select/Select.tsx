@@ -151,7 +151,7 @@ export default function Select({
             backgroundColor,
             borderColor: isFocused ? Colors.active : Colors.primary_light,
             borderWidth: 2,
-            borderRadius: 5,
+            borderRadius: 10,
             position: "relative",
             zIndex: isFocused ? 1000 : 100,
           },
@@ -186,8 +186,8 @@ export default function Select({
 
         {isFocused && (
           <AnimatedFlatlist
-            entering={FadeInDown}
-            exiting={FadeOutDown.duration(100)}
+            // entering={FadeInDown}
+            // exiting={FadeOutDown.duration(50)}
             style={{
               position: "absolute",
               top: displayAboveInput
@@ -198,7 +198,7 @@ export default function Select({
               width: Layout.screen.width * 0.95,
               borderWidth: 2,
               borderColor: Colors.active,
-              borderRadius: 5,
+              borderRadius: 10,
               left: -1,
               zIndex: 1100,
             }}

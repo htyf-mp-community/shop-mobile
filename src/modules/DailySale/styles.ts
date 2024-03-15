@@ -72,10 +72,9 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   discounted: {
-    fontSize: 18,
-    marginTop: 5,
-    color: "red",
-    textDecorationLine: "line-through",
+    fontSize: 15,
+    color: "gray",
+    marginLeft: 5,
   },
   bottom_tab: {
     width: WIDTH,

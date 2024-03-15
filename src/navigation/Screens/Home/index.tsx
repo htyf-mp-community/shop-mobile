@@ -44,6 +44,8 @@ export default function Home() {
           <AuctionsNavigator />
 
           <Carusels />
+
+          <View style={{ marginVertical: 25 }} />
         </ScrollView>
       </GestureDetector>
     </Sidebar>

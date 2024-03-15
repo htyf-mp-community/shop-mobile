@@ -24,11 +24,7 @@ export default function MyReviews() {
       }}
     >
       {loading && (
-        <SkeletonPlaceholder
-          backgroundColor={"#1f2b3d"}
-          highlightColor={"#2a3a52"}
-          size={{ width, height }}
-        >
+        <SkeletonPlaceholder size={{ width, height }}>
           <FlatList
             style={{ marginTop: 20 }}
             contentContainerStyle={{ alignItems: "center" }}
