@@ -33,7 +33,9 @@ export default function useCheckout(init = true) {
   async function Purchase() {
     // await dispatch(createPayment()); OLD WAY
 
-    await presentPaymentSheet().then(console.log).catch(console.warn);
+    const { error, paymentOption } = await presentPaymentSheet();
+
+    if (error) return;
 
     await dispatch(cartActions.clearCart());
   }

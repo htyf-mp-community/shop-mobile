@@ -38,7 +38,7 @@ export default function CaruselItem({
       <Image
         source={{ uri: source }}
         style={[styles.img, { height }]}
-        resizeMode="cover"
+        resizeMode="contain"
         resizeMethod="scale"
       />
     </SharedElement>

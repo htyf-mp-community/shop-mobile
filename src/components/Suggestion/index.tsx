@@ -41,7 +41,7 @@ function Suggestion({
     });
   }
 
-  const { pushToCart: onPress, result } = useCart(prod_id);
+  const { pushToCart: onPress, result, loading } = useCart(prod_id);
 
   return (
     <Animated.View
@@ -74,6 +74,7 @@ function Suggestion({
           variant="primary"
           type="contained"
           text="Add to cart"
+          disabled={loading}
           fontStyle={{ textTransform: "uppercase", fontSize: 16 }}
           style={{ flexDirection: "row-reverse", marginTop: 5 }}
           icon={

@@ -32,6 +32,8 @@ export const createPaymentIntent = createAsyncThunk<
 
     return data;
   } catch (error) {
+    console.log(JSON.stringify(error, null, 2));
+
     return { clientSecret: "", total: 0, error: "Intent failed" };
   }
 });

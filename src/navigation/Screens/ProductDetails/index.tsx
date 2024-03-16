@@ -19,11 +19,8 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
-import { IconButton } from "components";
-import { Entypo } from "@expo/vector-icons";
 import ImagesModal from "./components/ImagesModal";
 import useListenBackPress from "utils/hooks/useListenBackPress";
-import { useFocusEffect } from "@react-navigation/native";
 
 export default function ProductDetails({
   route,

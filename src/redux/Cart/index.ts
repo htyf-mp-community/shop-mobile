@@ -55,23 +55,6 @@ const cartSlice = createSlice({
       state.loading = false;
       state.error = payload;
     },
-
-    // startLoading(state: State) {
-    //   state.loading = true;
-    // },
-
-    // increment(state: State) {
-    //   state.amount += 1;
-    // },
-
-    // incrementAmmount(state: State, { payload }: { payload: number }) {
-    //   state.cart = state.cart.map((prod) => {
-    //     if (prod.prod_id === payload) {
-    //       return { ...prod, ammount: prod.ammount + 1 };
-    //     }
-    //     return prod;
-    //   });
-    // },
   },
   extraReducers(builder) {
     builder.addCase(removeCartProduct.fulfilled, (state, { payload }) => {

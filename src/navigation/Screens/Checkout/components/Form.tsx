@@ -23,7 +23,11 @@ export default function Form({ onSubmit }: FormProps) {
 
   const kb = useListenKeyboard();
 
-  const [adress, apart, city] = credentials.address.split(" ");
+  const [adress, apart, city] = credentials?.address?.split(" ") || [
+    "",
+    "",
+    "",
+  ];
 
   const products = useAppSelector((s) => s.cart.cart);
 
@@ -49,13 +53,16 @@ export default function Form({ onSubmit }: FormProps) {
               style={{ width: layout.screen.width }}
               contentContainerStyle={{ alignItems: "center" }}
             >
-              {/* <View style={{ width: "100%", padding: 5 }}>
+              <View style={{ width: "100%", paddingHorizontal: 15 }}>
                 {products.map((product) => (
-                  <Text style={{ fontSize: 12, color: "#fff" }}>
+                  <Text
+                    key={product.prod_id}
+                    style={{ fontSize: 12, color: "#fff" }}
+                  >
                     {product.title} x{product.ammount}
                   </Text>
                 ))}
-              </View> */}
+              </View>
 
               <Separator text="Personal Information" />
               <ValidatedInput

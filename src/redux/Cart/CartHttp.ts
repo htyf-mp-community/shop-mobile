@@ -28,7 +28,7 @@ export const removeCartProduct = createAsyncThunk<
 
   return {
     isDeleted: response.status === 200,
-    removeAll: input.removeAll && response?.data?.message === "Deleted",
+    removeAll: input.removeAll || false,
     cart_id: input.cart_id,
   };
 });

@@ -18,7 +18,7 @@ export function useCart() {
     onSuccess,
   });
 
-  const isLoading = loading && cart.length === 0;
+  const isLoading = loading && !isSynced;
 
   const onEndReached = useCallback(async () => {
     if (!hasMore) return;

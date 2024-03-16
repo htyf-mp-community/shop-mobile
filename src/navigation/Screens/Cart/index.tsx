@@ -49,30 +49,6 @@ export default function Cart({
     });
   }, [cart.length]);
 
-  // useEffect(() => { doesnt work
-  //   if (
-  //     route.params?.scrollToProductOnOpen &&
-  //     route.params?.selectedProductId
-  //   ) {
-  //     const productPos = cart.findIndex(
-  //       (item) => item.prod_id === route.params.selectedProductId
-  //     );
-
-  //     if (productPos !== -1) {
-  //       console.log("SCROLLED ");
-
-  //       const offset = 131 * (productPos + 1);
-
-  //       console.log(productPos, offset);
-
-  //       cartListRef.current?.scrollToOffset({
-  //         offset,
-  //         animated: true,
-  //       });
-  //     }
-  //   }
-  // }, [cart, route.params]);
-
   return (
     <View style={{ flex: 1, backgroundColor: theme.primary }}>
       <CartList ref={cartListRef} data={cart} {...restUseCartProps} />

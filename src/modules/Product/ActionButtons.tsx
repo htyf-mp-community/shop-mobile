@@ -3,6 +3,7 @@ import { Feather } from "@expo/vector-icons";
 import useCart from "modules/Cart/AddToCart/useAddCart";
 import { Colors } from "constants/styles";
 import AddWatchlist from "modules/AddWatchlist";
+import { useNavigation } from "@react-navigation/native";
 
 interface CartButtonProps {
   text: string;
@@ -11,9 +12,14 @@ interface CartButtonProps {
 }
 
 export const CartButton = ({ text, prod_id }: CartButtonProps) => {
-  const { pushToCart: appendCart, result } = useCart(prod_id);
+  const { pushToCart: appendCart, result, loading } = useCart(prod_id);
+
+  const navigation = useNavigation<any>();
+
   return (
     <Button
+      onLongPress={() => navigation.navigate("Cart")}
+      disabled={loading}
       icon={
         <Feather
           style={{ marginRight: 5 }}

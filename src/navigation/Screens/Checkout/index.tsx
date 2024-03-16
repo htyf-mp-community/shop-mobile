@@ -2,7 +2,7 @@ import React from "react";
 import { Text, View } from "react-native";
 import useCheckout from "./hooks/useCheckout";
 import styles from "./styles";
-import { Header } from "components";
+import { Header, Modal, ThemedText } from "components";
 import Form from "./components/Form";
 import CheckoutModal from "./components/CheckoutModal";
 import { useAppDispatch, useAppSelector } from "utils/hooks/hooks";
@@ -27,18 +27,10 @@ interface Input {
 export default function Checkout() {
   const { purchase, total } = useCheckout(true);
   const dispatch = useAppDispatch();
-  const [isVisible, setIsVisible] = React.useState(false);
-
   const { paymentIntentClientSecretLoading, ...checkout } = useAppSelector(
     (s) => s.checkout
   );
-
-  const onSubmit = async (input: Input) => {
-    setIsVisible(true);
-    dispatch(checkoutActions.saveCredentials(input));
-  };
-
-  const onCancel = () => setIsVisible(false);
+  const products = useAppSelector((s) => s.cart.cart);
 
   React.useEffect(() => {
     if (checkout.paymentIntentClientSecret !== "") {
@@ -46,7 +38,7 @@ export default function Checkout() {
         await initPaymentSheet({
           paymentIntentClientSecret: checkout.paymentIntentClientSecret,
           merchantDisplayName: "DMQ Store",
-          allowsDelayedPaymentMethods: true,
+          allowsDelayedPaymentMethods: false,
 
           appearance: {
             primaryButton: {
@@ -82,11 +74,23 @@ export default function Checkout() {
       </Header>
 
       <Form
-        //  onSubmit={onSubmit}
-        onSubmit={async () => {
-          await presentPaymentSheet().catch(console.log);
-        }}
+        // onSubmit={onSubmit}
+        onSubmit={purchase}
       />
+
+      <Modal isVisible={false}>
+        <ThemedText style={{ fontSize: 22, fontWeight: "bold" }}>
+          Purchase details
+        </ThemedText>
+
+        <View style={{ padding: 5 }}>
+          {products.map((p) => (
+            <ThemedText style={{ color: "gray" }} key={p.prod_id}>
+              {p.title} x{p.ammount} ${p.price}
+            </ThemedText>
+          ))}
+        </View>
+      </Modal>
 
       {/* <CheckoutModal
         onCancel={onCancel}

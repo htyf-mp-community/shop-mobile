@@ -8,7 +8,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useNavigationProps } from "/@types/types";
 
 export default function ButtonsBar(props: { product?: Cart; prod_id: number }) {
-  const { pushToCart: addCart, result } = useCart(props.prod_id || 0);
+  const { pushToCart: addCart, result, loading } = useCart(props.prod_id || 0);
 
   const navigation = useNavigation<any>();
 
@@ -18,6 +18,7 @@ export default function ButtonsBar(props: { product?: Cart; prod_id: number }) {
     >
       <AddWatchlist prod_id={props.prod_id} />
       <Button
+        disabled={loading}
         onLongPress={() => navigation.navigate("Cart")}
         fontStyle={{ textTransform: "uppercase", fontSize: 17 }}
         style={styles.button}
