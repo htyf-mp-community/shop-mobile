@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useEffect } from "react";
 import { API } from "@constants/routes";
 import { USER_PREFIX, useUser } from "@utils/context/UserContext";
 import { Alert } from "react-native";

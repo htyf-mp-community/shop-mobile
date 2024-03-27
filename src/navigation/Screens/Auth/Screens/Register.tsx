@@ -15,7 +15,7 @@ export default function RegisterScreen({
     password: "",
   });
 
-  const { onRegister, error, onClear, loading } = useAuth("register", {
+  const { onRegister, error, onClear, loading, status } = useAuth("register", {
     onStart: () => setIsVisible(true),
   });
 
@@ -31,6 +31,18 @@ export default function RegisterScreen({
     });
   }, []);
 
+  const onSignInPress = () => {
+    if (error) {
+      onClear();
+      return setIsVisible(false);
+    }
+
+    setIsVisible(false);
+    navigation.navigate("Login", {
+      ...credentials,
+    });
+  };
+
   return (
     <Container centerVertical>
       <AuthForm
@@ -40,11 +52,7 @@ export default function RegisterScreen({
         onSubmit={handleSubmit}
       />
       <RegisterModal
-        onSignInPress={() => {
-          navigation.navigate("Login", {
-            ...credentials,
-          });
-        }}
+        onSignInPress={onSignInPress}
         error={error}
         isVisible={isVisible}
         onCloseModal={() => {

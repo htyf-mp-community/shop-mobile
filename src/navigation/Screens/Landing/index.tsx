@@ -79,7 +79,7 @@ export default function Landing({ navigation }: any) {
           fontStyle={{ fontSize: 20 }}
           style={[
             styles.button,
-            { backgroundColor: Colors.accent, borderRadius: 10 },
+            { backgroundColor: Colors.accent, borderRadius: 15 },
           ]}
           text="Login"
           callback={onNavigateLogin}
@@ -88,7 +88,7 @@ export default function Landing({ navigation }: any) {
           variant="primary"
           type="contained"
           fontStyle={{ fontSize: 20 }}
-          style={[styles.button, { borderRadius: 10 }]}
+          style={[styles.button, { borderRadius: 15 }]}
           text="Create an account"
           callback={onNavigateRegister}
         />

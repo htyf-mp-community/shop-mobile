@@ -39,7 +39,7 @@ export default function ValidatedInput<T extends { [key: string]: string }>({
   return (
     <Input
       style={style}
-      placeholderTextColor={isError(name) ? "#ff3030" : "#fff"}
+      placeholderTextColor={isError(name) ? "#ff3030" : "gray"}
       value={parseValue(values[name])}
       onChangeText={handleChange(name)}
       placeholder={placeholder ?? label ?? capitalizeLabel}
