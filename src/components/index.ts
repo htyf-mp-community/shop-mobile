@@ -1,10 +1,8 @@
 export { default as Button } from "./ui/Button/Button";
 export { default as Input } from "./ui/Input/Input";
 export { default as Category } from "./Category/index";
-export { default as Message } from "./Message/Message";
 export { default as Dots } from "./Dots/Dots";
-export { default as Overlay } from "./Overlay/Overlay";
-export { default as Suggestion } from "./Suggestion/index";
+export { default as Suggestion } from "../navigation/Screens/Search/components/Suggestion/index";
 export { default as SkeletonPlaceholder } from "./ui/Skeleton/index";
 export { default as Container } from "./ui/Container/index";
 export { default as Modal } from "./ui/Modal/Modal";

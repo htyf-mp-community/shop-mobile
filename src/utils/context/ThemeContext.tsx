@@ -1,5 +1,11 @@
 import AsyncStorageLib from "@react-native-async-storage/async-storage";
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { useColorScheme } from "react-native";
 import { Colors } from "@constants/styles";
 import { notUndefined } from "@functions/typecheckers";
@@ -35,7 +41,7 @@ const THEMES = {
 
 const KEY = "SHOP_CURRENT_THEME";
 
-export const ThemeContextProvider: React.FC = ({ children }) => {
+export const ThemeContextProvider = ({ children }: { children: ReactNode }) => {
   //  const colorScheme = useColorScheme()! as Variant;
   const colorScheme = "dark";
 
@@ -47,20 +53,21 @@ export const ThemeContextProvider: React.FC = ({ children }) => {
     current: colorScheme,
   });
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const storage = await AsyncStorageLib.getItem(KEY)!;
-        if (storage !== null && notUndefined(storage)) {
-          const { theme } = JSON.parse(storage!) as { theme: Variant };
-          setTheme({
-            current: theme,
-            theme: THEMES[theme],
-          });
-        }
-      } catch (error) {}
-    })();
-  }, []);
+  // Light mode is not supported yet
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       const storage = await AsyncStorageLib.getItem(KEY)!;
+  //       if (storage !== null && notUndefined(storage)) {
+  //         const { theme } = JSON.parse(storage!) as { theme: Variant };
+  //         setTheme({
+  //           current: theme,
+  //           theme: THEMES[theme],
+  //         });
+  //       }
+  //     } catch (error) {}
+  //   })();
+  // }, []);
 
   async function onSaveTheme(theme: string) {
     try {

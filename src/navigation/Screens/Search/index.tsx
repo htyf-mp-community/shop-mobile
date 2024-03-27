@@ -5,8 +5,9 @@ import Searched from "./screens/Searched";
 import { horizontalAnimation } from "navigation/options";
 import Filters from "./screens/Filters";
 import Query from "./screens/Query";
+import { createSharedElementStackNavigator } from "react-navigation-shared-element";
 
-const Stack = createStackNavigator<NestedSearchScreens>();
+const Stack = createSharedElementStackNavigator<NestedSearchScreens>();
 
 export default function SearchScreen() {
   return (

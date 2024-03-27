@@ -4,6 +4,7 @@ import { forwardRef, useCallback, Ref } from "react";
 import { Keyboard, View } from "react-native";
 import useSaveUserSettings from "../hooks/useSaveUserSettings";
 import styles from "../styles";
+import { Colors } from "constants/styles";
 
 interface SettingsSheetProps {
   option: "NAME" | "ADDRESS" | "PHONE_NUMBER" | "SURNAME" | "";
@@ -31,9 +32,9 @@ const SettingsSheet = forwardRef(
       <BottomSheet
         ref={ref}
         index={-1}
-        backgroundStyle={{ backgroundColor: "#131d33" }}
+        backgroundStyle={{ backgroundColor: Colors.primary }}
         handleIndicatorStyle={{ backgroundColor: "white" }}
-        style={{ padding: 10 }}
+        style={{ paddingHorizontal: 20, paddingVertical: 10 }}
         enablePanDownToClose
         snapPoints={["50%", "75%"]}
         onClose={() => Keyboard.dismiss()}
@@ -41,7 +42,6 @@ const SettingsSheet = forwardRef(
       >
         <Input
           value={props.text}
-          placeholderColor="#fff"
           onChangeText={props.setText}
           placeholder={props.option.toLowerCase().replace("_", " ")}
           keyboardType={
@@ -51,8 +51,10 @@ const SettingsSheet = forwardRef(
         />
         <View style={{ width: "100%", alignItems: "center" }}>
           <Button
+            variant="primary"
+            type="outlined"
             text={`Save ${props.option.toLowerCase().replace("_", " ")}`}
-            fontStyle={{ color: "#00D85D" }}
+            fontStyle={{ color: Colors.secondary }}
             style={styles.button}
             onPress={() => onSave(props.option.toLowerCase(), props.text)}
           />

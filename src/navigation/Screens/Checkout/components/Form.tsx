@@ -19,7 +19,7 @@ interface FormProps {
 
 export default function Form({ onSubmit }: FormProps) {
   const { credentials } = useAppSelector((st) => st.user);
-  const inputWidth = { width: layout.screen.width - 20 };
+  const inputWidth = { width: "95%" };
 
   const kb = useListenKeyboard();
 
@@ -51,7 +51,10 @@ export default function Form({ onSubmit }: FormProps) {
           <View style={{ flex: 1 }}>
             <ScrollView
               style={{ width: layout.screen.width }}
-              contentContainerStyle={{ alignItems: "center" }}
+              contentContainerStyle={{
+                alignItems: "center",
+                paddingBottom: 100,
+              }}
             >
               <View style={{ width: "100%", paddingHorizontal: 15 }}>
                 {products.map((product) => (
@@ -68,14 +71,18 @@ export default function Form({ onSubmit }: FormProps) {
               <ValidatedInput
                 name="name"
                 style={inputWidth}
-                leftIcon={<AntDesign name="user" size={20} color="white" />}
+                leftIcon={(props) => (
+                  <AntDesign name="user" size={20} color={props.color} />
+                )}
                 {...f}
               />
 
               <ValidatedInput
                 name="surname"
                 style={inputWidth}
-                leftIcon={<AntDesign name="user" size={20} color="white" />}
+                leftIcon={(props) => (
+                  <AntDesign name="user" size={20} color={props.color} />
+                )}
                 {...f}
               />
 

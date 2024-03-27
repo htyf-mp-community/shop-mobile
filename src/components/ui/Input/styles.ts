@@ -1,3 +1,4 @@
+import { Colors } from "constants/styles";
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
@@ -7,10 +8,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   input: {
-    paddingVertical: 15,
+    paddingVertical: 10,
     paddingHorizontal: 10,
     fontSize: 18,
-    borderRadius: 10,
+    borderRadius: 15,
     fontFamily: "PoppinsRegular",
     color: "#fff",
     flex: 1,
@@ -18,10 +19,10 @@ const styles = StyleSheet.create({
     minHeight: 50,
   },
   label: {
-    fontSize: 21,
-    fontWeight: "bold",
-    color: "black",
-    marginLeft: 5,
+    fontSize: 15,
+    fontWeight: "500",
+    color: "#fff",
+    marginBottom: 2.5,
   },
 });
 

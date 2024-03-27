@@ -35,7 +35,7 @@ export default function Checkout() {
   React.useEffect(() => {
     if (checkout.paymentIntentClientSecret !== "") {
       (async () => {
-        await initPaymentSheet({
+        const props = await initPaymentSheet({
           paymentIntentClientSecret: checkout.paymentIntentClientSecret,
           merchantDisplayName: "DMQ Store",
           allowsDelayedPaymentMethods: false,
@@ -56,7 +56,9 @@ export default function Checkout() {
               componentDivider: Color(Colors.primary).darken(1).hex(),
             },
           },
-        }).catch(console.log);
+        });
+
+        console.log(props);
       })();
     }
   }, [checkout.paymentIntentClientSecret]);
@@ -91,12 +93,6 @@ export default function Checkout() {
           ))}
         </View>
       </Modal>
-
-      {/* <CheckoutModal
-        onCancel={onCancel}
-        onSubmit={purchase}
-        isVisible={isVisible}
-      /> */}
     </View>
   );
 }

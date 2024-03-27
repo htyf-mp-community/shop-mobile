@@ -35,7 +35,7 @@ export default StyleSheet.create({
     margin: 10,
     justifyContent: "center",
     alignItems: "center",
-    width: "60%",
+    width: "100%",
     backgroundColor: "transparent",
   },
 });

@@ -92,7 +92,7 @@ export default function Form({ onSubmit, disabled }: FormProps) {
                       textAlign: "left",
                       justifyContent: "flex-start",
                     }}
-                    numberOfLines={10}
+                    numberOfLines={9}
                     textAlign="left"
                     placeholder="Product's description"
                     name="description"
@@ -172,16 +172,18 @@ export default function Form({ onSubmit, disabled }: FormProps) {
                 </>
               )}
             </View>
-            <Button
-              onPress={() => {
-                step === 0 ? setSteps(step + 1) : f.handleSubmit();
-              }}
-              variant="primary"
-              type="contained"
-              text={step === 0 ? "Next" : "Upload product"}
-              size="xl"
-              disabled={!f.isValid}
-            />
+            <View style={{ padding: 10 }}>
+              <Button
+                onPress={() => {
+                  step === 0 ? setSteps(step + 1) : f.handleSubmit();
+                }}
+                variant="primary"
+                type="contained"
+                text={step === 0 ? "Next" : "Upload product"}
+                size="xl"
+                disabled={!f.isValid}
+              />
+            </View>
           </View>
         );
       }}

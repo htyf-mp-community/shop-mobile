@@ -37,6 +37,8 @@ export default function useCheckout(init = true) {
 
     if (error) return;
 
+    console.log(paymentOption);
+
     await dispatch(cartActions.clearCart());
   }
 

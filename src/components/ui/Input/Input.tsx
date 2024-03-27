@@ -12,6 +12,7 @@ import React, { useState } from "react";
 import { Colors } from "constants/styles";
 import layout from "constants/layout";
 import useColorTheme, { ThemeContextType } from "utils/context/ThemeContext";
+import Color from "color";
 
 export interface RenderComponentProps {
   theme: ThemeContextType["theme"];
@@ -120,7 +121,7 @@ export default function Input({
             styles.label,
             labelStyle,
             {
-              color: error ? "#ff3030" : "#e0e0e0",
+              color: error ? "#ff3030" : isFocused ? Colors.active : "#fff",
             },
           ]}
         >
@@ -138,7 +139,7 @@ export default function Input({
             ? Colors.error
             : isFocused
             ? Colors.active
-            : Colors.primary_light,
+            : Color(Colors.primary_light).lighten(0.25).hex(),
           alignItems: "center",
         }}
       >
@@ -151,7 +152,7 @@ export default function Input({
           spellCheck={false}
           value={value}
           onChangeText={setValue}
-          placeholderTextColor={error ? "#ff3030" : "white"}
+          placeholderTextColor={error ? "#ff3030" : "gray"}
           style={[
             styles.input,
             style,
@@ -184,7 +185,7 @@ export default function Input({
           style={[
             styles.label,
             {
-              color: error ? "#ff3030" : "#e0e0e0",
+              color: error ? "#ff3030" : isFocused ? Colors.active : "#fff",
               fontSize: 15,
               fontWeight: "400",
               marginLeft: 5,

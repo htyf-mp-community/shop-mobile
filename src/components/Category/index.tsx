@@ -15,7 +15,7 @@ export default function Category({ category }: CategoryProps) {
 
   const dispatch = useAppDispatch();
 
-  async function GetProductsByCategory() {
+  async function onCategoryPress() {
     dispatch(searchActions.setFilter({ key: "category", value: category }));
 
     navigation.navigate("Search");
@@ -23,16 +23,15 @@ export default function Category({ category }: CategoryProps) {
   return (
     <Ripple
       rippleColor="white"
-      onPress={GetProductsByCategory}
+      onPress={onCategoryPress}
       style={{
         backgroundColor: Colors.primary_light,
-
         padding: 10,
         paddingLeft: 20,
         paddingRight: 20,
         margin: 10,
         marginRight: 0,
-        borderRadius: 5,
+        borderRadius: 10,
       }}
     >
       <Text style={{ color: "#fff" }}>{category}</Text>

@@ -1,7 +1,6 @@
 import useFetch from "./utils/hooks/useFetch";
 import { useDispatch } from "react-redux";
 import useNotifications from "./utils/notifications/MainNotifications";
-import useCheckToken from "./utils/hooks/useCheckToken";
 import { userActions } from "./redux/User";
 import { useEffect } from "react";
 import MainNavigator from "navigation";

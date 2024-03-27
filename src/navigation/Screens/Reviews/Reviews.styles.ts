@@ -19,9 +19,9 @@ export const createStyles = StyleSheet.create({
   },
   button: {
     width: width - 20,
-    marginTop: 20,
+    marginTop: 10,
     justifyContent: "center",
     padding: 15,
-    borderRadius: 100,
+    borderRadius: 10,
   },
 });

@@ -32,17 +32,13 @@ export default function ImagesModal({
 }: ImagesModalProps) {
   if (visible)
     return (
-      <Animated.View
-        entering={FadeInUp}
-        exiting={FadeOutUp}
-        style={{ zIndex: 10000, position: "absolute", top: 0 }}
-      >
+      <Animated.View style={{ zIndex: 10000, position: "absolute", top: 0 }}>
         <View style={{ flex: 1, backgroundColor: "rgba(0,0,0,0.9)" }}>
           <IconButton
             containerStyle={{
               position: "absolute",
-              top: 20,
-              right: 20,
+              top: 0,
+              right: 0,
               zIndex: 100,
             }}
             onPress={onClose}

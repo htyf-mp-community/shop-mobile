@@ -62,12 +62,14 @@ export default function ProductSuggestion({
           >
             <Image
               style={{
-                width: 150,
+                width: 170,
                 height: 100,
-                borderRadius: 3,
+                borderRadius: 7.5,
               }}
+              resizeMode="contain"
               source={image(item.img_id)}
             />
+            <Text style={{ color: "#fff", marginTop: 1.5 }}>{item.title}</Text>
           </Ripple>
         )}
       />

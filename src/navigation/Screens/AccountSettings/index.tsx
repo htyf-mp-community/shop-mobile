@@ -41,9 +41,11 @@ export default function AccountSettings() {
   return (
     <Container>
       <Header />
-      <View style={{ padding: 20 }}>
+      <View style={{ padding: 10 }}>
         <View style={styles.header}>
-          <Text style={[styles.heading, { color: theme.text }]}>Settings</Text>
+          <Text style={[styles.heading, { color: theme.text }]}>
+            Account settings
+          </Text>
         </View>
 
         <Options onSheetOpen={onSheetOpen} />

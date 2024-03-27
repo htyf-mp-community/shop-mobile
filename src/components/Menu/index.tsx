@@ -33,8 +33,6 @@ function menuPosition({ placement }: Pick<MenuProps, "placement">) {
     ...(placement === "bottom" && { bottom: 5, right: 5 }),
     ...(placement === "left" && { left: 5, top: 5 }),
     ...(placement === "right" && { right: 5, top: 5 }),
-    //  ...(placement === "relative" && { top: 5, right: 5 }),
-    //  ...(placement === "center" && { top: 5, right: 5 }),
   };
 }
 

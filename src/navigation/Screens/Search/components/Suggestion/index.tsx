@@ -2,8 +2,11 @@ import useCart from "modules/Cart/AddToCart/useAddCart";
 import React from "react";
 import { View, Image, Text } from "react-native";
 import { SharedElement } from "react-navigation-shared-element";
-import { SuggestionType, useNavigationProps } from "../../@types/types";
-import { API } from "../../constants/routes";
+import {
+  SuggestionType,
+  useNavigationProps,
+} from "../../../../../@types/types";
+import { API } from "../../../../../constants/routes";
 import styles from "./Suggestion.styles";
 import { AntDesign } from "@expo/vector-icons";
 import Ripple from "react-native-material-ripple";

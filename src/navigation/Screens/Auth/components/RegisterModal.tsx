@@ -23,7 +23,7 @@ export default function RegisterModal({
       isVisible={isVisible}
       onBackdropPress={onCloseModal}
       animationIn="zoomIn"
-      animationOut="zoomOutUp"
+      animationOut="zoomOut"
       deviceHeight={height}
       onBackButtonPress={onCloseModal}
       statusBarTranslucent

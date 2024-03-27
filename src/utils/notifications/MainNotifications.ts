@@ -19,7 +19,7 @@ const useNotifications = () => {
   ) {
     const isSaved = await AsyncStorage.getItem(NOTIFICATIONS_KEY);
 
-    if (isSaved === "false" && !!expoPushToken) {
+    if (isSaved === "false" && !!expoPushToken && isSaved !== null) {
       await http().post(
         "/notifications/upload-token",
         {

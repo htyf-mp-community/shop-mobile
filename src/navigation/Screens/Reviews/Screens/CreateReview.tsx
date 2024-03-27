@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { SharedElement } from "react-navigation-shared-element";
 import { ScreenNavigationProps } from "/@types/types";
-import { Button, Input } from "@components/index";
+import { Button, Input, ValidatedInput } from "@components/index";
 import useListenKeyboard from "utils/hooks/useListenKeyboard";
 import StarsTouch from "@modules/Stars/Stars";
 import schema from "../schema";
@@ -34,7 +34,7 @@ export default function CreateReview({
           <Image
             source={{ uri: thumbnail }}
             style={styles.img}
-            resizeMode="cover"
+            resizeMode="contain"
             resizeMethod="scale"
           />
         </SharedElement>
@@ -68,7 +68,10 @@ export default function CreateReview({
         isVisible={response.hasFinished || false}
       />
 
-      <KeyboardAvoidingView behavior="padding" style={{ alignItems: "center" }}>
+      <KeyboardAvoidingView
+        behavior="padding"
+        style={{ alignItems: "center", flex: 1 }}
+      >
         <Formik
           initialValues={{
             description: "",
@@ -85,51 +88,35 @@ export default function CreateReview({
             })
           }
         >
-          {({
-            handleBlur,
-            handleChange,
-            handleSubmit,
-            errors,
-            isValid,
-            values,
-            dirty,
-            touched,
-          }) => (
+          {(f) => (
             <>
               <StarsTouch setRating={setRating} />
-              <Input
-                value={values.title}
-                setValue={handleChange("title")}
-                onBlur={handleBlur("title")}
-                placeholder="Review's title"
-                //name={"Title"}
-                helperText={errors.title || "Atleast 6 characters*"}
-                error={!!errors.title && touched.title}
-                style={styles.input}
-                placeholderTextColor={"gray"}
-              />
-              <Input
-                placeholderTextColor={"gray"}
-                value={values.description}
-                setValue={handleChange("description")}
-                onBlur={handleBlur("description")}
-                placeholder="Say something more about your expirience"
-                // name={"Description"}
-                helperText={errors.description || "Atleast 6 characters*"}
-                style={styles.input}
-                error={!!errors.description && touched.description}
-                scrollEnabled
-                multiline
-                textAlignVertical="top"
-                numberOfLines={5}
-              />
+              <View style={{ flex: 2 }}>
+                <ValidatedInput
+                  {...f}
+                  name="title"
+                  label="Title"
+                  placeholder="Tile of your review"
+                  placeholderTextColor="gray"
+                />
+                <ValidatedInput
+                  {...f}
+                  name="description"
+                  label="Description"
+                  placeholder="Your review here"
+                  numberOfLines={5}
+                  textAlign="left"
+                  textAlignVertical="top"
+                  placeholderTextColor="gray"
+                />
+              </View>
 
               <Button
                 type="contained"
                 variant="primary"
-                disabled={!(isValid && dirty && rating)}
-                text="submit"
-                callback={() => handleSubmit()}
+                disabled={!(f.isValid && f.dirty && rating)}
+                text="Share your review"
+                callback={() => f.handleSubmit()}
                 style={[styles.button]}
               />
             </>

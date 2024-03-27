@@ -48,14 +48,12 @@ const CartSheet = forwardRef<BottomSheet, CartSheetProps>(
         <View style={styles.container}>
           {cartProduct && (
             <View>
-              <Text style={styles.title}>Product added to cart</Text>
+              <Text style={styles.title}>In cart!</Text>
 
               <Preview product={product} />
 
               <View style={styles.buttons_container}>
-                <Text style={{ color: "#fff", fontSize: 17 }}>
-                  Modify amount
-                </Text>
+                <Text style={{ color: "#fff", fontSize: 17 }}>Amount</Text>
                 <View style={{ flexDirection: "row", marginTop: 10 }}>
                   <CartRemoveIconButton
                     isDisabled={cartProduct.ammount === 1}

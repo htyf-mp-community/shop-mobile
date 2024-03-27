@@ -2,7 +2,17 @@
 
 import { RootStackParams } from "/@types/types";
 
-export const API = "http://srv18.mikr.us:20410";
+//export const API = "http://srv25.mikr.us:40033";
+
+function getApiRouteENV() {
+  const url = process.env.API || process.env.BACKEND_URL;
+
+  if (!url) throw new Error("API URL not found");
+
+  return url;
+}
+
+export const API = getApiRouteENV();
 
 export const ENDPOINTS = {
   //

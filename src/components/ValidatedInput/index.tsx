@@ -29,7 +29,7 @@ export default function ValidatedInput<T extends { [key: string]: string }>({
   parseValue = (a) => a,
   style,
 
-  showLabel,
+  showLabel = true,
   ...rest
 }: ValidatedInputProps<T>) {
   const capitalizeLabel = name.charAt(0).toUpperCase() + name.slice(1);

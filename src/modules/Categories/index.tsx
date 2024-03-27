@@ -18,11 +18,7 @@ export default function Categories() {
 
   if (loading) {
     return (
-      <SkeletonPlaceholder
-        backgroundColor={"#1f2b3d"}
-        highlightColor={"#2a3a52"}
-        size={({ width }) => ({ width, height: 60 })}
-      >
+      <SkeletonPlaceholder size={({ width }) => ({ width, height: 60 })}>
         <View
           style={{
             marginHorizontal: 10,

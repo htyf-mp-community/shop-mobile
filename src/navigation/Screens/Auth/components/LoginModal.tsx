@@ -1,6 +1,6 @@
 import { Modal, Button } from "components";
 import { Image, Text, View } from "react-native";
-import { Fonts } from "constants/styles";
+import { Colors, Fonts } from "constants/styles";
 import layout from "constants/layout";
 
 interface LoginModalProps {
@@ -21,8 +21,9 @@ export default function LoginModal({ clear, error, visible }: LoginModalProps) {
       useNativeDriverForBackdrop
       style={{
         alignItems: "center",
-        height: layout.screen.height / 2,
+        height: 350,
         padding: 20,
+        borderRadius: 20,
       }}
     >
       <View style={{ alignItems: "center", flex: 3 }}>
@@ -38,7 +39,7 @@ export default function LoginModal({ clear, error, visible }: LoginModalProps) {
             fontSize: 30,
           }}
         >
-          Ooops...
+          OHH...
         </Text>
 
         <Text
@@ -49,8 +50,13 @@ export default function LoginModal({ clear, error, visible }: LoginModalProps) {
             lineHeight: 35,
           }}
         >
-          Something went wrong, see message below:{"\n"}
-          <Text style={{ fontWeight: "bold" }}>{error}</Text>
+          Something went wrong:
+          {"\n"}
+          <Text
+            style={{ fontWeight: "bold", color: Colors.error, fontSize: 20 }}
+          >
+            {error}
+          </Text>
         </Text>
       </View>
       <View style={{ flex: 1, justifyContent: "flex-end" }}>
