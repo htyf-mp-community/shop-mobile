@@ -131,7 +131,7 @@ export default function Input({
       <View
         style={{
           backgroundColor: Colors.primary_light,
-          borderRadius: 5,
+          borderRadius: 10,
           flexDirection: "row",
           width: (style as any)?.width ?? layout.screen.width * 0.95,
           borderWidth: 2,

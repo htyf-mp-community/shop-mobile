@@ -1,4 +1,5 @@
 import { Button, Modal } from "components";
+import layout from "constants/layout";
 import { Fonts } from "constants/styles";
 import { Dimensions, Text } from "react-native";
 
@@ -10,47 +11,43 @@ interface Props {
   onSignInPress: () => void;
 }
 
-const { height, width } = Dimensions.get("screen");
-
 export default function RegisterModal({
   isVisible,
   onCloseModal,
   error,
   onSignInPress,
 }: Props) {
+  const isError = !!error;
+
   return (
     <Modal
       isVisible={isVisible}
       onBackdropPress={onCloseModal}
       animationIn="zoomIn"
       animationOut="zoomOut"
-      deviceHeight={height}
+      deviceHeight={layout.screen.height}
       onBackButtonPress={onCloseModal}
       statusBarTranslucent
       useNativeDriverForBackdrop
-      style={{ alignItems: "center", paddingVertical: 20 }}
+      style={{ padding: 15, borderRadius: 20 }}
     >
       <Text
-        style={{ color: "#fff", fontFamily: Fonts.PoppinsBold, fontSize: 25 }}
+        style={{ color: "#fff", fontFamily: Fonts.PoppinsBold, fontSize: 22.5 }}
       >
-        {error || "Activate your account"}
+        {isError ? "Oh no! Something went wrong" : "Success!"}
       </Text>
 
-      <Text
-        style={{
-          color: "#fff",
-          fontFamily: Fonts.PoppinsRegular,
-          fontSize: 18,
-          marginTop: 10,
-        }}
-      >
-        {error || "Please check your email and activate your account"}
+      <Text style={{ color: "#fff", fontSize: 18, marginVertical: 20 }}>
+        {isError
+          ? error
+          : "You have successfully registered! Activate your account by clicking the link sent to your email."}
       </Text>
 
       <Button
-        style={{ width: width - 100, marginTop: 20 }}
+        style={{ width: "100%", marginTop: 15 }}
         variant="primary"
-        text="SIGN IN"
+        text={isError ? "Try again" : "Sign in"}
+        type="contained"
         callback={() => onSignInPress()}
       />
     </Modal>

@@ -62,7 +62,8 @@ export default function AuthForm({
                 autoFocus
                 name="email"
                 style={inputStyle}
-                placeholder="Email*"
+                label="Email*"
+                placeholder="Email"
                 leftIcon={(props) => (
                   <AntDesign name="user" size={25} color={props.color} />
                 )}
@@ -75,8 +76,9 @@ export default function AuthForm({
               />
               <ValidatedInput
                 name="password"
+                label="Password*"
                 style={inputStyle}
-                placeholder="Password*"
+                placeholder="Password"
                 leftIcon={(props) => (
                   <AntDesign name="lock" size={25} color={props.color} />
                 )}
@@ -99,13 +101,14 @@ export default function AuthForm({
               {isRegister && (
                 <ValidatedInput
                   style={inputStyle}
-                  placeholder="Confirm Password*"
+                  placeholder="Repeat your password"
                   leftIcon={(props) => (
                     <AntDesign name="lock" size={20} color={props.color} />
                   )}
                   autoComplete="password"
                   autoCorrect={false}
                   secureTextEntry={!vissible}
+                  label="Repeat password*"
                   rightIcon={(props) => (
                     <PasswordToggle
                       setVissible={setVissible}
@@ -130,7 +133,12 @@ export default function AuthForm({
                 type="contained"
                 variant="primary"
                 disabled={
-                  !(formik.isValid && formik.dirty && !loading && !error)
+                  !(
+                    formik.isValid &&
+                    (formik.dirty || !!initialValuesProp?.email) &&
+                    !loading &&
+                    !error
+                  )
                 }
                 fontStyle={{ fontWeight: "bold" }}
                 testID="SUBMIT_BUTTON"
@@ -144,7 +152,9 @@ export default function AuthForm({
                   marginTop: 10,
                 }}
               >
-                <Text style={{ color: "gray" }}>
+                <Text
+                  style={{ color: "gray", textDecorationLine: "underline" }}
+                >
                   {!isRegister ? "Don't have account?" : "Have an account?"}
                 </Text>
               </TouchableOpacity>

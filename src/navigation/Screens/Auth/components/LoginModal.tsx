@@ -15,61 +15,32 @@ export default function LoginModal({ clear, error, visible }: LoginModalProps) {
       isVisible={visible}
       onBackdropPress={clear}
       animationIn="zoomIn"
-      animationOut="zoomOutUp"
+      animationOut="zoomOut"
+      deviceHeight={layout.screen.height}
       onBackButtonPress={clear}
       statusBarTranslucent
       useNativeDriverForBackdrop
-      style={{
-        alignItems: "center",
-        height: 350,
-        padding: 20,
-        borderRadius: 20,
-      }}
+      style={{ padding: 15, borderRadius: 20 }}
     >
-      <View style={{ alignItems: "center", flex: 3 }}>
-        <Image
-          source={require("@assets/4944051.png")}
-          style={{ height: 100, width: 100 }}
-        />
+      <Text
+        style={{
+          color: "#fff",
+          fontFamily: Fonts.PoppinsBold,
+          fontSize: 30,
+        }}
+      >
+        OHH...
+      </Text>
 
-        <Text
-          style={{
-            color: "#fff",
-            fontFamily: Fonts.PoppinsBold,
-            fontSize: 30,
-          }}
-        >
-          OHH...
-        </Text>
+      <Text style={{ color: "#fff", fontSize: 18 }}>{error}</Text>
 
-        <Text
-          style={{
-            color: "#fff",
-            fontSize: 20,
-            fontFamily: Fonts.PoppinsRegular,
-            lineHeight: 35,
-          }}
-        >
-          Something went wrong:
-          {"\n"}
-          <Text
-            style={{ fontWeight: "bold", color: Colors.error, fontSize: 20 }}
-          >
-            {error}
-          </Text>
-        </Text>
-      </View>
-      <View style={{ flex: 1, justifyContent: "flex-end" }}>
-        <Button
-          callback={clear}
-          text="Try again"
-          type="contained"
-          color="primary"
-          size="xl"
-          borderRadius="full"
-          style={{ width: layout.window.width - 80 }}
-        />
-      </View>
+      <Button
+        callback={clear}
+        style={{ width: "100%", marginTop: 15 }}
+        variant="primary"
+        text="Try again"
+        type="contained"
+      />
     </Modal>
   );
 }

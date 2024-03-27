@@ -15,11 +15,11 @@ const styles = StyleSheet.create({
   },
   btn: {
     width: SCREEN_WIDTH * 0.95,
-    marginTop: 5,
+    marginTop: 10,
     padding: 15,
     color: Colors.text,
     justifyContent: "center",
-    borderRadius: radius.small,
+    borderRadius: 15,
     flexDirection: "row-reverse",
   },
 });
