@@ -41,6 +41,10 @@ export default function BottomTab({
         }
         relative
         prod_id={prod_id}
+        fontStyle={{
+          textTransform: "uppercase",
+          fontSize: 16,
+        }}
         text={notAvailable ? "Not Available" : "Add product"}
         style={[styles.button, { backgroundColor: Colors.secondary }]}
       />

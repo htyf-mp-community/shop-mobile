@@ -75,7 +75,7 @@ export default function Form({ onSubmit, disabled }: FormProps) {
               }}
             >
               {step === 0 && (
-                <>
+                <ScrollView>
                   <ValidatedInput
                     style={{ lineHeight: 25, textDecorationLine: "none" }}
                     leftIcon={<Ionicons name="text" size={24} color="white" />}
@@ -92,7 +92,7 @@ export default function Form({ onSubmit, disabled }: FormProps) {
                       textAlign: "left",
                       justifyContent: "flex-start",
                     }}
-                    numberOfLines={9}
+                    numberOfLines={8}
                     textAlign="left"
                     placeholder="Product's description"
                     name="description"
@@ -119,7 +119,7 @@ export default function Form({ onSubmit, disabled }: FormProps) {
                     helperText="Product's manufacturer"
                     {...f}
                   />
-                </>
+                </ScrollView>
               )}
 
               {step === 1 && (

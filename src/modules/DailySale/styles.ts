@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 15,
     justifyContent: "center",
+    flexDirection: "row-reverse",
   },
   favourite: {
     padding: 15,

@@ -82,11 +82,6 @@ export const defaultStackOptions: StackNavigationOptions = {
 export const auctionOptions: StackNavigationOptions = {
   ...defaultStackOptions,
   headerTitleAlign: "center",
-  detachPreviousScreen: false,
-  transitionSpec: {
-    open: { animation: "timing", config: { duration: 200 } },
-    close: { animation: "timing", config: { duration: 200 } },
-  },
 };
 
 export const detailsScreenOptions = ({
@@ -96,10 +91,10 @@ export const detailsScreenOptions = ({
   headerTitle: route?.params?.title?.split("").slice(0, 30).join(""),
   headerTitleAlign: "center",
   detachPreviousScreen: false,
-  // transitionSpec: {
-  //   open: { animation: "timing", config: { duration: 100 } },
-  //   close: { animation: "timing", config: { duration: 100 } },
-  // },
+  transitionSpec: {
+    open: { animation: "timing", config: { duration: 200 } },
+    close: { animation: "timing", config: { duration: 200 } },
+  },
 
   ...(!route.params.isSharedAnimationUsed && horizontalAnimation),
 });
@@ -128,7 +123,7 @@ export const cartScreenOptions: StackNavigationOptions = {
 };
 
 export const watchlistScreenOptions: StackNavigationOptions = {
-  //  ...horizontalAnimationFromLeft,
+  ...defaultStackOptions,
 };
 
 export const createReviewOptions = ({
@@ -137,6 +132,7 @@ export const createReviewOptions = ({
   route: RouteProp<RootStackParams, "CreateReview">;
 }): StackNavigationOptions => ({
   // ...horizontalAnimation,
+  ...defaultStackOptions,
   headerTitle: "",
 });
 
@@ -145,8 +141,9 @@ export const productReviewsOption = ({
 }: {
   route: RouteProp<RootStackParams, "ProductReviews">;
 }): StackNavigationOptions => ({
-  title: `Rate: ${params.prod_name}`,
-  ...horizontalAnimation,
+  title: `User reviews`,
+  headerTitleAlign: "center",
+  ...defaultStackOptions,
 });
 
 export const myReviewsOption: StackNavigationOptions = {
@@ -166,15 +163,15 @@ export const searchOptions: StackNavigationOptions = {
 export const purchaseHistoryOption: StackNavigationOptions = {
   headerTitle: "Purchase history",
   headerTitleAlign: "center",
+  ...defaultStackOptions,
 };
 
 export const authOptions: StackNavigationOptions = {
   headerShown: true,
-  ...horizontalAnimation,
+  ...defaultStackOptions,
 };
 
 export const landingOptions: StackNavigationOptions = {
   ...authOptions,
   headerShown: false,
-  animationTypeForReplace: "pop",
 };

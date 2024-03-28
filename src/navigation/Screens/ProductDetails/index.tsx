@@ -21,6 +21,10 @@ import Animated, {
 } from "react-native-reanimated";
 import ImagesModal from "./components/ImagesModal";
 import useListenBackPress from "utils/hooks/useListenBackPress";
+import ButtonsBar from "modules/DailySale/components/Buttonsbar";
+import { IconButton } from "components";
+import { AntDesign } from "@expo/vector-icons";
+import Ripple from "react-native-material-ripple";
 
 export default function ProductDetails({
   route,
@@ -75,6 +79,8 @@ export default function ProductDetails({
 
   const sheetRef = useRef<BottomSheet | null>(null);
 
+  const [imagesModalVisible, setImagesModalVisible] = useState(false);
+
   useEffect(() => {
     navigation.setOptions({
       headerTitle: () => (
@@ -89,19 +95,13 @@ export default function ProductDetails({
         </Animated.Text>
       ),
     });
-  }, []);
+  }, [imagesModalVisible]);
 
   useListenBackPress(() => {
     if (navigation.canGoBack()) navigation.pop();
 
     return true;
   }, []);
-
-  // useFocusEffect(() => {
-  //   //  sheetRef.current?.close();
-  // });
-
-  const [imagesModalVisible, setImagesModalVisible] = useState(false);
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.primary }}>
@@ -118,7 +118,6 @@ export default function ProductDetails({
         <ImagesCarusel
           onPress={(index) => {
             setImagesModalVisible(true);
-            // navigation.navigate('ImagePreview',{})
           }}
           {...{ sharedID, prod_id, images }}
         />

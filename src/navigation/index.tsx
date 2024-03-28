@@ -17,12 +17,7 @@ export default function MainNavigator() {
   return (
     <>
       <StatusBar backgroundColor={theme.primary} />
-      <NavigationContainer
-        // onStateChange={(state) =>
-        //   console.log(state?.routes.map(({ name }) => name))
-        // }
-        theme={current === "dark" ? DarkTheme : undefined}
-      >
+      <NavigationContainer theme={current === "dark" ? DarkTheme : undefined}>
         <Stack.Navigator
           detachInactiveScreens={false}
           initialRouteName={isLoggedIn ? "Home" : "Landing"}
@@ -93,13 +88,7 @@ export default function MainNavigator() {
                   }
                 }}
               />
-              {/* <Stack.Screen
-                name="ImagePreview"
-                component={Screen.ImagePreview}
-                options={{
-                  presentation: "modal",
-                }}
-              /> */}
+
               <Stack.Screen
                 name="Checkout"
                 component={Screen.Checkout}

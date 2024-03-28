@@ -86,7 +86,7 @@ export const GesturedImage = (item: { name: string; index: number }) => {
       { translateY: -focalY.value },
       { translateX: layout.window.width / 2 },
       { translateY: layout.window.height / 2 },
-    ],
+    ] as any,
   }));
 
   const finalGesture = Gesture.Race(handleGesture);

@@ -58,7 +58,7 @@ export const WatchlistButton = (props: WatchlistButtonProps) => {
         margin: 0,
         marginRight: 5,
         borderRightWidth: 1,
-        borderRightColor: "rgba(255,255,255,0.3)",
+        borderRightColor: "rgba(255,255,255,0.10)",
         borderRadius: 0,
       }}
     />

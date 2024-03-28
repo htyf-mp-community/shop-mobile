@@ -5,10 +5,15 @@ import { Button } from "components";
 import useCart from "modules/Cart/AddToCart/useAddCart";
 import { Cart } from "redux/Cart";
 import { useNavigation } from "@react-navigation/native";
-import { useNavigationProps } from "/@types/types";
+import CartIcon from "modules/Cart/AddToCart/CartIcon";
 
 export default function ButtonsBar(props: { product?: Cart; prod_id: number }) {
-  const { pushToCart: addCart, result, loading } = useCart(props.prod_id || 0);
+  const {
+    pushToCart: addCart,
+    result,
+    loading,
+    error,
+  } = useCart(props.prod_id || 0);
 
   const navigation = useNavigation<any>();
 
@@ -19,8 +24,9 @@ export default function ButtonsBar(props: { product?: Cart; prod_id: number }) {
       <AddWatchlist prod_id={props.prod_id} />
       <Button
         disabled={loading}
+        icon={<CartIcon loading={loading} success={result} error={!!error} />}
         onLongPress={() => navigation.navigate("Cart")}
-        fontStyle={{ textTransform: "uppercase", fontSize: 17 }}
+        fontStyle={{ textTransform: "uppercase", fontSize: 16, marginLeft: 10 }}
         style={styles.button}
         callback={addCart}
         text={
