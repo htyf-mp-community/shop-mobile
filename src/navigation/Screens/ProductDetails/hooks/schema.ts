@@ -13,7 +13,7 @@ export const GET_PRODUCT = gql`
 
       rating
 
-      img_id(take: 10, skip: 1) {
+      img_id(take: 10, skip: 0) {
         id
         name
       }

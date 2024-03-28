@@ -21,10 +21,6 @@ import Animated, {
 } from "react-native-reanimated";
 import ImagesModal from "./components/ImagesModal";
 import useListenBackPress from "utils/hooks/useListenBackPress";
-import ButtonsBar from "modules/DailySale/components/Buttonsbar";
-import { IconButton } from "components";
-import { AntDesign } from "@expo/vector-icons";
-import Ripple from "react-native-material-ripple";
 
 export default function ProductDetails({
   route,
@@ -35,10 +31,13 @@ export default function ProductDetails({
   const { data, refetch, loading } = useProduct(prod_id, title);
   const product = data?.product;
 
-  const images = [
-    { id: 0, name: image?.split("=")[1] },
-    ...(product?.img_id || []),
-  ];
+  const images = (() => {
+    if (typeof image === "undefined") return product?.img_id || [];
+
+    const fetchedImages = [...(product?.img_id || [])].splice(1);
+
+    return [{ id: 0, name: image?.split("=")[1] }, ...fetchedImages];
+  })();
 
   const { theme } = useColorTheme();
 
