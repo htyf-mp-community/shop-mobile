@@ -81,11 +81,11 @@ type Filters =
   | "search";
 
 export type NestedSearchScreens = {
-  Filters: {
+  Filters?: {
     focusedFilter: Filters;
   };
-  Searched: undefined;
-  Query: undefined;
+  Searched?: undefined;
+  Query?: undefined;
 };
 
 export type RootStackParams = {

@@ -1,6 +1,6 @@
 import { VirtualizedList, View, Image, Text } from "react-native";
 import ProductTile, { TILE_WIDTH } from "./ProductTile";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import type {
   Product,
   ProductImageProps,
@@ -11,6 +11,7 @@ import { wait } from "functions/wait";
 import { MasonryFlashList } from "@shopify/flash-list";
 import BottomSheet, {
   BottomSheetBackdrop,
+  BottomSheetBackdropProps,
   BottomSheetFlatList,
 } from "@gorhom/bottom-sheet";
 import { Colors } from "constants/styles";
@@ -20,20 +21,39 @@ import Color from "color";
 import { AntDesign, FontAwesome5 } from "@expo/vector-icons";
 import layout from "constants/layout";
 import { FlatList } from "react-native-gesture-handler";
+import ButtonsBar from "modules/DailySale/components/Buttonsbar";
+import Ripple from "react-native-material-ripple";
 
 interface ProductsListProps {
   data: ProductMinified[];
   onEndReached: () => void;
 
-  selectedProduct: ProductMinified;
+  setSelected: (prod: ProductMinified) => void;
+  selectedProduct: ProductMinified | null;
+
+  sheetRef: React.MutableRefObject<BottomSheet | null>;
 }
 
 export default function ProductsList({
   data,
   onEndReached,
-
   selectedProduct,
+  setSelected,
+  sheetRef,
 }: ProductsListProps) {
+  const cart = useAppSelector((state) => state.cart);
+
+  const backdropComponent = useCallback(
+    (props: BottomSheetBackdropProps) => (
+      <BottomSheetBackdrop
+        {...props}
+        appearsOnIndex={0}
+        disappearsOnIndex={-1}
+      />
+    ),
+    []
+  );
+
   return (
     <>
       <View style={{ flex: 1 }}>
@@ -48,25 +68,22 @@ export default function ProductsList({
               isExpanded={false}
               listIndex={index}
               product={item}
-              onLongProductPress={() => {}}
+              onPress={() => {
+                setSelected(item);
+              }}
             />
           )}
         />
       </View>
 
       <BottomSheet
-        index={0}
+        ref={sheetRef}
+        index={-1}
         handleIndicatorStyle={{ backgroundColor: "#fff" }}
         backgroundStyle={{ backgroundColor: Colors.primary }}
         style={{ paddingHorizontal: 10, justifyContent: "space-between" }}
-        snapPoints={["80%"]}
-        backdropComponent={(props) => (
-          <BottomSheetBackdrop
-            {...props}
-            appearsOnIndex={0}
-            disappearsOnIndex={-1}
-          />
-        )}
+        snapPoints={["65%"]}
+        backdropComponent={backdropComponent}
       >
         <Text style={{ fontSize: 10, color: "gray", textAlign: "right" }}>
           Product id: {selectedProduct?.prod_id}
@@ -111,49 +128,66 @@ export default function ProductsList({
           />
 
           <View style={{ flex: 1, paddingVertical: 10 }}>
-            <Text style={{ color: "#fff", fontSize: 18 }}>
-              Current price ${selectedProduct?.price}
+            <Text
+              style={{
+                color: "#fff",
+                fontSize: 15,
+                fontWeight: "bold",
+              }}
+            >
+              Prices
             </Text>
-            <Text style={{ color: "#fff", fontSize: 18 }}>
-              Lowest price $
-              {(selectedProduct?.price - Math.random() * 1000).toFixed(2)}
-            </Text>
+
+            <View
+              style={{
+                marginTop: 5,
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
+              <Text
+                style={{
+                  color: "#fff",
+                  fontSize: 18,
+                }}
+              >
+                {selectedProduct?.price}$
+              </Text>
+            </View>
+
+            <Ripple
+              style={{
+                padding: 10,
+                paddingHorizontal: 15,
+                backgroundColor: Color(Colors.secondary)
+                  .darken(0.75)
+                  .desaturate(0.5)
+                  .hex(),
+                borderRadius: 15,
+                marginTop: 20,
+                width: "55%",
+              }}
+            >
+              <Text
+                style={{
+                  color: Colors.secondary,
+                  fontSize: 18,
+                }}
+              >
+                Enable notifications
+              </Text>
+            </Ripple>
           </View>
         </View>
 
-        <View
-          style={{
-            flexDirection: "row",
-            width: "100%",
-            gap: 10,
-            marginVertical: 10,
-          }}
-        >
-          <Button
-            type="contained"
-            color="primary"
-            icon={
-              <FontAwesome5 name="trash-alt" size={24} color={Colors.error} />
-            }
-            fontStyle={{ color: Colors.error }}
-            style={{
-              backgroundColor: Color(Colors.error).alpha(0.25).string(),
-              width: 60,
-              borderRadius: 100,
-            }}
+        {selectedProduct && (
+          <ButtonsBar
+            prod_id={selectedProduct?.prod_id}
+            product={cart.cart.find(
+              (p) => p.prod_id === selectedProduct?.prod_id
+            )}
           />
-          <Button
-            type="contained"
-            color="primary"
-            text="Add to cart"
-            style={{
-              flex: 4,
-              backgroundColor: Colors.secondary,
-              borderRadius: 100,
-              padding: 15,
-            }}
-          />
-        </View>
+        )}
       </BottomSheet>
     </>
   );

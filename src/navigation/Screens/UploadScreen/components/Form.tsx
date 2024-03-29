@@ -30,7 +30,7 @@ const initialValues = {
   title: "",
   manufactor: "",
   quantity: "0",
-  tags: [] as any,
+  tags: "" as any,
 };
 
 interface FormProps {
@@ -61,7 +61,6 @@ export default function Form({ onSubmit, disabled }: FormProps) {
           quantity: +res.quantity,
           price: +res.price,
           images: listOfImages,
-          tags: res.tags.join(", "),
         })
       }
     >
@@ -82,21 +81,6 @@ export default function Form({ onSubmit, disabled }: FormProps) {
                     placeholder="Product's title"
                     name="title"
                     helperText="What's the name of the product?"
-                    {...f}
-                  />
-                  <ValidatedInput
-                    multiline
-                    style={{
-                      lineHeight: 25,
-                      textDecorationLine: "none",
-                      textAlign: "left",
-                      justifyContent: "flex-start",
-                    }}
-                    numberOfLines={8}
-                    textAlign="left"
-                    placeholder="Product's description"
-                    name="description"
-                    helperText="Describe the product in detail 200+ characters"
                     {...f}
                   />
                   <ValidatedInput
@@ -123,7 +107,36 @@ export default function Form({ onSubmit, disabled }: FormProps) {
               )}
 
               {step === 1 && (
+                <ValidatedInput
+                  multiline
+                  style={{
+                    lineHeight: 25,
+                    textDecorationLine: "none",
+                    textAlign: "left",
+                    justifyContent: "flex-start",
+                  }}
+                  numberOfLines={25}
+                  textAlign="left"
+                  textAlignVertical="top"
+                  placeholder="Product's description"
+                  name="description"
+                  helperText="Describe the product in detail 200+ characters"
+                  {...f}
+                />
+              )}
+
+              {step === 2 && (
                 <>
+                  <Text
+                    style={{
+                      color: "#fff",
+                      fontSize: 15,
+                      fontWeight: "bold",
+                      marginBottom: 2,
+                    }}
+                  >
+                    Choose category
+                  </Text>
                   <Select
                     multiSelect
                     maxSelectHeight={300}
@@ -138,15 +151,13 @@ export default function Form({ onSubmit, disabled }: FormProps) {
                     options={data as string[]}
                   />
 
-                  <Select
-                    multiSelect
-                    maxSelectHeight={400}
-                    transparentOverlay={false}
-                    containerStyle={{ marginBottom: 15 }}
-                    //prettier-ignore
-                    options={["electronics","clothing","accessories","home decor","furniture","beauty","toys","books","sports","outdoor",]}
-                    selected={f.values.tags || []}
-                    setSelected={(v) => f.setFieldValue("tags", v)}
+                  <ValidatedInput
+                    style={{ lineHeight: 25, textDecorationLine: "none" }}
+                    leftIcon={<Ionicons name="text" size={24} color="white" />}
+                    placeholder="Tags"
+                    name="tags"
+                    helperText="Add tags to your product"
+                    {...f}
                   />
 
                   <ValidatedInput
@@ -172,16 +183,31 @@ export default function Form({ onSubmit, disabled }: FormProps) {
                 </>
               )}
             </View>
-            <View style={{ padding: 10 }}>
+            <View style={{ padding: 10, flexDirection: "row", gap: 10 }}>
               <Button
                 onPress={() => {
-                  step === 0 ? setSteps(step + 1) : f.handleSubmit();
+                  setSteps(step - 1 >= 0 ? step - 1 : 0);
                 }}
                 variant="primary"
                 type="contained"
-                text={step === 0 ? "Next" : "Upload product"}
+                text={"Back"}
+                size="xl"
+                disabled={step === 0}
+              />
+              <Button
+                onPress={() => {
+                  if (step === 2) {
+                    f.handleSubmit();
+                  } else {
+                    setSteps(step + 1);
+                  }
+                }}
+                variant="primary"
+                type="contained"
+                text={step === 2 ? "Submit" : "Next"}
                 size="xl"
                 disabled={!f.isValid}
+                style={{ flex: 1 }}
               />
             </View>
           </View>

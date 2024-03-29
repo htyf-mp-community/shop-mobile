@@ -3,6 +3,8 @@ import useWatchlist from "./useWatchlist";
 import Icon from "./Icon";
 
 import { StyleProp, ViewStyle } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { useNavigationProps } from "/@types/types";
 
 interface AddWatchlistProps {
   prod_id: number;
@@ -28,6 +30,8 @@ export default function AddWatchlist({
   const handleWatchlistClick = () =>
     state === "IN" ? remove(prod_id) : appendWatchlist();
 
+  const navigation = useNavigation<useNavigationProps>();
+
   return (
     <Button
       style={[
@@ -41,6 +45,7 @@ export default function AddWatchlist({
       type="contained"
       color="primary"
       onPress={handleWatchlistClick}
+      onLongPress={() => navigation.navigate("Watchlist")}
       icon={<Icon iconSize={iconSize} state={state} iconColor={iconColor} />}
     />
   );

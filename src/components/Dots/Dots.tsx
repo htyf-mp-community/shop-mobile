@@ -9,6 +9,7 @@ interface DotsProps {
   x: Animated.Value;
 }
 
+// ZIndex doesnt work on Android
 export default function Dots({ arr, x }: DotsProps) {
   return (
     <>
@@ -34,7 +35,7 @@ export default function Dots({ arr, x }: DotsProps) {
               backgroundColor: backgroundColor,
               borderRadius: 100,
               margin: 4,
-              zIndex: 50,
+              zIndex: 20,
               transform: [{ scale }],
             }}
           />

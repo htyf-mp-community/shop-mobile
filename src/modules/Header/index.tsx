@@ -24,7 +24,7 @@ export default function Header({ toggleSidebar: onToggle }: SearchBarProps) {
 
       <Button
         icon={<EvilIcons name="search" size={27} color={theme.text} />}
-        onPress={() => navigation.navigate("Search")}
+        onPress={() => navigation.navigate("Search", {})}
         style={{ marginRight: 0, padding: 5 }}
       />
     </View>
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    zIndex: 120,
+    zIndex: 150,
     paddingVertical: 15,
     justifyContent: "space-between",
   },

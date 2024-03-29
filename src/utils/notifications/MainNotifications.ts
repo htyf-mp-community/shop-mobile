@@ -43,7 +43,9 @@ const useNotifications = () => {
         Notifications.addNotificationResponseReceivedListener((response) => {
           const request = response.notification.request;
 
-          if (request.content.data.type === "product_update") {
+          const allowedTypes = ["product_update", "daily_sale", "new_product"];
+
+          if (allowedTypes.includes(request.content.data.type)) {
             navigationRef.current?.navigate("Product", {
               prod_id: request.content.data.prod_id,
               sharedID: "",

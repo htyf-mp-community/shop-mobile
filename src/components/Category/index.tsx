@@ -5,20 +5,21 @@ import Ripple from "react-native-material-ripple";
 import { useAppDispatch } from "utils/hooks/hooks";
 import { searchActions } from "redux/Search/search";
 import { Colors } from "constants/styles";
+import { useNavigationProps } from "/@types/types";
 
 interface CategoryProps {
   category: string;
 }
 
 export default function Category({ category }: CategoryProps) {
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation<useNavigationProps>();
 
   const dispatch = useAppDispatch();
 
   async function onCategoryPress() {
     dispatch(searchActions.setFilter({ key: "category", value: category }));
 
-    navigation.navigate("Search");
+    navigation.navigate("Search", {});
   }
   return (
     <Ripple
