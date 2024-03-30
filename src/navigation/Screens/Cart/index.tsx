@@ -14,7 +14,7 @@ export default function Cart({
   route,
 }: ScreenNavigationProps<"Cart">) {
   const { theme } = useColorTheme();
-  const { cart, ...restUseCartProps } = useCart();
+  const { cart, total, ...restUseCartProps } = useCart();
 
   const { removeAll } = useRemoveCart();
 
@@ -52,7 +52,7 @@ export default function Cart({
   return (
     <View style={{ flex: 1, backgroundColor: theme.primary }}>
       <CartList ref={cartListRef} data={cart} {...restUseCartProps} />
-      <Purchase cart={cart} />
+      <Purchase cart={cart} total={total} />
     </View>
   );
 }

@@ -16,14 +16,14 @@ interface CartProduct extends ProductMinified {
 
 interface PurchaseProps {
   cart: CartProduct[];
+  total: number;
 }
 
-export default function Purchase({ cart }: PurchaseProps) {
+export default function Purchase({ cart, total }: PurchaseProps) {
   const navigation = useNavigation<useNavigationProps>();
-  const totalPrice = useMemo(() => CalcTotalCartPrice(cart), [cart]);
 
   function PurchaseProduct() {
-    navigation.navigate("Checkout", { cart, total: totalPrice });
+    navigation.navigate("Checkout", { cart, total });
   }
 
   const disabled = cart.length === 0;
@@ -44,7 +44,7 @@ export default function Purchase({ cart }: PurchaseProps) {
       <View style={styles.content}>
         <Text style={[styles.text, { color: theme.text }]}>Total:</Text>
         <Text style={[styles.text, { color: theme.text }]}>
-          ${totalPrice} + $9.99{" "}
+          ${total} + $9.99{" "}
           <MaterialCommunityIcons
             name="truck-delivery-outline"
             size={22}

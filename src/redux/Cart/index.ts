@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Paging, ProductMinified } from "/@types/types";
 import { addCartProduct, removeCartProduct } from "./CartHttp";
+import { CalcTotalCartPrice } from "functions/CalcTotalCartPrice";
 
 export interface Cart extends ProductMinified {
   cart_id: number;
@@ -15,6 +16,8 @@ const initialState = {
   isSynced: false,
 
   hasMore: false,
+
+  total: 0,
 };
 
 type State = typeof initialState;
@@ -35,6 +38,11 @@ const cartSlice = createSlice({
       state.isSynced = false;
       state.loading = false;
       state.empty = false;
+      state.total = 0;
+    },
+
+    setTotal(state: State, { payload }: { payload: number }) {
+      state.total = payload;
     },
 
     setCart(state: State, { payload }: { payload: Paging<Cart> }) {
@@ -80,6 +88,7 @@ const cartSlice = createSlice({
       }
 
       state.cart = cart;
+      state.total = CalcTotalCartPrice(cart);
       state.amount = amount(cart);
     });
 
@@ -99,6 +108,8 @@ const cartSlice = createSlice({
         state.cart.unshift(payload.product);
         state.amount += 1;
       }
+
+      state.total = CalcTotalCartPrice(state.cart);
     });
   },
 });

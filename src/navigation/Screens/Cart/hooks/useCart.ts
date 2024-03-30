@@ -5,7 +5,9 @@ import useFetch from "utils/hooks/useFetch";
 
 export function useCart() {
   const dispatch = useAppDispatch();
-  const { cart, isSynced, hasMore } = useAppSelector((state) => state.cart);
+  const { cart, isSynced, hasMore, total } = useAppSelector(
+    (state) => state.cart
+  );
   const [skip, setSkip] = useState(5);
 
   const onSuccess = useCallback((data: any) => {
@@ -28,10 +30,19 @@ export function useCart() {
     setSkip((prev) => prev + 5);
   }, [skip, hasMore]);
 
+  useFetch("/cart/total", {
+    invalidate: [],
+    fetchOnMount: true,
+    onSuccess: (data: { total: number }) => {
+      dispatch(cartActions.setTotal(data.total));
+    },
+  });
+
   return {
     cart,
     isLoading,
     onEndReached,
     isFetchingMore: cart.length !== 0 && loading,
+    total,
   };
 }
