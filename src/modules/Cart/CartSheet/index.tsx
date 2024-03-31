@@ -6,11 +6,11 @@ import { forwardRef, useCallback } from "react";
 import { Text, View } from "react-native";
 import useColorTheme from "utils/context/ThemeContext";
 import type { Product } from "/@types/types";
-import { CartAddIconButton, CartRemoveIconButton } from "../IconButtons";
 import styles from "./styles";
 import Preview from "./components/Preview";
 import Navigators from "./components/Navigators";
 import { Cart } from "redux/Cart";
+import QuantityButtons from "./components/QuantityButtons";
 
 interface CartSheetProps {
   product: Partial<Product>;
@@ -42,7 +42,7 @@ const CartSheet = forwardRef<BottomSheet, CartSheetProps>(
         snapPoints={["50%"]}
         backgroundStyle={{ backgroundColor: theme.primary }}
         enablePanDownToClose
-        handleIndicatorStyle={{ backgroundColor: "#fff", width: "25%" }}
+        handleIndicatorStyle={{ backgroundColor: "#fff", width: "20%" }}
         backdropComponent={backdropComponent}
       >
         <View style={styles.container}>
@@ -52,22 +52,12 @@ const CartSheet = forwardRef<BottomSheet, CartSheetProps>(
 
               <Preview product={product} />
 
-              <View style={styles.buttons_container}>
-                <Text style={{ color: "#fff", fontSize: 17 }}>Amount</Text>
-                <View style={{ flexDirection: "row", marginTop: 10 }}>
-                  <CartRemoveIconButton
-                    isDisabled={cartProduct.ammount === 1}
-                    cart_id={cartProduct?.cart_id}
-                  />
-                  <Text style={styles.amount_text}>{cartProduct?.ammount}</Text>
-                  <CartAddIconButton
-                    isDisabled={
-                      (cartProduct?.ammount || 0) > (product?.quantity || 0)
-                    }
-                    prod_id={cartProduct?.prod_id}
-                  />
-                </View>
-              </View>
+              <QuantityButtons
+                cart_id={cartProduct?.cart_id || 0}
+                prod_id={cartProduct?.prod_id || 0}
+                productQuantity={product.quantity || 0}
+                productCartQuantity={cartProduct?.ammount || 0}
+              />
             </View>
           )}
           <View style={styles.navigation_container}>

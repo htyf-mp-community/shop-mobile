@@ -78,6 +78,10 @@ export default function ProductDetails({
 
   const sheetRef = useRef<BottomSheet | null>(null);
 
+  useEffect(() => {
+    if (typeof cartProduct === "undefined") sheetRef.current?.close();
+  }, [cartProduct]);
+
   const [imagesModalVisible, setImagesModalVisible] = useState(false);
 
   useEffect(() => {

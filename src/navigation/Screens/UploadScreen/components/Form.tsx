@@ -170,17 +170,19 @@ export default function Form({ onSubmit, disabled }: FormProps) {
                     helperText="How many of this product do you have?"
                     {...f}
                   />
-
-                  <ImageUpload
-                    images={listOfImages}
-                    handleRemoveImage={(img) => {
-                      setListOfImages((prev) => prev.filter((i) => i !== img));
-                    }}
-                    handleSetImages={(img) => {
-                      setListOfImages((prev) => [...prev, img]);
-                    }}
-                  />
                 </>
+              )}
+
+              {step === 3 && (
+                <ImageUpload
+                  images={listOfImages}
+                  handleRemoveImage={(img) => {
+                    setListOfImages((prev) => prev.filter((i) => i !== img));
+                  }}
+                  handleSetImages={(img) => {
+                    setListOfImages((prev) => [...prev, ...img]);
+                  }}
+                />
               )}
             </View>
             <View style={{ padding: 10, flexDirection: "row", gap: 10 }}>
@@ -196,7 +198,7 @@ export default function Form({ onSubmit, disabled }: FormProps) {
               />
               <Button
                 onPress={() => {
-                  if (step === 2) {
+                  if (step === 3) {
                     f.handleSubmit();
                   } else {
                     setSteps(step + 1);
@@ -204,9 +206,9 @@ export default function Form({ onSubmit, disabled }: FormProps) {
                 }}
                 variant="primary"
                 type="contained"
-                text={step === 2 ? "Submit" : "Next"}
+                text={step === 3 ? "Submit" : "Next"}
                 size="xl"
-                disabled={!f.isValid}
+                disabled={step === 3 ? !f.isValid : false}
                 style={{ flex: 1 }}
               />
             </View>

@@ -36,16 +36,4 @@ export default StyleSheet.create({
     fontSize: 16,
     fontFamily: Fonts.PoppinsMedium,
   },
-  buttons_container: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginHorizontal: 10,
-    alignItems: "center",
-    marginTop: 5,
-  },
-  amount_text: {
-    color: "#fff",
-    fontSize: 16,
-    padding: 10,
-  },
 });

@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { removeCartProduct } from "redux/Cart/CartHttp";
 
-export default function useRemoveCart() {
+export default function useRemoveCart(onSuccess?: () => void) {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
 
@@ -22,6 +22,7 @@ export default function useRemoveCart() {
       console.warn(error);
     } finally {
       setLoading(false);
+      onSuccess?.();
     }
   }
 

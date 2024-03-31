@@ -58,7 +58,10 @@ export default function DailySale() {
             <View style={styles.bottom_tab}>
               <Headings.Price price={data.price} quantity={data.quantity} />
 
-              <RatingBar ratings={data.rating} reviewsCount={10} />
+              <RatingBar
+                ratings={data.rating}
+                reviewsCount={data.reviewsCount}
+              />
 
               <Taglist tagsList={tags} />
 

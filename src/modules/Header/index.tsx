@@ -19,13 +19,13 @@ export default function Header({ toggleSidebar: onToggle }: SearchBarProps) {
       <Button
         onPress={onToggle}
         icon={<EvilIcons name="navicon" size={32} color={theme.text} />}
-        style={{ marginLeft: 0, padding: 5 }}
+        style={{ marginLeft: 5, padding: 5 }}
       />
 
       <Button
         icon={<EvilIcons name="search" size={27} color={theme.text} />}
         onPress={() => navigation.navigate("Search", {})}
-        style={{ marginRight: 0, padding: 5 }}
+        style={{ marginRight: 5, padding: 5 }}
       />
     </View>
   );
