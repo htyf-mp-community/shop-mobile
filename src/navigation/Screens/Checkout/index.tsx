@@ -8,10 +8,10 @@ import CheckoutModal from "./components/CheckoutModal";
 import { useAppDispatch, useAppSelector } from "utils/hooks/hooks";
 import { checkoutActions } from "redux/Checkout";
 import ModalLoader from "components/ui/ModalLoader";
-import {
-  initPaymentSheet,
-  presentPaymentSheet,
-} from "@stripe/stripe-react-native";
+// import {
+//   initPaymentSheet,
+//   presentPaymentSheet,
+// } from "@stripe/stripe-react-native";
 import { Colors, Fonts } from "constants/styles";
 import Color from "color";
 
@@ -35,30 +35,30 @@ export default function Checkout() {
   React.useEffect(() => {
     if (checkout.paymentIntentClientSecret !== "") {
       (async () => {
-        const props = await initPaymentSheet({
-          paymentIntentClientSecret: checkout.paymentIntentClientSecret,
-          merchantDisplayName: "DMQ Store",
-          allowsDelayedPaymentMethods: false,
+        // const props = await initPaymentSheet({
+        //   paymentIntentClientSecret: checkout.paymentIntentClientSecret,
+        //   merchantDisplayName: "DMQ Store",
+        //   allowsDelayedPaymentMethods: false,
 
-          appearance: {
-            primaryButton: {
-              shapes: {
-                borderRadius: 50,
-              },
-              colors: {
-                background: Colors.secondary,
-              },
-            },
-            colors: {
-              background: Colors.primary,
-              componentBackground: Colors.primary_light,
-              componentBorder: Color(Colors.primary).darken(1).hex(),
-              componentDivider: Color(Colors.primary).darken(1).hex(),
-            },
-          },
-        });
+        //   appearance: {
+        //     primaryButton: {
+        //       shapes: {
+        //         borderRadius: 50,
+        //       },
+        //       colors: {
+        //         background: Colors.secondary,
+        //       },
+        //     },
+        //     colors: {
+        //       background: Colors.primary,
+        //       componentBackground: Colors.primary_light,
+        //       componentBorder: Color(Colors.primary).darken(1).hex(),
+        //       componentDivider: Color(Colors.primary).darken(1).hex(),
+        //     },
+        //   },
+        // });
 
-        console.log(props);
+        // console.log(props);
       })();
     }
   }, [checkout.paymentIntentClientSecret]);

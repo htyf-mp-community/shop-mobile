@@ -22,6 +22,7 @@ export default function MainNavigator() {
     <>
       <StatusBar backgroundColor={theme.primary} />
       <NavigationContainer
+        independent
         ref={navigationRef}
         theme={current === "dark" ? DarkTheme : undefined}
       >

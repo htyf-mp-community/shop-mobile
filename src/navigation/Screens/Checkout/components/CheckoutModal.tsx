@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { CardField, CardFieldInput } from "@stripe/stripe-react-native";
+// import { CardField, CardFieldInput } from "@stripe/stripe-react-native";
 import { useNavigationProps } from "/@types/types";
 import { Button, Modal } from "components";
 import { Colors } from "constants/styles";
@@ -25,7 +25,7 @@ export default function CheckoutModal({
 
   const [isCardValid, setIsCardValid] = useState(false);
 
-  const handleValidateCard = (input: CardFieldInput.Details) => {
+  const handleValidateCard = (input: any) => {
     if (input.complete) {
       setIsCardValid(true);
     }
@@ -68,7 +68,7 @@ export default function CheckoutModal({
         <>
           <Text style={styles.heading}>Enter your card credentials</Text>
 
-          <CardField
+          {/* <CardField
             onCardChange={handleValidateCard}
             style={{ height: 60, marginVertical: 10 }}
             cardStyle={{
@@ -77,7 +77,7 @@ export default function CheckoutModal({
               placeholderColor: "lightgray",
               borderRadius: 10,
             }}
-          />
+          /> */}
 
           <View
             style={{ flexDirection: "row", justifyContent: "space-between" }}
